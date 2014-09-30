@@ -5,12 +5,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.Employee;
+import uy.edu.um.laboratoriotic.business.EmployeeFilterVO;
 
 /**
  * This is the implementation of EmployeeDAOMgt
- *  
+ * 
  * @author sblanco1
  * 
  */
@@ -58,7 +60,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 
 			Statement oStatement = oConnection.createStatement();
-			
+
 			String sFirstName = oEmployee.getName();
 			String sLastName = oEmployee.getLastName();
 			int nID = oEmployee.getEmployeeID();
@@ -66,23 +68,6 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			String sInsert = "INSERT INTO Employees (firstName, lastName, iD) VALUES (\'"
 					+ sFirstName + "','" + sLastName + "'," + nID + ")";
 			oStatement.execute(sInsert);
-
-			String sQuery = "SELECT * FROM Employees";
-			ResultSet oResultSet = oStatement.executeQuery(sQuery);
-
-			while (oResultSet.next()) {
-
-				String sResultFIrstName = oResultSet.getString(1);
-				String sResultLastName = oResultSet.getString(2);
-				int nResultID = oResultSet.getInt(3);
-
-				System.out.println("El empleado encontredo es:\n"
-						+ sResultFIrstName + " " + sResultLastName
-						+ " document:" + nResultID);
-
-			}
-
-			oResultSet.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -120,30 +105,63 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 		return oResult;
 	}
-	
-	public void createTable(){
-		
+
+	public void createTable() {
+
 		Connection oConnection = null;
 		Statement oStatement;
 		boolean bValue = false;
-			
+
 		oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
-				
+
 		try {
-			
+
 			oStatement = oConnection.createStatement();
 			bValue = oStatement.execute(CREATE_TABLE_EMPLOYEE);
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		if (!bValue) {
 			System.out.println("Se ejecuto con exito");
 		}
 
+	}
 
+	
+	public ArrayList<Employee> getEmployees() {
+
+		ArrayList<Employee> oList = new ArrayList<>();
+		Statement oStatement = null;
+		Connection oConnection = null;
+
+		try {
+			
+			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+			oStatement = oConnection.createStatement();
+			String sQuery = "SELECT * FROM Employees";
+			ResultSet oResultSet = oStatement.executeQuery(sQuery);
+
+			while (oResultSet.next()) {
+
+				String sResultFIrstName = oResultSet.getString(1);
+				String sResultLastName = oResultSet.getString(2);
+				int nResultID = oResultSet.getInt(3);
+
+				System.out.println("El empleado encontrado es:\n"
+						+ sResultFIrstName + " " + sResultLastName
+						+ " document:" + nResultID);
+
+			}
+
+			oResultSet.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 }

@@ -14,4 +14,6 @@ public interface EmployeeRemoteMgt extends Remote{
 
 	public void addEmployee(EmployeeVO oEmployee) throws RemoteException;
 	
+	public String msg(String name) throws RemoteException;
+	
 }
