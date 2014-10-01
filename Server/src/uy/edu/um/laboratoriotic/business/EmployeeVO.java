@@ -43,6 +43,18 @@ public class EmployeeVO {
 		
 	}
 	
+	public EmployeeVO(String oName, String oLastName, int oEmployeeID,
+			String oLocation, String oSector, boolean oStatus) {
+
+		this.name = oName;
+		this.lastName = oLastName;
+		this.employeeID = oEmployeeID;
+		this.location = oLocation;
+		this.sector = oSector;
+		this.status = oStatus;
+
+	}
+	
 	/*
 	 * Getters & setters
 	 */
@@ -142,7 +154,7 @@ public class EmployeeVO {
 		this.workingHour = workingHour;
 	}
 
-	public boolean isStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 

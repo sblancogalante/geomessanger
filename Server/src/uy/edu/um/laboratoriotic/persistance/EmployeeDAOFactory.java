@@ -2,7 +2,7 @@ package uy.edu.um.laboratoriotic.persistance;
 
 
 /**
- * 
+ * This class is the connection that adds separation to the modules
  * @author sblanco1
  *
  */

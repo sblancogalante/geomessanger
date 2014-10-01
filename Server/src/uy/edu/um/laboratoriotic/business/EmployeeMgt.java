@@ -10,7 +10,7 @@ public interface EmployeeMgt {
 	/*
 	 * Methods
 	 */
-	public EmployeeVO addEmployee(EmployeeVO oEmployee);
+	public void addEmployee(Employee oEmployee);
 	
 	public void removeEmployee();
 	
@@ -20,6 +20,11 @@ public interface EmployeeMgt {
 	
 	public Employee searchEmployee(String oUserName);
 	
-	public Employee getEmployees(EmployeeFilterVO oEmployee);
+	public Employee getEmployees();
+	
+	public Employee getEmployee(EmployeeVO oEmployeeVO);
+
+	public EmployeeVO getEmployeeVO(Employee oEmployee);
+	
 	
 }
