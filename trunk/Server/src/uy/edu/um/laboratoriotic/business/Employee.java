@@ -21,13 +21,13 @@ public class Employee {
 	private boolean status;
 
 	/*
-	 * Constructors	
+	 * Constructors
 	 */
-	public Employee(int oEmployeeID, String oID, String oName, String oLastName,
-			String oUserName, String oPassword, String oLocation, String oSector,
-			String oMail, String oPosition, byte oProfilePicture,
-			Date oWorkingHour, boolean oStatus) {
-		
+	public Employee(int oEmployeeID, String oID, String oName,
+			String oLastName, String oUserName, String oPassword,
+			String oLocation, String oSector, String oMail, String oPosition,
+			byte oProfilePicture, Date oWorkingHour, boolean oStatus) {
+
 		this.employeeID = oEmployeeID;
 		this.iD = oID;
 		this.name = oName;
@@ -41,14 +41,19 @@ public class Employee {
 		this.profilePicture = oProfilePicture;
 		this.workingHour = oWorkingHour;
 		this.status = oStatus;
-		
+
 	}
-	
-	public Employee(String oName, String oLastName, int oEmployeeID){
-		
+
+	public Employee(String oName, String oLastName, int oEmployeeID,
+			String oLocation, String oSector, boolean oStatus) {
+
 		this.name = oName;
 		this.lastName = oLastName;
 		this.employeeID = oEmployeeID;
+		this.location = oLocation;
+		this.sector = oSector;
+		this.status = oStatus;
+
 	}
 
 	/*
@@ -150,7 +155,7 @@ public class Employee {
 		this.workingHour = workingHour;
 	}
 
-	public boolean isStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 
