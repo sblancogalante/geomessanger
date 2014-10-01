@@ -1,5 +1,7 @@
 package uy.edu.um.laboratoriotic.persistance;
 
+import java.util.ArrayList;
+
 import uy.edu.um.laboratoriotic.business.Employee;
 
 /**
@@ -10,6 +12,8 @@ import uy.edu.um.laboratoriotic.business.Employee;
 public interface EmployeeDAOMgt {
 
 	public void addEmployee(Employee oEmployee);
+	
+	public ArrayList<Employee> getEmployees();
 	
 	public void createTable();
 	
