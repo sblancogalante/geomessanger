@@ -3,7 +3,7 @@ package uy.edu.um.laboratoriotic.communication;
 import java.rmi.RemoteException;
 
 /**
- * 
+ * This class is the connection that adds separation to the modules
  * @author sblanco1
  * 
  */
