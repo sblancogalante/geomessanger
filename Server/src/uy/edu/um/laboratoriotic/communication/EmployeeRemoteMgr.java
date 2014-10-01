@@ -9,8 +9,14 @@ import uy.edu.um.laboratoriotic.business.EmployeeVO;
 
 public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
+	/*
+	 * Attributes of the class	
+	 */
 	private static EmployeeRemoteMgr instance = null;
 
+	/*
+	 * Constructors
+	 */	
 	private EmployeeRemoteMgr() throws RemoteException {
 
 		String name = "Employee";
@@ -28,6 +34,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	}
 
 	public static EmployeeRemoteMgr getInstance() throws RemoteException {
+		
 		if (instance == null) {
 			instance = new EmployeeRemoteMgr();
 		}
