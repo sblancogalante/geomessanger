@@ -68,12 +68,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			boolean sStatus = oEmployee.getStatus();
 
 			String sInsert = "INSERT INTO Employees (firstName, lastName, employeeID, location, sector, status) VALUES (\'"
-					+ sFirstName
-					+ "','"
-					+ sLastName
-					+ "',"
-					+ sEmployeeID
-					+ sLocation + "','" + sSector + "','" + sStatus + ")";
+					+ sFirstName+ "','"	+ sLastName	+ "',"+ sEmployeeID	+
+					sLocation + "','" + sSector + "','" + sStatus + "');";
+			
 			oStatement.execute(sInsert);
 
 		} catch (SQLException e) {
