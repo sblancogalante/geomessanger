@@ -3,7 +3,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import uy.edu.um.laboratoriotic.communication.EmployeeRemoteMgt;
+import uy.edu.um.laboratoriotic.services.EmployeeRemoteMgt;
 
 
 public class PruebaCliente {
