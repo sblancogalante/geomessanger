@@ -15,11 +15,15 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import uy.edu.um.laboratoriotic.services.EmployeeMgt;
+import uy.edu.um.laboratoriotic.services.EmployeeVO;
 
 public class CreateUser extends JDialog {
 
@@ -37,7 +41,6 @@ public class CreateUser extends JDialog {
 	private JButton btnCancel;
 
 	public CreateUser() {
-		
 		
 		setBounds(100, 100, 450, 350);
 		
@@ -81,6 +84,14 @@ public class CreateUser extends JDialog {
 		lblNewLabel_4 = new JLabel("Working Hour:");
 		
 		JButton btnCreate = new JButton("Create");
+		btnCreate.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent args0){
+				EmployeeVO employee = new EmployeeVO(textField.getText(),textField_1.getText(),textField_2.getText(),true);
+				// MANDAR DATOS A LA BASE DE DATOS PARA QE SE GUARDE 
+				System.out.println("Se ha creado: " + employee.getUserName());
+				dispose();
+			}
+		});
 		
 		btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener(){
