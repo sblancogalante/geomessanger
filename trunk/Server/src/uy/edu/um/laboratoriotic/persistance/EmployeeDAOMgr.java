@@ -23,7 +23,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	private static EmployeeDAOMgr instance = null;
 	private static final String DRIVER_JDBC = "org.hsqldb.jdbc.JDBCDriver";
 	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
-	private static final String CREATE_TABLE_EMPLOYEE = "CREATE TABLE Employees (firstName VARCHAR(27), lastName VARCHAR(28) NOT NULL, employeeID INT PRIMARY KEY, location VARCHAR(27) NOT NULL, sector VARCHAR(27), status BOOLEAN NOT NULL)";
+	private static final String CREATE_TABLE_EMPLOYEE = "CREATE TABLE Employees (firstName VARCHAR(27),lastName VARCHAR(28) NOT NULL,employeeID INT PRIMARY KEY,location VARCHAR(27) NOT NULL,sector VARCHAR(27),status BOOLEAN NOT NULL)";
 
 	/*
 	 * Constructor of the class
@@ -53,12 +53,13 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	public void addEmployee(Employee oEmployee) {
 		// TODO Auto-generated method stub
 		Connection oConnection = null;
+		Statement oStatement = null;
 
 		try {
 
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 
-			Statement oStatement = oConnection.createStatement();
+			oStatement = oConnection.createStatement();
 
 			String sFirstName = oEmployee.getName();
 			String sLastName = oEmployee.getLastName();
@@ -67,10 +68,10 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			String sSector = oEmployee.getSector();
 			boolean sStatus = oEmployee.getStatus();
 
-			String sInsert = "INSERT INTO Employees (firstName, lastName, employeeID, location, sector, status) VALUES (\'"
-					+ sFirstName+ "','"	+ sLastName	+ "',"+ sEmployeeID	+
-					sLocation + "','" + sSector + "','" + sStatus + "');";
-			
+			String sInsert = "INSERT INTO Employees (firstName,lastName,employeeID,location,sector,status) VALUES (\'"
+					+ sFirstName + "','"	+ sLastName	+ "','"	+ sEmployeeID + "','"
+					+ sLocation + "','" + sSector + "'," + sStatus + ")";
+
 			oStatement.execute(sInsert);
 
 		} catch (SQLException e) {
@@ -102,7 +103,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 			oStatement = oConnection.createStatement();
-			String sQuery = "SELECT * FROM Employees ORDER BY location ASC, sector ASC, status ASC";
+			String sQuery = "SELECT * FROM Employees ORDER BY location ASC,sector ASC,status ASC";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 
 			while (oResultSet.next()) {
@@ -133,6 +134,15 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+			}
 		}
 
 		return oList;
@@ -148,7 +158,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 			oStatement = oConnection.createStatement();
-			String sQuery = "SELECT * FROM `Employees` where (`Employees`.`employeeID` = '"
+			String sQuery = "SELECT * FROM Employees where ('Employees'.'employeeID' = '"
 					+ oEmployeeID + "') ;";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 
@@ -171,6 +181,14 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		return oEmployee;
@@ -212,14 +230,21 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oStatement = oConnection.createStatement();
 			bValue = oStatement.execute(CREATE_TABLE_EMPLOYEE);
+			if (!bValue) {
+				System.out.println("Se ejecuto con exito");
+			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-		if (!bValue) {
-			System.out.println("Se ejecuto con exito");
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 	}
