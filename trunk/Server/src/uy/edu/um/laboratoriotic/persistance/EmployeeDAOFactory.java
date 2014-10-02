@@ -17,7 +17,7 @@ public class EmployeeDAOFactory {
 		
 	}
 	
-	private static EmployeeDAOFactory getInstance(){
+	public static EmployeeDAOFactory getInstance(){
 		if(instance == null){
 			instance = new EmployeeDAOFactory();
 		}
