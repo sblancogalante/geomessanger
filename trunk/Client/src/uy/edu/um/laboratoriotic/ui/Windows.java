@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -22,6 +23,8 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+
+import uy.edu.um.laboratoriotic.services.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.EmployeeVO;
 
@@ -54,9 +57,13 @@ public class Windows extends JFrame {
 			}
 
 			
-			public EmployeeFilterVO[] getEmployees() {
-				EmployeeFilterVO[] filteredEmployees = {new EmployeeFilterVO("Luis","Uruguay","RH",true),new EmployeeFilterVO("Pedro","Mexico","RH",true) };
-				return null;
+			public ArrayList<EmployeeVO> getEmployees() {
+				EmployeeVO e1 = new EmployeeVO("Luis","Uruguay","RH",true);
+				EmployeeVO e2 = new EmployeeVO("Pedro","Mexico","RH",true);
+				ArrayList<EmployeeVO> employeesArrayList = new ArrayList<EmployeeVO>();
+				employeesArrayList.add(e1);
+				employeesArrayList.add(e2);
+				return employeesArrayList;
 			}
 			
 		};
@@ -153,11 +160,10 @@ public class Windows extends JFrame {
 				});
 		
 		JSeparator separator = new JSeparator();
-		EmployeeFilterVO[] filteredEmployees = employeeMgt.getEmployees();
+		EmployeeVO[] employeesVec = employeeMgt.getEmployees().toArray(new EmployeeVO[employeeMgt.getEmployees().size()]);
 		
-		userList = new JList<EmployeeFilterVO>(filteredEmployees);
+		userList = new JList<EmployeeVO>(employeesVec);
 		//String[] users = {"Luis","Pedro","Jose","Manolo","Federica","Jose","Manolo","Federica","Jose","Manolo","Federica","Jose","Manolo","Federica","Jose","Manolo","Federica"};
-		userList = new JList<String>();
 		
 		JButton searchButton = new JButton("Search");
 		
