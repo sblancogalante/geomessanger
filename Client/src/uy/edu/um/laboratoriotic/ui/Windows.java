@@ -22,8 +22,6 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
-
-import uy.edu.um.laboratoriotic.services.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.EmployeeVO;
 
