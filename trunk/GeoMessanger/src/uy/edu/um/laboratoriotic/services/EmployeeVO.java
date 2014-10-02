@@ -38,6 +38,18 @@ public class EmployeeVO {
 		
 	}
 	
+	public EmployeeVO (String oUserName, String oLocation, String oSector, boolean oStatus){
+		
+		this.userName = oUserName;
+		this.location = oLocation;
+		this.sector = oSector;
+		this.status = oStatus;
+	}
+	
+	public String toString(){
+		return userName;
+	}
+	
 	/*
 	 * Getters & setters
 	 */
