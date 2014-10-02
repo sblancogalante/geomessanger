@@ -2,6 +2,7 @@ package uy.edu.um.laboratoriotic.business;
 
 import java.rmi.RemoteException;
 
+import uy.edu.um.laboratoriotic.communication.EmployeeRemoteFactory;
 import uy.edu.um.laboratoriotic.communication.EmployeeRemoteMgr;
 import uy.edu.um.laboratoriotic.communication.EmployeeRemoteMgt;
 
@@ -36,20 +37,15 @@ public class BusinessFacade {
 	/*
 	 * All the instances
 	 */
-	public EmployeeMgt getEmployeeMgt() {
-		return EmployeeMgr.getInstance();
+	public EmployeeFactory getEmployeeFactory() {
+		return EmployeeFactory.getInstance();
 	}
 
-	public EmployeeRemoteMgt getEmployeeRemoteMgt(){
+	public EmployeeRemoteFactory getEmployeeRemoteFactory() throws RemoteException{
 		
-		EmployeeRemoteMgt oEmployee = null;
+		EmployeeRemoteFactory oEmployee = null;
 		
-		try {
-			oEmployee = EmployeeRemoteMgr.getInstance();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		oEmployee = EmployeeRemoteFactory.getInstance();
 		
 		return oEmployee;
 	}

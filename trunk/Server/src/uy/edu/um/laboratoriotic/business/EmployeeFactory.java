@@ -15,7 +15,7 @@ public class EmployeeFactory {
 		
 	}
 	
-	private static EmployeeFactory getInstance(){
+	public static EmployeeFactory getInstance(){
 		if(instance == null){
 			instance = new EmployeeFactory();
 		}
@@ -23,7 +23,7 @@ public class EmployeeFactory {
 		return instance;
 	}
 	
-	private static EmployeeMgt getEmployeeMgt(){
+	public EmployeeMgt getEmployeeMgt(){
 		return EmployeeMgr.getInstance();
 	}
 }

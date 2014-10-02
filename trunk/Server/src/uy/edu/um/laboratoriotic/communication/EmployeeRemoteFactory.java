@@ -15,7 +15,7 @@ public class EmployeeRemoteFactory {
 
 	}
 
-	private static EmployeeRemoteFactory getInstance() {
+	public static EmployeeRemoteFactory getInstance() {
 
 		if (instance == null) {
 			instance = new EmployeeRemoteFactory();
@@ -24,7 +24,7 @@ public class EmployeeRemoteFactory {
 		return instance;
 	}
 
-	private static EmployeeRemoteMgt getEmployeeMgt() throws RemoteException {
+	public EmployeeRemoteMgt getEmployeeMgt() throws RemoteException {
 		return EmployeeRemoteMgr.getInstance();
 	}
 
