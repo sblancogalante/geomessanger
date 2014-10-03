@@ -4,7 +4,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import uy.edu.um.laboratoriotic.business.Employee;
 import uy.edu.um.laboratoriotic.business.EmployeeVO;
 
 /**
@@ -15,6 +14,8 @@ import uy.edu.um.laboratoriotic.business.EmployeeVO;
 public interface EmployeeRemoteMgt extends Remote{
 
 	public void addEmployee(EmployeeVO oEmployee) throws RemoteException;
+	
+	public void removeEmployee(EmployeeVO oEmployeeID) throws RemoteException;
 	
 	public String msg(String name) throws RemoteException;
 	

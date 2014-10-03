@@ -68,9 +68,12 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			String sSector = oEmployee.getSector();
 			boolean sStatus = oEmployee.getStatus();
 
+			System.out.println("Se agrego con exito al empleado " + sFirstName
+					+ " " + sLastName);
+
 			String sInsert = "INSERT INTO Employees (firstName,lastName,employeeID,location,sector,status) VALUES (\'"
-					+ sFirstName + "','"	+ sLastName	+ "','"	+ sEmployeeID + "','"
-					+ sLocation + "','" + sSector + "'," + sStatus + ")";
+					+ sFirstName+ "','"	+ sLastName	+ "','"	+ sEmployeeID + "','"
+					+ sLocation	+ "','"	+ sSector + "'," + sStatus + ")";
 
 			oStatement.execute(sInsert);
 
@@ -148,6 +151,12 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		return oList;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgt#searchEmployee(int)
+	 */
 	public Employee searchEmployee(int oEmployeeID) {
 
 		Employee oEmployee = null;
@@ -158,7 +167,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 			oStatement = oConnection.createStatement();
-			String sQuery = "SELECT * FROM Employees where ('Employees'.'employeeID' = '"
+			String sQuery = "SELECT * FROM Employees where (Employees.employeeID = '"
 					+ oEmployeeID + "') ;";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 
@@ -174,6 +183,13 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				oEmployee = new Employee(sResultFirstName, sResultLastName,
 						sResultEmployeeID, sResultLocation, sResultSector,
 						sResultStatus);
+
+				System.out.println("El empleado hallado es: " + "\n"
+						+ "Nombre: " + sResultFirstName + "\n" + "Apellido: "
+						+ sResultLastName + "\n" + "Identificacion personal: "
+						+ sResultEmployeeID + "\n" + "Pais: " + sResultLocation
+						+ "\n" + "Sector de trabajo: " + sResultSector + "\n"
+						+ "Estado de conexion: " + sResultStatus);
 
 			}
 
@@ -193,6 +209,57 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 		return oEmployee;
 
+	}
+
+	@Override
+	public void removeEmployee(int oEmployeeID) {
+		// TODO Auto-generated method stub
+
+		Statement oStatement = null;
+		Connection oConnection = null;
+
+		try {
+
+			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+			oStatement = oConnection.createStatement();
+
+			String sQueryCount = "SELECT COUNT(*) FROM Employees";
+
+			ResultSet oResultSetCount = oStatement.executeQuery(sQueryCount);
+
+			if (oResultSetCount.next()) {
+
+				int nCount = oResultSetCount.getInt(1);
+
+				System.out.println("Cantidad de empleados: " + nCount);
+			}
+
+			String sQuery = "DELETE FROM Employees where (Employees.employeeID = '"
+					+ oEmployeeID + "') ;";
+			ResultSet oResultSet = oStatement.executeQuery(sQuery);
+
+			ResultSet oResultSetCount2 = oStatement.executeQuery(sQueryCount);
+
+			if (oResultSetCount2.next()) {
+
+				int nCount = oResultSetCount2.getInt(1);
+
+				System.out.println("Cantidad de empleados: " + nCount);
+			}
+
+			oResultSet.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	/*

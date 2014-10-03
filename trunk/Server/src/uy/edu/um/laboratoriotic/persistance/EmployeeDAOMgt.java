@@ -13,6 +13,8 @@ public interface EmployeeDAOMgt {
 
 	public void addEmployee(Employee oEmployee);
 	
+	public void removeEmployee(int oEmployeeID);
+	
 	public Employee searchEmployee(int oEmployeeID);
 	
 	public ArrayList<Employee> getEmployees();
