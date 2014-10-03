@@ -64,8 +64,8 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	@Override
 	public EmployeeVO getEmployee(EmployeeVO oEmployee) throws RemoteException {
 		// TODO Auto-generated method stub
-		EmployeeRemoteMgt oRemoteEmployee = (EmployeeRemoteMgt) BusinessFacade.getInstance()
-				.getEmployeeRemoteFactory();
+		EmployeeRemoteMgt oRemoteEmployee = (EmployeeRemoteMgt) BusinessFacade
+				.getInstance().getEmployeeRemoteFactory();
 
 		EmployeeVO oEmployeeVO = oRemoteEmployee.getEmployee(oEmployee);
 
@@ -75,7 +75,8 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	@Override
 	public void removeEmployee(EmployeeVO oEmployee) throws RemoteException {
 		// TODO Auto-generated method stub
-		EmployeeRemoteMgt oRemoteEmployee = EmployeeRemoteFactory.getInstance().getEmployeeMgt();
+		EmployeeRemoteMgt oRemoteEmployee = EmployeeRemoteFactory.getInstance()
+				.getEmployeeMgt();
 		EmployeeVO oEmployeeVO = oRemoteEmployee.getEmployee(oEmployee);
 		oRemoteEmployee.removeEmployee(oEmployeeVO);
 	}
