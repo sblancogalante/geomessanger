@@ -18,13 +18,25 @@ public class EmployeeDAOTest {
 		
 		EmployeeDAOFactory.getEmployeeDAOMgt().createTable();
 		
+		System.out.println("//////////////////////Test de addEmployee()//////////////////////");
+		
 		EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oEmployee);
 		
 		EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oEmployee1);
 		
 		EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oEmployee2);
 		
+		System.out.println("//////////////////////Test de getEmployees()/////////////////////");
+		
 		EmployeeDAOFactory.getEmployeeDAOMgt().getEmployees();
+		
+		System.out.println("//////////////////////Test de searchEmployee()/////////////////////");
+		
+		EmployeeDAOFactory.getEmployeeDAOMgt().searchEmployee(oEmployee.getEmployeeID());
+		
+		System.out.println("//////////////////////Test de removeEmployee()/////////////////////");
+		
+		EmployeeDAOFactory.getEmployeeDAOMgt().removeEmployee(oEmployee.getEmployeeID());
 	}
 
 }
