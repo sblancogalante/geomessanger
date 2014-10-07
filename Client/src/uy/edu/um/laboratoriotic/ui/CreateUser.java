@@ -109,6 +109,9 @@ public class CreateUser extends JDialog {
 				dispose();
 			}
 		});
+	
+		
+			
 		
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(

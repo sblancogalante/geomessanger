@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
+import uy.edu.um.laboratoriotic.services.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.EmployeeVO;
 
@@ -47,25 +48,7 @@ public class Windows extends JFrame {
 	
 	public Windows() {
 		
-		EmployeeMgt employeeMgt = new EmployeeMgt(){
-
-			
-			public void addEmployee(EmployeeVO oEmployee) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			
-			public ArrayList<EmployeeVO> getEmployees() {
-				EmployeeVO e1 = new EmployeeVO("Luis","Uruguay","RH",true);
-				EmployeeVO e2 = new EmployeeVO("Pedro","Mexico","RH",true);
-				ArrayList<EmployeeVO> employeesArrayList = new ArrayList<EmployeeVO>();
-				employeesArrayList.add(e1);
-				employeesArrayList.add(e2);
-				return employeesArrayList;
-			}
-			
-		};
+		final EmployeeMgt employeeMgt = EmployeeFactory.getInstance().getEmployeeMgt();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 550);
@@ -159,13 +142,20 @@ public class Windows extends JFrame {
 				});
 		
 		JSeparator separator = new JSeparator();
-		EmployeeVO[] employeesVec = employeeMgt.getEmployees().toArray(new EmployeeVO[employeeMgt.getEmployees().size()]);
 		
-		userList = new JList<EmployeeVO>(employeesVec);
-		//String[] users = {"Luis","Pedro","Jose","Manolo","Federica","Jose","Manolo","Federica","Jose","Manolo","Federica","Jose","Manolo","Federica","Jose","Manolo","Federica"};
+		if(employeeMgt.getEmployees() != null){
+			EmployeeVO[] employeesVec = employeeMgt.getEmployees().toArray(new EmployeeVO[employeeMgt.getEmployees().size()]);
+			userList = new JList<EmployeeVO>(employeesVec);
+		}else{
+			userList = new JList<EmployeeVO>();
+		}
 		
 		JButton searchButton = new JButton("Search");
-		
+		searchButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent args0){
+				actualizarContactos(employeeMgt);
+			}
+		});
 		
 		
 		
@@ -226,5 +216,17 @@ public class Windows extends JFrame {
 	
 	public JFrame getFrame(){
 		return this;
+	}
+	
+	private void actualizarContactos(EmployeeMgt employeeMgt){
+		
+		if(employeeMgt.getEmployees() != null){
+			EmployeeVO[] employeesVec = employeeMgt.getEmployees().toArray(new EmployeeVO[employeeMgt.getEmployees().size()]);
+			userList = new JList<EmployeeVO>(employeesVec);
+		}else{
+			userList = new JList<EmployeeVO>();
+			System.out.println("Null Employee List");
+		}
+		
 	}
 }
