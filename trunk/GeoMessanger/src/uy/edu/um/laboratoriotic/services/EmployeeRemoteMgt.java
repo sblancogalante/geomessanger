@@ -12,8 +12,8 @@ public interface EmployeeRemoteMgt extends Remote {
 
 	public EmployeeVO getEmployee(EmployeeVO oEmployee) throws RemoteException;
 
-	public ArrayList<EmployeeVO> getEmployees();
+	public ArrayList<EmployeeVO> getEmployees() throws RemoteException;
 
-	void removeEmployee(EmployeeVO oEmployee) throws RemoteException;
+	public void removeEmployee(EmployeeVO oEmployee) throws RemoteException;
 
 }
