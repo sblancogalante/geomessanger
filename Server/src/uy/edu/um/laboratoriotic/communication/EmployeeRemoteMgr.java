@@ -7,7 +7,8 @@ import uy.edu.um.laboratoriotic.business.BusinessFacade;
 import uy.edu.um.laboratoriotic.business.Employee;
 import uy.edu.um.laboratoriotic.business.EmployeeFactory;
 import uy.edu.um.laboratoriotic.business.EmployeeMgt;
-import uy.edu.um.laboratoriotic.business.EmployeeVO;
+import uy.edu.um.laboratoriotic.services.EmployeeRemoteMgt;
+import uy.edu.um.laboratoriotic.services.EmployeeVO;
 
 public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 

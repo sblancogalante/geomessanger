@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
@@ -22,6 +24,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import uy.edu.um.laboratoriotic.services.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.EmployeeVO;
 
@@ -39,6 +42,7 @@ public class CreateUser extends JDialog {
 	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
 	private JButton btnCancel;
+	private EmployeeMgt employeeMgt;
 
 	public CreateUser() {
 		
@@ -87,7 +91,13 @@ public class CreateUser extends JDialog {
 		btnCreate.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent args0){
 				EmployeeVO employee = new EmployeeVO(textField.getText(),textField_1.getText(),textField_2.getText(),true);
-				// MANDAR DATOS A LA BASE DE DATOS PARA QE SE GUARDE 
+				employeeMgt = EmployeeFactory.getInstance().getEmployeeMgt();
+				try {
+					employeeMgt.addEmployee(employee);
+				} catch (RemoteException | NotBoundException e) {
+					//HACER UN DIALOGO QUE T DIGA QE NO SE PUDO HACER EL EMPLOYEE
+					e.printStackTrace();
+				}
 				System.out.println("Se ha creado: " + employee.getUserName());
 				dispose();
 			}

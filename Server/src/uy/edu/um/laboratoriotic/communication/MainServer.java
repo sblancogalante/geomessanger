@@ -7,6 +7,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
+import uy.edu.um.laboratoriotic.services.EmployeeRemoteMgt;
 
 /**
  * This class is the one that initializes the DB connection and the RMI

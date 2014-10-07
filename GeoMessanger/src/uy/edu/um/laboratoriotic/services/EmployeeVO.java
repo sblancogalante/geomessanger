@@ -149,7 +149,7 @@ public class EmployeeVO {
 		this.workingHour = workingHour;
 	}
 
-	public boolean isStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 
