@@ -25,7 +25,7 @@ public class EmployeeMgr implements EmployeeMgt{
 	@Override
 	public void addEmployee(EmployeeVO oEmployee) throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
-		String sObjectService = "Employee"; 
+		String sObjectService = "EmployeeRemoteMgr"; 
 		Registry oRegitry = LocateRegistry.getRegistry(1099); 
 		EmployeeRemoteMgt oEmployeeRemoteMgt = (EmployeeRemoteMgt)oRegitry.lookup(sObjectService); 
 		

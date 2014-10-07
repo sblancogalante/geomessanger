@@ -10,8 +10,10 @@ public interface EmployeeRemoteMgt extends Remote {
 
 	public String msg(String name) throws RemoteException;
 
-	public EmployeeVO getEmployee(EmployeeVO oEmployee);
+	public EmployeeVO getEmployee(EmployeeVO oEmployee) throws RemoteException;
 
 	public ArrayList<EmployeeVO> getEmployees();
+
+	void removeEmployee(EmployeeVO oEmployee) throws RemoteException;
 
 }

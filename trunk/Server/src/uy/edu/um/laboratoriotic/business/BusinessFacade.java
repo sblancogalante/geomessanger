@@ -3,8 +3,6 @@ package uy.edu.um.laboratoriotic.business;
 import java.rmi.RemoteException;
 
 import uy.edu.um.laboratoriotic.communication.EmployeeRemoteFactory;
-import uy.edu.um.laboratoriotic.communication.EmployeeRemoteMgr;
-import uy.edu.um.laboratoriotic.communication.EmployeeRemoteMgt;
 
 /**
  * This class recognizes all interfaces of communication module and creates

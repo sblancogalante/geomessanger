@@ -1,6 +1,7 @@
 package uy.edu.um.laboratoriotic.business;
 
 import uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgr;
+import uy.edu.um.laboratoriotic.services.EmployeeVO;
 
 /**
  * this class is the implementation of EmployeeMgt

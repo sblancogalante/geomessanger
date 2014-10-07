@@ -2,6 +2,8 @@ package uy.edu.um.laboratoriotic.communication;
 
 import java.rmi.RemoteException;
 
+import uy.edu.um.laboratoriotic.services.EmployeeRemoteMgt;
+
 /**
  * This class is the connection that adds separation to the modules
  * @author sblanco1
