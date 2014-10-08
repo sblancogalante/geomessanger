@@ -21,9 +21,15 @@ public class MainServer {
 
 	public static void main(String[] args) throws RemoteException {
 
+		/*
+		 * Inicializamos la base de datos creando la tabla
+		 */
 		EmployeeDAOMgt oMgt = EmployeeDAOFactory.getEmployeeDAOMgt();
 		oMgt.createTable();
 		
+		/*
+		 * Establecemos la conexion RMI con el cliente
+		 */
 		String name = "EmployeeRemoteMgr";
 
 		BusinessFacade.getInstance()
