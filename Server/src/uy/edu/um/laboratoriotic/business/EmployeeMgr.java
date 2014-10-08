@@ -30,6 +30,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	@Override
 	public void addEmployee(Employee oEmployee) {
 		// TODO Auto-generated method stub
+	
 		EmployeeDAOMgr oNewDAOEmployee = EmployeeDAOMgr.getInstance();
 		Employee oNewEmployee = new Employee(oEmployee.getName(),
 				oEmployee.getLastName(), oEmployee.getEmployeeID(),
