@@ -55,10 +55,10 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	public ArrayList<EmployeeVO> getEmployees() throws RemoteException {
 		// TODO Auto-generated method stub
 
-		EmployeeRemoteMgt oEmployee = EmployeeRemoteFactory.getInstance()
+		EmployeeRemoteMgt oRemoteEmployee = EmployeeRemoteFactory.getInstance()
 				.getEmployeeRemoteMgt();
-
-		ArrayList<EmployeeVO> list = oEmployee.getEmployees();
+		
+		ArrayList<EmployeeVO> list = oRemoteEmployee.getEmployees();
 
 		return list;
 	}
