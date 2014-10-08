@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
 import uy.edu.um.laboratoriotic.business.Employee;
-import uy.edu.um.laboratoriotic.business.EmployeeFactory;
-import uy.edu.um.laboratoriotic.business.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.EmployeeRemoteMgt;
 import uy.edu.um.laboratoriotic.services.EmployeeVO;
 
@@ -45,18 +43,23 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	}
 
 	@Override
-	public void addEmployee(EmployeeVO oEmployeeVO) throws RemoteException {
-		BusinessFacade.getInstance().getEmployeeFactory();
+	public void addEmployee(EmployeeVO oEmployeeVO) throws RemoteException {		
+		BusinessFacade.getInstance().getEmployeeRemoteFactory();
 		// TODO Auto-generated method stub
-		EmployeeMgt oEmployee = EmployeeFactory.getInstance().getEmployeeMgt();
-		Employee oNewEmployeeToAdd = oEmployee.getEmployee(oEmployeeVO);
+		EmployeeRemoteMgt oEmployee = (EmployeeRemoteMgt) EmployeeRemoteFactory.getInstance().getEmployeeRemoteMgt();
+		EmployeeVO oNewEmployeeToAdd = oEmployee.getEmployee(oEmployeeVO);
 		oEmployee.addEmployee(oNewEmployeeToAdd);
 	}
 
 	@Override
-	public ArrayList<EmployeeVO> getEmployees() {
+	public ArrayList<EmployeeVO> getEmployees() throws RemoteException{
 		// TODO Auto-generated method stub
-		return null;
+		
+		EmployeeRemoteMgt oEmployee = EmployeeRemoteFactory.getInstance().getEmployeeRemoteMgt();
+		
+		ArrayList<EmployeeVO> list = oEmployee.getEmployees();
+		
+		return list;
 	}
 
 	@Override
@@ -74,7 +77,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	public void removeEmployee(EmployeeVO oEmployee) throws RemoteException {
 		// TODO Auto-generated method stub
 		EmployeeRemoteMgt oRemoteEmployee = EmployeeRemoteFactory.getInstance()
-				.getEmployeeMgt();
+				.getEmployeeRemoteMgt();
 		EmployeeVO oEmployeeVO = oRemoteEmployee.getEmployee(oEmployee);
 		oRemoteEmployee.removeEmployee(oEmployeeVO);
 	}
