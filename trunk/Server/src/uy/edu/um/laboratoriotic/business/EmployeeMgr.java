@@ -88,7 +88,7 @@ public class EmployeeMgr implements EmployeeMgt {
 		EmployeeDAOMgr oDAOEmployee = EmployeeDAOMgr.getInstance();
 		Employee oNewEmployee = oDAOEmployee.searchEmployee(oEmployee
 				.getEmployeeID());
-		EmployeeVO newVOEmployee = this.getEmployeeVO(oEmployee);
+		EmployeeVO newVOEmployee = this.getEmployeeVO(oNewEmployee);
 
 		return newVOEmployee;
 	}
