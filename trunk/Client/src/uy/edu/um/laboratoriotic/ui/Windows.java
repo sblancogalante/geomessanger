@@ -289,10 +289,11 @@ public class Windows extends JFrame {
 	private void actualizarContactos(EmployeeMgt employeeMgt)
 			throws RemoteException, NotBoundException {
 
-		if (employeeMgt.getEmployees() != null) {
+		if (employeeMgt.getEmployees() != null && employeeMgt.getEmployees().size() >0) {
 			EmployeeVO[] employeesVec = employeeMgt.getEmployees().toArray(
 					new EmployeeVO[employeeMgt.getEmployees().size()]);
-			userList = new JList<EmployeeVO>(employeesVec);
+			userList.setListData(employeesVec);
+			System.out.println("Hay alguien");
 		} else {
 			userList = new JList<EmployeeVO>();
 			System.out.println("Null Employee List");
