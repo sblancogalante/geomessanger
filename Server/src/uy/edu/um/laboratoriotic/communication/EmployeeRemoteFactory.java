@@ -26,7 +26,7 @@ public class EmployeeRemoteFactory {
 		return instance;
 	}
 
-	public EmployeeRemoteMgt getEmployeeMgt() throws RemoteException {
+	public EmployeeRemoteMgt getEmployeeRemoteMgt() throws RemoteException {
 		return EmployeeRemoteMgr.getInstance();
 	}
 

@@ -23,7 +23,7 @@ public class MainServer {
 
 		BusinessFacade.getInstance()
 				.getEmployeeRemoteFactory();
-		EmployeeRemoteMgt oUserRemoteMgr = EmployeeRemoteFactory.getInstance().getEmployeeMgt();
+		EmployeeRemoteMgt oUserRemoteMgr = EmployeeRemoteFactory.getInstance().getEmployeeRemoteMgt();
 
 		EmployeeRemoteMgt oStubUser = (EmployeeRemoteMgt) UnicastRemoteObject.exportObject(
 				(Remote) oUserRemoteMgr, 0);
