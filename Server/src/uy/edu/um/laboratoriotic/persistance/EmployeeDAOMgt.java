@@ -3,6 +3,7 @@ package uy.edu.um.laboratoriotic.persistance;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.Employee;
+import uy.edu.um.laboratoriotic.services.EmployeeVO;
 
 /**
  * This is the persistance interface
@@ -15,9 +16,9 @@ public interface EmployeeDAOMgt {
 	
 	public void removeEmployee(int oEmployeeID);
 	
-	public Employee searchEmployee(int oEmployeeID);
+	public EmployeeVO searchEmployee(int oEmployeeID);
 	
-	public ArrayList<Employee> getEmployees();
+	public ArrayList<EmployeeVO> getEmployees();
 	
 	public void createTable();
 	

@@ -22,11 +22,11 @@ public interface EmployeeMgt {
 	
 	public Employee searchEmployee(int oemployeeID);
 	
-	public ArrayList<Employee> getEmployees();
+	public ArrayList<EmployeeVO> getEmployees();
 	
-	public Employee getEmployee(EmployeeVO oEmployeeVO);
+	public Employee getEmployeeVO(EmployeeVO oEmployeeVO);
 
-	public EmployeeVO getEmployeeVO(Employee oEmployee);
+	public EmployeeVO getEmployee(Employee oEmployee);
 
 	
 	

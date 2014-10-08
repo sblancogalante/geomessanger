@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.Employee;
+import uy.edu.um.laboratoriotic.services.EmployeeVO;
 
 /**
  * This is the implementation of EmployeeDAOMgt
@@ -96,9 +97,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	 * 
 	 * @see uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgt#getEmployees()
 	 */
-	public ArrayList<Employee> getEmployees() {
+	public ArrayList<EmployeeVO> getEmployees() {
 
-		ArrayList<Employee> oList = new ArrayList<>();
+		ArrayList<EmployeeVO> oList = new ArrayList<>();
 		Statement oStatement = null;
 		Connection oConnection = null;
 
@@ -118,7 +119,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String sResultSector = oResultSet.getString(5);
 				boolean sResultStatus = oResultSet.getBoolean(6);
 
-				Employee oEmployee = new Employee(sResultFirstName,
+				EmployeeVO oEmployee = new EmployeeVO(sResultFirstName,
 						sResultLastName, sResultEmployeeID, sResultLocation,
 						sResultSector, sResultStatus);
 
@@ -157,9 +158,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	 * @see
 	 * uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgt#searchEmployee(int)
 	 */
-	public Employee searchEmployee(int oEmployeeID) {
+	public EmployeeVO searchEmployee(int oEmployeeID) {
 
-		Employee oEmployee = null;
+		EmployeeVO oEmployee = null;
 		Statement oStatement = null;
 		Connection oConnection = null;
 
@@ -180,7 +181,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String sResultSector = oResultSet.getString(5);
 				boolean sResultStatus = oResultSet.getBoolean(6);
 
-				oEmployee = new Employee(sResultFirstName, sResultLastName,
+				oEmployee = new EmployeeVO(sResultFirstName, sResultLastName,
 						sResultEmployeeID, sResultLocation, sResultSector,
 						sResultStatus);
 
