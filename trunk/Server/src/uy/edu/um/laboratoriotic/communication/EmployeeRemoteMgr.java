@@ -4,6 +4,9 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
+import uy.edu.um.laboratoriotic.business.Employee;
+import uy.edu.um.laboratoriotic.business.EmployeeFactory;
+import uy.edu.um.laboratoriotic.business.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.EmployeeRemoteMgt;
 import uy.edu.um.laboratoriotic.services.EmployeeVO;
 
@@ -44,10 +47,10 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	@Override
 	public void addEmployee(EmployeeVO oEmployeeVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		
-		EmployeeRemoteMgt oEmployee = (EmployeeRemoteMgt) EmployeeRemoteFactory
-				.getInstance().getEmployeeRemoteMgt();
-		EmployeeVO oNewEmployeeToAdd = oEmployee.getEmployee(oEmployeeVO);
+
+		EmployeeMgt oEmployee = (EmployeeMgt) EmployeeFactory.getInstance()
+				.getEmployeeMgt();
+		Employee oNewEmployeeToAdd = oEmployee.getEmployeeVO(oEmployeeVO);
 		oEmployee.addEmployee(oNewEmployeeToAdd);
 	}
 
@@ -55,33 +58,37 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	public ArrayList<EmployeeVO> getEmployees() throws RemoteException {
 		// TODO Auto-generated method stub
 
-		EmployeeRemoteMgt oRemoteEmployee = EmployeeRemoteFactory.getInstance()
-				.getEmployeeRemoteMgt();
-		
-		ArrayList<EmployeeVO> list = oRemoteEmployee.getEmployees();
+		EmployeeMgt oEmployee = EmployeeFactory.getInstance().getEmployeeMgt();
+
+		ArrayList<EmployeeVO> list = oEmployee.getEmployees();
 
 		return list;
 	}
 
 	@Override
-	public EmployeeVO getEmployee(EmployeeVO oEmployee) throws RemoteException {
+	public EmployeeVO getEmployee(EmployeeVO oEmployeeVO)
+			throws RemoteException {
 		// TODO Auto-generated method stub
-		EmployeeRemoteMgt oRemoteEmployee = (EmployeeRemoteMgt) BusinessFacade
-				.getInstance().getEmployeeRemoteFactory();
+		EmployeeMgt oEmployeeMgt = (EmployeeMgt) BusinessFacade.getInstance()
+				.getEmployeeRemoteFactory();
 
-		EmployeeVO oEmployeeVO = oRemoteEmployee.getEmployee(oEmployee);
+		Employee oEmployee = oEmployeeMgt.getEmployeeVO(oEmployeeVO);
 
-		return oEmployeeVO;
+		EmployeeVO oEmployeeToReturn = new EmployeeVO(oEmployee.getUserName(),
+				oEmployee.getLocation(), oEmployee.getSector(),
+				oEmployee.getStatus());
+
+		return oEmployeeToReturn;
 	}
 
 	@Override
-	public void removeEmployee(EmployeeVO oEmployee) throws RemoteException {
+	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		
-		EmployeeRemoteMgt oRemoteEmployee = EmployeeRemoteFactory.getInstance()
-				.getEmployeeRemoteMgt();
-		EmployeeVO oEmployeeVO = oRemoteEmployee.getEmployee(oEmployee);
-		oRemoteEmployee.removeEmployee(oEmployeeVO);
+
+		EmployeeMgt oRemoteEmployee = EmployeeFactory.getInstance()
+				.getEmployeeMgt();
+		Employee oEmployee = oRemoteEmployee.getEmployeeVO(oEmployeeVO);
+		oRemoteEmployee.removeEmployee(oEmployee.getEmployeeID());
 	}
 
 }
