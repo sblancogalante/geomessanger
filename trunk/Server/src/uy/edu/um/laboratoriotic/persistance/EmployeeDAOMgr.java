@@ -50,7 +50,6 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	 * uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgt#addEmployee(uy.edu
 	 * .um.laboratoriotic.business.Employee)
 	 */
-	@Override
 	public void addEmployee(Employee oEmployee) {
 		// TODO Auto-generated method stub
 		Connection oConnection = null;
@@ -212,7 +211,10 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 	}
 
-	@Override
+	/*
+	 * (non-Javadoc)
+	 * @see uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgt#removeEmployee(int)
+	 */
 	public void removeEmployee(int oEmployeeID) {
 		// TODO Auto-generated method stub
 
