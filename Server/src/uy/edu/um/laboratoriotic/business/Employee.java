@@ -55,6 +55,10 @@ public class Employee {
 		this.status = oStatus;
 
 	}
+	
+	public Employee(){
+		
+	}
 
 	/*
 	 * Getters & setters

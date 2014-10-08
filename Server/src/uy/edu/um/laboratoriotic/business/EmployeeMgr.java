@@ -1,5 +1,7 @@
 package uy.edu.um.laboratoriotic.business;
 
+import java.util.ArrayList;
+
 import uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgr;
 import uy.edu.um.laboratoriotic.services.EmployeeVO;
 
@@ -38,8 +40,11 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 
 	@Override
-	public void removeEmployee() {
+	public void removeEmployee(int oEmployeeID) {
 		// TODO Auto-generated method stub
+
+		EmployeeDAOMgr oNewDAOEmployee = EmployeeDAOMgr.getInstance();
+		oNewDAOEmployee.removeEmployee(oEmployeeID);
 
 	}
 
@@ -50,25 +55,36 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 
 	@Override
-	public Employee searchEmployee(String oLastName, String oName) {
+	public Employee searchEmployee(int oEmployeeID) {
 		// TODO Auto-generated method stub
-		return null;
+		Employee oResult = null;
+
+		EmployeeDAOMgr oNewDAOEmployee = EmployeeDAOMgr.getInstance();
+		Employee oEmployee = oNewDAOEmployee.searchEmployee(oEmployeeID);
+
+		if (oEmployee != null) {
+			oResult = oEmployee;
+		} else {
+			System.out.println("No se encontro el usuario con identificacion "
+					+ oEmployeeID);
+		}
+
+		return oResult;
 	}
 
 	@Override
-	public Employee searchEmployee(String oUserName) {
+	public ArrayList<Employee> getEmployees() {
 		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public Employee getEmployees() {
-		// TODO Auto-generated method stub
-		return null;
+		EmployeeDAOMgr oDAOEmployee = EmployeeDAOMgr.getInstance();
+		ArrayList<Employee> oNewEmployee = oDAOEmployee.getEmployees();
+
+		return oNewEmployee;
 	}
 
 	@Override
 	public EmployeeVO getEmployeeVO(Employee oEmployee) {
+
 		EmployeeDAOMgr oDAOEmployee = EmployeeDAOMgr.getInstance();
 		Employee oNewEmployee = oDAOEmployee.searchEmployee(oEmployee
 				.getEmployeeID());
@@ -80,6 +96,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	@Override
 	public Employee getEmployee(EmployeeVO oEmployee) {
 		// TODO Auto-generated method stub
+
 		String oName = oEmployee.getName();
 		String oLastName = oEmployee.getLastName();
 		int oEmployeeID = oEmployee.getEmployeeID();
