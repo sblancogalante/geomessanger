@@ -2,7 +2,8 @@ package uy.edu.um.laboratoriotic.business;
 
 import java.util.ArrayList;
 
-import uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgr;
+import uy.edu.um.laboratoriotic.persistance.EmployeeDAOFactory;
+import uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgt;
 import uy.edu.um.laboratoriotic.services.EmployeeVO;
 
 /**
@@ -31,7 +32,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	public void addEmployee(Employee oEmployee) {
 		// TODO Auto-generated method stub
 
-		EmployeeDAOMgr oNewDAOEmployee = EmployeeDAOMgr.getInstance();
+		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		Employee oNewEmployee = new Employee(oEmployee.getName(),
 				oEmployee.getLastName(), oEmployee.getEmployeeID(),
 				oEmployee.getLocation(), oEmployee.getSector(),
@@ -44,7 +45,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	public void removeEmployee(int oEmployeeID) {
 		// TODO Auto-generated method stub
 
-		EmployeeDAOMgr oNewDAOEmployee = EmployeeDAOMgr.getInstance();
+		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		oNewDAOEmployee.removeEmployee(oEmployeeID);
 
 	}
@@ -60,7 +61,7 @@ public class EmployeeMgr implements EmployeeMgt {
 		// TODO Auto-generated method stub
 		EmployeeVO oResult = null;
 
-		EmployeeDAOMgr oNewDAOEmployee = EmployeeDAOMgr.getInstance();
+		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		EmployeeVO oEmployee = oNewDAOEmployee.searchEmployee(oEmployeeID);
 
 		if (oEmployee != null) {
@@ -80,7 +81,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	public ArrayList<EmployeeVO> getEmployees() {
 		// TODO Auto-generated method stub
 
-		EmployeeDAOMgr oDAOEmployee = EmployeeDAOMgr.getInstance();
+		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		ArrayList<EmployeeVO> list = oDAOEmployee.getEmployees();
 
 		return list;
@@ -89,7 +90,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	@Override
 	public EmployeeVO getEmployee(Employee oEmployee) {
 
-		EmployeeDAOMgr oDAOEmployee = EmployeeDAOMgr.getInstance();
+		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		EmployeeVO oNewEmployee = oDAOEmployee.searchEmployee(oEmployee
 				.getEmployeeID());
 		Employee newEmployee = this.getEmployeeVO(oNewEmployee);
