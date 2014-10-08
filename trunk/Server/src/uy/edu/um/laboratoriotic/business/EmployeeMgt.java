@@ -1,5 +1,7 @@
 package uy.edu.um.laboratoriotic.business;
 
+import java.util.ArrayList;
+
 import uy.edu.um.laboratoriotic.services.EmployeeVO;
 
 /**
@@ -14,15 +16,13 @@ public interface EmployeeMgt {
 	 */
 	public void addEmployee(Employee oEmployee);
 	
-	public void removeEmployee();
+	public void removeEmployee(int oEmployeeID);
 	
 	public EmployeeVO modifyEmployee(EmployeeVO oEmployee);
 	
-	public Employee searchEmployee(String oLastName, String oName);
+	public Employee searchEmployee(int oemployeeID);
 	
-	public Employee searchEmployee(String oUserName);
-	
-	public Employee getEmployees();
+	public ArrayList<Employee> getEmployees();
 	
 	public Employee getEmployee(EmployeeVO oEmployeeVO);
 
