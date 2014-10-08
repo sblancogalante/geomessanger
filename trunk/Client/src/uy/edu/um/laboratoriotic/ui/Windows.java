@@ -6,7 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.ArrayList;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -45,28 +46,29 @@ public class Windows extends JFrame {
 	private JMenuItem deleteUserMenuItem;
 	private JMenuItem exitMenuItem;
 	private JMenuItem mntmProfile;
-	
-	public Windows() {
-		
-		final EmployeeMgt employeeMgt = EmployeeFactory.getInstance().getEmployeeMgt();
-		
+
+	public Windows() throws RemoteException, NotBoundException {
+
+		final EmployeeMgt employeeMgt = EmployeeFactory.getInstance()
+				.getEmployeeMgt();
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 550);
-		Dimension d = new Dimension(600,550);
+		Dimension d = new Dimension(600, 550);
 		this.setMinimumSize(d);
-		
+
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		fileMenu = new JMenu("File");
 		menuBar.add(fileMenu);
-		
+
 		editMenu = new JMenu("Edit");
 		menuBar.add(editMenu);
-		
+
 		mntmProfile = new JMenuItem("Profile");
 		editMenu.add(mntmProfile);
-		
+
 		adminMenu = new JMenu("Admin.");
 		/*
 		 * VER SI EL USUARIO ES ADMIN O NO
@@ -74,16 +76,15 @@ public class Windows extends JFrame {
 		boolean esAdmin = true;
 		adminMenu.setVisible(esAdmin);
 		menuBar.add(adminMenu);
-		
+
 		exitMenuItem = new JMenuItem("Exit");
-		exitMenuItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent args0){
+		exitMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent args0) {
 				dispose();
 			}
 		});
 		fileMenu.add(exitMenuItem);
-		
-		
+
 		createUserMenuItem = new JMenuItem("Create User");
 		createUserMenuItem.addActionListener(new ActionListener() {
 
@@ -92,141 +93,210 @@ public class Windows extends JFrame {
 				createUser.setVisible(true);
 
 			}
-			
+
 		});
-		
+
 		adminMenu.add(createUserMenuItem);
-		
+
 		deleteUserMenuItem = new JMenuItem("Delete User");
 		deleteUserMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent args0){
+			public void actionPerformed(ActionEvent args0) {
 				DeleteUser deleteUser = new DeleteUser();
 				deleteUser.setVisible(true);
-				
+
 			}
 		});
-		
+
 		adminMenu.add(deleteUserMenuItem);
-		 
-		
-		
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
-		userPhotoImage = new ImageIcon("/Users/Luis/Downloads/InterfazGrafica2.1/Foto.png");
-		userPhotoLabel = new JLabel(userPhotoImage);		
-		userNameLabel = new JLabel("Name");	
+
+		userPhotoImage = new ImageIcon(
+				"/Users/Luis/Downloads/InterfazGrafica2.1/Foto.png");
+		userPhotoLabel = new JLabel(userPhotoImage);
+		userNameLabel = new JLabel("Name");
 		userStateLabel = new JLabel("State");
-		
+
 		searchUserText = new JTextField();
 		searchUserText.setText("Search user");
 		searchUserText.setForeground(Color.LIGHT_GRAY);
 		searchUserText.setColumns(10);
 		// User name text field,changes of color when foucs
-				searchUserText.addFocusListener(new FocusListener() {
-					
-				    public void focusGained(FocusEvent e) {
-				    	if(searchUserText.getText().equals("Search user")){
-				    		searchUserText.setText("");
-				    		searchUserText.setForeground(Color.BLACK);
-				    	}
-				    }
+		searchUserText.addFocusListener(new FocusListener() {
 
-				    public void focusLost(FocusEvent e) {
-				        if(searchUserText.getText().equals("")){
-				        	searchUserText.setText("Search user");
-				        	searchUserText.setForeground(Color.LIGHT_GRAY);
-				        }
-				    }
-				});
-		
-		JSeparator separator = new JSeparator();
-		
-		if(employeeMgt.getEmployees() != null){
-			EmployeeVO[] employeesVec = employeeMgt.getEmployees().toArray(new EmployeeVO[employeeMgt.getEmployees().size()]);
-			userList = new JList<EmployeeVO>(employeesVec);
-		}else{
-			userList = new JList<EmployeeVO>();
-		}
-		
-		JButton searchButton = new JButton("Search");
-		searchButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent args0){
-				actualizarContactos(employeeMgt);
+			public void focusGained(FocusEvent e) {
+				if (searchUserText.getText().equals("Search user")) {
+					searchUserText.setText("");
+					searchUserText.setForeground(Color.BLACK);
+				}
+			}
+
+			public void focusLost(FocusEvent e) {
+				if (searchUserText.getText().equals("")) {
+					searchUserText.setText("Search user");
+					searchUserText.setForeground(Color.LIGHT_GRAY);
+				}
 			}
 		});
-		
-		
-		
-		
+
+		JSeparator separator = new JSeparator();
+
+		if (employeeMgt.getEmployees() != null) {
+			EmployeeVO[] employeesVec = employeeMgt.getEmployees().toArray(
+					new EmployeeVO[employeeMgt.getEmployees().size()]);
+			userList = new JList<EmployeeVO>(employeesVec);
+		} else {
+			userList = new JList<EmployeeVO>();
+		}
+
+		JButton searchButton = new JButton("Search");
+		searchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent args0) {
+				try {
+					actualizarContactos(employeeMgt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(1)
-							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(18)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(userPhotoLabel)
-									.addGap(12)
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(userNameLabel, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
-										.addComponent(userStateLabel, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(searchUserText, GroupLayout.PREFERRED_SIZE, 466, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(searchButton))
-								.addComponent(userList, GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE))))
-					.addGap(15))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(userPhotoLabel)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(30)
-							.addComponent(userNameLabel)
-							.addGap(12)
-							.addComponent(userStateLabel)))
-					.addGap(12)
-					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 12, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(searchUserText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(searchButton))
-					.addGap(18)
-					.addComponent(userList, GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
-					.addContainerGap())
-		);
+		gl_contentPane
+				.setHorizontalGroup(gl_contentPane
+						.createParallelGroup(Alignment.TRAILING)
+						.addGroup(
+								gl_contentPane
+										.createSequentialGroup()
+										.addGroup(
+												gl_contentPane
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_contentPane
+																		.createSequentialGroup()
+																		.addGap(1)
+																		.addComponent(
+																				separator,
+																				GroupLayout.DEFAULT_SIZE,
+																				574,
+																				Short.MAX_VALUE))
+														.addGroup(
+																gl_contentPane
+																		.createSequentialGroup()
+																		.addGap(18)
+																		.addGroup(
+																				gl_contentPane
+																						.createParallelGroup(
+																								Alignment.LEADING)
+																						.addGroup(
+																								gl_contentPane
+																										.createSequentialGroup()
+																										.addComponent(
+																												userPhotoLabel)
+																										.addGap(12)
+																										.addGroup(
+																												gl_contentPane
+																														.createParallelGroup(
+																																Alignment.LEADING)
+																														.addComponent(
+																																userNameLabel,
+																																GroupLayout.PREFERRED_SIZE,
+																																61,
+																																GroupLayout.PREFERRED_SIZE)
+																														.addComponent(
+																																userStateLabel,
+																																GroupLayout.PREFERRED_SIZE,
+																																237,
+																																GroupLayout.PREFERRED_SIZE)))
+																						.addGroup(
+																								gl_contentPane
+																										.createSequentialGroup()
+																										.addComponent(
+																												searchUserText,
+																												GroupLayout.PREFERRED_SIZE,
+																												466,
+																												GroupLayout.PREFERRED_SIZE)
+																										.addPreferredGap(
+																												ComponentPlacement.RELATED)
+																										.addComponent(
+																												searchButton))
+																						.addComponent(
+																								userList,
+																								GroupLayout.DEFAULT_SIZE,
+																								557,
+																								Short.MAX_VALUE))))
+										.addGap(15)));
+		gl_contentPane
+				.setVerticalGroup(gl_contentPane
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_contentPane
+										.createSequentialGroup()
+										.addGap(18)
+										.addGroup(
+												gl_contentPane
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addComponent(
+																userPhotoLabel)
+														.addGroup(
+																gl_contentPane
+																		.createSequentialGroup()
+																		.addGap(30)
+																		.addComponent(
+																				userNameLabel)
+																		.addGap(12)
+																		.addComponent(
+																				userStateLabel)))
+										.addGap(12)
+										.addComponent(separator,
+												GroupLayout.PREFERRED_SIZE, 12,
+												GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(
+												ComponentPlacement.UNRELATED)
+										.addGroup(
+												gl_contentPane
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																searchUserText,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																searchButton))
+										.addGap(18)
+										.addComponent(userList,
+												GroupLayout.DEFAULT_SIZE, 311,
+												Short.MAX_VALUE)
+										.addContainerGap()));
 		contentPane.setLayout(gl_contentPane);
-		
-		
-		
-		
+
 		this.setVisible(false);
-		
+
 	}
-	
-	public JFrame getFrame(){
+
+	public JFrame getFrame() {
 		return this;
 	}
-	
-	private void actualizarContactos(EmployeeMgt employeeMgt){
-		
-		if(employeeMgt.getEmployees() != null){
-			EmployeeVO[] employeesVec = employeeMgt.getEmployees().toArray(new EmployeeVO[employeeMgt.getEmployees().size()]);
+
+	private void actualizarContactos(EmployeeMgt employeeMgt)
+			throws RemoteException, NotBoundException {
+
+		if (employeeMgt.getEmployees() != null) {
+			EmployeeVO[] employeesVec = employeeMgt.getEmployees().toArray(
+					new EmployeeVO[employeeMgt.getEmployees().size()]);
 			userList = new JList<EmployeeVO>(employeesVec);
-		}else{
+		} else {
 			userList = new JList<EmployeeVO>();
 			System.out.println("Null Employee List");
 		}
-		
+
 	}
 }

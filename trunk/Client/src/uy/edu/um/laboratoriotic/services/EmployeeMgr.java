@@ -25,17 +25,25 @@ public class EmployeeMgr implements EmployeeMgt{
 	@Override
 	public void addEmployee(EmployeeVO oEmployee) throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
+		
 		String sObjectService = "EmployeeRemoteMgr"; 
 		Registry oRegitry = LocateRegistry.getRegistry(1099); 
 		EmployeeRemoteMgt oEmployeeRemoteMgt = (EmployeeRemoteMgt)oRegitry.lookup(sObjectService); 
-		
+		oEmployeeRemoteMgt.addEmployee(oEmployee);
 		
 	}
 
 	@Override
-	public ArrayList<EmployeeVO> getEmployees() {
+	public ArrayList<EmployeeVO> getEmployees() throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
-		return null;
+		ArrayList<EmployeeVO> list = new ArrayList<EmployeeVO>(); 
+		
+		String sObjectService = "EmployeeRemoteMgr"; 
+		Registry oRegitry = LocateRegistry.getRegistry(1099); 
+		EmployeeRemoteMgt oEmployeeRemoteMgt = (EmployeeRemoteMgt)oRegitry.lookup(sObjectService); 
+		list = oEmployeeRemoteMgt.getEmployees();
+		
+		return list;
 	}
 	
 	
