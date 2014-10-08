@@ -7,6 +7,8 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
+import uy.edu.um.laboratoriotic.persistance.EmployeeDAOFactory;
+import uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgt;
 import uy.edu.um.laboratoriotic.services.EmployeeRemoteMgt;
 
 /**
@@ -19,6 +21,9 @@ public class MainServer {
 
 	public static void main(String[] args) throws RemoteException {
 
+		EmployeeDAOMgt oMgt = EmployeeDAOFactory.getEmployeeDAOMgt();
+		oMgt.createTable();
+		
 		String name = "EmployeeRemoteMgr";
 
 		BusinessFacade.getInstance()
