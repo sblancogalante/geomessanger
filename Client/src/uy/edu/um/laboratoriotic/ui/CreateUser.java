@@ -94,11 +94,12 @@ public class CreateUser extends JDialog {
 				employeeMgt = EmployeeFactory.getInstance().getEmployeeMgt();
 				try {
 					employeeMgt.addEmployee(employee);
+					System.out.println("Se ha creado: " + employee.getUserName());
 				} catch (RemoteException | NotBoundException e) {
 					//HACER UN DIALOGO QUE T DIGA QE NO SE PUDO HACER EL EMPLOYEE
 					e.printStackTrace();
 				}
-				System.out.println("Se ha creado: " + employee.getUserName());
+				
 				dispose();
 			}
 		});
