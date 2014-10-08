@@ -1,8 +1,9 @@
 package uy.edu.um.laboratoriotic.services;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class EmployeeVO {
+public class EmployeeVO implements Serializable{
 
 	/*
 	 * Attributes of the class
@@ -15,13 +16,13 @@ public class EmployeeVO {
 	private boolean status;
 
 	/*
-	 * Constructors	
+	 * Constructors
 	 */
-	public EmployeeVO(int oEmployeeID, String oID, String oName, String oLastName,
-			String oUserName, String oPassword, String oLocation, String oSector,
-			String oMail, String oPosition, byte oProfilePicture,
-			Date oWorkingHour, boolean oStatus) {
-		
+	public EmployeeVO(int oEmployeeID, String oID, String oName,
+			String oLastName, String oUserName, String oPassword,
+			String oLocation, String oSector, String oMail, String oPosition,
+			byte oProfilePicture, Date oWorkingHour, boolean oStatus) {
+
 		this.employeeID = oEmployeeID;
 		this.iD = oID;
 		this.name = oName;
@@ -35,21 +36,33 @@ public class EmployeeVO {
 		this.profilePicture = oProfilePicture;
 		this.workingHour = oWorkingHour;
 		this.status = oStatus;
-		
+
 	}
-	
-	public EmployeeVO (String oUserName, String oLocation, String oSector, boolean oStatus){
-		
+
+	public EmployeeVO(String oUserName, String oLocation, String oSector,
+			boolean oStatus) {
+
 		this.userName = oUserName;
 		this.location = oLocation;
 		this.sector = oSector;
 		this.status = oStatus;
 	}
-	
-	public String toString(){
+
+	public EmployeeVO(String oName, String oLastName, int oEmployeeID,
+			String oLocation, String oSector, boolean oStatus) {
+		// TODO Auto-generated constructor stub
+		this.name = oName;
+		this.lastName = oLastName;
+		this.employeeID = oEmployeeID;
+		this.location = oLocation;
+		this.sector = oSector;
+		this.status = oStatus;
+	}
+
+	public String toString() {
 		return userName;
 	}
-	
+
 	/*
 	 * Getters & setters
 	 */
@@ -157,6 +170,4 @@ public class EmployeeVO {
 		this.status = status;
 	}
 
-	
-	
 }
