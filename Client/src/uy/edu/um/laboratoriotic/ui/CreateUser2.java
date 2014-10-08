@@ -29,10 +29,10 @@ public class CreateUser2 extends JDialog {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
 	private JTextField textField_7;
+	private JTextField textField_6;
+	private JTextField textField_8;
+	private JTextField textField_9;
 
 	/**
 	 * Launch the application.
@@ -124,9 +124,10 @@ public class CreateUser2 extends JDialog {
 		panel_4.setLayout(gl_panel_4);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setToolTipText("");
 		tabbedPane.addTab("Account", null, panel_1, null);
 		
-		JLabel lblNoteTheFields = new JLabel("NOTE: The fields with (*) are obligatory.");
+		JLabel lblNoteTheFields = new JLabel("<<NOTE: The fields with (*) are obligatory.>>");
 		
 		textField = new JTextField();
 		textField.setColumns(10);
@@ -137,53 +138,56 @@ public class CreateUser2 extends JDialog {
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
+		JLabel lblEmployeeid = new JLabel("EmployeeID: (*)");
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
+		JLabel lblName = new JLabel("User name: (*)");
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
+		JLabel lblLastName = new JLabel("Password: (*)");
 		
-		JLabel lblEmployeeid = new JLabel("EmployeeID:");
+		JLabel lblNewLabel = new JLabel("Location: (*)");
 		
-		JLabel lblName = new JLabel("Name:");
+		JLabel lblNewLabel_1 = new JLabel("Sector: (*)");
 		
-		JLabel lblLastName = new JLabel("Last name:");
+		JComboBox comboBox_1 = new JComboBox();
 		
-		JLabel lblUserName = new JLabel("User name:");
+		JComboBox comboBox_2 = new JComboBox();
 		
-		JLabel lblPassword = new JLabel("Password:");
-		
-		JLabel lblNewLabel = new JLabel("New label");
+		JSeparator separator = new JSeparator();
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.TRAILING)
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addGap(65)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
 						.addComponent(lblEmployeeid)
 						.addComponent(lblName)
-						.addComponent(lblLastName)
-						.addComponent(lblUserName)
-						.addComponent(lblPassword)
-						.addComponent(lblNewLabel))
+						.addComponent(lblLastName))
 					.addGap(18)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(textField, GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+						.addComponent(textField_1, GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+						.addComponent(textField, GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addGap(2)
-							.addComponent(textField_2, 353, 353, 353))
-						.addComponent(textField_4, GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
-						.addComponent(textField_3, GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
-						.addComponent(textField_5, GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 355, GroupLayout.PREFERRED_SIZE))
+							.addComponent(textField_2, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)))
 					.addGap(35))
-				.addGroup(Alignment.LEADING, gl_panel_1.createSequentialGroup()
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(50)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel))
+					.addPreferredGap(ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_1))
+					.addGap(43))
+				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(separator, GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+					.addContainerGap())
+				.addGroup(gl_panel_1.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblNoteTheFields, GroupLayout.PREFERRED_SIZE, 303, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(242, Short.MAX_VALUE))
+					.addContainerGap(234, Short.MAX_VALUE))
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.TRAILING)
@@ -194,25 +198,23 @@ public class CreateUser2 extends JDialog {
 						.addComponent(lblEmployeeid))
 					.addGap(18)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblName))
+						.addComponent(lblName)
+						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(24)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblLastName))
-					.addGap(21)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblUserName))
-					.addGap(19)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblPassword))
+					.addGap(32)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel))
-					.addGap(38)
+						.addComponent(lblNewLabel)
+						.addComponent(lblNewLabel_1))
+					.addGap(18)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(77)
 					.addComponent(lblNoteTheFields)
 					.addContainerGap())
 		);
@@ -221,32 +223,48 @@ public class CreateUser2 extends JDialog {
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("User Details", null, panel_2, null);
 		
-		JLabel label = new JLabel("NOTE: The fields with (*) are obligatory.");
+		JLabel label = new JLabel("<<NOTE: The fields with (*) are obligatory.>>");
 		
 		textField_7 = new JTextField();
 		textField_7.setColumns(10);
 		
-		JLabel lblEmailAdress = new JLabel("Email Adress:");
+		JLabel lblEmailAdress = new JLabel("Email Adress: (*)");
 		
-		JComboBox comboBox = new JComboBox();
+		textField_6 = new JTextField();
+		textField_6.setColumns(10);
+		
+		JLabel lblName_1 = new JLabel("Name:");
+		
+		textField_8 = new JTextField();
+		textField_8.setColumns(10);
+		
+		JLabel lblLastName_1 = new JLabel("Last name:");
+		
+		textField_9 = new JTextField();
+		textField_9.setColumns(10);
+		
+		JLabel lblId = new JLabel("ID:");
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(label, GroupLayout.PREFERRED_SIZE, 303, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(242, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_panel_2.createSequentialGroup()
-					.addContainerGap(80, Short.MAX_VALUE)
-					.addComponent(lblEmailAdress)
+					.addContainerGap(234, Short.MAX_VALUE))
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addContainerGap(56, Short.MAX_VALUE)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblEmailAdress)
+						.addComponent(lblName_1)
+						.addComponent(lblLastName_1)
+						.addComponent(lblId))
 					.addGap(18)
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addGroup(Alignment.TRAILING, gl_panel_2.createSequentialGroup()
-							.addComponent(textField_7, GroupLayout.PREFERRED_SIZE, 355, GroupLayout.PREFERRED_SIZE)
-							.addGap(37))))
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(textField_9, Alignment.LEADING)
+						.addComponent(textField_8, Alignment.LEADING)
+						.addComponent(textField_6, Alignment.LEADING)
+						.addComponent(textField_7, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE))
+					.addGap(37))
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.TRAILING)
@@ -255,9 +273,19 @@ public class CreateUser2 extends JDialog {
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
 						.addComponent(textField_7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblEmailAdress))
-					.addGap(78)
-					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField_6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblName_1))
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField_8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblLastName_1))
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField_9, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblId))
+					.addPreferredGap(ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
 					.addComponent(label)
 					.addContainerGap())
 		);
@@ -266,7 +294,7 @@ public class CreateUser2 extends JDialog {
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Other", null, panel_3, null);
 		
-		JLabel label_1 = new JLabel("NOTE: The fields with (*) are obligatory.");
+		JLabel label_1 = new JLabel("<<NOTE: The fields with (*) are obligatory.>>");
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
 		gl_panel_3.setHorizontalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
