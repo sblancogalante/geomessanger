@@ -1,6 +1,7 @@
 package uy.edu.um.laboratoriotic.ui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +9,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -22,7 +25,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
 
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
@@ -142,20 +147,50 @@ public class Windows extends JFrame {
 		});
 
 		JSeparator separator = new JSeparator();
+		
+		
+		
+		//INICIALIZATION OF THE JLIST 
+		
+		userList = new JList<EmployeeVO>();
+		
+		userList.setCellRenderer(new ListCellRenderer<EmployeeVO>() {
 
+			@Override
+			public Component getListCellRendererComponent(
+					JList<? extends EmployeeVO> list, EmployeeVO value,
+					int index, boolean isSelected, boolean cellHasFocus) {
+
+				JLabel oLabel = new JLabel();				
+				oLabel.setText(value.getUserName()+" "+value.getLastName());
+				return oLabel;
+			}
+		});
+		
+		
+		
+		
 		if (employeeMgt.getEmployees() != null) {
-			EmployeeVO[] employeesVec = employeeMgt.getEmployees().toArray(
-					new EmployeeVO[employeeMgt.getEmployees().size()]);
-			userList = new JList<EmployeeVO>(employeesVec);
-		} else {
-			userList = new JList<EmployeeVO>();
+			
+			DefaultListModel<EmployeeVO> employeeListModel = new DefaultListModel();
+			fillDefaultListFromArray(employeeMgt.getEmployees(), employeeListModel);
+			userList.setModel(employeeListModel);
+			
+		} else{
+			
+			DefaultListModel<EmployeeVO> rootEmployee = new DefaultListModel();
+			rootEmployee.add(rootEmployee.getSize(),new EmployeeVO("Root","Uruguay","RH",true));
+			
+			userList.setModel(rootEmployee);
 		}
-
+		
+		
+		
 		JButton searchButton = new JButton("Search");
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
 				try {
-					actualizarContactos(employeeMgt);
+					actualizarContactos(employeeMgt, userList);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -286,18 +321,30 @@ public class Windows extends JFrame {
 		return this;
 	}
 
-	private void actualizarContactos(EmployeeMgt employeeMgt)
+	private void actualizarContactos(EmployeeMgt employeeMgt, JList<EmployeeVO> userList)
 			throws RemoteException, NotBoundException {
 
 		if (employeeMgt.getEmployees() != null && employeeMgt.getEmployees().size() >0) {
-			EmployeeVO[] employeesVec = employeeMgt.getEmployees().toArray(
-					new EmployeeVO[employeeMgt.getEmployees().size()]);
-			userList.setListData(employeesVec);
+			
+			DefaultListModel<EmployeeVO> lModel = new DefaultListModel();
+			fillDefaultListFromArray(employeeMgt.getEmployees(),lModel);
+			userList.setModel(lModel);
+			
 			System.out.println("Hay alguien");
+			
 		} else {
-			userList = new JList<EmployeeVO>();
+			
 			System.out.println("Null Employee List");
 		}
 
+	}
+	
+	
+	private void fillDefaultListFromArray(ArrayList<EmployeeVO> arrayList,DefaultListModel<EmployeeVO> lModel){
+		
+		for(EmployeeVO employee : arrayList){
+		lModel.add(lModel.getSize(),employee);
+		}
+		
 	}
 }
