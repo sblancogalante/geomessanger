@@ -37,10 +37,7 @@ public class EmployeeMgr implements EmployeeMgt {
 			NotBoundException {
 		// TODO Auto-generated method stub
 
-		String sObjectService = "EmployeeRemoteMgr";
-		Registry oRegitry = LocateRegistry.getRegistry(1099);
-		EmployeeRemoteMgt oEmployeeRemoteMgt = (EmployeeRemoteMgt) oRegitry
-				.lookup(sObjectService);
+		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
 		oEmployeeRemoteMgt.addEmployee(oEmployeeVO);
 
 	}
@@ -64,19 +61,19 @@ public class EmployeeMgr implements EmployeeMgt {
 		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
 		oEmployeeRemoteMgt.removeEmployee(oEmployeeVO);
 	}
-	
+
 	/*
 	 * Helping methods
 	 */
-	private EmployeeRemoteMgt lookUp(String sObjectService, int oPortNumber) throws RemoteException, NotBoundException{
+	private EmployeeRemoteMgt lookUp(String sObjectService, int oPortNumber)
+			throws RemoteException, NotBoundException {
 		EmployeeRemoteMgt oReturn;
-		
+
 		Registry oRegistry = LocateRegistry.getRegistry(oPortNumber);
-		oReturn = (EmployeeRemoteMgt)oRegistry.lookup(sObjectService);
-		
+		oReturn = (EmployeeRemoteMgt) oRegistry.lookup(sObjectService);
+
 		return oReturn;
-		
+
 	}
-	
 
 }
