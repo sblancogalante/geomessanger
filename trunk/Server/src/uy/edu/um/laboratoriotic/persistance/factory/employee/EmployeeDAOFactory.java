@@ -1,4 +1,7 @@
-package uy.edu.um.laboratoriotic.persistance;
+package uy.edu.um.laboratoriotic.persistance.factory.employee;
+
+import uy.edu.um.laboratoriotic.persistance.management.employee.EmployeeDAOMgt;
+import uy.edu.um.laboratoriotic.persistance.manager.employee.EmployeeDAOMgr;
 
 
 /**

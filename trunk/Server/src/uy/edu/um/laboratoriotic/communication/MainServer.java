@@ -6,10 +6,10 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-import uy.edu.um.laboratoriotic.business.BusinessFacade;
-import uy.edu.um.laboratoriotic.persistance.EmployeeDAOFactory;
-import uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgt;
-import uy.edu.um.laboratoriotic.services.EmployeeRemoteMgt;
+import uy.edu.um.laboratoriotic.communication.factory.employee.EmployeeRemoteFactory;
+import uy.edu.um.laboratoriotic.persistance.factory.employee.EmployeeDAOFactory;
+import uy.edu.um.laboratoriotic.persistance.management.employee.EmployeeDAOMgt;
+import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
 
 /**
  * This class is the one that initializes the DB connection and the RMI
@@ -32,8 +32,6 @@ public class MainServer {
 		 */
 		String name = "EmployeeRemoteMgr";
 
-		BusinessFacade.getInstance()
-				.getEmployeeRemoteFactory();
 		EmployeeRemoteMgt oUserRemoteMgr = EmployeeRemoteFactory.getInstance().getEmployeeRemoteMgt();
 
 		EmployeeRemoteMgt oStubUser = (EmployeeRemoteMgt) UnicastRemoteObject.exportObject(

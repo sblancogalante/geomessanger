@@ -1,4 +1,4 @@
-package uy.edu.um.laboratoriotic.business;
+package uy.edu.um.laboratoriotic.business.entities.employee;
 
 import java.util.Date;
 

@@ -1,8 +1,9 @@
-package uy.edu.um.laboratoriotic.business;
+package uy.edu.um.laboratoriotic.business.management.employee;
 
 import java.util.ArrayList;
 
-import uy.edu.um.laboratoriotic.services.EmployeeVO;
+import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
  * This interface is the one in charge of establishing communication between the modules
