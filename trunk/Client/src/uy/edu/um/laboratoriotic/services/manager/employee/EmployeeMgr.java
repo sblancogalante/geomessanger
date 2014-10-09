@@ -1,10 +1,14 @@
-package uy.edu.um.laboratoriotic.services;
+package uy.edu.um.laboratoriotic.services.manager.employee;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+
+import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
+import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 public class EmployeeMgr implements EmployeeMgt{
 
