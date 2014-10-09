@@ -161,7 +161,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	 */
 	public EmployeeVO searchEmployee(int oEmployeeID) {
 
-		EmployeeVO oEmployee = null;
+		EmployeeVO oEmployeeVO = null;
 		Statement oStatement = null;
 		Connection oConnection = null;
 
@@ -182,7 +182,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String sResultSector = oResultSet.getString(5);
 				boolean sResultStatus = oResultSet.getBoolean(6);
 
-				oEmployee = new EmployeeVO(sResultFirstName, sResultLastName,
+				oEmployeeVO = new EmployeeVO(sResultFirstName, sResultLastName,
 						sResultEmployeeID, sResultLocation, sResultSector,
 						sResultStatus);
 
@@ -209,7 +209,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			}
 		}
 
-		return oEmployee;
+		return oEmployeeVO;
 
 	}
 
