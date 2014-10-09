@@ -73,18 +73,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 					+ " " + sLastName);
 
 			String sInsert = "INSERT INTO Employees (firstName,lastName,employeeID,location,sector,status) VALUES (\'"
-					+ sFirstName
-					+ "','"
-					+ sLastName
-					+ "','"
-					+ sEmployeeID
-					+ "','"
-					+ sLocation
-					+ "','"
-					+ sSector
-					+ "',"
-					+ sStatus
-					+ ")";
+					+ sFirstName+ "','"	+ sLastName	+ "','"	+ sEmployeeID + "','"
+					+ sLocation	+ "','"	+ sSector+ "',"	+ sStatus + ")";
 
 			oStatement.execute(sInsert);
 
