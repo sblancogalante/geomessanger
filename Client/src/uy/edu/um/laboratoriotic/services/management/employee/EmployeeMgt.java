@@ -13,4 +13,6 @@ public interface EmployeeMgt {
 	
 	public ArrayList<EmployeeVO> getEmployees() throws RemoteException, NotBoundException;
 	
+	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException, NotBoundException;
+	
 }
