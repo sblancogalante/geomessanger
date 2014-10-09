@@ -22,7 +22,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	private EmployeeRemoteMgr() throws RemoteException {
 
 	}
-	
+
 	public static EmployeeRemoteMgr getInstance() throws RemoteException {
 
 		if (instance == null) {
@@ -41,22 +41,31 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
-		
+
 		Employee oEmployee = oEmployeeMgt.getEmployeeVO(oEmployeeVO);
-		
+
 		oEmployeeMgt.addEmployee(oEmployee);
 	}
 
 	@Override
 	public ArrayList<EmployeeVO> getEmployees() throws RemoteException {
 		// TODO Auto-generated method stub
+		ArrayList<EmployeeVO> oListToReturn = new ArrayList<>();
+		EmployeeVO oEmployee;
+		int index = 0;
 
-		EmployeeMgt oEmployee = BusinessFacade.getInstance()
+		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
 
-		ArrayList<EmployeeVO> oList = oEmployee.getEmployees();
+		ArrayList<Employee> oList = oEmployeeMgt.getEmployees();
 
-		return oList;
+		while (oList.iterator().hasNext()) {
+			oEmployee = oList.get(index).toVO();
+			oListToReturn.add(oEmployee);
+			index++;
+		}
+
+		return oListToReturn;
 	}
 
 	@Override
@@ -68,9 +77,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 		Employee oEmployee = oEmployeeMgt.getEmployeeVO(oEmployeeVO);
 
-		EmployeeVO oEmployeeToReturn = new EmployeeVO(oEmployee.getUserName(),
-				oEmployee.getLocation(), oEmployee.getSector(),
-				oEmployee.getStatus());
+		EmployeeVO oEmployeeToReturn = oEmployee.toVO();
 
 		return oEmployeeToReturn;
 	}
@@ -81,9 +88,9 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
-		
+
 		Employee oEmployee = oEmployeeMgt.getEmployeeVO(oEmployeeVO);
-		
+
 		oEmployeeMgt.removeEmployee(oEmployee.getEmployeeID());
 	}
 
