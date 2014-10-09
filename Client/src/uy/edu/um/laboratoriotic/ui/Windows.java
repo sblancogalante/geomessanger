@@ -25,9 +25,9 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
-import uy.edu.um.laboratoriotic.services.EmployeeFactory;
-import uy.edu.um.laboratoriotic.services.EmployeeMgt;
-import uy.edu.um.laboratoriotic.services.EmployeeVO;
+import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
+import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 public class Windows extends JFrame {
 

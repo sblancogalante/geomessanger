@@ -1,6 +1,7 @@
-package uy.edu.um.laboratoriotic.services;
+package uy.edu.um.laboratoriotic.services.factory.employee;
 
-import uy.edu.um.laboratoriotic.services.EmployeeMgt;
+import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
+import uy.edu.um.laboratoriotic.services.manager.employee.EmployeeMgr;
 
 public class EmployeeFactory {
 
