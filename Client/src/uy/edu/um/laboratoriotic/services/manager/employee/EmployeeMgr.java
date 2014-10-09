@@ -12,8 +12,14 @@ import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 public class EmployeeMgr implements EmployeeMgt {
 
+	/*
+	 * Attributes of the class
+	 */
 	private static EmployeeMgr instance = null;
 
+	/*
+	 * Constructors
+	 */
 	private EmployeeMgr() {
 
 	}
@@ -27,7 +33,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 
 	@Override
-	public void addEmployee(EmployeeVO oEmployee) throws RemoteException,
+	public void addEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
 			NotBoundException {
 		// TODO Auto-generated method stub
 
@@ -35,7 +41,7 @@ public class EmployeeMgr implements EmployeeMgt {
 		Registry oRegitry = LocateRegistry.getRegistry(1099);
 		EmployeeRemoteMgt oEmployeeRemoteMgt = (EmployeeRemoteMgt) oRegitry
 				.lookup(sObjectService);
-		oEmployeeRemoteMgt.addEmployee(oEmployee);
+		oEmployeeRemoteMgt.addEmployee(oEmployeeVO);
 
 	}
 
