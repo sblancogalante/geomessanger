@@ -1,9 +1,9 @@
-package uy.edu.um.laboratoriotic.persistance;
+package uy.edu.um.laboratoriotic.persistance.management.employee;
 
 import java.util.ArrayList;
 
-import uy.edu.um.laboratoriotic.business.Employee;
-import uy.edu.um.laboratoriotic.services.EmployeeVO;
+import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
  * This is the persistance interface

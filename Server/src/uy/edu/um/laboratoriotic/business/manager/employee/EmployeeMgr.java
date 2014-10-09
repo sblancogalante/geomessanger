@@ -1,10 +1,12 @@
-package uy.edu.um.laboratoriotic.business;
+package uy.edu.um.laboratoriotic.business.manager.employee;
 
 import java.util.ArrayList;
 
-import uy.edu.um.laboratoriotic.persistance.EmployeeDAOFactory;
-import uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgt;
-import uy.edu.um.laboratoriotic.services.EmployeeVO;
+import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
+import uy.edu.um.laboratoriotic.business.management.employee.EmployeeMgt;
+import uy.edu.um.laboratoriotic.persistance.factory.employee.EmployeeDAOFactory;
+import uy.edu.um.laboratoriotic.persistance.management.employee.EmployeeDAOMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
  * this class is the implementation of EmployeeMgt

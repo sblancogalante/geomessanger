@@ -1,6 +1,7 @@
-package uy.edu.um.laboratoriotic.business;
+package uy.edu.um.laboratoriotic.business.factory.employee;
 
-import uy.edu.um.laboratoriotic.business.EmployeeMgt;
+import uy.edu.um.laboratoriotic.business.management.employee.EmployeeMgt;
+import uy.edu.um.laboratoriotic.business.manager.employee.EmployeeMgr;
 
 /**
  * This class is the connection that adds separation to the modules

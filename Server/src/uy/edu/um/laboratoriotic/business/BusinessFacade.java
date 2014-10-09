@@ -2,7 +2,8 @@ package uy.edu.um.laboratoriotic.business;
 
 import java.rmi.RemoteException;
 
-import uy.edu.um.laboratoriotic.communication.EmployeeRemoteFactory;
+import uy.edu.um.laboratoriotic.business.factory.employee.EmployeeFactory;
+import uy.edu.um.laboratoriotic.communication.factory.employee.EmployeeRemoteFactory;
 
 /**
  * This class recognizes all interfaces of communication module and creates
@@ -36,17 +37,14 @@ public class BusinessFacade {
 	 * All the instances
 	 */
 	public EmployeeFactory getEmployeeFactory() {
+		
 		return EmployeeFactory.getInstance();
 	}
 
-	public EmployeeRemoteFactory getEmployeeRemoteFactory() throws RemoteException{
-		
-		EmployeeRemoteFactory oEmployee = null;
-		
-		oEmployee = EmployeeRemoteFactory.getInstance();
-		
-		return oEmployee;
+	public EmployeeRemoteFactory getEmployeeRemoteFactory()
+			throws RemoteException {
+
+		return EmployeeRemoteFactory.getInstance();
 	}
-	
-	
+
 }
