@@ -1,14 +1,14 @@
-package uy.edu.um.laboratoriotic.services;
+package uy.edu.um.laboratoriotic.services.management.employee;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+
 public interface EmployeeRemoteMgt extends Remote {
 	
-	public void addEmployee(EmployeeVO oEmployee) throws RemoteException;
-
-	public String msg(String name) throws RemoteException;
+	public void addEmployee(EmployeeVO oEmployee) throws RemoteException;	
 
 	public EmployeeVO getEmployee(EmployeeVO oEmployee) throws RemoteException;
 
