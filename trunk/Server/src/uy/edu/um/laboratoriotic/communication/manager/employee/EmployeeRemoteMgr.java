@@ -22,10 +22,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	private EmployeeRemoteMgr() throws RemoteException {
 
 	}
-
-	/*
-	 * Methods implementation
-	 */
+	
 	public static EmployeeRemoteMgr getInstance() throws RemoteException {
 
 		if (instance == null) {
@@ -35,6 +32,9 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 		return instance;
 	}
 
+	/*
+	 * Methods implementation
+	 */
 	@Override
 	public void addEmployee(EmployeeVO oEmployeeVO) throws RemoteException {
 		// TODO Auto-generated method stub
