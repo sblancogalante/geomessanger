@@ -5,8 +5,14 @@ import uy.edu.um.laboratoriotic.services.manager.employee.EmployeeMgr;
 
 public class EmployeeFactory {
 
+	/*
+	 * Attributes of the class
+	 */
 	private static EmployeeFactory instance = null;
 
+	/*
+	 * Constructors
+	 */
 	private EmployeeFactory() {
 
 	}

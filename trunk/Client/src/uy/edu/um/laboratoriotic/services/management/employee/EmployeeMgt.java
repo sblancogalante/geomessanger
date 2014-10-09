@@ -9,7 +9,7 @@ import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 public interface EmployeeMgt {
 
-	public void addEmployee(EmployeeVO oEmployee) throws RemoteException, NotBoundException;
+	public void addEmployee(EmployeeVO oEmployeeVO) throws RemoteException, NotBoundException;
 	
 	public ArrayList<EmployeeVO> getEmployees() throws RemoteException, NotBoundException;
 	
