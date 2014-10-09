@@ -16,9 +16,9 @@ public interface EmployeeDAOMgt {
 	
 	public void removeEmployee(int oEmployeeID);
 	
-	public EmployeeVO searchEmployee(int oEmployeeID);
+	public Employee searchEmployee(int oEmployeeID);
 	
-	public ArrayList<EmployeeVO> getEmployees();
+	public ArrayList<Employee> getEmployees();
 	
 	public void createTable();
 	

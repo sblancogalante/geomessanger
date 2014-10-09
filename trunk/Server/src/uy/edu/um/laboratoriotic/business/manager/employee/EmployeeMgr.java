@@ -64,10 +64,10 @@ public class EmployeeMgr implements EmployeeMgt {
 		EmployeeVO oResult = null;
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		EmployeeVO oEmployee = oNewDAOEmployee.searchEmployee(oEmployeeID);
+		Employee oEmployee = oNewDAOEmployee.searchEmployee(oEmployeeID);
 
 		if (oEmployee != null) {
-			oResult = oEmployee;
+			oResult = oEmployee.toVO();
 		} else {
 			System.out.println("No se encontro el usuario con identificacion "
 					+ oEmployeeID);
@@ -80,12 +80,12 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 
 	@Override
-	public ArrayList<EmployeeVO> getEmployees() {
+	public ArrayList<Employee> getEmployees() {
 		// TODO Auto-generated method stub
-
+		
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		ArrayList<EmployeeVO> list = oDAOEmployee.getEmployees();
-
+		ArrayList<Employee> list = oDAOEmployee.getEmployees();
+		
 		return list;
 	}
 
@@ -93,14 +93,11 @@ public class EmployeeMgr implements EmployeeMgt {
 	public EmployeeVO getEmployee(Employee oEmployee) {
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		EmployeeVO oNewEmployee = oDAOEmployee.searchEmployee(oEmployee
+		Employee oNewEmployee = oDAOEmployee.searchEmployee(oEmployee
 				.getEmployeeID());
-		Employee newEmployee = this.getEmployeeVO(oNewEmployee);
 
-		EmployeeVO oEmployeeToReturn = new EmployeeVO(
-				newEmployee.getUserName(), newEmployee.getLocation(),
-				newEmployee.getSector(), newEmployee.getStatus());
-
+		EmployeeVO oEmployeeToReturn = oNewEmployee.toVO();
+		
 		return oEmployeeToReturn;
 	}
 

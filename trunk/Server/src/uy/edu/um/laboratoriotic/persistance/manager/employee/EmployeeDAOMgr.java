@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.persistance.management.employee.EmployeeDAOMgt;
-import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
  * This is the implementation of EmployeeDAOMgt
@@ -74,8 +73,18 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 					+ " " + sLastName);
 
 			String sInsert = "INSERT INTO Employees (firstName,lastName,employeeID,location,sector,status) VALUES (\'"
-					+ sFirstName+ "','"	+ sLastName	+ "','"	+ sEmployeeID + "','"
-					+ sLocation	+ "','"	+ sSector + "'," + sStatus + ")";
+					+ sFirstName
+					+ "','"
+					+ sLastName
+					+ "','"
+					+ sEmployeeID
+					+ "','"
+					+ sLocation
+					+ "','"
+					+ sSector
+					+ "',"
+					+ sStatus
+					+ ")";
 
 			oStatement.execute(sInsert);
 
@@ -98,9 +107,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	 * 
 	 * @see uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgt#getEmployees()
 	 */
-	public ArrayList<EmployeeVO> getEmployees() {
+	public ArrayList<Employee> getEmployees() {
 
-		ArrayList<EmployeeVO> oList = new ArrayList<>();
+		ArrayList<Employee> oList = new ArrayList<>();
 		Statement oStatement = null;
 		Connection oConnection = null;
 
@@ -120,7 +129,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String sResultSector = oResultSet.getString(5);
 				boolean sResultStatus = oResultSet.getBoolean(6);
 
-				EmployeeVO oEmployee = new EmployeeVO(sResultFirstName,
+				Employee oEmployee = new Employee(sResultFirstName,
 						sResultLastName, sResultEmployeeID, sResultLocation,
 						sResultSector, sResultStatus);
 
@@ -159,13 +168,13 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	 * @see
 	 * uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgt#searchEmployee(int)
 	 */
-	public EmployeeVO searchEmployee(int oEmployeeID) {
+	public Employee searchEmployee(int oEmployeeID) {
 
-		EmployeeVO oEmployeeVO = null;
+		Employee oEmployee = null;
 		Statement oStatement = null;
 		Connection oConnection = null;
 
-		try { 
+		try {
 
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 			oStatement = oConnection.createStatement();
@@ -182,7 +191,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String sResultSector = oResultSet.getString(5);
 				boolean sResultStatus = oResultSet.getBoolean(6);
 
-				oEmployeeVO = new EmployeeVO(sResultFirstName, sResultLastName,
+				oEmployee = new Employee(sResultFirstName, sResultLastName,
 						sResultEmployeeID, sResultLocation, sResultSector,
 						sResultStatus);
 
@@ -209,7 +218,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			}
 		}
 
-		return oEmployeeVO;
+		return oEmployee;
 
 	}
 

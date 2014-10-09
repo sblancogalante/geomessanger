@@ -2,6 +2,8 @@ package uy.edu.um.laboratoriotic.business.entities.employee;
 
 import java.util.Date;
 
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+
 /**
  * Representa el empleado de la empresa
  * 
@@ -55,20 +57,26 @@ public class Employee {
 		this.status = oStatus;
 
 	}
-	
+
 	public Employee(String oUserName, String oLocation, String oSector,
 			boolean oStatus) {
 		// TODO Auto-generated constructor stub
-	
+
 		this.userName = oUserName;
 		this.location = oLocation;
 		this.sector = oSector;
-		this.status = oStatus;	
-		
+		this.status = oStatus;
+
 	}
-	
-	public Employee(){
-		
+
+	public Employee() {
+
+	}
+
+	public EmployeeVO toVO() {
+
+		return new EmployeeVO(userName, location, sector, status);
+
 	}
 
 	/*

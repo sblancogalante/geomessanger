@@ -23,7 +23,7 @@ public interface EmployeeMgt {
 	
 	public Employee searchEmployee(int oemployeeID);
 	
-	public ArrayList<EmployeeVO> getEmployees();
+	public ArrayList<Employee> getEmployees();
 	
 	public Employee getEmployeeVO(EmployeeVO oEmployeeVO);
 
