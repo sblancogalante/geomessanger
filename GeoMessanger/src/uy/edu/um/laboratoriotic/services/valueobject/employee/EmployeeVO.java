@@ -1,4 +1,4 @@
-package uy.edu.um.laboratoriotic.services;
+package uy.edu.um.laboratoriotic.services.valueobject.employee;
 
 import java.io.Serializable;
 import java.util.Date;
