@@ -42,7 +42,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
 
-		Employee oEmployee = oEmployeeMgt.getEmployeeVO(oEmployeeVO);
+		Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
 
 		oEmployeeMgt.addEmployee(oEmployee);
 	}
@@ -75,7 +75,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
 
-		Employee oEmployee = oEmployeeMgt.getEmployeeVO(oEmployeeVO);
+		Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
 
 		EmployeeVO oEmployeeToReturn = oEmployee.toVO();
 
@@ -89,7 +89,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
 
-		Employee oEmployee = oEmployeeMgt.getEmployeeVO(oEmployeeVO);
+		Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
 
 		oEmployeeMgt.removeEmployee(oEmployee.getEmployeeID());
 	}

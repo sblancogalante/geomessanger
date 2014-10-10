@@ -73,6 +73,9 @@ public class Employee {
 
 	}
 
+	/*
+	 * Auxiliary methods
+	 */
 	public EmployeeVO toVO() {
 
 		return new EmployeeVO(userName, location, sector, status);

@@ -24,7 +24,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	private static EmployeeDAOMgr instance = null;
 	private static final String DRIVER_JDBC = "org.hsqldb.jdbc.JDBCDriver";
 	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
-	private static final String CREATE_TABLE_EMPLOYEE = "CREATE TABLE Employees (firstName VARCHAR(27),lastName VARCHAR(28) NOT NULL,employeeID INT PRIMARY KEY,location VARCHAR(27) NOT NULL,sector VARCHAR(27),status BOOLEAN NOT NULL)";
+	private static final String CREATE_TABLE_EMPLOYEE = "CREATE TABLE Employees (firstName VARCHAR(27),lastName VARCHAR(28) NOT NULL,employeeID INT PRIMARY KEY NOT NULL,location VARCHAR(27) NOT NULL,sector VARCHAR(27),status BOOLEAN NOT NULL,userName VARCHAR(27) NOT NULL,password VARCHAR(20))";
 
 	/*
 	 * Constructor of the class
@@ -44,11 +44,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	/*
-	 * (non-Javadoc) methods implementation
-	 * 
-	 * @see
-	 * uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgt#addEmployee(uy.edu
-	 * .um.laboratoriotic.business.Employee)
+	 * This are the management implementation methods
 	 */
 	@Override
 	public void addEmployee(Employee oEmployee) {
@@ -62,19 +58,14 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oStatement = oConnection.createStatement();
 
-			String sFirstName = oEmployee.getName();
-			String sLastName = oEmployee.getLastName();
-			int sEmployeeID = oEmployee.getEmployeeID();
-			String sLocation = oEmployee.getLocation();
-			String sSector = oEmployee.getSector();
-			boolean sStatus = oEmployee.getStatus();
-
-			System.out.println("Se agrego con exito al empleado " + sFirstName
-					+ " " + sLastName);
+			System.out.println("Se agrego con exito al empleado "
+					+ oEmployee.getUserName());
 
 			String sInsert = "INSERT INTO Employees (firstName,lastName,employeeID,location,sector,status) VALUES (\'"
-					+ sFirstName+ "','"	+ sLastName	+ "','"	+ sEmployeeID + "','"
-					+ sLocation	+ "','"	+ sSector+ "',"	+ sStatus + ")";
+					+ oEmployee.getName() + "','" + oEmployee.getLastName()
+					+ "','"	+ oEmployee.getEmployeeID()	+ "','"
+					+ oEmployee.getLocation() + "','" + oEmployee.getSector()
+					+ "'," + oEmployee.getStatus() + ")";
 
 			oStatement.execute(sInsert);
 
@@ -92,11 +83,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgt#getEmployees()
-	 */
+	@Override
 	public ArrayList<Employee> getEmployees() {
 
 		ArrayList<Employee> oList = new ArrayList<>();
@@ -118,6 +105,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String sResultLocation = oResultSet.getString(4);
 				String sResultSector = oResultSet.getString(5);
 				boolean sResultStatus = oResultSet.getBoolean(6);
+				String sUserName = oResultSet.getString(7);
 
 				Employee oEmployee = new Employee(sResultFirstName,
 						sResultLastName, sResultEmployeeID, sResultLocation,
@@ -125,12 +113,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 				oList.add(oEmployee);
 
-				System.out.println("El empleado encontrado es:\n"
-						+ sResultFirstName + " " + sResultLastName
-						+ " identificacion personal:" + sResultEmployeeID
-						+ " pais en donde trabaja:" + sResultLocation
-						+ " sector de trabajo:" + sResultSector + " estado:"
-						+ sResultStatus);
+				System.out.println("El empleado encontrado es:\n" + sUserName);
 
 			}
 
@@ -152,12 +135,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		return oList;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * uy.edu.um.laboratoriotic.persistance.EmployeeDAOMgt#searchEmployee(int)
-	 */
+	@Override
 	public Employee searchEmployee(int oEmployeeID) {
 
 		Employee oEmployee = null;
@@ -180,17 +158,13 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String sResultLocation = oResultSet.getString(4);
 				String sResultSector = oResultSet.getString(5);
 				boolean sResultStatus = oResultSet.getBoolean(6);
+				String oUserName = oResultSet.getString(7);
 
 				oEmployee = new Employee(sResultFirstName, sResultLastName,
 						sResultEmployeeID, sResultLocation, sResultSector,
 						sResultStatus);
 
-				System.out.println("El empleado hallado es: " + "\n"
-						+ "Nombre: " + sResultFirstName + "\n" + "Apellido: "
-						+ sResultLastName + "\n" + "Identificacion personal: "
-						+ sResultEmployeeID + "\n" + "Pais: " + sResultLocation
-						+ "\n" + "Sector de trabajo: " + sResultSector + "\n"
-						+ "Estado de conexion: " + sResultStatus);
+				System.out.println("El empleado hallado es: " + oUserName);
 
 			}
 
@@ -266,6 +240,13 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	/*
 	 * Helping methods
 	 */
+	/**
+	 * This method establishes the connection with the data base
+	 * 
+	 * @param oDBDriver
+	 * @param dBDirection
+	 * @return
+	 */
 	private Connection connect(String oDBDriver, String dBDirection) {
 
 		Connection oResult = null;
@@ -286,21 +267,20 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		return oResult;
 	}
 
+	/**
+	 * This method creates the tables in the data base
+	 */
 	public void createTable() {
 
 		Connection oConnection = null;
 		Statement oStatement;
-		boolean bValue = false;
 
 		oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 
 		try {
 
 			oStatement = oConnection.createStatement();
-			bValue = oStatement.execute(CREATE_TABLE_EMPLOYEE);
-			if (!bValue) {
-				System.out.println("Se ejecuto con exito");
-			}
+			oStatement.execute(CREATE_TABLE_EMPLOYEE);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

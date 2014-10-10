@@ -15,10 +15,16 @@ public class EmployeeDAOFactory {
 	 */
 	private static EmployeeDAOFactory instance = null;
 	
+	/*
+	 * Constructor
+	 */
 	private EmployeeDAOFactory(){
 		
 	}
 	
+	/*
+	 * Methods
+	 */
 	public static EmployeeDAOFactory getInstance(){
 		if(instance == null){
 			instance = new EmployeeDAOFactory();
