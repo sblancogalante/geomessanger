@@ -1,7 +1,7 @@
-package uy.edu.um.laboratoriotic.persistance.factory.employee;
+package uy.edu.um.laboratoriotic.persistence.factory.employee;
 
-import uy.edu.um.laboratoriotic.persistance.management.employee.EmployeeDAOMgt;
-import uy.edu.um.laboratoriotic.persistance.manager.employee.EmployeeDAOMgr;
+import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
+import uy.edu.um.laboratoriotic.persistence.manager.employee.EmployeeDAOMgr;
 
 /**
  * This class is the connection that adds separation to the modules

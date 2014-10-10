@@ -1,7 +1,7 @@
-package uy.edu.um.laboratoriotic.persistance.factory.general;
+package uy.edu.um.laboratoriotic.persistence.factory.general;
 
-import uy.edu.um.laboratoriotic.persistance.management.general.GeneralDAOMgt;
-import uy.edu.um.laboratoriotic.persistance.manager.general.GeneralDAOMgr;
+import uy.edu.um.laboratoriotic.persistence.management.general.GeneralDAOMgt;
+import uy.edu.um.laboratoriotic.persistence.manager.general.GeneralDAOMgr;
 
 /**
  * This class is the connection that adds separation to the modules

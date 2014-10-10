@@ -1,11 +1,11 @@
-package uy.edu.um.laboratoriotic.persistance.management.employee;
+package uy.edu.um.laboratoriotic.persistence.management.employee;
 
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 
 /**
- * This is the persistance interface
+ * This is the persistence interface
  * @author sblanco1
  *
  */
