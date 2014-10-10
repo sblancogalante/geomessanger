@@ -73,6 +73,16 @@ public class Employee {
 
 	}
 
+	public Employee(String oUserName, int oEmployeeID, String oLocation,
+			String oSector, boolean oStatus) {
+		// TODO Auto-generated constructor stub
+		this.userName = oUserName;
+		this.employeeID = oEmployeeID;
+		this.location = oLocation;
+		this.sector = oSector;
+		this.status = oStatus;
+	}
+
 	/*
 	 * Auxiliary methods
 	 */

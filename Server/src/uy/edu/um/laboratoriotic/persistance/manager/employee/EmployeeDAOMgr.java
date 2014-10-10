@@ -24,7 +24,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	private static EmployeeDAOMgr instance = null;
 	private static final String DRIVER_JDBC = "org.hsqldb.jdbc.JDBCDriver";
 	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
-	private static final String CREATE_TABLE_EMPLOYEE = "CREATE TABLE Employees (firstName VARCHAR(27),lastName VARCHAR(28) NOT NULL,employeeID INT PRIMARY KEY NOT NULL,location VARCHAR(27) NOT NULL,sector VARCHAR(27),status BOOLEAN NOT NULL,userName VARCHAR(27) NOT NULL,password VARCHAR(20))";
+	private static final String CREATE_TABLE_EMPLOYEE = "CREATE TABLE Employees (firstName VARCHAR(27), lastName VARCHAR(28), employeeID INT PRIMARY KEY NOT NULL, location VARCHAR(27) NOT NULL, sector VARCHAR(27), status BOOLEAN NOT NULL, userName VARCHAR(27) NOT NULL, password VARCHAR(20))";
 
 	/*
 	 * Constructor of the class
@@ -61,9 +61,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			System.out.println("Se agrego con exito al empleado "
 					+ oEmployee.getUserName());
 
-			String sInsert = "INSERT INTO Employees (firstName,lastName,employeeID,location,sector,status) VALUES (\'"
-					+ oEmployee.getName() + "','" + oEmployee.getLastName()
-					+ "','"	+ oEmployee.getEmployeeID()	+ "','"
+			String sInsert = "INSERT INTO Employees (userName, employeeID, location, sector, status) VALUES (\'"
+					+ oEmployee.getUserName() + "','" + oEmployee.getEmployeeID()	+ "','"
 					+ oEmployee.getLocation() + "','" + oEmployee.getSector()
 					+ "'," + oEmployee.getStatus() + ")";
 
