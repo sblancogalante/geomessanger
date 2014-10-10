@@ -58,15 +58,15 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oStatement = oConnection.createStatement();
 
-			System.out.println("Se agrego con exito al empleado "
-					+ oEmployee.getUserName());
-
 			String sInsert = "INSERT INTO Employees (userName, employeeID, location, sector, status) VALUES (\'"
-					+ oEmployee.getUserName() + "','" + oEmployee.getEmployeeID()	+ "','"
-					+ oEmployee.getLocation() + "','" + oEmployee.getSector()
-					+ "'," + oEmployee.getStatus() + ")";
+					+ oEmployee.getUserName() + "','" + oEmployee.getEmployeeID()
+					+ "','"	+ oEmployee.getLocation() + "','"
+					+ oEmployee.getSector()	+ "'," + oEmployee.getStatus() + ")";
 
 			oStatement.execute(sInsert);
+
+			System.out.println("Se agrego con exito al empleado "
+					+ oEmployee.getUserName());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
