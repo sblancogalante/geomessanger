@@ -9,6 +9,11 @@ import uy.edu.um.laboratoriotic.business.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
+/**
+ * This class is the implementation of EmployeeRemoteMgt
+ * @author sblanco1
+ *
+ */
 public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 	/*

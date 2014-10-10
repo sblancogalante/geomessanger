@@ -5,7 +5,7 @@ import java.util.Date;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
- * Representa el empleado de la empresa
+ * This class represents an employee
  * 
  * @author sblanco1
  * 
@@ -66,10 +66,6 @@ public class Employee {
 		this.location = oLocation;
 		this.sector = oSector;
 		this.status = oStatus;
-
-	}
-
-	public Employee() {
 
 	}
 

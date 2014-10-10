@@ -5,6 +5,11 @@ import java.rmi.RemoteException;
 import uy.edu.um.laboratoriotic.services.management.general.GeneralRemoteMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
 
+/**
+ * This class is the implementation of GeneralRemoteMgt
+ * @author sblanco1
+ *
+ */
 public class GeneralRemoteMgr implements GeneralRemoteMgt {
 
 	/*
@@ -28,6 +33,9 @@ public class GeneralRemoteMgr implements GeneralRemoteMgt {
 		return instance;
 	}
 
+	/*
+	 * Management interface method implementations
+	 */
 	@Override
 	public void addType(TypeVO oTypeVO) throws RemoteException {
 		// TODO Auto-generated method stub
