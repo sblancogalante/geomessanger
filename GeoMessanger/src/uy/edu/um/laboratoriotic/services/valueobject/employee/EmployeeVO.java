@@ -3,6 +3,11 @@ package uy.edu.um.laboratoriotic.services.valueobject.employee;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * This is the entity that we use to travel from the server to the client and backwards
+ * @author sblanco1
+ *
+ */
 public class EmployeeVO implements Serializable{
 
 	/*
@@ -57,10 +62,6 @@ public class EmployeeVO implements Serializable{
 		this.location = oLocation;
 		this.sector = oSector;
 		this.status = oStatus;
-	}
-
-	public String toString() {
-		return userName;
 	}
 
 	/*

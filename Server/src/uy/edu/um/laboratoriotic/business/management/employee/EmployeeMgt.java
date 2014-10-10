@@ -12,22 +12,46 @@ import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
  */
 public interface EmployeeMgt {
 
-	/*
-	 * Methods
+	/**
+	 * This method makes sure that the data base adds an employee
+	 * @param oEmployee
 	 */
 	public void addEmployee(Employee oEmployee);
 	
+	/**
+	 * This method makes sure that the data base removes an employee
+	 * @param oEmployeeID
+	 */
 	public void removeEmployee(int oEmployeeID);
 	
-	public EmployeeVO modifyEmployee(EmployeeVO oEmployee);
+	/**
+	 * This method makes sure that the data base modifies the information
+	 * of the user
+	 * @param oEmployee
+	 * @return
+	 */
+	public Employee modifyEmployee(Employee oEmployee);
 	
+	/**
+	 * This method makes sure that the data base searches an employee
+	 * @param oemployeeID
+	 * @return
+	 */
 	public Employee searchEmployee(int oemployeeID);
 	
-	public ArrayList<Employee> getEmployees();
-	
-	public Employee getEmployeeVO(EmployeeVO oEmployeeVO);
+	/**
+	 * This method makes sure that the data base returns a list with all the 
+	 * current employees
+	 * @return
+	 */
+	public ArrayList<Employee> getEmployees();	
 
-	public EmployeeVO getEmployee(Employee oEmployee);
+	/**
+	 * This is an auxiliary method	
+	 * @param oEmployeeVO
+	 * @return
+	 */
+	public Employee getEmployee(EmployeeVO oEmployeeVO);
 
 	
 	

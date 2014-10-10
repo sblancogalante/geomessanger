@@ -16,12 +16,21 @@ import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
  */
 public class EmployeeMgr implements EmployeeMgt {
 
+	/*
+	 * Attributes of the class
+	 */
 	private static EmployeeMgr instance = null;
 
+	/*
+	 * Constructor
+	 */
 	private EmployeeMgr() {
 
 	}
 
+	/*
+	 * Methods
+	 */
 	public static EmployeeMgr getInstance() {
 		if (instance == null) {
 			instance = new EmployeeMgr();
@@ -30,15 +39,15 @@ public class EmployeeMgr implements EmployeeMgt {
 		return instance;
 	}
 
+	/*
+	 * This are the management implementation methods
+	 */
 	@Override
 	public void addEmployee(Employee oEmployee) {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		Employee oNewEmployee = new Employee(oEmployee.getName(),
-				oEmployee.getLastName(), oEmployee.getEmployeeID(),
-				oEmployee.getLocation(), oEmployee.getSector(),
-				oEmployee.getStatus());
+		Employee oNewEmployee = oEmployee;
 		oNewDAOEmployee.addEmployee(oNewEmployee);
 
 	}
@@ -53,8 +62,10 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 
 	@Override
-	public EmployeeVO modifyEmployee(EmployeeVO oEmployee) {
+	public Employee modifyEmployee(Employee oEmployee) {
 		// TODO Auto-generated method stub
+		//EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
+				
 		return null;
 	}
 
@@ -82,41 +93,23 @@ public class EmployeeMgr implements EmployeeMgt {
 	@Override
 	public ArrayList<Employee> getEmployees() {
 		// TODO Auto-generated method stub
-		
+
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		ArrayList<Employee> list = oDAOEmployee.getEmployees();
-		
+
 		return list;
 	}
 
 	@Override
-	public EmployeeVO getEmployee(Employee oEmployee) {
+	public Employee getEmployee(EmployeeVO oEmployeeVO) {
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		Employee oNewEmployee = oDAOEmployee.searchEmployee(oEmployee
+		Employee oNewEmployee = oDAOEmployee.searchEmployee(oEmployeeVO
 				.getEmployeeID());
 
-		EmployeeVO oEmployeeToReturn = oNewEmployee.toVO();
-		
+		Employee oEmployeeToReturn = oNewEmployee;
+
 		return oEmployeeToReturn;
-	}
-
-	@Override
-	public Employee getEmployeeVO(EmployeeVO oEmployee) {
-		// TODO Auto-generated method stub
-
-		String oName = oEmployee.getName();
-		String oLastName = oEmployee.getLastName();
-		int oEmployeeID = oEmployee.getEmployeeID();
-		String oLocation = oEmployee.getLocation();
-		String oSector = oEmployee.getSector();
-		boolean oStatus = oEmployee.getStatus();
-
-		Employee oNewEmployee = new Employee(oName, oLastName, oEmployeeID,
-				oLocation, oSector, oStatus);
-
-		return oNewEmployee;
-
 	}
 
 }
