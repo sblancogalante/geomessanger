@@ -7,8 +7,8 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 import uy.edu.um.laboratoriotic.communication.factory.employee.EmployeeRemoteFactory;
-import uy.edu.um.laboratoriotic.persistance.factory.employee.EmployeeDAOFactory;
-import uy.edu.um.laboratoriotic.persistance.management.employee.EmployeeDAOMgt;
+import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
+import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
 
 /**

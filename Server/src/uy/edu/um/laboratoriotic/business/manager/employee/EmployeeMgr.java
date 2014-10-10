@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.management.employee.EmployeeMgt;
-import uy.edu.um.laboratoriotic.persistance.factory.employee.EmployeeDAOFactory;
-import uy.edu.um.laboratoriotic.persistance.management.employee.EmployeeDAOMgt;
+import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
+import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**

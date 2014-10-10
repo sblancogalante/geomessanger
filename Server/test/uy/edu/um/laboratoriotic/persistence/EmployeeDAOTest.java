@@ -3,7 +3,7 @@ package uy.edu.um.laboratoriotic.persistence;
 import org.junit.Test;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
-import uy.edu.um.laboratoriotic.persistance.factory.employee.EmployeeDAOFactory;
+import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
 
 public class EmployeeDAOTest {
 

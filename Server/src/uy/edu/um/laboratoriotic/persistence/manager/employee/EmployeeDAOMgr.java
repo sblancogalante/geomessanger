@@ -1,4 +1,4 @@
-package uy.edu.um.laboratoriotic.persistance.manager.employee;
+package uy.edu.um.laboratoriotic.persistence.manager.employee;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
-import uy.edu.um.laboratoriotic.persistance.management.employee.EmployeeDAOMgt;
+import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
 
 /**
  * This is the implementation of EmployeeDAOMgt
