@@ -31,7 +31,10 @@ public class EmployeeMgr implements EmployeeMgt {
 
 		return instance;
 	}
-
+	
+	/*
+	 * Management interface implementation methods
+	 */
 	@Override
 	public void addEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
 			NotBoundException {
@@ -60,6 +63,7 @@ public class EmployeeMgr implements EmployeeMgt {
 		// TODO Auto-generated method stub
 		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
 		oEmployeeRemoteMgt.removeEmployee(oEmployeeVO);
+		
 	}
 
 	/*
@@ -67,6 +71,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	 */
 	private EmployeeRemoteMgt lookUp(String sObjectService, int oPortNumber)
 			throws RemoteException, NotBoundException {
+		
 		EmployeeRemoteMgt oReturn;
 
 		Registry oRegistry = LocateRegistry.getRegistry(oPortNumber);
