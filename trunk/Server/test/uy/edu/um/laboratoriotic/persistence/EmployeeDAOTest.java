@@ -10,11 +10,11 @@ public class EmployeeDAOTest {
 	@Test
 	public void test() {
 		
-		Employee oEmployee = new Employee("Santiago", "Blanco", 50620810, "Uruguay", "Desarrollo", false);		
+		Employee oEmployee = new Employee("Santiago", 50620810, "Uruguay", "Desarrollo", false);		
 		
-		Employee oEmployee1 = new Employee("Luis", "Gurmendez", 48726458, "Chile", "Testing", true);		
+		Employee oEmployee1 = new Employee("Luis", 48963214, "Chile", "Testing", true);		
 		
-		Employee oEmployee2 = new Employee("Paul", "Castaibert", 42735684, "Uruguay", "Testing", true);		
+		Employee oEmployee2 = new Employee("Paul", 42735684, "Uruguay", "Testing", true);		
 		
 		EmployeeDAOFactory.getEmployeeDAOMgt().createTable();
 		
