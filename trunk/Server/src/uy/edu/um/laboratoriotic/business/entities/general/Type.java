@@ -1,5 +1,10 @@
 package uy.edu.um.laboratoriotic.business.entities.general;
 
+/**
+ * This class represents a type
+ * @author sblanco1
+ *
+ */
 public class Type {
 
 	/*
