@@ -11,8 +11,9 @@ import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
  * This class is the implementation of EmployeeRemoteMgt
+ * 
  * @author sblanco1
- *
+ * 
  */
 public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
@@ -47,7 +48,11 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
 
-		Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
+		// Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
+
+		Employee oEmployee = new Employee(oEmployeeVO.getUserName(),
+				oEmployeeVO.getEmployeeID(), oEmployeeVO.getLocation(),
+				oEmployeeVO.getSector(), oEmployeeVO.getStatus());
 
 		oEmployeeMgt.addEmployee(oEmployee);
 	}
