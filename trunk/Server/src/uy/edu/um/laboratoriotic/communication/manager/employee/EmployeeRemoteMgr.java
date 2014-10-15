@@ -2,6 +2,7 @@ package uy.edu.um.laboratoriotic.communication.manager.employee;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
@@ -62,17 +63,15 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 		// TODO Auto-generated method stub
 		ArrayList<EmployeeVO> oListToReturn = new ArrayList<>();
 		EmployeeVO oEmployee;
-		int index = 0;
-
+		
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
 
 		ArrayList<Employee> oList = oEmployeeMgt.getEmployees();
 
 		while (oList.iterator().hasNext()) {
-			oEmployee = oList.get(index).toVO();
-			oListToReturn.add(oEmployee);
-			index++;
+			oEmployee = oList.iterator().next().toVO();
+			oListToReturn.add(oEmployee);		
 		}
 
 		return oListToReturn;
