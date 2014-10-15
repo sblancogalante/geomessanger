@@ -34,7 +34,7 @@ import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
-public class Windows extends JFrame {
+public class MainWindow extends JFrame {
 
 	private JPanel contentPane;
 	private ImageIcon userPhotoImage;
@@ -42,7 +42,7 @@ public class Windows extends JFrame {
 	private JLabel userStateLabel;
 	private JLabel userNameLabel;
 	private JTextField searchUserText;
-	private JList userList;
+	private JList<EmployeeVO> userList;
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
 	private JMenu editMenu;
@@ -52,7 +52,7 @@ public class Windows extends JFrame {
 	private JMenuItem exitMenuItem;
 	private JMenuItem mntmProfile;
 
-	public Windows() throws RemoteException, NotBoundException {
+	public MainWindow() throws RemoteException, NotBoundException {
 
 		final EmployeeMgt employeeMgt = EmployeeFactory.getInstance()
 				.getEmployeeMgt();
@@ -170,15 +170,15 @@ public class Windows extends JFrame {
 		
 		
 		
-		if (employeeMgt.getEmployees() != null) {
+		if (employeeMgt.getEmployees() != null && employeeMgt.getEmployees().size() > 0) {
 			
-			DefaultListModel<EmployeeVO> employeeListModel = new DefaultListModel();
+			DefaultListModel<EmployeeVO> employeeListModel = new DefaultListModel<EmployeeVO>();
 			fillDefaultListFromArray(employeeMgt.getEmployees(), employeeListModel);
 			userList.setModel(employeeListModel);
 			
 		} else{
 			
-			DefaultListModel<EmployeeVO> rootEmployee = new DefaultListModel();
+			DefaultListModel<EmployeeVO> rootEmployee = new DefaultListModel<EmployeeVO>();
 			rootEmployee.add(rootEmployee.getSize(),new EmployeeVO("Root","Uruguay","RH",true));
 			
 			userList.setModel(rootEmployee);
@@ -324,9 +324,9 @@ public class Windows extends JFrame {
 	private void actualizarContactos(EmployeeMgt employeeMgt, JList<EmployeeVO> userList)
 			throws RemoteException, NotBoundException {
 
-		if (employeeMgt.getEmployees() != null && employeeMgt.getEmployees().size() >0) {
+		if (employeeMgt.getEmployees() != null && employeeMgt.getEmployees().size() > 0) {
 			
-			DefaultListModel<EmployeeVO> lModel = new DefaultListModel();
+			DefaultListModel<EmployeeVO> lModel = new DefaultListModel<EmployeeVO>();
 			fillDefaultListFromArray(employeeMgt.getEmployees(),lModel);
 			userList.setModel(lModel);
 			

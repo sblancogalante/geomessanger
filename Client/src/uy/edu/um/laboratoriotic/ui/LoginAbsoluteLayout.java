@@ -114,9 +114,9 @@ public class LoginAbsoluteLayout extends JFrame {
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				logedin = true;
-				Windows wind;
+				MainWindow wind;
 				try {
-					wind = new Windows();
+					wind = new MainWindow();
 					wind.setVisible(true);
 				} catch (RemoteException | NotBoundException e1) {
 					// TODO Auto-generated catch block
