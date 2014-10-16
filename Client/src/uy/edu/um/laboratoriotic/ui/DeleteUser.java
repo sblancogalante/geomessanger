@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import javax.swing.UIManager;
 
 public class DeleteUser extends JDialog {
 
@@ -129,6 +130,7 @@ public class DeleteUser extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton deleteButton = new JButton("DELETE");
+				deleteButton.setBackground(UIManager.getColor("Button.foreground"));
 				deleteButton.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent arg0) {
 
