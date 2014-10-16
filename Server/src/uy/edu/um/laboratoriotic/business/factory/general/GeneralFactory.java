@@ -32,9 +32,10 @@ public class GeneralFactory {
 		return instance;
 	}
 
-	public GeneralMgt getTypeMgt() {
-
+	public GeneralMgt getGeneralMgt() {
+		// TODO Auto-generated method stub
 		return GeneralMgr.getInstance();
+
 	}
 
 }

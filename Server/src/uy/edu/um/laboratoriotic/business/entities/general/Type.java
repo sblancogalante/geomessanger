@@ -1,7 +1,11 @@
 package uy.edu.um.laboratoriotic.business.entities.general;
 
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
+
 /**
  * This class represents a type
+ * 
  * @author sblanco1
  *
  */
@@ -10,38 +14,54 @@ public class Type {
 	/*
 	 * Attributes of the class
 	 */
-	private String country, workSector;
+	private String type, value;
+	private int typeID;
 
 	/*
 	 * Constructors
 	 */
-	public Type(String country, String workSector) {
+	public Type(int oTypeID, String oType, String oValue) {
 
-		this.country = country;
-		this.workSector = workSector;
+		this.typeID = oTypeID;
+		this.type = oType;
+		this.value = oValue;
+	}
+
+	public Type() {
+
 	}
 	
-	public Type(){
-		
+	public TypeVO toVO() {
+
+		return new TypeVO(typeID, type, value);
+
 	}
 
 	/*
 	 * Getters & setters
 	 */
-	public String getCountry() {
-		return country;
+	public int getTypeID() {
+		return typeID;
 	}
 
-	public void setCountry(String country) {
-		this.country = country;
+	public void setTypeID(int oTypeID) {
+		this.typeID = oTypeID;
 	}
 
-	public String getWorkSector() {
-		return workSector;
+	public String getType() {
+		return type;
 	}
 
-	public void setWorkSector(String workSector) {
-		this.workSector = workSector;
-	}	
-	
+	public void setType(String oType) {
+		this.type = oType;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String oValue) {
+		this.value = oValue;
+	}
+
 }

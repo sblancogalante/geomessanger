@@ -61,7 +61,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			String sInsert = "INSERT INTO Employees (userName, employeeID, location, sector, status) VALUES (\'"
 					+ oEmployee.getUserName() + "','" + oEmployee.getEmployeeID()
 					+ "','"	+ oEmployee.getLocation() + "','"
-					+ oEmployee.getSector()	+ "'," + oEmployee.getStatus() + ")";
+					+ oEmployee.getSector()	+ "'," + oEmployee.getStatus() + ");";
 
 			oStatement.execute(sInsert);
 
@@ -93,7 +93,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 			oStatement = oConnection.createStatement();
-			String sQuery = "SELECT * FROM Employees ORDER BY location ASC,sector ASC,status ASC";
+			String sQuery = "SELECT * FROM Employees ORDER BY location ASC,sector ASC,status ASC;";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 
 			while (oResultSet.next()) {
@@ -146,7 +146,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 			oStatement = oConnection.createStatement();
 			String sQuery = "SELECT * FROM Employees where (Employees.employeeID = '"
-					+ oEmployeeID + "') ;";
+					+ oEmployeeID + "');";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 
 			while (oResultSet.next()) {

@@ -16,9 +16,22 @@ public interface GeneralDAOMgt {
 	public void addType(Type oType);
 	
 	/**
-	 * This method removes a type from the data base
+	 * This method removes a type from the database
 	 * @param oType
 	 */
-	public void removeType(Type oType);
+	public void removeType(String oType);
+	
+	/**
+	 * This method removes a value from the data base
+	 * @param oType
+	 */
+	public void removeValue(String oValue);
+
+	/**
+	 * This method searches a type in the database
+	 * @param oType
+	 * @return
+	 */
+	public Type searchType(String oType);
 	
 }
