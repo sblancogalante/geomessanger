@@ -70,10 +70,10 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 		ArrayList<Employee> oList = oEmployeeMgt.getEmployees();
 
-		while (oList.iterator().hasNext()) {
-			oEmployee = oList.iterator().next().toVO();
+		for(Employee e: oList){
+			oEmployee = e.toVO();
 			oListToReturn.add(oEmployee);
-		}
+		}		
 
 		return oListToReturn;
 	}
