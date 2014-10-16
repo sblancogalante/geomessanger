@@ -2,7 +2,6 @@ package uy.edu.um.laboratoriotic.communication.manager.employee;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
