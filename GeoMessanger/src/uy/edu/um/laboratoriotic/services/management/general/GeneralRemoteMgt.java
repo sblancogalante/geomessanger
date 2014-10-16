@@ -13,6 +13,8 @@ public interface GeneralRemoteMgt {
 
 	public void addType(TypeVO oTypeVO) throws RemoteException;
 
-	public void removeType(TypeVO oTypeVO) throws RemoteException;
+	public void removeType(TypeVO oTypeVO) throws RemoteException;	
+	
+	public TypeVO getType(TypeVO oTypeVO) throws RemoteException;
 
 }

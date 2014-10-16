@@ -6,10 +6,21 @@ import uy.edu.um.laboratoriotic.persistence.factory.general.GeneralDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.management.general.GeneralDAOMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
 
+/**
+ * This class is the implementation of GeneralMgt
+ * @author sblanco1
+ *
+ */
 public class GeneralMgr implements GeneralMgt {
 
+	/*
+	 * Attributes of the class
+	 */
 	private static GeneralMgr instance = null;
 
+	/*
+	 * Constructor of the class
+	 */
 	private GeneralMgr() {
 
 	}
@@ -22,6 +33,9 @@ public class GeneralMgr implements GeneralMgt {
 		return instance;
 	}
 
+	/*
+	 * This are the management implementation methods
+	 */
 	@Override
 	public void addType(Type oType) {
 		// TODO Auto-generated method stub

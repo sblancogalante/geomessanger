@@ -10,6 +10,11 @@ import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
+/**
+ * This is the implementation of EmployeeMgt
+ * @author sblanco1
+ *
+ */
 public class EmployeeMgr implements EmployeeMgt {
 
 	/*
@@ -33,7 +38,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 	
 	/*
-	 * Management interface implementation methods
+	 * Management implementation methods
 	 */
 	@Override
 	public void addEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
