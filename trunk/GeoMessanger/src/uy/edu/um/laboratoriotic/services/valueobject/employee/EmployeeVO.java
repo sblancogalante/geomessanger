@@ -75,11 +75,11 @@ public class EmployeeVO implements Serializable{
 		this.employeeID = employeeID;
 	}
 
-	public String getiD() {
+	public String getID() { 
 		return iD;
 	}
 
-	public void setiD(String iD) {
+	public void setID(String iD) { 
 		this.iD = iD;
 	}
 
