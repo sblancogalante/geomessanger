@@ -1,6 +1,5 @@
 package uy.edu.um.laboratoriotic.business.entities.general;
 
-import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
 
 /**

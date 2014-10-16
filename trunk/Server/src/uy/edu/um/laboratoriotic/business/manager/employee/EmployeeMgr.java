@@ -9,7 +9,7 @@ import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
- * this class is the implementation of EmployeeMgt
+ * This class is the implementation of EmployeeMgt
  * 
  * @author sblanco1
  * 
