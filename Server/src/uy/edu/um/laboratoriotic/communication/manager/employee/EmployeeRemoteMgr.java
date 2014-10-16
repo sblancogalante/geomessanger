@@ -50,18 +50,22 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 		// Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
 
-		Employee oEmployee = new Employee(oEmployeeVO.getUserName(),
-				oEmployeeVO.getEmployeeID(), oEmployeeVO.getLocation(),
-				oEmployeeVO.getSector(), oEmployeeVO.getStatus());
+		Employee oEmployee = new Employee(oEmployeeVO.getEmployeeID(),
+				oEmployeeVO.getID(), oEmployeeVO.getName(),
+				oEmployeeVO.getLastName(), oEmployeeVO.getUserName(),
+				oEmployeeVO.getPassword(), oEmployeeVO.getLocation(),
+				oEmployeeVO.getSector(), oEmployeeVO.getMail(),
+				oEmployeeVO.getPosition(), oEmployeeVO.getProfilePicture(),
+				oEmployeeVO.getWorkingHour(), oEmployeeVO.getStatus());
 
 		oEmployeeMgt.addEmployee(oEmployee);
-		
+
 	}
 
 	@Override
 	public ArrayList<EmployeeVO> getEmployees() throws RemoteException {
 		// TODO Auto-generated method stub
-	
+
 		ArrayList<EmployeeVO> oListToReturn = new ArrayList<>();
 		EmployeeVO oEmployee;
 
@@ -70,10 +74,10 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 		ArrayList<Employee> oList = oEmployeeMgt.getEmployees();
 
-		for(Employee iEmployee: oList){
+		for (Employee iEmployee : oList) {
 			oEmployee = iEmployee.toVO();
 			oListToReturn.add(oEmployee);
-		}		
+		}
 
 		return oListToReturn;
 	}
@@ -82,7 +86,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	public EmployeeVO getEmployee(EmployeeVO oEmployeeVO)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		
+
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
 
@@ -103,7 +107,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 		Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
 
 		oEmployeeMgt.removeEmployee(oEmployee.getEmployeeID());
-		
+
 	}
 
 }
