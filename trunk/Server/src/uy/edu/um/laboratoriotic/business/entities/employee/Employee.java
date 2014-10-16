@@ -84,7 +84,7 @@ public class Employee {
 	 */
 	public EmployeeVO toVO() {
 
-		return new EmployeeVO(userName, location, sector, status);
+		return new EmployeeVO(employeeID, iD, name, lastName, userName, password, location, sector, mail, position, profilePicture, workingHour, status);
 
 	}
 
