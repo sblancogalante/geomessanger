@@ -162,7 +162,7 @@ public class MainWindow extends JFrame {
 					int index, boolean isSelected, boolean cellHasFocus) {
 
 				JLabel oLabel = new JLabel();				
-				oLabel.setText(value.getUserName()+" "+value.getLastName());
+				oLabel.setText(value.getEmployeeID()+" "+value.getLastName());
 				return oLabel;
 			}
 		});
@@ -323,11 +323,13 @@ public class MainWindow extends JFrame {
 
 	private void actualizarContactos(EmployeeMgt employeeMgt, JList<EmployeeVO> userList)
 			throws RemoteException, NotBoundException {
+		
+		ArrayList<EmployeeVO> oListEmployee = employeeMgt.getEmployees();
 
-		if (employeeMgt.getEmployees() != null && employeeMgt.getEmployees().size() > 0) {
+		if (oListEmployee != null && oListEmployee.size() > 0) {
 			
 			DefaultListModel<EmployeeVO> lModel = new DefaultListModel<EmployeeVO>();
-			fillDefaultListFromArray(employeeMgt.getEmployees(),lModel);
+			fillDefaultListFromArray(oListEmployee,lModel);
 			userList.setModel(lModel);
 			
 			System.out.println("Hay alguien");
