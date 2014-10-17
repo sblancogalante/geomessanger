@@ -100,11 +100,11 @@ public class Employee {
 		this.employeeID = oEmployeeID;
 	}
 
-	public String getiD() {
+	public String getID() {
 		return iD;
 	}
 
-	public void setiD(String oID) {
+	public void setID(String oID) {
 		this.iD = oID;
 	}
 
