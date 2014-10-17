@@ -1,5 +1,6 @@
 package uy.edu.um.laboratoriotic.business.entities.employee;
 
+import java.sql.Blob;
 import java.util.Date;
 
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -18,7 +19,7 @@ public class Employee {
 	private int employeeID;
 	private String iD, name, lastName, userName, password, location, sector,
 			mail, position;
-	private byte profilePicture;
+	private Blob profilePicture;
 	private Date workingHour;
 	private boolean status;
 
@@ -28,7 +29,7 @@ public class Employee {
 	public Employee(int oEmployeeID, String oID, String oName,
 			String oLastName, String oUserName, String oPassword,
 			String oLocation, String oSector, String oMail, String oPosition,
-			byte oProfilePicture, Date oWorkingHour, boolean oStatus) {
+			Blob oProfilePicture, Date oWorkingHour, boolean oStatus) {
 
 		this.employeeID = oEmployeeID;
 		this.iD = oID;
@@ -84,9 +85,7 @@ public class Employee {
 	 */
 	public EmployeeVO toVO() {
 
-		return new EmployeeVO(employeeID, iD, name, lastName, userName,
-				password, location, sector, mail, position, profilePicture,
-				workingHour, status);
+		return new EmployeeVO(userName, location, sector, status);
 
 	}
 
@@ -97,104 +96,104 @@ public class Employee {
 		return employeeID;
 	}
 
-	public void setEmployeeID(int employeeID) {
-		this.employeeID = employeeID;
+	public void setEmployeeID(int oEmployeeID) {
+		this.employeeID = oEmployeeID;
 	}
 
 	public String getiD() {
 		return iD;
 	}
 
-	public void setiD(String iD) {
-		this.iD = iD;
+	public void setiD(String oID) {
+		this.iD = oID;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String oName) {
+		this.name = oName;
 	}
 
 	public String getLastName() {
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastName(String oLastName) {
+		this.lastName = oLastName;
 	}
 
 	public String getUserName() {
 		return userName;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUserName(String oUserName) {
+		this.userName = oUserName;
 	}
 
 	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPassword(String oPassword) {
+		this.password = oPassword;
 	}
 
 	public String getLocation() {
 		return location;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setLocation(String oLocation) {
+		this.location = oLocation;
 	}
 
 	public String getSector() {
 		return sector;
 	}
 
-	public void setSector(String sector) {
-		this.sector = sector;
+	public void setSector(String oSector) {
+		this.sector = oSector;
 	}
 
 	public String getMail() {
 		return mail;
 	}
 
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setMail(String oMail) {
+		this.mail = oMail;
 	}
 
 	public String getPosition() {
 		return position;
 	}
 
-	public void setPosition(String position) {
-		this.position = position;
+	public void setPosition(String oPosition) {
+		this.position = oPosition;
 	}
 
-	public byte getProfilePicture() {
+	public Blob getProfilePicture() {
 		return profilePicture;
 	}
 
-	public void setProfilePicture(byte profilePicture) {
-		this.profilePicture = profilePicture;
+	public void setProfilePicture(Blob oProfilePicture) {
+		this.profilePicture = oProfilePicture;
 	}
 
 	public Date getWorkingHour() {
 		return workingHour;
 	}
 
-	public void setWorkingHour(Date workingHour) {
-		this.workingHour = workingHour;
+	public void setWorkingHour(Date oWorkingHour) {
+		this.workingHour = oWorkingHour;
 	}
 
 	public boolean getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setStatus(boolean oStatus) {
+		this.status = oStatus;
 	}
 
 }
