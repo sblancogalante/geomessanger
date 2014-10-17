@@ -1,5 +1,7 @@
 package uy.edu.um.laboratoriotic.services.valueobject.employee;
 
+import java.io.Serializable;
+
 /**
  * This class represents the filters that we are using to get the results of the
  * search
@@ -7,7 +9,7 @@ package uy.edu.um.laboratoriotic.services.valueobject.employee;
  * @author sblanco1
  * 
  */
-public class EmployeeFilterVO {
+public class EmployeeFilterVO implements Serializable{
 
 	/*
 	 * Attributes of the class
