@@ -60,7 +60,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oStatement = oConnection.createStatement();
 			String sInsert = "INSERT INTO Employees (employeeID, iD, name, lastName, userName, password, location, sector, mail, position, profilePicture, workingHour, status) VALUES ("
-					+ oEmployee.getEmployeeID()	+ ",'"	+ oEmployee.getiD()
+					+ oEmployee.getEmployeeID()	+ ",'"	+ oEmployee.getID()
 					+ "','"	+ oEmployee.getName() + "','" + oEmployee.getLastName()
 					+ "','" + oEmployee.getUserName() + "','" + oEmployee.getPassword()
 					+ "','"	+ oEmployee.getLocation() + "','" + oEmployee.getSector()

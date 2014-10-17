@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.sql.Blob;
 import java.util.Date;
 
 import javax.swing.JTextField;
@@ -103,7 +104,7 @@ String[] comboBoxDefaultArray = {"<<Default>>"};
 		btnCreateUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Date workingHours = new Date();
-				byte profilePic = 0;
+				Blob profilePic = null;
 				EmployeeVO oEmployee = new EmployeeVO(Integer.parseInt(employeeIDText.getText()), iDText.getText(), nameText.getText(),
 						lastNameText.getText(), userNameText.getText(), passwordText.getText(), (String)locationComboBox.getSelectedItem() ,
 						(String)sectorComboBox.getSelectedItem(), eMailText.getText(), positionText.getText(),profilePic , workingHours,
