@@ -1,11 +1,13 @@
 package uy.edu.um.laboratoriotic.persistence.manager.employee;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
@@ -24,7 +26,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	private static EmployeeDAOMgr instance = null;
 	private static final String DRIVER_JDBC = "org.hsqldb.jdbc.JDBCDriver";
 	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
-	private static final String CREATE_TABLE_EMPLOYEE = "CREATE TABLE Employees (firstName VARCHAR(27), lastName VARCHAR(28), employeeID INT PRIMARY KEY NOT NULL, location VARCHAR(27) NOT NULL, sector VARCHAR(27), status BOOLEAN NOT NULL, userName VARCHAR(27) NOT NULL, password VARCHAR(20))";
+	private static final String CREATE_TABLE_EMPLOYEE = "CREATE TABLE Employees (employeeID INT PRIMARY KEY NOT NULL, iD VARCHAR(20) NOT NULL, name VARCHAR(27), lastName VARCHAR(28), userName VARCHAR(20) NOT NULL, password VARCHAR(20) NOT NULL, location VARCHAR(27) NOT NULL, sector VARCHAR(27), mail VARCHAR(30) NOT NULL, position VARCHAR(30), profilePicture BLOB, workingHour DATE, status BOOLEAN NOT NULL)";
 
 	/*
 	 * Constructor of the class
@@ -57,12 +59,15 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 
 			oStatement = oConnection.createStatement();
-
-			String sInsert = "INSERT INTO Employees (userName, employeeID, location, sector, status) VALUES (\'"
-					+ oEmployee.getUserName() + "','" + oEmployee.getEmployeeID()
-					+ "','"	+ oEmployee.getLocation() + "','"
-					+ oEmployee.getSector()	+ "'," + oEmployee.getStatus() + ");";
-
+			String sInsert = "INSERT INTO Employees (employeeID, iD, name, lastName, userName, password, location, sector, mail, position, profilePicture, workingHour, status) VALUES ("
+					+ oEmployee.getEmployeeID()	+ ",'"	+ oEmployee.getiD()
+					+ "','"	+ oEmployee.getName() + "','" + oEmployee.getLastName()
+					+ "','" + oEmployee.getUserName() + "','" + oEmployee.getPassword()
+					+ "','"	+ oEmployee.getLocation() + "','" + oEmployee.getSector()
+					+ "','"	+ oEmployee.getMail() + "','" + oEmployee.getPosition()
+					+ "'," + oEmployee.getProfilePicture()	+ ","	+ oEmployee.getWorkingHour()
+					+ ","	+ oEmployee.getStatus() + ");";
+		
 			oStatement.execute(sInsert);
 
 			System.out.println("Se agrego con exito al empleado "
@@ -98,21 +103,30 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			while (oResultSet.next()) {
 
-				String sResultFirstName = oResultSet.getString(1);
-				String sResultLastName = oResultSet.getString(2);
-				int sResultEmployeeID = oResultSet.getInt(3);
-				String sResultLocation = oResultSet.getString(4);
-				String sResultSector = oResultSet.getString(5);
-				boolean sResultStatus = oResultSet.getBoolean(6);
-				String sUserName = oResultSet.getString(7);
+				int sResultEmployeeID = oResultSet.getInt(1);
+				String sResultID = oResultSet.getString(2);
+				String sResultName = oResultSet.getString(3);
+				String sResultLastName = oResultSet.getString(4);
+				String sResultUserName = oResultSet.getString(5);
+				String sResultPassword = oResultSet.getString(6);
+				String sResultLocation = oResultSet.getString(7);
+				String sResultSector = oResultSet.getString(8);
+				String sResultMail = oResultSet.getString(9);
+				String sResultPosition = oResultSet.getString(10);
+				Blob sResultProfilePicture = oResultSet.getBlob(11);
+				Date sResultWorkingHour = oResultSet.getDate(12);
+				boolean sResultStatus = oResultSet.getBoolean(13);
 
-				Employee oEmployee = new Employee(sResultFirstName,
-						sResultLastName, sResultEmployeeID, sResultLocation,
-						sResultSector, sResultStatus);
+				Employee oEmployee = new Employee(sResultEmployeeID, sResultID,
+						sResultName, sResultLastName, sResultUserName,
+						sResultPassword, sResultLocation, sResultSector,
+						sResultMail, sResultPosition, sResultProfilePicture,
+						sResultWorkingHour, sResultStatus);
 
 				oList.add(oEmployee);
 
-				System.out.println("El empleado encontrado es:\n" + sUserName);
+				System.out.println("El empleado encontrado es:\n"
+						+ sResultUserName);
 
 			}
 
@@ -151,19 +165,27 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			while (oResultSet.next()) {
 
-				String sResultFirstName = oResultSet.getString(1);
-				String sResultLastName = oResultSet.getString(2);
-				int sResultEmployeeID = oResultSet.getInt(3);
-				String sResultLocation = oResultSet.getString(4);
-				String sResultSector = oResultSet.getString(5);
-				boolean sResultStatus = oResultSet.getBoolean(6);
-				String oUserName = oResultSet.getString(7);
+				int sResultEmployeeID = oResultSet.getInt(1);
+				String sResultID = oResultSet.getString(2);
+				String sResultName = oResultSet.getString(3);
+				String sResultLastName = oResultSet.getString(4);
+				String sResultUserName = oResultSet.getString(5);
+				String sResultPassword = oResultSet.getString(6);
+				String sResultLocation = oResultSet.getString(7);
+				String sResultSector = oResultSet.getString(8);
+				String sResultMail = oResultSet.getString(9);
+				String sResultPosition = oResultSet.getString(10);
+				Blob sResultProfilePicture = oResultSet.getBlob(11);
+				Date sResultWorkingHour = oResultSet.getDate(12);
+				boolean sResultStatus = oResultSet.getBoolean(13);
 
-				oEmployee = new Employee(sResultFirstName, sResultLastName,
-						sResultEmployeeID, sResultLocation, sResultSector,
-						sResultStatus);
+				oEmployee = new Employee(sResultEmployeeID, sResultID,
+						sResultName, sResultLastName, sResultUserName,
+						sResultPassword, sResultLocation, sResultSector,
+						sResultMail, sResultPosition, sResultProfilePicture,
+						sResultWorkingHour, sResultStatus);
 
-				System.out.println("El empleado hallado es: " + oUserName);
+				System.out.println("El empleado hallado es: " + sResultUserName);
 
 			}
 
