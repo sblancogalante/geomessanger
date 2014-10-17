@@ -7,6 +7,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 import uy.edu.um.laboratoriotic.communication.factory.employee.EmployeeRemoteFactory;
+import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
@@ -25,7 +26,12 @@ public class MainServer {
 		 * Inicializamos la base de datos creando la tabla
 		 */
 		EmployeeDAOMgt oMgt = EmployeeDAOFactory.getEmployeeDAOMgt();
-		oMgt.createTable();
+		try {
+			oMgt.createTable();
+		} catch (DataBaseConnection e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		/*
 		 * Establecemos la conexion RMI con el cliente

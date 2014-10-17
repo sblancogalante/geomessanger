@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.management.employee.EmployeeMgt;
+import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -43,17 +44,17 @@ public class EmployeeMgr implements EmployeeMgt {
 	 * This are the management implementation methods
 	 */
 	@Override
-	public void addEmployee(Employee oEmployee) {
+	public void addEmployee(Employee oEmployee) throws DataBaseConnection {
 		// TODO Auto-generated method stub
-
+				
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		Employee oNewEmployee = oEmployee;
-		oNewDAOEmployee.addEmployee(oNewEmployee);
+		oNewDAOEmployee.addEmployee(oNewEmployee);		
 
 	}
 
 	@Override
-	public void removeEmployee(int oEmployeeID) {
+	public void removeEmployee(int oEmployeeID) throws DataBaseConnection {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
@@ -64,13 +65,14 @@ public class EmployeeMgr implements EmployeeMgt {
 	@Override
 	public Employee modifyEmployee(Employee oEmployee) {
 		// TODO Auto-generated method stub
-		//EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-				
+		// EmployeeDAOMgt oNewDAOEmployee =
+		// EmployeeDAOFactory.getEmployeeDAOMgt();
+
 		return null;
 	}
 
 	@Override
-	public Employee searchEmployee(int oEmployeeID) {
+	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection {
 		// TODO Auto-generated method stub
 		EmployeeVO oResult = null;
 
@@ -91,7 +93,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 
 	@Override
-	public ArrayList<Employee> getEmployees() {
+	public ArrayList<Employee> getEmployees() throws DataBaseConnection {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
@@ -101,7 +103,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 
 	@Override
-	public Employee getEmployee(EmployeeVO oEmployeeVO) {
+	public Employee getEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection {
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		Employee oNewEmployee = oDAOEmployee.searchEmployee(oEmployeeVO
