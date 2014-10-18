@@ -1,5 +1,7 @@
 package uy.edu.um.laboratoriotic.persistence;
 
+import java.rmi.RemoteException;
+
 import org.junit.Test;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
@@ -53,6 +55,8 @@ public class EmployeeDAOTest {
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 			test();
+		} catch (RemoteException r) {
+			r.printStackTrace();
 		}
 
 	}

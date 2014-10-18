@@ -16,18 +16,20 @@ public interface EmployeeMgt {
 	/**
 	 * This method makes sure that the data base adds an employee
 	 * @param oEmployee
+	 * @throws DataBaseConnection
 	 */
 	public void addEmployee(Employee oEmployee) throws DataBaseConnection;
 	
 	/**
 	 * This method makes sure that the data base removes an employee
 	 * @param oEmployeeID
+	 * @throws DataBaseConnection
 	 */
 	public void removeEmployee(int oEmployeeID) throws DataBaseConnection;
 	
 	/**
 	 * This method makes sure that the data base modifies the information
-	 * of the user
+	 * of oEmployee
 	 * @param oEmployee
 	 * @return
 	 */
@@ -45,7 +47,7 @@ public interface EmployeeMgt {
 	 * This method makes sure that the data base returns a list with all the 
 	 * current employees
 	 * @return
-	 * @throws DataBaseConnection 
+	 * @throws DataBaseConnection
 	 */
 	public ArrayList<Employee> getEmployees() throws DataBaseConnection;	
 
@@ -53,7 +55,7 @@ public interface EmployeeMgt {
 	 * This is an auxiliary method	
 	 * @param oEmployeeVO
 	 * @return
-	 * @throws DataBaseConnection 
+	 * @throws DataBaseConnection
 	 */
 	public Employee getEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection;
 

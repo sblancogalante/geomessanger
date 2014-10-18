@@ -1,5 +1,6 @@
 package uy.edu.um.laboratoriotic.persistence.manager.employee;
 
+import java.rmi.RemoteException;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -49,7 +50,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	 * This are the management implementation methods
 	 */
 	@Override
-	public void addEmployee(Employee oEmployee) {
+	public void addEmployee(Employee oEmployee) throws RemoteException {
 		// TODO Auto-generated method stub
 		Connection oConnection = null;
 		Statement oStatement = null;
@@ -60,21 +61,40 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oStatement = oConnection.createStatement();
 			String sInsert = "INSERT INTO Employees (employeeID, iD, name, lastName, userName, password, location, sector, mail, position, profilePicture, workingHour, status) VALUES ("
-					+ oEmployee.getEmployeeID()	+ ",'"	+ oEmployee.getID()
-					+ "','"	+ oEmployee.getName() + "','" + oEmployee.getLastName()
-					+ "','" + oEmployee.getUserName() + "','" + oEmployee.getPassword()
-					+ "','"	+ oEmployee.getLocation() + "','" + oEmployee.getSector()
-					+ "','"	+ oEmployee.getMail() + "','" + oEmployee.getPosition()
-					+ "'," + oEmployee.getProfilePicture()	+ ","	+ oEmployee.getWorkingHour()
-					+ ","	+ oEmployee.getStatus() + ");";
-		
+					+ oEmployee.getEmployeeID()
+					+ ",'"
+					+ oEmployee.getID()
+					+ "','"
+					+ oEmployee.getName()
+					+ "','"
+					+ oEmployee.getLastName()
+					+ "','"
+					+ oEmployee.getUserName()
+					+ "','"
+					+ oEmployee.getPassword()
+					+ "','"
+					+ oEmployee.getLocation()
+					+ "','"
+					+ oEmployee.getSector()
+					+ "','"
+					+ oEmployee.getMail()
+					+ "','"
+					+ oEmployee.getPosition()
+					+ "',"
+					+ oEmployee.getProfilePicture()
+					+ ","
+					+ oEmployee.getWorkingHour()
+					+ ","
+					+ oEmployee.getStatus()
+					+ ");";
+
 			oStatement.execute(sInsert);
 
 			System.out.println("Se agrego con exito al empleado "
 					+ oEmployee.getUserName());
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RemoteException();
 		} finally {
 			if (oConnection != null) {
 				try {
@@ -88,7 +108,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public ArrayList<Employee> getEmployees() {
+	public ArrayList<Employee> getEmployees() throws RemoteException {
 
 		ArrayList<Employee> oList = new ArrayList<>();
 		Statement oStatement = null;
@@ -133,7 +153,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oResultSet.close();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RemoteException();
 		} finally {
 			if (oConnection != null) {
 				try {
@@ -149,7 +169,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public Employee searchEmployee(int oEmployeeID) {
+	public Employee searchEmployee(int oEmployeeID) throws RemoteException {
 
 		Employee oEmployee = null;
 		Statement oStatement = null;
@@ -185,14 +205,15 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 						sResultMail, sResultPosition, sResultProfilePicture,
 						sResultWorkingHour, sResultStatus);
 
-				System.out.println("El empleado hallado es: " + sResultUserName);
+				System.out
+						.println("El empleado hallado es: " + sResultUserName);
 
 			}
 
 			oResultSet.close();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RemoteException();
 		} finally {
 			if (oConnection != null) {
 				try {
@@ -208,7 +229,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public void removeEmployee(int oEmployeeID) {
+	public void removeEmployee(int oEmployeeID) throws RemoteException {
 		// TODO Auto-generated method stub
 
 		Statement oStatement = null;
@@ -246,7 +267,34 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oResultSet.close();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RemoteException();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void createTable() throws RemoteException {
+
+		Connection oConnection = null;
+		Statement oStatement;
+
+		oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+
+		try {
+
+			oStatement = oConnection.createStatement();
+			oStatement.execute(CREATE_TABLE_EMPLOYEE);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new RemoteException();
 		} finally {
 			if (oConnection != null) {
 				try {
@@ -286,35 +334,6 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		}
 
 		return oResult;
-	}
-
-	/**
-	 * This method creates the tables in the data base
-	 */
-	public void createTable() {
-
-		Connection oConnection = null;
-		Statement oStatement;
-
-		oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
-
-		try {
-
-			oStatement = oConnection.createStatement();
-			oStatement.execute(CREATE_TABLE_EMPLOYEE);
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if (oConnection != null) {
-				try {
-					oConnection.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
 	}
 
 }
