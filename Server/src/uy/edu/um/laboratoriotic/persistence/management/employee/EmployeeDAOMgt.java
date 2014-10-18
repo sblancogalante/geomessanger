@@ -15,7 +15,7 @@ import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 public interface EmployeeDAOMgt {
 
 	/**
-	 * This method adds an employee to the data base
+	 * This method adds an employee to the database
 	 * 
 	 * @param oEmployee
 	 * @throws DataBaseConnection
@@ -25,7 +25,7 @@ public interface EmployeeDAOMgt {
 			RemoteException;
 
 	/**
-	 * This method removes an employee from the data base
+	 * This method removes an employee from the database
 	 * 
 	 * @param oEmployeeID
 	 * @throws DataBaseConnection
@@ -35,7 +35,7 @@ public interface EmployeeDAOMgt {
 			RemoteException;
 
 	/**
-	 * This method searches an employee in the data base
+	 * This method searches an employee in the database
 	 * 
 	 * @param oEmployeeID
 	 * @return
@@ -46,7 +46,7 @@ public interface EmployeeDAOMgt {
 			RemoteException;
 
 	/**
-	 * This method return a list with all the employees of the data base
+	 * This method return a list with all the employees of the database
 	 * 
 	 * @return
 	 * @throws DataBaseConnection
@@ -56,7 +56,7 @@ public interface EmployeeDAOMgt {
 			RemoteException;
 
 	/**
-	 * This method creates the data base tables
+	 * This method creates the database tables
 	 * 
 	 * @throws DataBaseConnection
 	 * @throws RemoteException

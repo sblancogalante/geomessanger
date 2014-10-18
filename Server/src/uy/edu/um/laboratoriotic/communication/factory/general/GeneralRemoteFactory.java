@@ -7,6 +7,7 @@ import uy.edu.um.laboratoriotic.services.management.general.GeneralRemoteMgt;
 
 /**
  * This class is the connection that adds separation to the modules
+ * 
  * @author sblanco1
  * 
  */
@@ -28,7 +29,7 @@ public class GeneralRemoteFactory {
 
 		if (instance == null) {
 			instance = new GeneralRemoteFactory();
-		} 
+		}
 
 		return instance;
 	}
@@ -36,5 +37,5 @@ public class GeneralRemoteFactory {
 	public GeneralRemoteMgt getGeneralRemoteMgt() throws RemoteException {
 		return GeneralRemoteMgr.getInstance();
 	}
-	
+
 }

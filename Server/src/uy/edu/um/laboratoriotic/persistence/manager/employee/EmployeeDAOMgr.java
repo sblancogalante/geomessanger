@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
+import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
 
 /**
@@ -50,7 +51,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	 * This are the management implementation methods
 	 */
 	@Override
-	public void addEmployee(Employee oEmployee) throws RemoteException {
+	public void addEmployee(Employee oEmployee) throws DataBaseConnection, RemoteException {
 		// TODO Auto-generated method stub
 		Connection oConnection = null;
 		Statement oStatement = null;
@@ -108,7 +109,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public ArrayList<Employee> getEmployees() throws RemoteException {
+	public ArrayList<Employee> getEmployees() throws DataBaseConnection, RemoteException {
 
 		ArrayList<Employee> oList = new ArrayList<>();
 		Statement oStatement = null;
@@ -169,7 +170,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public Employee searchEmployee(int oEmployeeID) throws RemoteException {
+	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection, RemoteException {
 
 		Employee oEmployee = null;
 		Statement oStatement = null;
@@ -229,7 +230,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public void removeEmployee(int oEmployeeID) throws RemoteException {
+	public void removeEmployee(int oEmployeeID) throws DataBaseConnection, RemoteException {
 		// TODO Auto-generated method stub
 
 		Statement oStatement = null;
@@ -280,7 +281,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 	
 	@Override
-	public void createTable() throws RemoteException {
+	public void createTable() throws DataBaseConnection, RemoteException {
 
 		Connection oConnection = null;
 		Statement oStatement;

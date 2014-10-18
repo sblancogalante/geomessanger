@@ -7,13 +7,20 @@ import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
 
 /**
  * This class is the connection that adds separation to the modules
+ * 
  * @author sblanco1
  * 
  */
 public class EmployeeRemoteFactory {
 
+	/*
+	 * Attributes of the class
+	 */
 	private static EmployeeRemoteFactory instance = null;
 
+	/*
+	 * Constructor
+	 */
 	private EmployeeRemoteFactory() {
 
 	}
@@ -22,7 +29,7 @@ public class EmployeeRemoteFactory {
 
 		if (instance == null) {
 			instance = new EmployeeRemoteFactory();
-		} 
+		}
 
 		return instance;
 	}
