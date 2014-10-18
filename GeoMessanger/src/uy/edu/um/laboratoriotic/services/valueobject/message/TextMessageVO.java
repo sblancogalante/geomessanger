@@ -1,11 +1,12 @@
 package uy.edu.um.laboratoriotic.services.valueobject.message;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 
-import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
-public class TextMessageVO extends MessageVO {
+public class TextMessageVO extends MessageVO implements Serializable{
 
 	/*
 	 * Attributes of the class
@@ -17,7 +18,7 @@ public class TextMessageVO extends MessageVO {
 	 * Constructor
 	 */
 	public TextMessageVO(String oText, boolean oIsConference, int oID,
-			Employee oSender, HashSet<Employee> oReceiver, Date date) {
+			EmployeeVO oSender, HashSet<EmployeeVO> oReceiver, Date date) {
 
 		super(oID, oSender, oReceiver, date);
 
