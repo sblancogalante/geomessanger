@@ -1,5 +1,6 @@
 package uy.edu.um.laboratoriotic.business.manager.employee;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
@@ -46,10 +47,15 @@ public class EmployeeMgr implements EmployeeMgt {
 	@Override
 	public void addEmployee(Employee oEmployee) throws DataBaseConnection {
 		// TODO Auto-generated method stub
-				
+
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		Employee oNewEmployee = oEmployee;
-		oNewDAOEmployee.addEmployee(oNewEmployee);		
+		try {
+			oNewDAOEmployee.addEmployee(oNewEmployee);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -58,7 +64,12 @@ public class EmployeeMgr implements EmployeeMgt {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		oNewDAOEmployee.removeEmployee(oEmployeeID);
+		try {
+			oNewDAOEmployee.removeEmployee(oEmployeeID);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -77,13 +88,19 @@ public class EmployeeMgr implements EmployeeMgt {
 		EmployeeVO oResult = null;
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		Employee oEmployee = oNewDAOEmployee.searchEmployee(oEmployeeID);
-
-		if (oEmployee != null) {
-			oResult = oEmployee.toVO();
-		} else {
-			System.out.println("No se encontro el usuario con identificacion "
-					+ oEmployeeID);
+		Employee oEmployee;
+		try {
+			oEmployee = oNewDAOEmployee.searchEmployee(oEmployeeID);
+			if (oEmployee != null) {
+				oResult = oEmployee.toVO();
+			} else {
+				System.out
+						.println("No se encontro el usuario con identificacion "
+								+ oEmployeeID);
+			}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		Employee oToReturn = new Employee(oResult.getUserName(),
@@ -97,17 +114,30 @@ public class EmployeeMgr implements EmployeeMgt {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		ArrayList<Employee> list = oDAOEmployee.getEmployees();
+		ArrayList<Employee> list = new ArrayList<Employee>();
+		try {
+			list = oDAOEmployee.getEmployees();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return list;
 	}
 
 	@Override
-	public Employee getEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection {
+	public Employee getEmployee(EmployeeVO oEmployeeVO)
+			throws DataBaseConnection {
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		Employee oNewEmployee = oDAOEmployee.searchEmployee(oEmployeeVO
-				.getEmployeeID());
+		Employee oNewEmployee = null;
+		try {
+			oNewEmployee = oDAOEmployee.searchEmployee(oEmployeeVO
+					.getEmployeeID());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Employee oEmployeeToReturn = oNewEmployee;
 
