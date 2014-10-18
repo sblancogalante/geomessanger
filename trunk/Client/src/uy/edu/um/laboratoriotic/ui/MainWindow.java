@@ -25,9 +25,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.ListModel;
+import javax.swing.ListCellRenderer;
 import javax.swing.border.EmptyBorder;
 
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
