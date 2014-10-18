@@ -6,6 +6,7 @@ import uy.edu.um.laboratoriotic.business.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.business.factory.general.GeneralFactory;
 import uy.edu.um.laboratoriotic.communication.factory.employee.EmployeeRemoteFactory;
 import uy.edu.um.laboratoriotic.communication.factory.general.GeneralRemoteFactory;
+import uy.edu.um.laboratoriotic.communication.factory.message.TextMessageRemoteFactory;
 
 /**
  * This class recognizes all interfaces of communication module and creates
@@ -59,5 +60,15 @@ public class BusinessFacade {
 
 		return GeneralRemoteFactory.getInstance();
 	}
+	
+	public TextMessageRemoteFactory getTextMessageRemoteFactory() throws RemoteException{
+		// TODO Auto-generated method stub
+		TextMessageRemoteFactory oTextMessageRF = null;
+		
+		oTextMessageRF = TextMessageRemoteFactory.getInstance();
+		
+		return oTextMessageRF;
+	}
+
 
 }

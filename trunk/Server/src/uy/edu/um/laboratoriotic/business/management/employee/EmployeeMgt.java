@@ -14,21 +14,21 @@ import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 public interface EmployeeMgt {
 
 	/**
-	 * This method makes sure that the data base adds an employee
+	 * This method makes sure that the database adds an employee
 	 * @param oEmployee
 	 * @throws DataBaseConnection
 	 */
 	public void addEmployee(Employee oEmployee) throws DataBaseConnection;
 	
 	/**
-	 * This method makes sure that the data base removes an employee
+	 * This method makes sure that the database removes an employee
 	 * @param oEmployeeID
 	 * @throws DataBaseConnection
 	 */
 	public void removeEmployee(int oEmployeeID) throws DataBaseConnection;
 	
 	/**
-	 * This method makes sure that the data base modifies the information
+	 * This method makes sure that the database modifies the information
 	 * of oEmployee
 	 * @param oEmployee
 	 * @return
@@ -36,7 +36,7 @@ public interface EmployeeMgt {
 	public Employee modifyEmployee(Employee oEmployee);
 	
 	/**
-	 * This method makes sure that the data base searches an employee
+	 * This method makes sure that the database searches an employee
 	 * @param oemployeeID
 	 * @return
 	 * @throws DataBaseConnection 
@@ -44,7 +44,7 @@ public interface EmployeeMgt {
 	public Employee searchEmployee(int oemployeeID) throws DataBaseConnection;
 	
 	/**
-	 * This method makes sure that the data base returns a list with all the 
+	 * This method makes sure that the database returns a list with all the 
 	 * current employees
 	 * @return
 	 * @throws DataBaseConnection
