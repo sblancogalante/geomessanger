@@ -1,24 +1,25 @@
 package uy.edu.um.laboratoriotic.services.valueobject.message;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 
-import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
-public abstract class MessageVO {
+public abstract class MessageVO implements Serializable{
 
 	/*
 	 * Attributes of the class
 	 */
 	private int iD;
-	private Employee sender;
-	private HashSet<Employee> receivers;
+	private EmployeeVO sender;
+	private HashSet<EmployeeVO> receivers;
 	private Date date;
 
 	/*
 	 * Constructor
 	 */
-	public MessageVO(int oID, Employee oSender, HashSet<Employee> oReceivers,
+	public MessageVO(int oID, EmployeeVO oSender, HashSet<EmployeeVO> oReceivers,
 			Date oDate) {
 
 		this.sender = oSender;
@@ -39,19 +40,19 @@ public abstract class MessageVO {
 		this.iD = oID;
 	}
 
-	public Employee getSender() {
+	public EmployeeVO getSender() {
 		return sender;
 	}
 
-	public void setSender(Employee oSender) {
+	public void setSender(EmployeeVO oSender) {
 		this.sender = oSender;
 	}
 
-	public HashSet<Employee> getReceivers() {
+	public HashSet<EmployeeVO> getReceivers() {
 		return receivers;
 	}
 
-	public void setReceivers(HashSet<Employee> oReceivers) {
+	public void setReceivers(HashSet<EmployeeVO> oReceivers) {
 		this.receivers = oReceivers;
 	}
 
