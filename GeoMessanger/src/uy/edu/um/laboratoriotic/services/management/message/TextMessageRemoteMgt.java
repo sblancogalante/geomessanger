@@ -1,5 +1,6 @@
 package uy.edu.um.laboratoriotic.services.management.message;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.HashSet;
 
@@ -13,7 +14,7 @@ import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
  * @author sblanco1
  * 
  */
-public interface TextMessageRemoteMgt {
+public interface TextMessageRemoteMgt extends Remote {
 
 	/**
 	 * This method communicates the server that the client is trying to add a
@@ -34,8 +35,7 @@ public interface TextMessageRemoteMgt {
 	 * @return
 	 * @throws RemoteException
 	 */
-	public HashSet<TextMessageVO> getTextMessages()
-			throws RemoteException;
+	public HashSet<TextMessageVO> getTextMessages() throws RemoteException;
 
 	/**
 	 * This method communicates the server that the client is trying to get a
@@ -53,7 +53,9 @@ public interface TextMessageRemoteMgt {
 	 * 
 	 * @param oSender
 	 * @param oReceiver
+	 * @throws RemoteException
 	 */
-	public void clearHistory(EmployeeVO oSender, EmployeeVO oReceiver);
+	public void clearHistory(EmployeeVO oSender, EmployeeVO oReceiver)
+			throws RemoteException;
 
 }

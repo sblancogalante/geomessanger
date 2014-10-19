@@ -94,7 +94,7 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 	}
 
 	@Override
-	public HashSet<TextMessageVO> getTextMessages(Date oDate)
+	public HashSet<TextMessageVO> getTextMessages()
 			throws RemoteException {
 		// TODO Auto-generated method stub
 

@@ -29,6 +29,7 @@ public class TextMessageRemoteFactory {
 	}
 
 	public TextMessageRemoteMgt getTextMessageRemoteMgt() throws RemoteException {
+		
 		return TextMessageRemoteMgr.getInstance();
 	}
 	

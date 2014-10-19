@@ -9,7 +9,9 @@ import java.rmi.server.UnicastRemoteObject;
 import uy.edu.um.laboratoriotic.communication.factory.employee.EmployeeRemoteFactory;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
+import uy.edu.um.laboratoriotic.persistence.factory.message.TextMessageDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
+import uy.edu.um.laboratoriotic.persistence.management.message.TextMessageDAOMgt;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
 
 /**
@@ -25,28 +27,45 @@ public class MainServer {
 		/*
 		 * Inicializamos la base de datos creando la tabla
 		 */
-		EmployeeDAOMgt oMgt = EmployeeDAOFactory.getEmployeeDAOMgt();
+		EmployeeDAOMgt oEmployeeDAOMgt = EmployeeDAOFactory.getEmployeeDAOMgt();
+		TextMessageDAOMgt oTextMessageDAOMgt = TextMessageDAOFactory
+				.getTextMessageDAOMgt();
 		try {
-			oMgt.createTable();
+			oEmployeeDAOMgt.createTable();
+			oTextMessageDAOMgt.createTable();
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+		Registry oRegistry = LocateRegistry.createRegistry(1099);
+
 		/*
 		 * Establecemos la conexion RMI con el cliente
 		 */
-		String name = "EmployeeRemoteMgr";
+		String nameEmployee = "EmployeeRemoteMgr";
 
-		EmployeeRemoteMgt oUserRemoteMgr = EmployeeRemoteFactory.getInstance().getEmployeeRemoteMgt();
+		EmployeeRemoteMgt oEmployeeRemoteMgt = EmployeeRemoteFactory
+				.getInstance().getEmployeeRemoteMgt();
 
-		EmployeeRemoteMgt oStubUser = (EmployeeRemoteMgt) UnicastRemoteObject.exportObject(
-				(Remote) oUserRemoteMgr, 0);
+		EmployeeRemoteMgt oStubEmployee = (EmployeeRemoteMgt) UnicastRemoteObject
+				.exportObject((Remote) oEmployeeRemoteMgt, 0);
 
-		Registry oRegistry = LocateRegistry.createRegistry(1099);
-		
-		oRegistry.rebind(name, oStubUser);
+		oRegistry.rebind(nameEmployee, oStubEmployee);
 
+		/*
+		 * Establecemos la conexion RMI con los mensajes
+		 */
+		//TODAVIA NO PUDE SOLUCIONAR NESTED EXCEPTION PARA ASIGNAR 2 VECES EL PUERTO
+	/*	String nameTextMessage = "TextMessageRemoteMgr"; 
+
+		TextMessageRemoteMgt oTextMessageRemoteMgt = TextMessageRemoteFactory
+				.getInstance().getTextMessageRemoteMgt();
+
+		TextMessageRemoteMgt oStubTextMessage = (TextMessageRemoteMgt) UnicastRemoteObject
+				.exportObject((Remote) oTextMessageRemoteMgt, 0);
+
+		oRegistry.rebind(nameTextMessage, oStubTextMessage);
+	 */
 	}
-
 }

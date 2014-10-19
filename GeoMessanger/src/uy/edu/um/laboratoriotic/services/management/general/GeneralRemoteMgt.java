@@ -1,5 +1,6 @@
 package uy.edu.um.laboratoriotic.services.management.general;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
@@ -11,7 +12,7 @@ import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
  * @author sblanco1
  * 
  */
-public interface GeneralRemoteMgt {
+public interface GeneralRemoteMgt extends Remote {
 
 	public void addType(TypeVO oTypeVO) throws RemoteException;
 
