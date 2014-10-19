@@ -7,12 +7,14 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 import uy.edu.um.laboratoriotic.communication.factory.employee.EmployeeRemoteFactory;
+import uy.edu.um.laboratoriotic.communication.factory.message.TextMessageRemoteFactory;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.factory.message.TextMessageDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
 import uy.edu.um.laboratoriotic.persistence.management.message.TextMessageDAOMgt;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
+import uy.edu.um.laboratoriotic.services.management.message.TextMessageRemoteMgt;
 
 /**
  * This class is the one that initializes the DB connection and the RMI
@@ -57,7 +59,7 @@ public class MainServer {
 		 * Establecemos la conexion RMI con los mensajes
 		 */
 		//TODAVIA NO PUDE SOLUCIONAR NESTED EXCEPTION PARA ASIGNAR 2 VECES EL PUERTO
-	/*	String nameTextMessage = "TextMessageRemoteMgr"; 
+		String nameTextMessage = "TextMessageRemoteMgr"; 
 
 		TextMessageRemoteMgt oTextMessageRemoteMgt = TextMessageRemoteFactory
 				.getInstance().getTextMessageRemoteMgt();
@@ -66,6 +68,6 @@ public class MainServer {
 				.exportObject((Remote) oTextMessageRemoteMgt, 0);
 
 		oRegistry.rebind(nameTextMessage, oStubTextMessage);
-	 */
+	 
 	}
 }
