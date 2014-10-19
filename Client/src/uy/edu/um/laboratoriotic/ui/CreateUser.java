@@ -98,11 +98,11 @@ String[] comboBoxDefaultArray = {"<<Default>>"};
 		JButton btnCreateUser = new JButton("Create User");
 		btnCreateUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Date workingHours = new Date();
+				String workingHours = null;
 				Blob profilePic = null;
 				EmployeeVO oEmployee = new EmployeeVO(Integer.parseInt(employeeIDText.getText()), iDText.getText(), nameText.getText(),
 						lastNameText.getText(), userNameText.getText(), passwordText.getText(), (String)locationComboBox.getSelectedItem() ,
-						(String)sectorComboBox.getSelectedItem(), eMailText.getText(), positionText.getText(),profilePic , workingHours,
+						(String)sectorComboBox.getSelectedItem(), eMailText.getText(), workingHours, positionText.getText(), profilePic,
 						false);
 				System.out.println(oEmployee.toString());
 				EmployeeMgt employeeMgt = EmployeeFactory.getInstance().getEmployeeMgt();

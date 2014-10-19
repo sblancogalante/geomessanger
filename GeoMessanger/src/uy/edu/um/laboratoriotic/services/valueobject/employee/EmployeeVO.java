@@ -9,7 +9,7 @@ import java.util.Date;
  * backwards
  * 
  * @author sblanco1
- *
+ * 
  */
 public class EmployeeVO implements Serializable {
 
@@ -18,9 +18,8 @@ public class EmployeeVO implements Serializable {
 	 */
 	private int employeeID;
 	private String iD, name, lastName, userName, password, location, sector,
-			mail, position;
+			mail, position, workingHour;
 	private Blob profilePicture;
-	private Date workingHour;
 	private boolean status;
 
 	/*
@@ -29,7 +28,7 @@ public class EmployeeVO implements Serializable {
 	public EmployeeVO(int oEmployeeID, String oID, String oName,
 			String oLastName, String oUserName, String oPassword,
 			String oLocation, String oSector, String oMail, String oPosition,
-			Blob oProfilePicture, Date oWorkingHour, boolean oStatus) {
+			String oWorkingHour, Blob oProfilePicture, boolean oStatus) {
 
 		this.employeeID = oEmployeeID;
 		this.iD = oID;
@@ -158,11 +157,11 @@ public class EmployeeVO implements Serializable {
 		this.profilePicture = oProfilePicture;
 	}
 
-	public Date getWorkingHour() {
+	public String getWorkingHour() {
 		return workingHour;
 	}
 
-	public void setWorkingHour(Date oWorkingHour) {
+	public void setWorkingHour(String oWorkingHour) {
 		this.workingHour = oWorkingHour;
 	}
 
