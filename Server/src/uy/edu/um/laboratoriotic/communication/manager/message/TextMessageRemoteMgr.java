@@ -1,4 +1,4 @@
-package uy.edu.um.laboratoriotic.communication.manager;
+package uy.edu.um.laboratoriotic.communication.manager.message;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
