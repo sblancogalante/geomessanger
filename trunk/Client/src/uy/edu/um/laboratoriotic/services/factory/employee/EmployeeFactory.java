@@ -5,8 +5,9 @@ import uy.edu.um.laboratoriotic.services.manager.employee.EmployeeMgr;
 
 /**
  * This is the class that we use to get the instances of the others
+ * 
  * @author sblanco1
- *
+ * 
  */
 public class EmployeeFactory {
 
@@ -23,6 +24,7 @@ public class EmployeeFactory {
 	}
 
 	public static EmployeeFactory getInstance() {
+		
 		if (instance == null) {
 			instance = new EmployeeFactory();
 		}
@@ -31,6 +33,7 @@ public class EmployeeFactory {
 	}
 
 	public EmployeeMgt getEmployeeMgt() {
+	
 		return EmployeeMgr.getInstance();
 	}
 
