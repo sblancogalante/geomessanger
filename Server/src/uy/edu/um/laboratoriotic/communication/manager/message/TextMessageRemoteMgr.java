@@ -1,7 +1,6 @@
 package uy.edu.um.laboratoriotic.communication.manager.message;
 
 import java.rmi.RemoteException;
-import java.util.Date;
 import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
