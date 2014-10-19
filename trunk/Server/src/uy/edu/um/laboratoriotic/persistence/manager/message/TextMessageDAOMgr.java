@@ -29,7 +29,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	private static final String DRIVER_JDBC = "org.hsqldb.jdbc.JDBCDriver";
 	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
 	private static final String CREATE_TABLE_TEXT_MESSAGES = "CREATE TABLE textMessages (iDTextMessage int PRIMARY KEY, text VARCHAR(300) NOT NULL, iDEmployeeSender int NOT NULL, date DATE NOT NULL, isConference boolean NOT NULL)";
-	private static final String CREATE_TABLE_EMPLOYEES_MESSAGES = "CREATE TABLE employeesMessages (iDTextMessage int PRIMARY KEY, iDEmployeeReceiver int PRIMARY KEY)";
+	private static final String CREATE_TABLE_EMPLOYEES_MESSAGES = "CREATE TABLE employeesMessages (iDTextMessage int FOREIGN KEY REFERENCES textMessages, iDEmployeeReceiver int FOREIGN KEY REFERENCES Employees)";
 
 	/*
 	 * Constructor
@@ -55,7 +55,8 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	 * Management implementation methods
 	 */
 	@Override
-	public TextMessage addTextMessage(TextMessage oTextMessage) throws DataBaseConnection, RemoteException{
+	public TextMessage addTextMessage(TextMessage oTextMessage)
+			throws DataBaseConnection, RemoteException {
 		// TODO Auto-generated method stub
 		Connection oConnection = null;
 		Statement oStatement = null;
@@ -66,31 +67,31 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 			oStatement = oConnection.createStatement();
 
-			long sId = oTextMessage.getIDMessage();
-			int sIdSender = oTextMessage.getSender().getEmployeeID();
+			long sID = oTextMessage.getIDMessage();
+			int sIDSender = oTextMessage.getSender().getEmployeeID();
 			Date sDate = oTextMessage.getDate();
 			String sText = oTextMessage.getTextMessage();
 			boolean sConf = oTextMessage.getIsConference();
 
 			System.out.println("Se agrego con exito a la tabla de mensajes:"
-					+ sId + "que con el texto: " + sText + "enviado por "
-					+ sIdSender + " , con la fecha " + sDate);
+					+ sID + "que con el texto: " + sText + "enviado por "
+					+ sIDSender + " , con la fecha " + sDate);
 
 			String sInsert1 = "INSERT INTO textMessages (iDTextMessage, text, iDEmployeeSender, date, isConference) VALUES ("
-					+ sId
+					+ sID
 					+ ","
-					+ sIdSender
+					+ sIDSender
 					+ ","
 					+ sDate
 					+ ",'"
 					+ sText
 					+ "',"
 					+ sConf + ")";
-			
+
 			oStatement.execute(sInsert1);
 
 			String sInsert2 = "INSERT INTO messageEmployee (idTextMessage,idEmployeeReceiver) VALUES ("
-					+ sId + ",'" + ")";
+					+ sID + ",'" + ")";
 
 			oStatement.execute(sInsert2);
 
@@ -106,14 +107,14 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 				}
 			}
 		}
-		
+
 		return oTextMessage;
 	}
 
 	@Override
 	public HashSet<TextMessage> getTextMessages() throws RemoteException {
 		// TODO Auto-generated method stub
-		
+
 		HashSet<TextMessage> oList = new HashSet<>();
 		Statement oStatement = null;
 		Connection oConnection = null;
@@ -129,8 +130,9 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 				int sID = oResultSet.getInt(1);
 				String sTextMessage = oResultSet.getString(2);
-				Employee sSender = (Employee)oResultSet.getObject(3);
-				HashSet<Employee> sReceivers = (HashSet<Employee>)oResultSet.getObject(4);
+				Employee sSender = (Employee) oResultSet.getObject(3);
+				HashSet<Employee> sReceivers = (HashSet<Employee>) oResultSet
+						.getObject(4);
 				Date sDate = oResultSet.getDate(5);
 				boolean sIsConference = oResultSet.getBoolean(6);
 
@@ -160,11 +162,12 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	}
 
 	@Override
-	public void createTable() throws DataBaseConnection, RemoteException{
+	public void createTable() throws DataBaseConnection, RemoteException {
 		// TODO Auto-generated method stub
-		
+
 		Connection oConnection = null;
 		Statement oStatement;
+		Statement oStatement2;
 		boolean bValue = false;
 		boolean bValue2 = false;
 
@@ -173,15 +176,18 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 		try {
 
 			oStatement = oConnection.createStatement();
+			oStatement2 = oConnection.createStatement();
 			bValue = oStatement.execute(CREATE_TABLE_TEXT_MESSAGES);
-			bValue2 = oStatement.execute(CREATE_TABLE_EMPLOYEES_MESSAGES);
+			bValue2 = oStatement2.execute(CREATE_TABLE_EMPLOYEES_MESSAGES);
+			
 			if (!bValue && !bValue2) {
 				System.out.println("Se ejecuto con exito");
 			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			throw new RemoteException();
+			//throw new RemoteException();
+			e.printStackTrace();
 		} finally {
 			if (oConnection != null) {
 				try {
