@@ -58,7 +58,7 @@ public class TextMessageMgr implements TextMessageMgt {
 	}
 
 	@Override
-	public HashSet<TextMessage> getTextMessages(TextMessage oTextMessage)
+	public HashSet<TextMessage> getTextMessages()
 			throws DataBaseConnection {
 		// TODO Auto-generated method stub
 
@@ -66,7 +66,7 @@ public class TextMessageMgr implements TextMessageMgt {
 				.getTextMessageDAOMgt();
 		HashSet<TextMessage> list = new HashSet<TextMessage>();
 		try {
-			list = oDAOTextMessage.getTextMessages(oTextMessage);
+			list = oDAOTextMessage.getTextMessages();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

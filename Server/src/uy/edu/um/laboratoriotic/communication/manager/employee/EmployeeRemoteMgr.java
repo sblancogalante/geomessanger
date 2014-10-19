@@ -73,7 +73,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 		// TODO Auto-generated method stub
 
 		ArrayList<EmployeeVO> oListToReturn = new ArrayList<>();
-		EmployeeVO oEmployee;
+		EmployeeVO oEmployeeVO;
 
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
@@ -83,8 +83,8 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 			oList = oEmployeeMgt.getEmployees();
 
 			for (Employee iEmployee : oList) {
-				oEmployee = iEmployee.toVO();
-				oListToReturn.add(oEmployee);
+				oEmployeeVO = iEmployee.toVO();
+				oListToReturn.add(oEmployeeVO);
 			}
 
 		} catch (DataBaseConnection e) {
