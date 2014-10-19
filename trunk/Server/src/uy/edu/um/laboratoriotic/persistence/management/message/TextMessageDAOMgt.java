@@ -1,7 +1,6 @@
 package uy.edu.um.laboratoriotic.persistence.management.message;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
