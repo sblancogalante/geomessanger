@@ -3,6 +3,7 @@ package uy.edu.um.laboratoriotic.services.management.message;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
@@ -24,8 +25,7 @@ public interface TextMessageRemoteMgt {
 	 * @return
 	 * @throws RemoteException
 	 */
-	public TextMessageVO addTextMessage(EmployeeVO oSender,
-			TextMessageVO oTextMessageVO, ArrayList<EmployeeVO> receivers)
+	public TextMessageVO addTextMessage(TextMessageVO oTextMessageVO)
 			throws RemoteException;
 
 	/**
@@ -36,7 +36,7 @@ public interface TextMessageRemoteMgt {
 	 * @return
 	 * @throws RemoteException
 	 */
-	public ArrayList<TextMessageVO> getTextMessages(Date oDate)
+	public HashSet<TextMessageVO> getTextMessages(Date oDate)
 			throws RemoteException;
 
 	/**
@@ -50,7 +50,7 @@ public interface TextMessageRemoteMgt {
 			throws RemoteException;
 
 	/**
-	 * This method communicates the server that the client is trynig to clear
+	 * This method communicates the server that the client is trying to clear
 	 * the chat window for an employee
 	 * 
 	 * @param oSender

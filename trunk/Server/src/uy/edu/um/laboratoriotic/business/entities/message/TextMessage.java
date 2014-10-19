@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 
 /**
  * This class represents a message that only contains text
@@ -36,6 +38,28 @@ public class TextMessage extends Message {
 		this.date = oDate;
 		this.isConference = oIsConference;
 
+	}
+
+	/*
+	 * Helping methods
+	 */
+	public TextMessageVO toVO() {
+
+		HashSet<EmployeeVO> oReceiversToReturn = new HashSet<>();
+
+		for (Employee iEmployee : receivers) {
+			EmployeeVO oEmployeeVO = new EmployeeVO(iEmployee.getEmployeeID(),
+					iEmployee.getID(), iEmployee.getName(),
+					iEmployee.getLastName(), iEmployee.getUserName(),
+					iEmployee.getPassword(), iEmployee.getLocation(),
+					iEmployee.getSector(), iEmployee.getMail(),
+					iEmployee.getPosition(), iEmployee.getWorkingHour(),
+					iEmployee.getProfilePicture(), iEmployee.getStatus());
+			oReceiversToReturn.add(oEmployeeVO);
+		}
+
+		return new TextMessageVO(this.getIDMessage(), textMessage, sender.toVO(),
+				oReceiversToReturn, date, isConference);
 	}
 
 	/*

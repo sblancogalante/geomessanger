@@ -86,6 +86,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 					+ sText
 					+ "',"
 					+ sConf + ")";
+			
 			oStatement.execute(sInsert1);
 
 			String sInsert2 = "INSERT INTO messageEmployee (idTextMessage,idEmployeeReceiver) VALUES ("
@@ -110,7 +111,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	}
 
 	@Override
-	public HashSet<TextMessage> getTextMessages(TextMessage oTextMessage) throws RemoteException {
+	public HashSet<TextMessage> getTextMessages() throws RemoteException {
 		// TODO Auto-generated method stub
 		
 		HashSet<TextMessage> oList = new HashSet<>();
@@ -121,18 +122,17 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 			oStatement = oConnection.createStatement();
-			String sQuery = "SELECT * FROM TextMessage where (messagesText.iD = '"
-					+ oTextMessage.getIDMessage() + "') ;";
+			String sQuery = "SELECT * FROM TextMessage ) ;";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 
 			while (oResultSet.next()) {
 
-				int sID = oTextMessage.getIDMessage();
-				String sTextMessage = oTextMessage.getTextMessage();
-				Employee sSender = oTextMessage.getSender();
-				HashSet<Employee> sReceivers = oTextMessage.getReceivers();
-				Date sDate = oTextMessage.getDate();
-				boolean sIsConference = oTextMessage.getIsConference();
+				int sID = oResultSet.getInt(1);
+				String sTextMessage = oResultSet.getString(2);
+				Employee sSender = (Employee)oResultSet.getObject(3);
+				HashSet<Employee> sReceivers = (HashSet<Employee>)oResultSet.getObject(4);
+				Date sDate = oResultSet.getDate(5);
+				boolean sIsConference = oResultSet.getBoolean(6);
 
 				TextMessage oTextMessages = new TextMessage(sID, sTextMessage,
 						sSender, sReceivers, sDate, sIsConference);

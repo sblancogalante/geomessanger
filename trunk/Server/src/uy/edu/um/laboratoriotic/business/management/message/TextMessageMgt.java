@@ -31,7 +31,7 @@ public interface TextMessageMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 */
-	public HashSet<TextMessage> getTextMessages(TextMessage oTextMessage)
+	public HashSet<TextMessage> getTextMessages()
 			throws DataBaseConnection;
 
 }
