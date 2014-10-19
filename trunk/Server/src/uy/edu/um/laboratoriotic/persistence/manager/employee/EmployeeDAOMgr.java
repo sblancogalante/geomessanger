@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
@@ -28,7 +27,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	private static EmployeeDAOMgr instance = null;
 	private static final String DRIVER_JDBC = "org.hsqldb.jdbc.JDBCDriver";
 	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
-	private static final String CREATE_TABLE_EMPLOYEE = "CREATE TABLE Employees (employeeID INT PRIMARY KEY NOT NULL, iD VARCHAR(20) NOT NULL, name VARCHAR(27), lastName VARCHAR(28), userName VARCHAR(20) NOT NULL, password VARCHAR(20) NOT NULL, location VARCHAR(27) NOT NULL, sector VARCHAR(27), mail VARCHAR(30) NOT NULL, position VARCHAR(30), profilePicture BLOB, workingHour DATE, status BOOLEAN NOT NULL)";
+	private static final String CREATE_TABLE_EMPLOYEES = "CREATE TABLE Employees (employeeID INT PRIMARY KEY NOT NULL, iD VARCHAR(20) NOT NULL, name VARCHAR(20), lastName VARCHAR(20), userName VARCHAR(20) NOT NULL, password VARCHAR(20) NOT NULL, location VARCHAR(30) NOT NULL, sector VARCHAR(30), mail VARCHAR(30) NOT NULL, position VARCHAR(30), profilePicture BLOB, workingHour VARCHAR(20), status BOOLEAN NOT NULL)";
 
 	/*
 	 * Constructor of the class
@@ -51,7 +50,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	 * This are the management implementation methods
 	 */
 	@Override
-	public void addEmployee(Employee oEmployee) throws DataBaseConnection, RemoteException {
+	public void addEmployee(Employee oEmployee) throws DataBaseConnection,
+			RemoteException {
 		// TODO Auto-generated method stub
 		Connection oConnection = null;
 		Statement oStatement = null;
@@ -83,9 +83,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 					+ oEmployee.getPosition()
 					+ "',"
 					+ oEmployee.getProfilePicture()
-					+ ","
+					+ ",'"
 					+ oEmployee.getWorkingHour()
-					+ ","
+					+ "',"
 					+ oEmployee.getStatus()
 					+ ");";
 
@@ -109,7 +109,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public ArrayList<Employee> getEmployees() throws DataBaseConnection, RemoteException {
+	public ArrayList<Employee> getEmployees() throws DataBaseConnection,
+			RemoteException {
 
 		ArrayList<Employee> oList = new ArrayList<>();
 		Statement oStatement = null;
@@ -134,15 +135,15 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String sResultSector = oResultSet.getString(8);
 				String sResultMail = oResultSet.getString(9);
 				String sResultPosition = oResultSet.getString(10);
-				Blob sResultProfilePicture = oResultSet.getBlob(11);
-				Date sResultWorkingHour = oResultSet.getDate(12);
+				String sResultWorkingHour = oResultSet.getString(11);
+				Blob sResultProfilePicture = oResultSet.getBlob(12);				
 				boolean sResultStatus = oResultSet.getBoolean(13);
 
 				Employee oEmployee = new Employee(sResultEmployeeID, sResultID,
 						sResultName, sResultLastName, sResultUserName,
 						sResultPassword, sResultLocation, sResultSector,
-						sResultMail, sResultPosition, sResultProfilePicture,
-						sResultWorkingHour, sResultStatus);
+						sResultMail, sResultPosition, sResultWorkingHour,
+						sResultProfilePicture, sResultStatus);
 
 				oList.add(oEmployee);
 
@@ -170,7 +171,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection, RemoteException {
+	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection,
+			RemoteException {
 
 		Employee oEmployee = null;
 		Statement oStatement = null;
@@ -196,15 +198,15 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String sResultSector = oResultSet.getString(8);
 				String sResultMail = oResultSet.getString(9);
 				String sResultPosition = oResultSet.getString(10);
-				Blob sResultProfilePicture = oResultSet.getBlob(11);
-				Date sResultWorkingHour = oResultSet.getDate(12);
+				String sResultWorkingHour = oResultSet.getString(11);
+				Blob sResultProfilePicture = oResultSet.getBlob(12);
 				boolean sResultStatus = oResultSet.getBoolean(13);
 
 				oEmployee = new Employee(sResultEmployeeID, sResultID,
 						sResultName, sResultLastName, sResultUserName,
 						sResultPassword, sResultLocation, sResultSector,
-						sResultMail, sResultPosition, sResultProfilePicture,
-						sResultWorkingHour, sResultStatus);
+						sResultMail, sResultPosition, sResultWorkingHour,
+						sResultProfilePicture, sResultStatus);
 
 				System.out
 						.println("El empleado hallado es: " + sResultUserName);
@@ -230,7 +232,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public void removeEmployee(int oEmployeeID) throws DataBaseConnection, RemoteException {
+	public void removeEmployee(int oEmployeeID) throws DataBaseConnection,
+			RemoteException {
 		// TODO Auto-generated method stub
 
 		Statement oStatement = null;
@@ -279,7 +282,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			}
 		}
 	}
-	
+
 	@Override
 	public void createTable() throws DataBaseConnection, RemoteException {
 
@@ -291,7 +294,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		try {
 
 			oStatement = oConnection.createStatement();
-			oStatement.execute(CREATE_TABLE_EMPLOYEE);
+			oStatement.execute(CREATE_TABLE_EMPLOYEES);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

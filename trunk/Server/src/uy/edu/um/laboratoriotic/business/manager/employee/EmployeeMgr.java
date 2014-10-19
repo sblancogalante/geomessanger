@@ -84,15 +84,15 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection {
-		// TODO Auto-generated method stub
-		EmployeeVO oResult = null;
+		// TODO Auto-generated method stub		
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		Employee oEmployee;
+		Employee  oEmployeeToReturn = null;
 		try {
 			oEmployee = oNewDAOEmployee.searchEmployee(oEmployeeID);
 			if (oEmployee != null) {
-				oResult = oEmployee.toVO();
+				oEmployeeToReturn = oEmployee;
 			} else {
 				System.out
 						.println("No se encontro el usuario con identificacion "
@@ -101,12 +101,9 @@ public class EmployeeMgr implements EmployeeMgt {
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}		
 
-		Employee oToReturn = new Employee(oResult.getUserName(),
-				oResult.getLocation(), oResult.getSector(), oResult.getStatus());
-
-		return oToReturn;
+		return oEmployeeToReturn;
 	}
 
 	@Override
@@ -130,16 +127,14 @@ public class EmployeeMgr implements EmployeeMgt {
 			throws DataBaseConnection {
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		Employee oNewEmployee = null;
+		Employee oEmployeeToReturn = null;
 		try {
-			oNewEmployee = oDAOEmployee.searchEmployee(oEmployeeVO
+			oEmployeeToReturn = oDAOEmployee.searchEmployee(oEmployeeVO
 					.getEmployeeID());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-		Employee oEmployeeToReturn = oNewEmployee;
+		}		
 
 		return oEmployeeToReturn;
 	}

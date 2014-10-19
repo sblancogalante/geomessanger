@@ -1,7 +1,6 @@
 package uy.edu.um.laboratoriotic.business.entities.employee;
 
 import java.sql.Blob;
-import java.util.Date;
 
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
@@ -18,9 +17,8 @@ public class Employee {
 	 */
 	private int employeeID;
 	private String iD, name, lastName, userName, password, location, sector,
-			mail, position;
+			mail, position, workingHour;
 	private Blob profilePicture;
-	private Date workingHour;
 	private boolean status;
 
 	/*
@@ -29,7 +27,7 @@ public class Employee {
 	public Employee(int oEmployeeID, String oID, String oName,
 			String oLastName, String oUserName, String oPassword,
 			String oLocation, String oSector, String oMail, String oPosition,
-			Blob oProfilePicture, Date oWorkingHour, boolean oStatus) {
+			String oWorkingHour, Blob oProfilePicture, boolean oStatus) {
 
 		this.employeeID = oEmployeeID;
 		this.iD = oID;
@@ -41,8 +39,8 @@ public class Employee {
 		this.sector = oSector;
 		this.mail = oMail;
 		this.position = oPosition;
-		this.profilePicture = oProfilePicture;
 		this.workingHour = oWorkingHour;
+		this.profilePicture = oProfilePicture;
 		this.status = oStatus;
 
 	}
@@ -59,22 +57,12 @@ public class Employee {
 
 	}
 
-	public Employee(String oUserName, String oLocation, String oSector,
-			boolean oStatus) {
-		// TODO Auto-generated constructor stub
-
-		this.userName = oUserName;
-		this.location = oLocation;
-		this.sector = oSector;
-		this.status = oStatus;
-
-	}
-
-	public Employee(String oUserName, int oEmployeeID, String oLocation,
+	public Employee(int oEmployeeID, String oUserName, String oLocation,
 			String oSector, boolean oStatus) {
 		// TODO Auto-generated constructor stub
-		this.userName = oUserName;
+
 		this.employeeID = oEmployeeID;
+		this.userName = oUserName;
 		this.location = oLocation;
 		this.sector = oSector;
 		this.status = oStatus;
@@ -85,7 +73,9 @@ public class Employee {
 	 */
 	public EmployeeVO toVO() {
 
-		return new EmployeeVO(userName, location, sector, status);
+		return new EmployeeVO(employeeID, iD, name, lastName, userName,
+				password, location, sector, mail, position, workingHour,
+				profilePicture, status);
 
 	}
 
@@ -172,21 +162,21 @@ public class Employee {
 		this.position = oPosition;
 	}
 
+	public String getWorkingHour() {
+		return workingHour;
+	}
+
+	public void setWorkingHour(String oWorkingHour) {
+		this.workingHour = oWorkingHour;
+	}
+	
 	public Blob getProfilePicture() {
 		return profilePicture;
 	}
 
 	public void setProfilePicture(Blob oProfilePicture) {
 		this.profilePicture = oProfilePicture;
-	}
-
-	public Date getWorkingHour() {
-		return workingHour;
-	}
-
-	public void setWorkingHour(Date oWorkingHour) {
-		this.workingHour = oWorkingHour;
-	}
+	}	
 
 	public boolean getStatus() {
 		return status;

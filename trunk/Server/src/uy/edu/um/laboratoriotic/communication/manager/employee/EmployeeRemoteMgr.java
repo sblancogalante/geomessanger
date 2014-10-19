@@ -46,8 +46,6 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	public void addEmployee(EmployeeVO oEmployeeVO) throws RemoteException {
 		// TODO Auto-generated method stub
 
-		int count = 0;
-
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
 
@@ -58,21 +56,14 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 				oEmployeeVO.getLastName(), oEmployeeVO.getUserName(),
 				oEmployeeVO.getPassword(), oEmployeeVO.getLocation(),
 				oEmployeeVO.getSector(), oEmployeeVO.getMail(),
-				oEmployeeVO.getPosition(), oEmployeeVO.getProfilePicture(),
-				oEmployeeVO.getWorkingHour(), oEmployeeVO.getStatus());
+				oEmployeeVO.getPosition(), oEmployeeVO.getWorkingHour(),
+				oEmployeeVO.getProfilePicture(), oEmployeeVO.getStatus());
 
 		try {
 			oEmployeeMgt.addEmployee(oEmployee);
-			count++;
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
-			if (count <= 5) {
-				addEmployee(oEmployeeVO);
-			} else {
-				System.out
-						.println("Estableciendo la conexion a la base de datos, por favor espere unos segundos");
-				addEmployee(oEmployeeVO);
-			}
+
 		}
 
 	}
@@ -80,7 +71,6 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	@Override
 	public ArrayList<EmployeeVO> getEmployees() throws RemoteException {
 		// TODO Auto-generated method stub
-		int count = 0;
 
 		ArrayList<EmployeeVO> oListToReturn = new ArrayList<>();
 		EmployeeVO oEmployee;
@@ -99,13 +89,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
-			if (count <= 5) {
-				getEmployees();
-			} else {
-				System.out
-						.println("Estableciendo la conexion a la base de datos, por favor espere unos segundos");
-				getEmployees();
-			}
+
 		}
 
 		return oListToReturn;
@@ -115,7 +99,6 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	public EmployeeVO getEmployee(EmployeeVO oEmployeeVO)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		int count = 0;
 
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
@@ -127,13 +110,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 			oEmployeeVOToReturn = oEmployee.toVO();
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
-			if (count <= 5) {
-				getEmployee(oEmployeeVO);
-			} else {
-				System.out
-						.println("Estableciendo la conexion a la base de datos, por favor espere unos segundos");
-				getEmployee(oEmployeeVO);
-			}
+
 		}
 
 		return oEmployeeVOToReturn;
@@ -142,7 +119,6 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	@Override
 	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		int count = 0;
 
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
@@ -153,13 +129,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 			oEmployeeMgt.removeEmployee(oEmployee.getEmployeeID());
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
-			if (count <= 5) {
-				removeEmployee(oEmployeeVO);
-			} else {
-				System.out
-						.println("Estableciendo la conexion a la base de datos, por favor espere unos segundos");
-				removeEmployee(oEmployeeVO);
-			}
+
 		}
 
 	}
