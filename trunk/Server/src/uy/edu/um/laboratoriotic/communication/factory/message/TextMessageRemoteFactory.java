@@ -2,7 +2,7 @@ package uy.edu.um.laboratoriotic.communication.factory.message;
 
 import java.rmi.RemoteException;
 
-import uy.edu.um.laboratoriotic.communication.manager.TextMessageRemoteMgr;
+import uy.edu.um.laboratoriotic.communication.manager.message.TextMessageRemoteMgr;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageRemoteMgt;
 
 public class TextMessageRemoteFactory {
