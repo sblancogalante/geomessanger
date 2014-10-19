@@ -27,7 +27,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	private static EmployeeDAOMgr instance = null;
 	private static final String DRIVER_JDBC = "org.hsqldb.jdbc.JDBCDriver";
 	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
-	private static final String CREATE_TABLE_EMPLOYEES = "CREATE TABLE Employees (employeeID INT PRIMARY KEY NOT NULL, iD VARCHAR(20) NOT NULL, name VARCHAR(20), lastName VARCHAR(20), userName VARCHAR(20) NOT NULL, password VARCHAR(20) NOT NULL, location VARCHAR(30) NOT NULL, sector VARCHAR(30), mail VARCHAR(30) NOT NULL, position VARCHAR(30), profilePicture BLOB, workingHour VARCHAR(20), status BOOLEAN NOT NULL)";
+	private static final String CREATE_TABLE_EMPLOYEES = "CREATE TABLE Employees (employeeID INT PRIMARY KEY NOT NULL, iD VARCHAR(20) NOT NULL, name VARCHAR(20), lastName VARCHAR(20), userName VARCHAR(20) NOT NULL, password VARCHAR(20) NOT NULL, location VARCHAR(30) NOT NULL, sector VARCHAR(30), mail VARCHAR(30) NOT NULL, position VARCHAR(30), workingHour VARCHAR(20), profilePicture BLOB, status BOOLEAN NOT NULL)";
 
 	/*
 	 * Constructor of the class
@@ -61,7 +61,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 
 			oStatement = oConnection.createStatement();
-			String sInsert = "INSERT INTO Employees (employeeID, iD, name, lastName, userName, password, location, sector, mail, position, profilePicture, workingHour, status) VALUES ("
+			String sInsert = "INSERT INTO Employees (employeeID, iD, name, lastName, userName, password, location, sector, mail, position, workingHour, profilePicture, status) VALUES ("
 					+ oEmployee.getEmployeeID()
 					+ ",'"
 					+ oEmployee.getID()
@@ -80,12 +80,12 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 					+ "','"
 					+ oEmployee.getMail()
 					+ "','"
-					+ oEmployee.getPosition()
-					+ "',"
-					+ oEmployee.getProfilePicture()
-					+ ",'"
+					+ oEmployee.getPosition()					
+					+ "','"
 					+ oEmployee.getWorkingHour()
 					+ "',"
+					+ oEmployee.getProfilePicture()
+					+ ","					
 					+ oEmployee.getStatus()
 					+ ");";
 
@@ -155,7 +155,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oResultSet.close();
 
 		} catch (SQLException e) {
-			throw new RemoteException();
+			//throw new RemoteException();
+			e.printStackTrace();
 		} finally {
 			if (oConnection != null) {
 				try {
