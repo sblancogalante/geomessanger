@@ -1,8 +1,6 @@
 package uy.edu.um.laboratoriotic.services.management.message;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -36,7 +34,7 @@ public interface TextMessageRemoteMgt {
 	 * @return
 	 * @throws RemoteException
 	 */
-	public HashSet<TextMessageVO> getTextMessages(Date oDate)
+	public HashSet<TextMessageVO> getTextMessages()
 			throws RemoteException;
 
 	/**
