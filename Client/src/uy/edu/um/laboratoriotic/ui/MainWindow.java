@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -50,6 +52,7 @@ public class MainWindow extends JFrame {
 	private JMenuItem deleteUserMenuItem;
 	private JMenuItem exitMenuItem;
 	private JMenuItem mntmProfile;
+	private ArrayList<EmployeeVO> listEmployee;
 
 	public MainWindow() throws RemoteException, NotBoundException {
 
@@ -168,22 +171,29 @@ public class MainWindow extends JFrame {
 			}
 		});
 		
-		
-		
-		
+		//AGREGA LOS EMPLEADOS CONOCIDOS
 		if (employeeMgt.getEmployees() != null && employeeMgt.getEmployees().size() > 0) {
 			
 			DefaultListModel<EmployeeVO> employeeListModel = new DefaultListModel<EmployeeVO>();
 			fillDefaultListFromArray(employeeMgt.getEmployees(), employeeListModel);
 			userList.setModel(employeeListModel);
 			
-		} else{
-			
-			DefaultListModel<EmployeeVO> rootEmployee = new DefaultListModel<EmployeeVO>();
-			rootEmployee.add(rootEmployee.getSize(),new EmployeeVO("Root","Uruguay","RH",true));
-			
-			userList.setModel(rootEmployee);
-		}
+		} 
+		
+		// Add a listener for mouse clicks
+				userList.addMouseListener(new MouseAdapter() {
+				    public void mouseClicked(MouseEvent evt) {
+				        JList list = (JList)evt.getSource();
+				        if (evt.getClickCount() == 2) {          // Double-click
+				            // Get item index
+				        	
+				            int index = list.locationToIndex(evt.getPoint());
+				            ChatRoom2 chatRoom = new ChatRoom2(listEmployee.get(index));
+				            chatRoom.setVisible(true);
+				           System.out.println(index); 
+				        } 
+				    }
+				});
 		
 		
 		
@@ -191,7 +201,7 @@ public class MainWindow extends JFrame {
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
 				try {
-					actualizarContactos(employeeMgt, userList);
+					listEmployee = actualizarContactos(employeeMgt, userList);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -322,7 +332,7 @@ public class MainWindow extends JFrame {
 		return this;
 	}
 
-	private void actualizarContactos(EmployeeMgt employeeMgt, JList<EmployeeVO> userList)
+	private ArrayList<EmployeeVO>  actualizarContactos(EmployeeMgt employeeMgt, JList<EmployeeVO> userList)
 			throws RemoteException, NotBoundException {
 		
 		ArrayList<EmployeeVO> oListEmployee = employeeMgt.getEmployees();
@@ -333,12 +343,14 @@ public class MainWindow extends JFrame {
 			fillDefaultListFromArray(oListEmployee,lModel);
 			userList.setModel(lModel);
 			
-			System.out.println("Hay alguien");
+			
 			
 		} else {
 			
 			System.out.println("Null Employee List");
 		}
+		
+		return oListEmployee;
 
 	}
 	
