@@ -93,20 +93,40 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 	}
 
 	@Override
-	public HashSet<TextMessageVO> getTextMessages()
-			throws RemoteException {
+	public HashSet<TextMessageVO> getTextMessages(EmployeeVO oSenderVO,
+			HashSet<EmployeeVO> oReceiversVO) throws RemoteException {
 		// TODO Auto-generated method stub
-
-		HashSet<TextMessageVO> oListToReturn = new HashSet<>();
+		
 		TextMessageVO oTextMessageVO;
+		HashSet<TextMessage> oHashSet = new HashSet<>();		
+		HashSet<TextMessageVO> oListToReturn = new HashSet<>();		
+		HashSet<Employee> oReceivers = new HashSet<>();
+		Employee oEmployee;
 
 		TextMessageMgt oTextMessageMgt = BusinessFacade.getInstance()
 				.getTextMessageFactory().getTextMessageMgt();
 
-		HashSet<TextMessage> oHashSet = new HashSet<>();
-		
+		Employee oSender = new Employee(oSenderVO.getEmployeeID(),
+				oSenderVO.getID(), oSenderVO.getName(),
+				oSenderVO.getLastName(), oSenderVO.getUserName(),
+				oSenderVO.getPassword(), oSenderVO.getLocation(),
+				oSenderVO.getSector(), oSenderVO.getMail(),
+				oSenderVO.getPosition(), oSenderVO.getWorkingHour(),
+				oSenderVO.getProfilePicture(), oSenderVO.getStatus());
+
+		for (EmployeeVO iEmployeeVO : oReceiversVO) {
+			oEmployee = new Employee(iEmployeeVO.getEmployeeID(),
+					iEmployeeVO.getID(), iEmployeeVO.getName(),
+					iEmployeeVO.getLastName(), iEmployeeVO.getUserName(),
+					iEmployeeVO.getPassword(), iEmployeeVO.getLocation(),
+					iEmployeeVO.getSector(), iEmployeeVO.getMail(),
+					iEmployeeVO.getPosition(), iEmployeeVO.getWorkingHour(),
+					iEmployeeVO.getProfilePicture(), iEmployeeVO.getStatus());
+			oReceivers.add(oEmployee);
+		}
+
 		try {
-			oHashSet = oTextMessageMgt.getTextMessages();
+			oHashSet = oTextMessageMgt.getTextMessages(oSender, oReceivers);
 
 			for (TextMessage iTextMessage : oHashSet) {
 				oTextMessageVO = iTextMessage.toVO();
@@ -119,7 +139,7 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 		}
 
 		return oListToReturn;
-		
+
 	}
 
 	@Override

@@ -35,7 +35,7 @@ public interface TextMessageRemoteMgt extends Remote {
 	 * @return
 	 * @throws RemoteException
 	 */
-	public HashSet<TextMessageVO> getTextMessages() throws RemoteException;
+	public HashSet<TextMessageVO> getTextMessages(EmployeeVO oSender, HashSet<EmployeeVO> oReceivers) throws RemoteException;
 
 	/**
 	 * This method communicates the server that the client is trying to get a

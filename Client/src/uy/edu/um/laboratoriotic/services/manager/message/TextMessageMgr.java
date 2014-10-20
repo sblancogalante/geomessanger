@@ -8,6 +8,7 @@ import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageRemoteMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 
 public class TextMessageMgr implements TextMessageMgt {
@@ -51,7 +52,7 @@ public class TextMessageMgr implements TextMessageMgt {
 	}
 
 	@Override
-	public HashSet<TextMessageVO> getTextMessages() throws RemoteException, NotBoundException {
+	public HashSet<TextMessageVO> getTextMessages(EmployeeVO oSender, HashSet<EmployeeVO> oReceivers) throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
 		
 		HashSet<TextMessageVO> oHashSetToReturn = new HashSet<>();
@@ -59,7 +60,7 @@ public class TextMessageMgr implements TextMessageMgt {
 		TextMessageRemoteMgt oTextMessageRemoteMgt = lookUp(
 				"TextMessageRemoteMgr", 1099);
 		
-		oHashSetToReturn = oTextMessageRemoteMgt.getTextMessages();
+		oHashSetToReturn = oTextMessageRemoteMgt.getTextMessages(oSender, oReceivers);
 		
 		return oHashSetToReturn;
 	}

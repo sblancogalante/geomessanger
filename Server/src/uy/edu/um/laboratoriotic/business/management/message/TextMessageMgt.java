@@ -2,6 +2,7 @@ package uy.edu.um.laboratoriotic.business.management.message;
 
 import java.util.HashSet;
 
+import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 
@@ -31,7 +32,7 @@ public interface TextMessageMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 */
-	public HashSet<TextMessage> getTextMessages()
+	public HashSet<TextMessage> getTextMessages(Employee oSender, HashSet<Employee> oReceivers)
 			throws DataBaseConnection;
 
 }

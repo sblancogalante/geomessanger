@@ -3,6 +3,7 @@ package uy.edu.um.laboratoriotic.business.manager.message;
 import java.rmi.RemoteException;
 import java.util.HashSet;
 
+import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
 import uy.edu.um.laboratoriotic.business.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
@@ -58,7 +59,7 @@ public class TextMessageMgr implements TextMessageMgt {
 	}
 
 	@Override
-	public HashSet<TextMessage> getTextMessages()
+	public HashSet<TextMessage> getTextMessages(Employee oSender, HashSet<Employee> oReceivers)
 			throws DataBaseConnection {
 		// TODO Auto-generated method stub
 
@@ -66,7 +67,7 @@ public class TextMessageMgr implements TextMessageMgt {
 				.getTextMessageDAOMgt();
 		HashSet<TextMessage> list = new HashSet<TextMessage>();
 		try {
-			list = oDAOTextMessage.getTextMessages();
+			list = oDAOTextMessage.getTextMessages(oSender, oReceivers);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
