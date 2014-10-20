@@ -160,8 +160,10 @@ public class MainWindow extends JFrame {
 					JList<? extends EmployeeVO> list, EmployeeVO value,
 					int index, boolean isSelected, boolean cellHasFocus) {
 
+				
+				//HACER UN PANEL MEDIO SALADO
 				JLabel oLabel = new JLabel();				
-				oLabel.setText(value.getEmployeeID()+" "+value.getLastName());
+				oLabel.setText(value.getName()+" "+value.getLastName());
 				return oLabel;
 			}
 		});
