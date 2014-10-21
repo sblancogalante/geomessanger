@@ -128,7 +128,7 @@ public class MainWindow extends JFrame {
 		setContentPane(contentPane);
 
 		userPhotoImage = new ImageIcon(
-				"/Users/Luis/Downloads/InterfazGrafica2.1/Foto.png");
+				"Images/Foto.png");
 		userPhotoLabel = new JLabel(userPhotoImage);
 		userNameLabel = new JLabel("Name");
 		userStateLabel = new JLabel("State");
