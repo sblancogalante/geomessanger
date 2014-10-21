@@ -108,8 +108,15 @@ public class MainWindow extends JFrame {
 		deleteUserMenuItem = new JMenuItem("Delete User");
 		deleteUserMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
-				DeleteUser deleteUser = new DeleteUser();
-				deleteUser.setVisible(true);
+				DeleteUser deleteUser;
+				try {
+					deleteUser = new DeleteUser();
+					deleteUser.setVisible(true);
+				} catch (RemoteException | NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 
 			}
 		});
@@ -165,7 +172,10 @@ public class MainWindow extends JFrame {
 
 				
 				//HACER UN PANEL MEDIO SALADO
-				JLabel oLabel = new JLabel();				
+				JLabel oLabel = new JLabel();
+				if(isSelected){
+					oLabel.setForeground(Color.BLUE);
+				}
 				oLabel.setText(value.getName()+" "+value.getLastName());
 				return oLabel;
 			}
@@ -358,7 +368,7 @@ public class MainWindow extends JFrame {
 	private void fillDefaultListFromArray(ArrayList<EmployeeVO> arrayList,DefaultListModel<EmployeeVO> lModel){
 		
 		for(EmployeeVO employee : arrayList){
-		lModel.add(lModel.getSize(),employee);
+			lModel.add(lModel.getSize(),employee);
 		}
 		
 	}
