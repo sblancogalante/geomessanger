@@ -24,7 +24,7 @@ public interface TextMessageRemoteMgt extends Remote {
 	 * @return
 	 * @throws RemoteException
 	 */
-	public TextMessageVO addTextMessage(TextMessageVO oTextMessageVO)
+	public void addTextMessage(TextMessageVO oTextMessageVO)
 			throws RemoteException;
 
 	/**

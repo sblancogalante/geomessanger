@@ -42,7 +42,7 @@ public class TextMessageMgr implements TextMessageMgt {
 	 * Management implementation methods
 	 */
 	@Override
-	public TextMessage addTextMessage(TextMessage oTextMessage)
+	public void addTextMessage(TextMessage oTextMessage)
 			throws DataBaseConnection {
 		// TODO Auto-generated method stub
 		TextMessageDAOMgt oNewDAOTextMessage = TextMessageDAOFactory
@@ -53,8 +53,7 @@ public class TextMessageMgr implements TextMessageMgt {
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return null;
+		}		
 
 	}
 

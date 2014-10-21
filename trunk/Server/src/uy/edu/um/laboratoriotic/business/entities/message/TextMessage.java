@@ -1,6 +1,6 @@
 package uy.edu.um.laboratoriotic.business.entities.message;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
@@ -21,14 +21,14 @@ public class TextMessage extends Message {
 	private String textMessage;
 	private Employee sender;
 	private HashSet<Employee> receivers;
-	private Date date;
+	private Timestamp date;
 	private boolean isConference;
 
 	/*
 	 * Constructor
 	 */
 	public TextMessage(int oIDMessage, String oTextMessage, Employee oSender,
-			HashSet<Employee> oReceivers, Date oDate, boolean oIsConference) {
+			HashSet<Employee> oReceivers, Timestamp oDate, boolean oIsConference) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
 
@@ -90,11 +90,11 @@ public class TextMessage extends Message {
 		this.receivers = oReceivers;
 	}
 
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 
-	public void setDate(Date oDate) {
+	public void setDate(Timestamp oDate) {
 		this.date = oDate;
 	}
 

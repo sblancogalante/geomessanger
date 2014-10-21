@@ -22,7 +22,7 @@ public interface TextMessageDAOMgt {
 	 * @throws DataBaseConnection
 	 * @throws RemoteException
 	 */
-	public TextMessage addTextMessage(TextMessage oTextMessage)
+	public void addTextMessage(TextMessage oTextMessage)
 			throws DataBaseConnection, RemoteException;
 
 	/**

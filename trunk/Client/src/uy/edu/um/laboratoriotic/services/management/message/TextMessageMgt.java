@@ -20,11 +20,10 @@ public interface TextMessageMgt {
 	 * add a text message
 	 * 
 	 * @param oTextMessageVO
-	 * @return
 	 * @throws NotBoundException
 	 * @throws RemoteException
 	 */
-	public TextMessageVO addTextMessage(TextMessageVO oTextMessageVO)
+	public void addTextMessage(TextMessageVO oTextMessageVO)
 			throws RemoteException, NotBoundException;
 
 	/**
