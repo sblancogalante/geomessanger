@@ -1,6 +1,7 @@
 package uy.edu.um.laboratoriotic.services.valueobject.message;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -17,14 +18,14 @@ public class FileMessageVO extends MessageVO implements Serializable{
 	 */
 	private byte[] file;
 	private String name;
-	private Date date;
+	private Timestamp date;
 	private boolean isConference;
 
 	/*
 	 * Constructor
 	 */
 	public FileMessageVO(int oIDMessage, byte[] oFile, String oName,
-			Date oDate, boolean oIsConference) {
+			Timestamp oDate, boolean oIsConference) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
 
@@ -53,15 +54,15 @@ public class FileMessageVO extends MessageVO implements Serializable{
 		this.name = oName;
 	}
 
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 
-	public void setDate(Date oDate) {
+	public void setDate(Timestamp oDate) {
 		this.date = oDate;
 	}
 
-	public boolean isConference() {
+	public boolean getIsConference() {
 		return isConference;
 	}
 
