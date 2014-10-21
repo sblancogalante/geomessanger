@@ -4,9 +4,11 @@ import java.rmi.RemoteException;
 
 import uy.edu.um.laboratoriotic.business.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.business.factory.general.GeneralFactory;
+import uy.edu.um.laboratoriotic.business.factory.message.FileMessageFactory;
 import uy.edu.um.laboratoriotic.business.factory.message.TextMessageFactory;
 import uy.edu.um.laboratoriotic.communication.factory.employee.EmployeeRemoteFactory;
 import uy.edu.um.laboratoriotic.communication.factory.general.GeneralRemoteFactory;
+import uy.edu.um.laboratoriotic.communication.factory.message.FileMessageRemoteFactory;
 import uy.edu.um.laboratoriotic.communication.factory.message.TextMessageRemoteFactory;
 
 /**
@@ -71,6 +73,17 @@ public class BusinessFacade {
 			throws RemoteException {
 
 		return TextMessageRemoteFactory.getInstance();
+	}
+
+	public FileMessageFactory getFileMessageFactory() {
+
+		return FileMessageFactory.getInstance();
+	}
+
+	public FileMessageRemoteFactory getFileMessageRemoteFactory()
+			throws RemoteException {
+
+		return FileMessageRemoteFactory.getInstance();
 	}
 
 }

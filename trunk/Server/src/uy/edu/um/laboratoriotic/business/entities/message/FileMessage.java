@@ -1,6 +1,13 @@
 package uy.edu.um.laboratoriotic.business.entities.message;
 
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashSet;
+
+import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
+import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 
 /**
  * This class represents a message that has an attachment
@@ -15,13 +22,15 @@ public class FileMessage extends Message {
 	 */
 	private byte[] file;
 	private String name;
-	private Date date;
+	private Employee sender;
+	private HashSet<Employee> receivers;
+	private Timestamp date;
 	private boolean isConference;
 
 	/*
 	 * Constructor
 	 */
-	public FileMessage(int oIDMessage, byte[] oFile, String oName, Date oDate,
+	public FileMessage(int oIDMessage, byte[] oFile, String oName, Timestamp oDate,
 			boolean oIsConference) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
@@ -29,20 +38,42 @@ public class FileMessage extends Message {
 		this.setFile(oFile);
 		this.setName(oName);
 		this.setDate(oDate);
-		this.setConference(oIsConference);
+		this.setIsconference(oIsConference);
+	}
+
+	/*
+	 * Helping methods
+	 */
+	public FileMessageVO toVO() {
+
+		HashSet<EmployeeVO> oReceiversToReturn = new HashSet<>();
+
+		for (Employee iEmployee : receivers) {
+			EmployeeVO oEmployeeVO = new EmployeeVO(iEmployee.getEmployeeID(),
+					iEmployee.getID(), iEmployee.getName(),
+					iEmployee.getLastName(), iEmployee.getUserName(),
+					iEmployee.getPassword(), iEmployee.getLocation(),
+					iEmployee.getSector(), iEmployee.getMail(),
+					iEmployee.getPosition(), iEmployee.getWorkingHour(),
+					iEmployee.getProfilePicture(), iEmployee.getStatus());
+			oReceiversToReturn.add(oEmployeeVO);
+		}
+
+		return new FileMessageVO(this.getIDMessage(), file, name, date, isConference);
 	}
 
 	/*
 	 * Getters & Setters
 	 */
+
 	public byte[] getFile() {
 		return file;
 	}
 
-	public void setFile(byte[] oFile) {
-		this.file = oFile;
+	public void setFile(byte[] oFileMessage) {
+		this.file = oFileMessage;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -51,19 +82,35 @@ public class FileMessage extends Message {
 		this.name = oName;
 	}
 
-	public Date getDate() {
+	public Employee getSender() {
+		return sender;
+	}
+
+	public void setSender(Employee oSender) {
+		this.sender = oSender;
+	}
+
+	public HashSet<Employee> getReceivers() {
+		return receivers;
+	}
+
+	public void setReceivers(HashSet<Employee> oReceivers) {
+		this.receivers = oReceivers;
+	}
+
+	public Timestamp getDate() {
 		return date;
 	}
 
-	public void setDate(Date oDate) {
+	public void setDate(Timestamp oDate) {
 		this.date = oDate;
 	}
 
-	public boolean isConference() {
+	public boolean getIsConference() {
 		return isConference;
 	}
 
-	public void setConference(boolean oIsConference) {
+	public void setIsconference(boolean oIsConference) {
 		this.isConference = oIsConference;
 	}
 
