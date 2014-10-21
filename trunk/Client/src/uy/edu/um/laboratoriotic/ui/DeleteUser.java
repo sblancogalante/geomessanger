@@ -2,6 +2,7 @@ package uy.edu.um.laboratoriotic.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -9,7 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -21,8 +26,13 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+
+import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
+import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 public class DeleteUser extends JDialog {
 
@@ -30,7 +40,10 @@ public class DeleteUser extends JDialog {
 	private JTextField searchUserText;
 	JLabel ChooseUserLabel;
 
-	public DeleteUser() {
+	public DeleteUser() throws RemoteException, NotBoundException {
+		
+		final EmployeeMgt employeeMgt = EmployeeFactory.getInstance()
+				.getEmployeeMgt();
 		
 		setBounds(100, 100, 450, 410);
 		Dimension d = new Dimension(450,410);
@@ -47,7 +60,34 @@ public class DeleteUser extends JDialog {
 		
 		ChooseUserLabel = new JLabel("Choose a user: ");
 		
-		JList list = new JList();
+		final JList<EmployeeVO> userList = new JList<EmployeeVO>();
+		
+		userList.setCellRenderer(new ListCellRenderer<EmployeeVO>() {
+
+			@Override
+			public Component getListCellRendererComponent(
+					JList<? extends EmployeeVO> list, EmployeeVO value,
+					int index, boolean isSelected, boolean cellHasFocus) {
+
+				
+				//HACER UN PANEL MEDIO SALADO
+				JLabel oLabel = new JLabel();	
+				if(isSelected){
+					oLabel.setForeground(Color.BLUE);
+				}
+				oLabel.setText(value.getName()+" "+value.getLastName());
+				return oLabel;
+			}
+		});
+		
+		//AGREGA LOS EMPLEADOS CONOCIDOS
+		if (employeeMgt.getEmployees() != null && employeeMgt.getEmployees().size() > 0) {
+			
+			DefaultListModel<EmployeeVO> employeeListModel = new DefaultListModel<EmployeeVO>();
+			fillDefaultListFromArray(employeeMgt.getEmployees(), employeeListModel);
+			userList.setModel(employeeListModel);
+			
+		} 
 		
 		searchUserText = new JTextField();
 		searchUserText.setText("");
@@ -95,7 +135,7 @@ public class DeleteUser extends JDialog {
 									.addComponent(separator, GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
 									.addGap(51))
 								.addGroup(gl_contentPanel.createSequentialGroup()
-									.addComponent(list, GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+									.addComponent(userList, GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
 									.addGap(18))
 								.addGroup(gl_contentPanel.createSequentialGroup()
 									.addComponent(searchUserText, GroupLayout.PREFERRED_SIZE, 284, GroupLayout.PREFERRED_SIZE)
@@ -117,7 +157,7 @@ public class DeleteUser extends JDialog {
 						.addComponent(searchUserText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(button))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(list, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+					.addComponent(userList, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
 					.addGap(15))
 		);
 		contentPanel.setLayout(gl_contentPanel);
@@ -131,10 +171,18 @@ public class DeleteUser extends JDialog {
 				deleteButton.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent arg0) {
 
-						int nvalue = JOptionPane.showConfirmDialog(DeleteUser.this, "Are you sure you want to Delete : " + "userName " + "?");
+						int nvalue = JOptionPane.showConfirmDialog(DeleteUser.this, "Are you sure you want to Delete : " 
+						+ userList.getSelectedValue().getName() + userList.getSelectedValue().getLastName() + " ?");
 			
 						if (nvalue == 0){
 							//DEELTE USER
+							try {
+								employeeMgt.removeEmployee(userList.getSelectedValue());
+								dispose();
+							} catch (RemoteException | NotBoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							
 						}else{
 							
@@ -156,5 +204,13 @@ public class DeleteUser extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	
+private void fillDefaultListFromArray(ArrayList<EmployeeVO> arrayList,DefaultListModel<EmployeeVO> lModel){
+		
+		for(EmployeeVO employee : arrayList){
+			lModel.add(lModel.getSize(),employee);
+		}
+		
 	}
 }
