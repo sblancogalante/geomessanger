@@ -11,14 +11,18 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
@@ -105,6 +109,7 @@ public class ChatRoom2 extends JFrame {
 				TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),employee,recivers,null,false);
 				try {
 					textMgt.addTextMessage(message);
+					
 				} catch (RemoteException | NotBoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -191,4 +196,33 @@ public class ChatRoom2 extends JFrame {
 		scrollPane_1.setViewportView(converTextArea);
 		contentPane.setLayout(gl_contentPane);
 	}
+	
+	private Collection<TextMessageVO> actualizarMensajes(TextMessageMgt textMgt,
+			JList<TextMessageVO> messageList, EmployeeVO oSender, HashSet<EmployeeVO> oReceiver){
+		
+			Collection<TextMessageVO> oListMessages = null;
+			try {
+				oListMessages = textMgt.getTextMessages(oSender, oReceiver);
+			} catch (RemoteException | NotBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return oListMessages;
+		
+	}
+	
+	
+private void fillDefaultListFromArray(ArrayList<EmployeeVO> arrayList,DefaultListModel<EmployeeVO> lModel){
+		
+		for(EmployeeVO employee : arrayList){
+			lModel.add(lModel.getSize(),employee);
+		}
+		
+		
+	}
+	
+	
+	
+	
+
 }
