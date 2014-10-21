@@ -96,10 +96,10 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 			
 
-			oPrepStatement.execute(sInsert1);
+			oPrepStatement.execute();
 
 			String sInsert2 = "INSERT INTO MessagesEmployees (textMessageID,EmployeeID) VALUES ("
-					+ sID + ",'" + ")";
+					+ sID + "," + sIDSender + ")";
 
 			oStatement = oConnection.createStatement();
 			
@@ -107,6 +107,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
 			throw new RemoteException();
 		} finally {
 			if (oConnection != null) {
