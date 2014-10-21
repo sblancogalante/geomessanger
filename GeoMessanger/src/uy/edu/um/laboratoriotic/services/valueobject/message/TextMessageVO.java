@@ -1,7 +1,7 @@
 package uy.edu.um.laboratoriotic.services.valueobject.message;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -21,14 +21,14 @@ public class TextMessageVO extends MessageVO implements Serializable {
 	private String textMessage;
 	private EmployeeVO sender;
 	private HashSet<EmployeeVO> receivers;
-	private Date date;
+	private Timestamp date;
 	private boolean isConference;
 
 	/*
 	 * Constructor
 	 */
 	public TextMessageVO(int oIDMessage, String oTextMessage,
-			EmployeeVO oSender, HashSet<EmployeeVO> oReceivers, Date oDate,
+			EmployeeVO oSender, HashSet<EmployeeVO> oReceivers, Timestamp oDate,
 			boolean oIsConference) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
@@ -69,11 +69,11 @@ public class TextMessageVO extends MessageVO implements Serializable {
 		this.receivers = oReceivers;
 	}
 
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 
-	public void setDate(Date oDate) {
+	public void setDate(Timestamp oDate) {
 		this.date = oDate;
 	}
 

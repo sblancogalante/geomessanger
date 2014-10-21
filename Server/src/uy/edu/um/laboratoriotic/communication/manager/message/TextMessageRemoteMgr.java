@@ -39,7 +39,7 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 	 * Management implementation methods
 	 */
 	@Override
-	public TextMessageVO addTextMessage(TextMessageVO oTextMessageVO)
+	public void addTextMessage(TextMessageVO oTextMessageVO)
 			throws RemoteException {
 		// TODO Auto-generated method stub
 
@@ -88,8 +88,7 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 		}
 
 		TextMessageVO oTextMessageVOToReturn = oTextMessage.toVO();
-
-		return oTextMessageVOToReturn;
+		
 	}
 
 	@Override

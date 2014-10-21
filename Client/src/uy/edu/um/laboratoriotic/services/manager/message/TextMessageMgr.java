@@ -38,17 +38,15 @@ public class TextMessageMgr implements TextMessageMgt {
 	 * Management implementation methods
 	 */
 	@Override
-	public TextMessageVO addTextMessage(TextMessageVO oTextMessageVO)
+	public void addTextMessage(TextMessageVO oTextMessageVO)
 			throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
 
 		TextMessageRemoteMgt oTextMessageRemoteMgt = lookUp(
 				"TextMessageRemoteMgr", 1099);
 
-		TextMessageVO oTextMessageVOToReturn = oTextMessageRemoteMgt
-				.addTextMessage(oTextMessageVO);
-
-		return oTextMessageVOToReturn;
+		oTextMessageRemoteMgt.addTextMessage(oTextMessageVO);
+		
 	}
 
 	@Override

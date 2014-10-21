@@ -21,7 +21,7 @@ public interface TextMessageMgt {
 	 * @param oTextMessage
 	 * @throws DataBaseConnection
 	 */
-	public TextMessage addTextMessage(TextMessage oTextMessage)
+	public void addTextMessage(TextMessage oTextMessage)
 			throws DataBaseConnection;
 
 	/**
