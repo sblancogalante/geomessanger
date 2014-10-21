@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.HashSet;
 
+import org.junit.FixMethodOrder;
+
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
@@ -32,6 +34,8 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	private static final String CREATE_TABLE_TEXT_MESSAGES = "CREATE TABLE TextMessages (textMessageID int PRIMARY KEY, text VARCHAR(300), employeeID int NOT NULL FOREIGN KEY REFERENCES Employees, date DATE NOT NULL, isConference boolean NOT NULL)";
 	private static final String CREATE_TABLE_MESSAGES_EMPLOYEES = "CREATE TABLE MessagesEmployees (textMessageID int FOREIGN KEY REFERENCES TextMessages, EmployeeID int FOREIGN KEY REFERENCES Employees)";
 
+	private static int identifierNumber = 0;
+	
 	/*
 	 * Constructor
 	 */
@@ -67,10 +71,11 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 			
-			int sID = oTextMessage.getIDMessage();
+			int sID = TextMessageDAOMgr.identifierNumber++;
 			String sText = oTextMessage.getTextMessage();
 			int sIDSender = oTextMessage.getSender().getEmployeeID();
-			Timestamp sDate = oTextMessage.getDate();			
+			//FIXME
+			Timestamp sDate = new Timestamp(System.currentTimeMillis());			
 			boolean sIsConf = oTextMessage.getIsConference();
 			
 			String sInsert1 = "INSERT INTO TextMessages (textMessageID, text, employeeID, date, isConference) VALUES (?,?,?,?,?)";
@@ -93,7 +98,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 			oPrepStatement.execute(sInsert1);
 
-			String sInsert2 = "INSERT INTO MessagesEmployees (idTextMessage,idEmployeeReceiver) VALUES ("
+			String sInsert2 = "INSERT INTO MessagesEmployees (textMessageID,EmployeeID) VALUES ("
 					+ sID + ",'" + ")";
 
 			oStatement = oConnection.createStatement();
