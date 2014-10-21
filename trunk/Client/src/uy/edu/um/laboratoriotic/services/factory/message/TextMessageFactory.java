@@ -23,7 +23,7 @@ public class TextMessageFactory {
 		
 	}
 	
-	public TextMessageFactory getInstance(){
+	public static TextMessageFactory getInstance(){
 		
 		if (instance == null) {
 			instance = new TextMessageFactory();

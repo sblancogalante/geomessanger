@@ -5,8 +5,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.ScrollPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.HashSet;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,7 +29,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
+import uy.edu.um.laboratoriotic.services.factory.message.TextMessageFactory;
+import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
+import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 
 public class ChatRoom2 extends JFrame {
 
@@ -51,7 +61,15 @@ public class ChatRoom2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ChatRoom2(EmployeeVO employee) {
+	public ChatRoom2(final EmployeeVO employee) {
+		
+		final JTextArea messageTextArea = new JTextArea("Message...");
+		final HashSet<EmployeeVO> recivers = new HashSet<EmployeeVO>();
+		recivers.add(employee);
+		
+	
+		final TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 500);
 		Dimension d = new Dimension(500,500);
@@ -78,8 +96,22 @@ public class ChatRoom2 extends JFrame {
 		JScrollPane scrollPane_2 = new JScrollPane();
 		
 		JSeparator separator = new JSeparator();
+	
 		
 		JButton btnNewButton = new JButton("Send");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent args0) {
+				
+				TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),employee,recivers,null,false);
+				try {
+					textMgt.addTextMessage(message);
+				} catch (RemoteException | NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+				
+		});
 		
 		JLabel lblNewLabel_1 = new JLabel("Chatting with " + employee.getName()+  " " + employee.getLastName());
 		
@@ -130,7 +162,7 @@ public class ChatRoom2 extends JFrame {
 					.addContainerGap())
 		);
 		
-		final JTextArea messageTextArea = new JTextArea("Message...");
+		
 		messageTextArea.setForeground(Color.LIGHT_GRAY);
 		
 		//focus gained
