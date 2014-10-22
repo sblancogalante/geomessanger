@@ -6,6 +6,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.communication.factory.employee.EmployeeRemoteFactory;
 import uy.edu.um.laboratoriotic.communication.factory.message.TextMessageRemoteFactory;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
@@ -34,6 +35,7 @@ public class MainServer {
 				.getTextMessageDAOMgt();
 		try {
 			oEmployeeDAOMgt.createTable();
+			oEmployeeDAOMgt.addEmployee(new Employee("root", "root"));
 			oTextMessageDAOMgt.createTable();
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
@@ -58,8 +60,9 @@ public class MainServer {
 		/*
 		 * Establecemos la conexion RMI con los mensajes
 		 */
-		//TODAVIA NO PUDE SOLUCIONAR NESTED EXCEPTION PARA ASIGNAR 2 VECES EL PUERTO
-		String nameTextMessage = "TextMessageRemoteMgr"; 
+		// TODAVIA NO PUDE SOLUCIONAR NESTED EXCEPTION PARA ASIGNAR 2 VECES EL
+		// PUERTO
+		String nameTextMessage = "TextMessageRemoteMgr";
 
 		TextMessageRemoteMgt oTextMessageRemoteMgt = TextMessageRemoteFactory
 				.getInstance().getTextMessageRemoteMgt();
@@ -68,6 +71,6 @@ public class MainServer {
 				.exportObject((Remote) oTextMessageRemoteMgt, 0);
 
 		oRegistry.rebind(nameTextMessage, oStubTextMessage);
-	 
+
 	}
 }

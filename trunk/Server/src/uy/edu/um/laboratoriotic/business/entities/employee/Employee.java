@@ -45,27 +45,23 @@ public class Employee {
 
 	}
 
-	public Employee(String oName, String oLastName, int oEmployeeID,
+	public Employee(int oEmployeeID, String oUserName, String oPassword,
 			String oLocation, String oSector, boolean oStatus) {
-
-		this.name = oName;
-		this.lastName = oLastName;
-		this.employeeID = oEmployeeID;
-		this.location = oLocation;
-		this.sector = oSector;
-		this.status = oStatus;
-
-	}
-
-	public Employee(int oEmployeeID, String oUserName, String oLocation,
-			String oSector, boolean oStatus) {
-		// TODO Auto-generated constructor stub
-
+		
 		this.employeeID = oEmployeeID;
 		this.userName = oUserName;
+		this.password = oPassword;
 		this.location = oLocation;
 		this.sector = oSector;
 		this.status = oStatus;
+		
+	}
+
+	public Employee(String oUserName, String oPassword) {
+
+		this.userName = oUserName;
+		this.password = oPassword;
+		
 	}
 
 	/*
@@ -169,14 +165,14 @@ public class Employee {
 	public void setWorkingHour(String oWorkingHour) {
 		this.workingHour = oWorkingHour;
 	}
-	
+
 	public Blob getProfilePicture() {
 		return profilePicture;
 	}
 
 	public void setProfilePicture(Blob oProfilePicture) {
 		this.profilePicture = oProfilePicture;
-	}	
+	}
 
 	public boolean getStatus() {
 		return status;
