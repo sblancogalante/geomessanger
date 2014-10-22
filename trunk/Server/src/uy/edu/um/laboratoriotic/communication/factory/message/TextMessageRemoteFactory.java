@@ -5,6 +5,12 @@ import java.rmi.RemoteException;
 import uy.edu.um.laboratoriotic.communication.manager.message.TextMessageRemoteMgr;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageRemoteMgt;
 
+/**
+ * This class is the connection that adds separation to the modules
+ * 
+ * @author sblanco1
+ * 
+ */
 public class TextMessageRemoteFactory {
 
 	/*

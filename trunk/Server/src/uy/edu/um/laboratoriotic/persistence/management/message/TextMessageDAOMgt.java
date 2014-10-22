@@ -16,7 +16,7 @@ import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 public interface TextMessageDAOMgt {
 
 	/**
-	 * This method adds an message to the database
+	 * This method adds a message to the database
 	 * 
 	 * @param oTextMessage
 	 * @throws DataBaseConnection

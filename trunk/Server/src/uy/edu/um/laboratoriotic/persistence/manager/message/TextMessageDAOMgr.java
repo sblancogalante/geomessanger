@@ -10,8 +10,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.HashSet;
 
-import org.junit.FixMethodOrder;
-
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
@@ -63,6 +61,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	public void addTextMessage(TextMessage oTextMessage)
 			throws DataBaseConnection, RemoteException {
 		// TODO Auto-generated method stub
+		
 		Connection oConnection = null;
 		PreparedStatement oPrepStatement = null;
 		Statement oStatement = null;

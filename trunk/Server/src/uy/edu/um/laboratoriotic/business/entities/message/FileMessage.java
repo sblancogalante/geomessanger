@@ -1,13 +1,12 @@
 package uy.edu.um.laboratoriotic.business.entities.message;
 
+import java.sql.Blob;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
-import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 
 /**
  * This class represents a message that has an attachment
@@ -20,7 +19,7 @@ public class FileMessage extends Message {
 	/*
 	 * Attributes of the class
 	 */
-	private byte[] file;
+	private Blob file;
 	private String name;
 	private Employee sender;
 	private HashSet<Employee> receivers;
@@ -30,15 +29,15 @@ public class FileMessage extends Message {
 	/*
 	 * Constructor
 	 */
-	public FileMessage(int oIDMessage, byte[] oFile, String oName, Timestamp oDate,
+	public FileMessage(int oIDMessage, Blob oFile, String oName, Timestamp oDate,
 			boolean oIsConference) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
 
-		this.setFile(oFile);
-		this.setName(oName);
-		this.setDate(oDate);
-		this.setIsconference(oIsConference);
+		this.file = oFile;
+		this.name = oName;
+		this.date = oDate;
+		this.isConference = oIsConference;
 	}
 
 	/*
@@ -66,19 +65,19 @@ public class FileMessage extends Message {
 	 * Getters & Setters
 	 */
 
-	public byte[] getFile() {
+	public Blob getFileMessage() {
 		return file;
 	}
 
-	public void setFile(byte[] oFileMessage) {
+	public void setFileMessage(Blob oFileMessage) {
 		this.file = oFileMessage;
 	}
 	
-	public String getName() {
+	public String getFileMessageName() {
 		return name;
 	}
 
-	public void setName(String oName) {
+	public void setFileMessageName(String oName) {
 		this.name = oName;
 	}
 
