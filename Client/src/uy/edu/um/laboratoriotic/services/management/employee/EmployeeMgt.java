@@ -47,4 +47,16 @@ public interface EmployeeMgt {
 	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
 			NotBoundException;
 
+	/**
+	 * This method is the one that communicates with the commons interface to
+	 * check the login of an employee
+	 * 
+	 * @param oEmployeeVO
+	 * @return
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 */
+	boolean checkLogin(EmployeeVO oEmployeeVO)throws RemoteException,
+	NotBoundException;
+
 }
