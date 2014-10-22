@@ -1,8 +1,5 @@
 package uy.edu.um.laboratoriotic.business.management.message;
 
-import java.util.HashSet;
-
-import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.FileMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 

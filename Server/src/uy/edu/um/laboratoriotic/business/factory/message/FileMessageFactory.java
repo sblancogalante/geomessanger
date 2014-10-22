@@ -1,7 +1,6 @@
 package uy.edu.um.laboratoriotic.business.factory.message;
 
 import uy.edu.um.laboratoriotic.business.manager.message.FileMessageMgr;
-import uy.edu.um.laboratoriotic.business.manager.message.TextMessageMgr;
 
 public class FileMessageFactory {
 	
