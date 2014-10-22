@@ -59,9 +59,7 @@ public class MainServer {
 
 		/*
 		 * Establecemos la conexion RMI con los mensajes
-		 */
-		// TODAVIA NO PUDE SOLUCIONAR NESTED EXCEPTION PARA ASIGNAR 2 VECES EL
-		// PUERTO
+		 */		
 		String nameTextMessage = "TextMessageRemoteMgr";
 
 		TextMessageRemoteMgt oTextMessageRemoteMgt = TextMessageRemoteFactory
