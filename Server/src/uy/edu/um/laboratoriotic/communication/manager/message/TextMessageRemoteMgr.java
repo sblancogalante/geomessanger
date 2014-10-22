@@ -12,6 +12,12 @@ import uy.edu.um.laboratoriotic.services.management.message.TextMessageRemoteMgt
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 
+/**
+ * This class is the implementation of TextMessageRemoteMgt
+ * 
+ * @author sblanco1
+ *
+ */
 public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 
 	/*
@@ -87,18 +93,18 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 
 		}
 
-		TextMessageVO oTextMessageVOToReturn = oTextMessage.toVO();
-		
+		oTextMessage.toVO();
+
 	}
 
 	@Override
 	public HashSet<TextMessageVO> getTextMessages(EmployeeVO oSenderVO,
 			HashSet<EmployeeVO> oReceiversVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		
+
 		TextMessageVO oTextMessageVO;
-		HashSet<TextMessage> oHashSet = new HashSet<>();		
-		HashSet<TextMessageVO> oListToReturn = new HashSet<>();		
+		HashSet<TextMessage> oHashSet = new HashSet<>();
+		HashSet<TextMessageVO> oListToReturn = new HashSet<>();
 		HashSet<Employee> oReceivers = new HashSet<>();
 		Employee oEmployee;
 

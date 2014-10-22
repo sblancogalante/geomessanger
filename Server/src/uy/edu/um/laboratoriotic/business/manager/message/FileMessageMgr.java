@@ -40,8 +40,7 @@ public class FileMessageMgr implements FileMessageMgt{
 	public void addFileMessage(FileMessage oFileMessage)
 			throws DataBaseConnection {
 		// TODO Auto-generated method stub
-		FileMessageDAOMgt oNewDAOFileMessage = FileMessageDAOFactory.getInstance()
-				.getFileMessageDAOMgt();
+		FileMessageDAOMgt oNewDAOFileMessage = FileMessageDAOFactory.getFileMessageDAOMgt();
 		FileMessage oNewFileMessage = oFileMessage;
 		try {
 			oNewDAOFileMessage.addFileMessage(oNewFileMessage);
@@ -52,23 +51,22 @@ public class FileMessageMgr implements FileMessageMgt{
 
 	}
 
-	@Override
-	public HashSet<FileMessage> getFileMessages(Employee oSender, HashSet<Employee> oReceivers)
-			throws DataBaseConnection {
-		// TODO Auto-generated method stub
-
-		FileMessageDAOMgt oDAOFileMessage = FileMessageDAOFactory.getInstance()
-				.getFileMessageDAOMgt();
-		HashSet<FileMessage> list = new HashSet<FileMessage>();
-		try {
-			list = oDAOFileMessage.getFileMessages(oSender, oReceivers);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return list;
-	}
+//	@Override
+//	public HashSet<FileMessage> getFileMessages(Employee oSender, HashSet<Employee> oReceivers)
+//			throws DataBaseConnection {
+//		// TODO Auto-generated method stub
+//
+//		FileMessageDAOMgt oDAOFileMessage = FileMessageDAOFactory.getFileMessageDAOMgt();
+//		HashSet<FileMessage> list = new HashSet<FileMessage>();
+//		try {
+//			list = oDAOFileMessage.getFileMessages(oSender, oReceivers);
+//		} catch (RemoteException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		return list;
+//	}
 
 
 }

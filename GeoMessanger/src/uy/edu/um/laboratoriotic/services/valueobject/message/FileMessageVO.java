@@ -1,8 +1,8 @@
 package uy.edu.um.laboratoriotic.services.valueobject.message;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * This is the entity that we use to travel from the server to the client and
@@ -16,7 +16,7 @@ public class FileMessageVO extends MessageVO implements Serializable{
 	/*
 	 * Attributes of the class
 	 */
-	private byte[] file;
+	private Blob file;
 	private String name;
 	private Timestamp date;
 	private boolean isConference;
@@ -24,25 +24,25 @@ public class FileMessageVO extends MessageVO implements Serializable{
 	/*
 	 * Constructor
 	 */
-	public FileMessageVO(int oIDMessage, byte[] oFile, String oName,
+	public FileMessageVO(int oIDMessage, Blob oFile, String oName,
 			Timestamp oDate, boolean oIsConference) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
 
-		this.setFile(oFile);
-		this.setName(oName);
-		this.setDate(oDate);
-		this.setConference(oIsConference);
+		this.file = oFile;
+		this.name = oName;
+		this.date = oDate;
+		this.isConference = oIsConference;
 	}
 
 	/*
 	 * Getters & Setters
 	 */
-	public byte[] getFile() {
+	public Blob getFile() {
 		return file;
 	}
 
-	public void setFile(byte[] oFile) {
+	public void setFile(Blob oFile) {
 		this.file = oFile;
 	}
 

@@ -25,8 +25,8 @@ public interface FileMessageMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 */
-	public HashSet<FileMessage> getFileMessages(Employee oSender, HashSet<Employee> oReceivers)
-			throws DataBaseConnection;
+//	public HashSet<FileMessage> getFileMessages(Employee oSender, HashSet<Employee> oReceivers)
+//			throws DataBaseConnection;
 
 
 }
