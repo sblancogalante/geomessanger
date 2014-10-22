@@ -1,6 +1,7 @@
 package uy.edu.um.laboratoriotic.communication.manager.message;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageRemoteMgt;
@@ -47,7 +48,7 @@ public class FileMessageRemoteMgr implements FileMessageRemoteMgt{
 	}
 
 	@Override
-	public HashSet<FileMessageVO> getFileMessages(EmployeeVO oSender,
+	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender,
 			HashSet<EmployeeVO> oReceivers) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
