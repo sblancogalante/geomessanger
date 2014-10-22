@@ -4,6 +4,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
@@ -50,17 +51,17 @@ public class TextMessageMgr implements TextMessageMgt {
 	}
 
 	@Override
-	public HashSet<TextMessageVO> getTextMessages(EmployeeVO oSender, HashSet<EmployeeVO> oReceivers) throws RemoteException, NotBoundException {
+	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSender, HashSet<EmployeeVO> oReceivers) throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
 		
-		HashSet<TextMessageVO> oHashSetToReturn = new HashSet<>();
+		ArrayList<TextMessageVO> oArrayListToReturn = new ArrayList<>();
 		
 		TextMessageRemoteMgt oTextMessageRemoteMgt = lookUp(
 				"TextMessageRemoteMgr", 1099);
 		
-		oHashSetToReturn = oTextMessageRemoteMgt.getTextMessages(oSender, oReceivers);
+		oArrayListToReturn = oTextMessageRemoteMgt.getTextMessages(oSender, oReceivers);
 		
-		return oHashSetToReturn;
+		return oArrayListToReturn;
 	}
 
 	/*
