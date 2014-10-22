@@ -50,12 +50,12 @@ public class FileMessageMgr implements FileMessageMgt{
 	}
 
 //	@Override
-//	public HashSet<FileMessage> getFileMessages(Employee oSender, HashSet<Employee> oReceivers)
+//	public ArrayList<FileMessage> getFileMessages(Employee oSender, HashSet<Employee> oReceivers)
 //			throws DataBaseConnection {
 //		// TODO Auto-generated method stub
 //
 //		FileMessageDAOMgt oDAOFileMessage = FileMessageDAOFactory.getFileMessageDAOMgt();
-//		HashSet<FileMessage> list = new HashSet<FileMessage>();
+//		ArrayList<FileMessage> list = new ArrayList<FileMessage>();
 //		try {
 //			list = oDAOFileMessage.getFileMessages(oSender, oReceivers);
 //		} catch (RemoteException e) {

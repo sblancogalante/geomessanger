@@ -1,6 +1,7 @@
 package uy.edu.um.laboratoriotic.services.management.message;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -28,7 +29,7 @@ public interface FileMessageRemoteMgt {
 	 * @return
 	 * @throws RemoteException
 	 */
-	public HashSet<FileMessageVO> getFileMessages(EmployeeVO oSender, HashSet<EmployeeVO> oReceivers) throws RemoteException;
+	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender, HashSet<EmployeeVO> oReceivers) throws RemoteException;
 
 
 
