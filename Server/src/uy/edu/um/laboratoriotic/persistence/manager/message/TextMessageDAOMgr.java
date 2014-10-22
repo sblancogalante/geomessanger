@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
@@ -121,11 +122,11 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	}
 
 	@Override
-	public HashSet<TextMessage> getTextMessages(Employee oSender,
+	public ArrayList<TextMessage> getTextMessages(Employee oSender,
 			HashSet<Employee> oReceivers) throws RemoteException {
 		// TODO Auto-generated method stub
 
-		HashSet<TextMessage> oList = new HashSet<>();
+		ArrayList<TextMessage> oList = new ArrayList<>();
 		Statement oStatement = null;
 		Connection oConnection = null;
 
@@ -143,14 +144,14 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 						+ oSender.getEmployeeID()
 						+ "AND tm.receivers="
 						+ iEmployee.getEmployeeID()
-						+ ""
+						+ "ORDER BY tm.date"
 						+ "UNION "
 						+ "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position"
 						+ " FROM Employees e, TextMessage tm, MessagesEmployees m "
 						+ "WHERE t.receivers = e.employeeID AND m.textMessageID = tm.textMessageID AND tm.sender="
 						+ iEmployee.getEmployeeID()
 						+ "AND tm.receivers="
-						+ oSender.getEmployeeID() + ") ;";
+						+ oSender.getEmployeeID() + "ORDER BY tm.date" + ");";
 
 			}			
 			

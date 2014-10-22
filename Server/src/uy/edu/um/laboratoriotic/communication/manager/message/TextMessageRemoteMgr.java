@@ -1,6 +1,7 @@
 package uy.edu.um.laboratoriotic.communication.manager.message;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
@@ -16,7 +17,7 @@ import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
  * This class is the implementation of TextMessageRemoteMgt
  * 
  * @author sblanco1
- *
+ * 
  */
 public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 
@@ -98,15 +99,16 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 	}
 
 	@Override
-	public HashSet<TextMessageVO> getTextMessages(EmployeeVO oSenderVO,
+	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSenderVO,
 			HashSet<EmployeeVO> oReceiversVO) throws RemoteException {
 		// TODO Auto-generated method stub
 
 		TextMessageVO oTextMessageVO;
-		HashSet<TextMessage> oHashSet = new HashSet<>();
-		HashSet<TextMessageVO> oListToReturn = new HashSet<>();
-		HashSet<Employee> oReceivers = new HashSet<>();
+		ArrayList<TextMessage> oArrayList = new ArrayList<>();
+		ArrayList<TextMessageVO> oListToReturn = new ArrayList<>();
+
 		Employee oEmployee;
+		HashSet<Employee> oReceivers = new HashSet<>();
 
 		TextMessageMgt oTextMessageMgt = BusinessFacade.getInstance()
 				.getTextMessageFactory().getTextMessageMgt();
@@ -131,9 +133,9 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 		}
 
 		try {
-			oHashSet = oTextMessageMgt.getTextMessages(oSender, oReceivers);
+			oArrayList = oTextMessageMgt.getTextMessages(oSender, oReceivers);
 
-			for (TextMessage iTextMessage : oHashSet) {
+			for (TextMessage iTextMessage : oArrayList) {
 				oTextMessageVO = iTextMessage.toVO();
 				oListToReturn.add(oTextMessageVO);
 			}

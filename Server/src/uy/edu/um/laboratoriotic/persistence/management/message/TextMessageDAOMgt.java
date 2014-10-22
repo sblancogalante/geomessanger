@@ -1,6 +1,7 @@
 package uy.edu.um.laboratoriotic.persistence.management.message;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
@@ -33,7 +34,7 @@ public interface TextMessageDAOMgt {
 	 * @throws DataBaseConnection
 	 * @throws RemoteException
 	 */
-	public HashSet<TextMessage> getTextMessages(Employee oSender, HashSet<Employee> oReceivers)
+	public ArrayList<TextMessage> getTextMessages(Employee oSender, HashSet<Employee> oReceivers)
 			throws DataBaseConnection, RemoteException;
 
 	/**
