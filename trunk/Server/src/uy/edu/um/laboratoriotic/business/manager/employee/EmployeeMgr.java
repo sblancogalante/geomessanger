@@ -115,6 +115,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		ArrayList<Employee> list = new ArrayList<Employee>();
+		
 		try {
 			list = oDAOEmployee.getEmployees();
 		} catch (RemoteException e) {
@@ -131,6 +132,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		Employee oEmployeeToReturn = null;
+		
 		try {
 			oEmployeeToReturn = oDAOEmployee.searchEmployee(oEmployeeVO
 					.getEmployeeID());
@@ -148,7 +150,8 @@ public class EmployeeMgr implements EmployeeMgt {
 		boolean toReturn = false;
 		
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		String crypted = this.hashPassword(oEmployee.getPassword());
+		String crypted = this.hashEncriptation(oEmployee.getPassword());
+		
 		try {
 			toReturn = oDAOEmployee.checkLogin(oEmployee.getUserName(), crypted);
 		} catch (RemoteException e) {
@@ -162,7 +165,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	/*
 	 * Helping methods 
 	 */
-	public String hashPassword(String oPassword) {
+	public String hashEncriptation(String oPassword) {
 		
 		String password = null;
 		
