@@ -80,14 +80,13 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 					+ "','"
 					+ oEmployee.getMail()
 					+ "','"
-					+ oEmployee.getPosition()					
+					+ oEmployee.getPosition()
 					+ "','"
 					+ oEmployee.getWorkingHour()
 					+ "',"
 					+ oEmployee.getProfilePicture()
-					+ ","					
-					+ oEmployee.getStatus()
-					+ ");";
+					+ ","
+					+ oEmployee.getStatus() + ");";
 
 			oStatement.execute(sInsert);
 
@@ -136,7 +135,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String sResultMail = oResultSet.getString(9);
 				String sResultPosition = oResultSet.getString(10);
 				String sResultWorkingHour = oResultSet.getString(11);
-				Blob sResultProfilePicture = oResultSet.getBlob(12);				
+				Blob sResultProfilePicture = oResultSet.getBlob(12);
 				boolean sResultStatus = oResultSet.getBoolean(13);
 
 				Employee oEmployee = new Employee(sResultEmployeeID, sResultID,
@@ -155,7 +154,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oResultSet.close();
 
 		} catch (SQLException e) {
-			//throw new RemoteException();
+			// throw new RemoteException();
 			e.printStackTrace();
 		} finally {
 			if (oConnection != null) {
@@ -311,6 +310,49 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		}
 	}
 
+	@Override
+	public boolean checkLogin(String oUserName, String oPassword) throws DataBaseConnection,
+			RemoteException {
+
+		boolean toReturn = false;
+		Connection oConnection = null;
+		try {
+			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+			Statement oStatement = oConnection.createStatement();
+			ResultSet oResultSet = oStatement
+					.executeQuery("SELECT userName, password FROM Employees WHERE (Employees.userName = '"
+							+ oUserName + "');");
+
+			while (oResultSet.next()) {
+
+				String userName = oResultSet.getString(5);
+				String password = oResultSet.getString(6);
+
+				if (oUserName.equals(userName)
+						&& oPassword.equals(password)) {
+					toReturn = true;
+				}
+			}
+
+			oResultSet.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RemoteException();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return toReturn;
+	}
+
 	/*
 	 * Helping methods
 	 */
@@ -340,24 +382,23 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 		return oResult;
 	}
-	
-//	/**
-//	 * This method converts from Date to String
-//	 * @param oDate
-//	 * @return
-//	 */
-//	private String dateToString(Date oDate){
-//		
-//		
-//		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-//	
-//		Date today = oDate;     
-//	
-//		String reportDate = df.format(today);
-//
-//		return reportDate;
-//		
-//	}
-	
+
+	// /**
+	// * This method converts from Date to String
+	// * @param oDate
+	// * @return
+	// */
+	// private String dateToString(Date oDate){
+	//
+	//
+	// DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+	//
+	// Date today = oDate;
+	//
+	// String reportDate = df.format(today);
+	//
+	// return reportDate;
+	//
+	// }
 
 }

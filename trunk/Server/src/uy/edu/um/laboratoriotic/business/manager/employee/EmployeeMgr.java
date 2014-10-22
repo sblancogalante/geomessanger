@@ -1,6 +1,9 @@
 package uy.edu.um.laboratoriotic.business.manager.employee;
 
+import java.math.BigInteger;
 import java.rmi.RemoteException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
@@ -137,6 +140,44 @@ public class EmployeeMgr implements EmployeeMgt {
 		}		
 
 		return oEmployeeToReturn;
+	}
+	
+	@Override
+	public boolean checkLogin(Employee oEmployee) throws DataBaseConnection {
+		
+		boolean toReturn = false;
+		
+		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
+		String crypted = this.hashPassword(oEmployee.getPassword());
+		try {
+			toReturn = oDAOEmployee.checkLogin(oEmployee.getUserName(), crypted);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return toReturn;
+		
+	}
+	
+	/*
+	 * Helping methods 
+	 */
+	public String hashPassword(String oPassword) {
+		
+		String password = null;
+		
+		try {
+			
+			MessageDigest md5 = MessageDigest.getInstance("MD5");
+			md5.update(oPassword.getBytes());
+			BigInteger hash = new BigInteger(1, md5.digest());
+			password = hash.toString(16);
+			
+		} catch (NoSuchAlgorithmException e) {
+			// No hacer nada
+		}
+		
+		return password;
 	}
 
 }

@@ -74,6 +74,18 @@ public class EmployeeMgr implements EmployeeMgt {
 		oEmployeeRemoteMgt.removeEmployee(oEmployeeVO);
 
 	}
+	
+	@Override
+	public boolean checkLogin(EmployeeVO oEmployeeVO) throws RemoteException, NotBoundException {
+		// TODO Auto-generated method stub
+		
+		boolean toReturn = false;
+		
+		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);		
+		toReturn = oEmployeeRemoteMgt.checkLogin(oEmployeeVO);
+		
+		return toReturn;
+	}
 
 	/*
 	 * Helping methods

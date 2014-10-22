@@ -52,4 +52,14 @@ public interface EmployeeRemoteMgt extends Remote {
 	 */
 	public ArrayList<EmployeeVO> getEmployees() throws RemoteException;
 
+	/**
+	 * This method communicates the server that the client wants to assert
+	 * a login
+	 * 
+	 * @param oEmployeeVO
+	 * @return
+	 * @throws RemoteException
+	 */
+	boolean checkLogin(EmployeeVO oEmployeeVO) throws RemoteException;
+
 }

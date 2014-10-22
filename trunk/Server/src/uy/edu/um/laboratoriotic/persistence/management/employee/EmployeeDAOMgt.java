@@ -10,7 +10,7 @@ import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
  * This is the persistence interface
  * 
  * @author sblanco1
- *
+ * 
  */
 public interface EmployeeDAOMgt {
 
@@ -62,5 +62,17 @@ public interface EmployeeDAOMgt {
 	 * @throws RemoteException
 	 */
 	public void createTable() throws DataBaseConnection, RemoteException;
+
+	/**
+	 * This method checks the login
+	 * 
+	 * @param oUserName
+	 * @param oPassword
+	 * @return
+	 * @throws DataBaseConnection
+	 * @throws RemoteException
+	 */
+	public boolean checkLogin(String oUserName, String oPassword)
+			throws DataBaseConnection, RemoteException;
 
 }

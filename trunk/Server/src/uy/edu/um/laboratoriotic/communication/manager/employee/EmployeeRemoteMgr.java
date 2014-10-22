@@ -134,4 +134,28 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 	}
 
+	@Override
+	public boolean checkLogin(EmployeeVO oEmployeeVO) throws RemoteException {
+
+		boolean toReturn = false;
+
+		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
+				.getEmployeeFactory().getEmployeeMgt();
+
+		Employee oEmployee = new Employee(oEmployeeVO.getEmployeeID(),
+				oEmployeeVO.getID(), oEmployeeVO.getName(),
+				oEmployeeVO.getLastName(), oEmployeeVO.getUserName(),
+				oEmployeeVO.getPassword(), oEmployeeVO.getLocation(),
+				oEmployeeVO.getSector(), oEmployeeVO.getMail(),
+				oEmployeeVO.getPosition(), oEmployeeVO.getWorkingHour(),
+				oEmployeeVO.getProfilePicture(), oEmployeeVO.getStatus());
+
+		try {
+			toReturn = oEmployeeMgt.checkLogin(oEmployee);
+		} catch (DataBaseConnection e) {
+			// TODO Auto-generated catch block
+		}
+
+		return toReturn;
+	}
 }
