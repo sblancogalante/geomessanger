@@ -1,9 +1,7 @@
 package uy.edu.um.laboratoriotic.business.manager.message;
 
 import java.rmi.RemoteException;
-import java.util.HashSet;
 
-import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.FileMessage;
 import uy.edu.um.laboratoriotic.business.management.message.FileMessageMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
