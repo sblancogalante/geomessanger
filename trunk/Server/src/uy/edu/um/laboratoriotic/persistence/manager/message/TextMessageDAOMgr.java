@@ -30,11 +30,11 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	private static TextMessageDAOMgr instance = null;
 	private static final String DRIVER_JDBC = "org.hsqldb.jdbc.JDBCDriver";
 	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
-	private static final String CREATE_TABLE_TEXT_MESSAGES = "CREATE TABLE TextMessages (textMessageID int PRIMARY KEY, text VARCHAR(300), employeeID int NOT NULL FOREIGN KEY REFERENCES Employees, date DATE NOT NULL, isConference boolean NOT NULL)";
+	private static final String CREATE_TABLE_TEXT_MESSAGES = "CREATE TABLE TextMessages (textMessageID int PRIMARY KEY, text VARCHAR(300), employeeSenderID int NOT NULL FOREIGN KEY REFERENCES Employees, employeeReceiverID int NOT NULL FOREIGN KEY REFERENCES Employees, date DATE NOT NULL, isConference boolean NOT NULL)";
 	private static final String CREATE_TABLE_MESSAGES_EMPLOYEES = "CREATE TABLE MessagesEmployees (textMessageID int FOREIGN KEY REFERENCES TextMessages, EmployeeID int FOREIGN KEY REFERENCES Employees)";
 
 	private static int identifierNumber = 0;
-	
+
 	/*
 	 * Constructor
 	 */
@@ -62,7 +62,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	public void addTextMessage(TextMessage oTextMessage)
 			throws DataBaseConnection, RemoteException {
 		// TODO Auto-generated method stub
-		
+
 		Connection oConnection = null;
 		PreparedStatement oPrepStatement = null;
 		Statement oStatement = null;
@@ -70,31 +70,37 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 		try {
 
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
-			
+
 			int sID = TextMessageDAOMgr.identifierNumber++;
 			String sText = oTextMessage.getTextMessage();
 			int sIDSender = oTextMessage.getSender().getEmployeeID();
-			//FIXME
-			Timestamp sDate = new Timestamp(System.currentTimeMillis());			
+			HashSet<Employee> sReceivers = oTextMessage.getReceivers();
+
+			// FIXME
+			Timestamp sDate = new Timestamp(System.currentTimeMillis());
 			boolean sIsConf = oTextMessage.getIsConference();
-			
-			String sInsert1 = "INSERT INTO TextMessages (textMessageID, text, employeeID, date, isConference) VALUES (?,?,?,?,?)";
-//					+ sID + ","	+ sIDSender	+ "," + sDate + ",'"
-//					+ sText	+ "'," + sConf + ")";
 
-			oPrepStatement= oConnection.prepareStatement(sInsert1);
+			for (Employee iEmployee : sReceivers) {
+				String sInsert1 = "INSERT INTO TextMessages (textMessageID, text, employeeSenderID, employeeReceiverID, date, isConference) VALUES (?,?,?,?,?,?)";
+				// + sID + "," + sIDSender + "," + sDate + ",'"
+				// + sText + "'," + sConf + ")";
 
-			oPrepStatement.setInt(1, sID);
-			oPrepStatement.setString(2, sText);
-			oPrepStatement.setInt(3, sIDSender);
-			oPrepStatement.setTimestamp(4, sDate);
-			oPrepStatement.setBoolean(5, sIsConf);
+				oPrepStatement = oConnection.prepareStatement(sInsert1);
 
-			System.out.println("Se agrego con exito a la tabla de mensajes:"
-					+ sID + "que con el texto: " + sText + "enviado por "
-					+ sIDSender + " , con la fecha " + sDate);
+				oPrepStatement.setInt(1, sID);
+				oPrepStatement.setString(2, sText);
+				oPrepStatement.setInt(3, sIDSender);
+				oPrepStatement.setInt(4, iEmployee.getEmployeeID());
+				oPrepStatement.setTimestamp(5, sDate);
+				oPrepStatement.setBoolean(6, sIsConf);
 
-			
+				System.out
+						.println("Se agrego con exito a la tabla de mensajes:"
+								+ sID + " que con el texto: " + sText
+								+ " enviado por " + sIDSender
+								+ " para " + sReceivers + ", con la fecha " + sDate);
+
+			}
 
 			oPrepStatement.execute();
 
@@ -102,7 +108,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 					+ sID + "," + sIDSender + ")";
 
 			oStatement = oConnection.createStatement();
-			
+
 			oStatement.execute(sInsert2);
 
 		} catch (SQLException e) {
@@ -118,7 +124,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -138,23 +144,24 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 			String sQuery = null;
 
 			for (Employee iEmployee : oReceivers) {
-				sQuery = "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position"
-						+ " FROM Employees e, TextMessage tm, MessagesEmployees m "
-						+ "WHERE t.receivers = e.employeeID AND m.textMessageID = tm.textMessageID AND tm.sender="
+				sQuery = "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.date"
+						+ " FROM Employees e, TextMessages tm, MessagesEmployees m "
+						+ "WHERE tm.employeeReceiverID = e.employeeID AND m.textMessageID = tm.textMessageID AND tm.employeeSenderID ="
 						+ oSender.getEmployeeID()
-						+ "AND tm.receivers="
+						+ " AND tm.employeeReceiverID ="
 						+ iEmployee.getEmployeeID()
-						+ "ORDER BY tm.date"
-						+ "UNION "
+						+ " ORDER BY tm.date ASC"
+						+ " UNION "
 						+ "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position"
-						+ " FROM Employees e, TextMessage tm, MessagesEmployees m "
-						+ "WHERE t.receivers = e.employeeID AND m.textMessageID = tm.textMessageID AND tm.sender="
+						+ " FROM Employees e, TextMessages tm, MessagesEmployees m "
+						+ "WHERE tm.employeeReceiverID = e.employeeID AND m.textMessageID = tm.textMessageID AND tm.employeeSenderID ="
 						+ iEmployee.getEmployeeID()
-						+ "AND tm.receivers="
-						+ oSender.getEmployeeID() + "ORDER BY tm.date" + ");";
+						+ " AND tm.employeeReceiverID ="
+						+ oSender.getEmployeeID() + " ORDER BY tm.date ASC;";
 
-			}			
-			
+			}
+
+			System.out.println(sQuery);
 			oResultSet = oStatement.executeQuery(sQuery);
 
 			while (oResultSet.next()) {
@@ -176,6 +183,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
 			throw new RemoteException();
 		} finally {
 			if (oConnection != null) {
