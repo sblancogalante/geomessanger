@@ -39,7 +39,7 @@ public class GeneralRemoteMgr implements GeneralRemoteMgt {
 	}
 
 	/*
-	 * Management interface method implementations
+	 * Management method implementations
 	 */
 	@Override
 	public void addType(TypeVO oTypeVO) throws RemoteException {
@@ -73,8 +73,8 @@ public class GeneralRemoteMgr implements GeneralRemoteMgt {
 
 		Type oType = oGeneralMgt.getType(oTypeVO);
 
-		TypeVO oTYpeVOToReturn = new TypeVO(oType.getTypeID(),
-				oType.getType(), oType.getValue());
+		TypeVO oTYpeVOToReturn = new TypeVO(oType.getTypeID(), oType.getType(),
+				oType.getValue());
 
 		return oTYpeVOToReturn;
 	}

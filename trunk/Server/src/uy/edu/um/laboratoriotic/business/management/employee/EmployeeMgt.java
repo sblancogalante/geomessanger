@@ -21,7 +21,7 @@ public interface EmployeeMgt {
 	 * @param oEmployee
 	 * @throws DataBaseConnection
 	 */
-	public void addEmployee(Employee oEmployee) throws DataBaseConnection;
+	public void addEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection;
 
 	/**
 	 * This method makes sure that the database removes an employee
@@ -38,7 +38,7 @@ public interface EmployeeMgt {
 	 * @param oEmployee
 	 * @return
 	 */
-	public Employee modifyEmployee(Employee oEmployee);
+	public Employee modifyEmployee(EmployeeVO oEmployeeVO);
 
 	/**
 	 * This method makes sure that the database searches an employee
@@ -56,7 +56,7 @@ public interface EmployeeMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 */
-	public ArrayList<Employee> getEmployees() throws DataBaseConnection;
+	public ArrayList<EmployeeVO> getEmployees() throws DataBaseConnection;
 
 	/**
 	 * This is an auxiliary method
@@ -76,7 +76,7 @@ public interface EmployeeMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 */
-	boolean checkLogin(Employee oEmployee) throws DataBaseConnection;
+	boolean checkLogin(EmployeeVO oEmployeeVO) throws DataBaseConnection;
 
 	
 

@@ -10,6 +10,8 @@ import uy.edu.um.laboratoriotic.business.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.factory.message.TextMessageDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.management.message.TextMessageDAOMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 
 /**
  * This class is the implementation of TextMessageMgt
@@ -32,6 +34,7 @@ public class TextMessageMgr implements TextMessageMgt {
 	}
 
 	public static TextMessageMgr getInstance() {
+
 		if (instance == null) {
 			instance = new TextMessageMgr();
 		}
@@ -43,39 +46,106 @@ public class TextMessageMgr implements TextMessageMgt {
 	 * Management implementation methods
 	 */
 	@Override
-	public void addTextMessage(TextMessage oTextMessage)
+	public void addTextMessage(TextMessageVO oTextMessageVO)
 			throws DataBaseConnection {
 		// TODO Auto-generated method stub
+
 		TextMessageDAOMgt oNewDAOTextMessage = TextMessageDAOFactory
 				.getTextMessageDAOMgt();
-		TextMessage oNewTextMessage = oTextMessage;
+
+		Employee oSenderEmployee = new Employee(oTextMessageVO.getSender()
+				.getEmployeeID(), oTextMessageVO.getSender().getID(),
+				oTextMessageVO.getSender().getName(), oTextMessageVO
+						.getSender().getLastName(), oTextMessageVO.getSender()
+						.getUserName(), oTextMessageVO.getSender()
+						.getPassword(), oTextMessageVO.getSender()
+						.getLocation(), oTextMessageVO.getSender().getSector(),
+				oTextMessageVO.getSender().getMail(), oTextMessageVO
+						.getSender().getPosition(), oTextMessageVO.getSender()
+						.getWorkingHour(), oTextMessageVO.getSender()
+						.getProfilePicture(), oTextMessageVO.getSender()
+						.getStatus());
+
+		HashSet<Employee> oReceiversEmployees = new HashSet<>();
+
+		for (EmployeeVO iEmployeeVO : oTextMessageVO.getReceivers()) {
+
+			Employee oReceiverEmployee = new Employee(
+					iEmployeeVO.getEmployeeID(), iEmployeeVO.getID(),
+					iEmployeeVO.getName(), iEmployeeVO.getLastName(),
+					iEmployeeVO.getUserName(), iEmployeeVO.getPassword(),
+					iEmployeeVO.getLocation(), iEmployeeVO.getSector(),
+					iEmployeeVO.getMail(), iEmployeeVO.getPosition(),
+					iEmployeeVO.getWorkingHour(),
+					iEmployeeVO.getProfilePicture(), iEmployeeVO.getStatus());
+
+			oReceiversEmployees.add(oReceiverEmployee);
+		}
+
+		TextMessage oTextMessage = new TextMessage(
+				oTextMessageVO.getIDMessage(), oTextMessageVO.getTextMessage(),
+				oSenderEmployee, oReceiversEmployees, oTextMessageVO.getDate(),
+				oTextMessageVO.getIsConference());
+
 		try {
-			oNewDAOTextMessage.addTextMessage(oNewTextMessage);
+			oNewDAOTextMessage.addTextMessage(oTextMessage);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		oTextMessage.toVO();
 
 	}
 
 	@Override
-	public ArrayList<TextMessage> getTextMessages(Employee oSender,
-			HashSet<Employee> oReceivers) throws DataBaseConnection {
+	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSenderVO,
+			HashSet<EmployeeVO> oReceiversVO) throws DataBaseConnection {
 		// TODO Auto-generated method stub
 
-		ArrayList<TextMessage> list = new ArrayList<TextMessage>();
-		
+		TextMessageVO oTextMessageVO;
+		ArrayList<TextMessage> oArrayList = new ArrayList<>();
+		ArrayList<TextMessageVO> oListToReturn = new ArrayList<>();
+
+		Employee oEmployee;
+		HashSet<Employee> oReceivers = new HashSet<>();
+
 		TextMessageDAOMgt oDAOTextMessage = TextMessageDAOFactory
 				.getTextMessageDAOMgt();
-				
+
+		Employee oSender = new Employee(oSenderVO.getEmployeeID(),
+				oSenderVO.getID(), oSenderVO.getName(),
+				oSenderVO.getLastName(), oSenderVO.getUserName(),
+				oSenderVO.getPassword(), oSenderVO.getLocation(),
+				oSenderVO.getSector(), oSenderVO.getMail(),
+				oSenderVO.getPosition(), oSenderVO.getWorkingHour(),
+				oSenderVO.getProfilePicture(), oSenderVO.getStatus());
+
+		for (EmployeeVO iEmployeeVO : oReceiversVO) {
+			oEmployee = new Employee(iEmployeeVO.getEmployeeID(),
+					iEmployeeVO.getID(), iEmployeeVO.getName(),
+					iEmployeeVO.getLastName(), iEmployeeVO.getUserName(),
+					iEmployeeVO.getPassword(), iEmployeeVO.getLocation(),
+					iEmployeeVO.getSector(), iEmployeeVO.getMail(),
+					iEmployeeVO.getPosition(), iEmployeeVO.getWorkingHour(),
+					iEmployeeVO.getProfilePicture(), iEmployeeVO.getStatus());
+			oReceivers.add(oEmployee);
+		}
+
 		try {
-			list = oDAOTextMessage.getTextMessages(oSender, oReceivers);
+			oArrayList = oDAOTextMessage.getTextMessages(oSender, oReceivers);
+
+			for (TextMessage iTextMessage : oArrayList) {
+				oTextMessageVO = iTextMessage.toVO();
+				oListToReturn.add(oTextMessageVO);
+			}
+
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return list;
+		return oListToReturn;
 	}
 
 }

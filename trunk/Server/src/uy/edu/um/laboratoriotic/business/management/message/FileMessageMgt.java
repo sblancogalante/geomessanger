@@ -1,7 +1,7 @@
 package uy.edu.um.laboratoriotic.business.management.message;
 
-import uy.edu.um.laboratoriotic.business.entities.message.FileMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
 
 public interface FileMessageMgt {
 	
@@ -11,7 +11,7 @@ public interface FileMessageMgt {
 	 * @param oTextMessage
 	 * @throws DataBaseConnection
 	 */
-	public void addFileMessage(FileMessage oFileMessage)
+	public void addFileMessage(FileMessageVO oFileMessageVO)
 			throws DataBaseConnection;
 
 	/**
@@ -22,7 +22,7 @@ public interface FileMessageMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 */
-//	public ArrayList<FileMessage> getFileMessages(Employee oSender, HashSet<Employee> oReceivers)
+//	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender, HashSet<EmployeeVO> oReceivers)
 //			throws DataBaseConnection;
 
 

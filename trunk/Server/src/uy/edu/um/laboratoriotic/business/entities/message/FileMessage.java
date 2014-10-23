@@ -29,13 +29,16 @@ public class FileMessage extends Message {
 	/*
 	 * Constructor
 	 */
-	public FileMessage(int oIDMessage, Blob oFile, String oName, Timestamp oDate,
+	public FileMessage(int oIDMessage, Blob oFile, String oName,
+			Employee oSender, HashSet<Employee> oReceivers, Timestamp oDate,
 			boolean oIsConference) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
 
 		this.file = oFile;
 		this.name = oName;
+		this.sender = oSender;
+		this.receivers = oReceivers;
 		this.date = oDate;
 		this.isConference = oIsConference;
 	}
@@ -58,13 +61,13 @@ public class FileMessage extends Message {
 			oReceiversToReturn.add(oEmployeeVO);
 		}
 
-		return new FileMessageVO(this.getIDMessage(), file, name, date, isConference);
+		return new FileMessageVO(this.getIDMessage(), file, name,
+				sender.toVO(), oReceiversToReturn, date, isConference);
 	}
 
 	/*
 	 * Getters & Setters
 	 */
-
 	public Blob getFileMessage() {
 		return file;
 	}
@@ -72,7 +75,7 @@ public class FileMessage extends Message {
 	public void setFileMessage(Blob oFileMessage) {
 		this.file = oFileMessage;
 	}
-	
+
 	public String getFileMessageName() {
 		return name;
 	}

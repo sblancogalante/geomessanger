@@ -47,20 +47,10 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 		// TODO Auto-generated method stub
 
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
-				.getEmployeeFactory().getEmployeeMgt();
-
-		// Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
-
-		Employee oEmployee = new Employee(oEmployeeVO.getEmployeeID(),
-				oEmployeeVO.getID(), oEmployeeVO.getName(),
-				oEmployeeVO.getLastName(), oEmployeeVO.getUserName(),
-				oEmployeeVO.getPassword(), oEmployeeVO.getLocation(),
-				oEmployeeVO.getSector(), oEmployeeVO.getMail(),
-				oEmployeeVO.getPosition(), oEmployeeVO.getWorkingHour(),
-				oEmployeeVO.getProfilePicture(), oEmployeeVO.getStatus());
+				.getEmployeeFactory().getEmployeeMgt();	
 
 		try {
-			oEmployeeMgt.addEmployee(oEmployee);
+			oEmployeeMgt.addEmployee(oEmployeeVO);
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 
@@ -72,21 +62,13 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	public ArrayList<EmployeeVO> getEmployees() throws RemoteException {
 		// TODO Auto-generated method stub
 
-		ArrayList<EmployeeVO> oListToReturn = new ArrayList<>();
-		EmployeeVO oEmployeeVO;
+		ArrayList<EmployeeVO> oListToReturn = new ArrayList<>();	
 
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
-
-		ArrayList<Employee> oList = new ArrayList<>();
+		
 		try {
-			oList = oEmployeeMgt.getEmployees();
-
-			for (Employee iEmployee : oList) {
-				oEmployeeVO = iEmployee.toVO();
-				oListToReturn.add(oEmployeeVO);
-			}
-
+			oListToReturn = oEmployeeMgt.getEmployees();
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 
@@ -100,11 +82,12 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 			throws RemoteException {
 		// TODO Auto-generated method stub
 
-		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
-				.getEmployeeFactory().getEmployeeMgt();
-
 		Employee oEmployee;
 		EmployeeVO oEmployeeVOToReturn = null;
+		
+		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
+				.getEmployeeFactory().getEmployeeMgt();		
+		
 		try {
 			oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
 			oEmployeeVOToReturn = oEmployee.toVO();
@@ -120,10 +103,11 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException {
 		// TODO Auto-generated method stub
 
-		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
-				.getEmployeeFactory().getEmployeeMgt();
-
 		Employee oEmployee;
+		
+		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
+				.getEmployeeFactory().getEmployeeMgt();		
+		
 		try {
 			oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
 			oEmployeeMgt.removeEmployee(oEmployee.getEmployeeID());
@@ -140,22 +124,15 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 		boolean toReturn = false;
 
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
-				.getEmployeeFactory().getEmployeeMgt();
-
-		Employee oEmployee = new Employee(oEmployeeVO.getEmployeeID(),
-				oEmployeeVO.getID(), oEmployeeVO.getName(),
-				oEmployeeVO.getLastName(), oEmployeeVO.getUserName(),
-				oEmployeeVO.getPassword(), oEmployeeVO.getLocation(),
-				oEmployeeVO.getSector(), oEmployeeVO.getMail(),
-				oEmployeeVO.getPosition(), oEmployeeVO.getWorkingHour(),
-				oEmployeeVO.getProfilePicture(), oEmployeeVO.getStatus());
+				.getEmployeeFactory().getEmployeeMgt();		
 
 		try {
-			toReturn = oEmployeeMgt.checkLogin(oEmployee);
+			toReturn = oEmployeeMgt.checkLogin(oEmployeeVO);
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 		}
 
 		return toReturn;
 	}
+	
 }
