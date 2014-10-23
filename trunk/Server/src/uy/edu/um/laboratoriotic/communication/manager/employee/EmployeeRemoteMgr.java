@@ -8,6 +8,7 @@ import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
@@ -119,7 +120,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	}
 
 	@Override
-	public boolean checkLogin(EmployeeVO oEmployeeVO) throws RemoteException {
+	public boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO) throws RemoteException {
 
 		boolean toReturn = false;
 
@@ -127,7 +128,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 				.getEmployeeFactory().getEmployeeMgt();		
 
 		try {
-			toReturn = oEmployeeMgt.checkLogin(oEmployeeVO);
+			toReturn = oEmployeeMgt.checkLogin(oEmployeeFilterVO);
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 		}

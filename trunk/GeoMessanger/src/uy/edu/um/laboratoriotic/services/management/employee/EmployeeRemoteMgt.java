@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
@@ -60,6 +61,6 @@ public interface EmployeeRemoteMgt extends Remote {
 	 * @return
 	 * @throws RemoteException
 	 */
-	boolean checkLogin(EmployeeVO oEmployeeVO) throws RemoteException;
+	boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO) throws RemoteException;
 
 }
