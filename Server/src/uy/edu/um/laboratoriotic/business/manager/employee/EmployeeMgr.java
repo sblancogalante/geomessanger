@@ -37,6 +37,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	 * Methods
 	 */
 	public static EmployeeMgr getInstance() {
+		
 		if (instance == null) {
 			instance = new EmployeeMgr();
 		}
@@ -48,13 +49,23 @@ public class EmployeeMgr implements EmployeeMgt {
 	 * This are the management implementation methods
 	 */
 	@Override
-	public void addEmployee(Employee oEmployee) throws DataBaseConnection {
+	public void addEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		Employee oNewEmployee = oEmployee;
+		
+		// Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);		
+
+		Employee oEmployee = new Employee(oEmployeeVO.getEmployeeID(),
+				oEmployeeVO.getID(), oEmployeeVO.getName(),
+				oEmployeeVO.getLastName(), oEmployeeVO.getUserName(),
+				oEmployeeVO.getPassword(), oEmployeeVO.getLocation(),
+				oEmployeeVO.getSector(), oEmployeeVO.getMail(),
+				oEmployeeVO.getPosition(), oEmployeeVO.getWorkingHour(),
+				oEmployeeVO.getProfilePicture(), oEmployeeVO.getStatus());
+		
 		try {
-			oNewDAOEmployee.addEmployee(oNewEmployee);
+			oNewDAOEmployee.addEmployee(oEmployee);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,7 +88,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 
 	@Override
-	public Employee modifyEmployee(Employee oEmployee) {
+	public Employee modifyEmployee(EmployeeVO oEmployeeVO) {
 		// TODO Auto-generated method stub
 		// EmployeeDAOMgt oNewDAOEmployee =
 		// EmployeeDAOFactory.getEmployeeDAOMgt();
@@ -87,11 +98,11 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		Employee oEmployee;
-		Employee  oEmployeeToReturn = null;
+		Employee oEmployeeToReturn = null;
 		try {
 			oEmployee = oNewDAOEmployee.searchEmployee(oEmployeeID);
 			if (oEmployee != null) {
@@ -104,26 +115,35 @@ public class EmployeeMgr implements EmployeeMgt {
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 
 		return oEmployeeToReturn;
 	}
 
 	@Override
-	public ArrayList<Employee> getEmployees() throws DataBaseConnection {
+	public ArrayList<EmployeeVO> getEmployees() throws DataBaseConnection {
 		// TODO Auto-generated method stub
 
-		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		ArrayList<Employee> list = new ArrayList<Employee>();
-		
+		EmployeeVO oEmployeeVO;
+		ArrayList<EmployeeVO> oListToReturn = new ArrayList<>();
+		ArrayList<Employee> oList = new ArrayList<>();
+	
+		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();		
+
 		try {
-			list = oDAOEmployee.getEmployees();
+			oList = oDAOEmployee.getEmployees();
+
+			for (Employee iEmployee : oList) {
+				oEmployeeVO = iEmployee.toVO();
+				oListToReturn.add(oEmployeeVO);
+			}
+
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return list;
+		return oListToReturn;
 	}
 
 	@Override
@@ -132,55 +152,56 @@ public class EmployeeMgr implements EmployeeMgt {
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		Employee oEmployeeToReturn = null;
-		
+
 		try {
 			oEmployeeToReturn = oDAOEmployee.searchEmployee(oEmployeeVO
 					.getEmployeeID());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 
 		return oEmployeeToReturn;
 	}
-	
+
 	@Override
-	public boolean checkLogin(Employee oEmployee) throws DataBaseConnection {
-		
+	public boolean checkLogin(EmployeeVO oEmployeeVO) throws DataBaseConnection {
+
 		boolean toReturn = false;
-		
+
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		String crypted = this.hashEncriptation(oEmployee.getPassword());
-		
+		String crypted = this.hashEncriptation(oEmployeeVO.getPassword());
+
 		try {
-			toReturn = oDAOEmployee.checkLogin(oEmployee.getUserName(), crypted);
+			toReturn = oDAOEmployee.checkLogin(oEmployeeVO.getUserName(),
+					crypted);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return toReturn;
-		
+
 	}
-	
+
 	/*
-	 * Helping methods 
+	 * Helping methods
 	 */
 	public String hashEncriptation(String oPassword) {
-		
-		String password = null;
-		
+
+		String newPassword = null;
+
 		try {
-			
+
 			MessageDigest md5 = MessageDigest.getInstance("MD5");
 			md5.update(oPassword.getBytes());
 			BigInteger hash = new BigInteger(1, md5.digest());
-			password = hash.toString(16);
-			
+			newPassword = hash.toString(16);
+
 		} catch (NoSuchAlgorithmException e) {
 			// No hacer nada
 		}
-		
-		return password;
+
+		return newPassword;
 	}
 
 }

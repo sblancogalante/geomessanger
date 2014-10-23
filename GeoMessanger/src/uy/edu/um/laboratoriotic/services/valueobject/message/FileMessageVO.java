@@ -3,6 +3,9 @@ package uy.edu.um.laboratoriotic.services.valueobject.message;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Timestamp;
+import java.util.HashSet;
+
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
  * This is the entity that we use to travel from the server to the client and
@@ -18,6 +21,8 @@ public class FileMessageVO extends MessageVO implements Serializable{
 	 */
 	private Blob file;
 	private String name;
+	private EmployeeVO sender;
+	private HashSet<EmployeeVO> receivers;
 	private Timestamp date;
 	private boolean isConference;
 
@@ -25,12 +30,15 @@ public class FileMessageVO extends MessageVO implements Serializable{
 	 * Constructor
 	 */
 	public FileMessageVO(int oIDMessage, Blob oFile, String oName,
-			Timestamp oDate, boolean oIsConference) {
+			EmployeeVO oSender, HashSet<EmployeeVO> oReceivers, Timestamp oDate,
+			boolean oIsConference) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
 
 		this.file = oFile;
 		this.name = oName;
+		this.sender = oSender;
+		this.receivers = oReceivers;
 		this.date = oDate;
 		this.isConference = oIsConference;
 	}
@@ -38,20 +46,36 @@ public class FileMessageVO extends MessageVO implements Serializable{
 	/*
 	 * Getters & Setters
 	 */
-	public Blob getFile() {
+	public Blob getFileMessage() {
 		return file;
 	}
 
-	public void setFile(Blob oFile) {
-		this.file = oFile;
+	public void setFileMessage(Blob oFileMessage) {
+		this.file = oFileMessage;
 	}
 
-	public String getName() {
+	public String getFileMessageName() {
 		return name;
 	}
 
-	public void setName(String oName) {
+	public void setFileMessageName(String oName) {
 		this.name = oName;
+	}
+
+	public EmployeeVO getSender() {
+		return sender;
+	}
+
+	public void setSender(EmployeeVO oSender) {
+		this.sender = oSender;
+	}
+
+	public HashSet<EmployeeVO> getReceivers() {
+		return receivers;
+	}
+
+	public void setReceivers(HashSet<EmployeeVO> oReceivers) {
+		this.receivers = oReceivers;
 	}
 
 	public Timestamp getDate() {
@@ -66,7 +90,7 @@ public class FileMessageVO extends MessageVO implements Serializable{
 		return isConference;
 	}
 
-	public void setConference(boolean oIsConference) {
+	public void setIsconference(boolean oIsConference) {
 		this.isConference = oIsConference;
 	}
 

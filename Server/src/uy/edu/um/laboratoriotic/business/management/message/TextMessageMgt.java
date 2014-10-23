@@ -6,6 +6,8 @@ import java.util.HashSet;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 
 /**
  * This interface is the one in charge of establishing communication between the
@@ -22,7 +24,7 @@ public interface TextMessageMgt {
 	 * @param oTextMessage
 	 * @throws DataBaseConnection
 	 */
-	public void addTextMessage(TextMessage oTextMessage)
+	public void addTextMessage(TextMessageVO oTextMessageVO)
 			throws DataBaseConnection;
 
 	/**
@@ -33,7 +35,7 @@ public interface TextMessageMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 */
-	public ArrayList<TextMessage> getTextMessages(Employee oSender, HashSet<Employee> oReceivers)
+	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSender, HashSet<EmployeeVO> oReceivers)
 			throws DataBaseConnection;
 
 }
