@@ -19,6 +19,12 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.UserNameAlreadyExists;
+import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
+import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+
 public class LoginAbsoluteLayout extends JFrame {
 
 	private JPanel contentPane;
@@ -36,7 +42,8 @@ public class LoginAbsoluteLayout extends JFrame {
 	public LoginAbsoluteLayout() {
 
 		logedin = false;
-
+		
+		final EmployeeMgt employeeMgr =  EmployeeFactory.getInstance().getEmployeeMgt();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 200, 300);
 		Dimension d = new Dimension(200, 300);
@@ -115,9 +122,17 @@ public class LoginAbsoluteLayout extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				logedin = true;
 				MainWindow wind;
+				String inputUserName = userText.getText();
+				String inputPassword = String.valueOf(passwordText.getPassword());
+				EmployeeFilterVO inputEmployeeVO = new EmployeeFilterVO(inputUserName, inputPassword);
+				
 				try {
-					wind = new MainWindow();
-					wind.setVisible(true);
+					if(employeeMgr.checkLogin(inputEmployeeVO)){
+						wind = new MainWindow(inputEmployeeVO);
+						wind.setVisible(true);
+					}
+					
+					
 				} catch (RemoteException | NotBoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

@@ -4,6 +4,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
@@ -56,7 +57,7 @@ public interface EmployeeMgt {
 	 * @throws RemoteException
 	 * @throws NotBoundException
 	 */
-	boolean checkLogin(EmployeeVO oEmployeeVO)throws RemoteException,
+	boolean checkLogin(EmployeeFilterVO oEmployeeVO)throws RemoteException,
 	NotBoundException;
 
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
@@ -76,7 +77,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 	
 	@Override
-	public boolean checkLogin(EmployeeVO oEmployeeVO) throws RemoteException, NotBoundException {
+	public boolean checkLogin(EmployeeFilterVO oEmployeeVO) throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
 		
 		boolean toReturn = false;

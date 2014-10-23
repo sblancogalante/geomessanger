@@ -33,6 +33,7 @@ import javax.swing.border.EmptyBorder;
 
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 public class MainWindow extends JFrame {
@@ -54,7 +55,7 @@ public class MainWindow extends JFrame {
 	private JMenuItem mntmProfile;
 	private ArrayList<EmployeeVO> listEmployee;
 
-	public MainWindow() throws RemoteException, NotBoundException {
+	public MainWindow(EmployeeFilterVO actualUser) throws RemoteException, NotBoundException {
 
 		final EmployeeMgt employeeMgt = EmployeeFactory.getInstance()
 				.getEmployeeMgt();
