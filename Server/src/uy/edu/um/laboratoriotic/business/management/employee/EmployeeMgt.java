@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
@@ -76,7 +77,7 @@ public interface EmployeeMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 */
-	boolean checkLogin(EmployeeVO oEmployeeVO) throws DataBaseConnection;
+	boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO) throws DataBaseConnection;
 
 	
 

@@ -9,24 +9,20 @@ import java.io.Serializable;
  * @author sblanco1
  * 
  */
-public class EmployeeFilterVO implements Serializable{
+public class EmployeeFilterVO implements Serializable {
 
 	/*
 	 * Attributes of the class
 	 */
-	private boolean status;
-	private String location, sector, userName;
+	private String userName, password;
 
 	/*
 	 * Constructors
 	 */
-	public EmployeeFilterVO(String oUserName, String oLocation, String oSector,
-			boolean oStatus) {
+	public EmployeeFilterVO(String oUserName, String oPassword) {
 
 		this.userName = oUserName;
-		this.location = oLocation;
-		this.sector = oSector;
-		this.status = oStatus;
+		this.password = oPassword;
 
 	}
 
@@ -41,28 +37,12 @@ public class EmployeeFilterVO implements Serializable{
 		this.userName = oUserName;
 	}
 
-	public boolean isStatus() {
-		return status;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public String getSector() {
-		return sector;
-	}
-
-	public void setSector(String sector) {
-		this.sector = sector;
+	public void setPassword(String oPassword) {
+		this.password = oPassword;
 	}
 
 }

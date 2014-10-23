@@ -11,6 +11,7 @@ import uy.edu.um.laboratoriotic.business.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
@@ -165,15 +166,15 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 
 	@Override
-	public boolean checkLogin(EmployeeVO oEmployeeVO) throws DataBaseConnection {
+	public boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO) throws DataBaseConnection {
 
 		boolean toReturn = false;
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		String crypted = this.hashEncriptation(oEmployeeVO.getPassword());
+		String crypted = this.hashEncriptation(oEmployeeFilterVO.getPassword());
 
 		try {
-			toReturn = oDAOEmployee.checkLogin(oEmployeeVO.getUserName(),
+			toReturn = oDAOEmployee.checkLogin(oEmployeeFilterVO.getUserName(),
 					crypted);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
