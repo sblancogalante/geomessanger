@@ -44,26 +44,25 @@ public class EmployeeVO implements Serializable {
 		this.workingHour = oWorkingHour;
 		this.status = oStatus;
 
-	}
+	}	
 
-	public EmployeeVO(String oUserName, String oLocation, String oSector,
-			boolean oStatus) {
+	public EmployeeVO(int oEmployeeID, String oUserName, String oPassword,
+			String oLocation, String oSector, boolean oStatus) {
+		
+		this.employeeID = oEmployeeID;
+		this.userName = oUserName;
+		this.password = oPassword;
+		this.location = oLocation;
+		this.sector = oSector;
+		this.status = oStatus;
+		
+	}
+	
+	public EmployeeVO(String oUserName, String oPassword) {
 
 		this.userName = oUserName;
-		this.location = oLocation;
-		this.sector = oSector;
-		this.status = oStatus;
-	}
-
-	public EmployeeVO(String oName, String oLastName, int oEmployeeID,
-			String oLocation, String oSector, boolean oStatus) {
-		// TODO Auto-generated constructor stub
-		this.name = oName;
-		this.lastName = oLastName;
-		this.employeeID = oEmployeeID;
-		this.location = oLocation;
-		this.sector = oSector;
-		this.status = oStatus;
+		this.password = oPassword;
+		
 	}
 
 	/*

@@ -52,7 +52,7 @@ public class ChatRoom2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EmployeeVO oEmployee = new EmployeeVO("luisgur","Uruguay","programador",false);
+					EmployeeVO oEmployee = new EmployeeVO("luisgur","asdfg");
 					ChatRoom2 frame = new ChatRoom2(oEmployee);
 					frame.setVisible(true);
 				} catch (Exception e) {

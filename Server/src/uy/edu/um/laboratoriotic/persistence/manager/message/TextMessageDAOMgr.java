@@ -152,7 +152,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 						+ iEmployee.getEmployeeID()
 						+ " ORDER BY tm.date ASC"
 						+ " UNION "
-						+ "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position"
+						+ "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.date"
 						+ " FROM Employees e, TextMessages tm, MessagesEmployees m "
 						+ "WHERE tm.employeeReceiverID = e.employeeID AND m.textMessageID = tm.textMessageID AND tm.employeeSenderID ="
 						+ iEmployee.getEmployeeID()
