@@ -73,7 +73,7 @@ public interface EmployeeRemoteMgt extends Remote {
 	 * @return
 	 * @throws RemoteException
 	 */
-	public EmployeeVO getLoginEmployee(String oUserName, String oPassword)
+	public EmployeeVO getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO)
 			throws RemoteException;
 
 }

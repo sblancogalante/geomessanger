@@ -186,15 +186,16 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 
 	@Override
-	public Employee getLoginEmployee(String oUserName, String oPassword)
+	public Employee getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO)
 			throws DataBaseConnection {
 
 		Employee oEmployeeToReturn = null;
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
+		String crypted = this.hashEncriptation(oEmployeeFilterVO.getPassword());
 
 		try {
-			oEmployeeToReturn = oDAOEmployee.getLoginEmployee(oUserName, oPassword);
+			oEmployeeToReturn = oDAOEmployee.getLoginEmployee(oEmployeeFilterVO.getUserName(), crypted);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

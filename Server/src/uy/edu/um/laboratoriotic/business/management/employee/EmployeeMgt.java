@@ -89,7 +89,7 @@ public interface EmployeeMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 */
-	public Employee getLoginEmployee(String oUserName, String oPassword)
+	public Employee getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO)
 			throws DataBaseConnection;
 
 }

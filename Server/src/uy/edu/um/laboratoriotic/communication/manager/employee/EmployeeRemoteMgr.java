@@ -137,7 +137,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	}
 	
 	@Override
-	public EmployeeVO getLoginEmployee(String oUserName, String oPassword) throws RemoteException {
+	public EmployeeVO getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO) throws RemoteException {
 		
 		Employee oEmployeeToReturn = null;
 		
@@ -145,7 +145,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 				.getEmployeeFactory().getEmployeeMgt();	
 		
 		try {			
-			oEmployeeToReturn = oEmployeeMgt.getLoginEmployee(oUserName, oPassword);			
+			oEmployeeToReturn = oEmployeeMgt.getLoginEmployee(oEmployeeFilterVO);			
 			
 		} catch(DataBaseConnection e){
 			// TODO Auto-generated catch block
