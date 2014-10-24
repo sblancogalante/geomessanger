@@ -49,12 +49,20 @@ public class LoginAbsoluteLayout extends JFrame {
 		Dimension d = new Dimension(200, 300);
 		this.setMaximumSize(d);
 		this.setMinimumSize(d);
+		
 
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(238, 238, 238));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		final JLabel errorLabel = new JLabel("Incorrect Password!");
+		errorLabel.setForeground(Color.RED);
+		errorLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		errorLabel.setBounds(6, 238, 176, 16);
+		errorLabel.setVisible(false);
+		contentPane.add(errorLabel);
 
 		loginLabel = new JLabel("Log in");
 		loginLabel.setBounds(63, 6, 74, 28);
@@ -72,13 +80,16 @@ public class LoginAbsoluteLayout extends JFrame {
 				if (userText.getText().equals("User name")) {
 					userText.setText("");
 					userText.setForeground(Color.BLACK);
+					
 				}
+				errorLabel.setVisible(false);
 			}
 
 			public void focusLost(FocusEvent e) {
 				if (userText.getText().equals("")) {
 					userText.setText("User name");
 					userText.setForeground(Color.LIGHT_GRAY);
+					
 				}
 			}
 		});
@@ -95,7 +106,9 @@ public class LoginAbsoluteLayout extends JFrame {
 						"Password")) {
 					passwordText.setText("");
 					passwordText.setForeground(Color.BLACK);
+					
 				}
+				errorLabel.setVisible(false);
 			}
 
 			public void focusLost(FocusEvent e) {
@@ -130,6 +143,10 @@ public class LoginAbsoluteLayout extends JFrame {
 					if(employeeMgr.checkLogin(inputEmployeeVO)){
 						wind = new MainWindow(inputEmployeeVO);
 						wind.setVisible(true);
+						dispose();
+					}else{
+						errorLabel.setVisible(true);
+						errorLabelDisappear();
 					}
 					
 					
@@ -140,7 +157,7 @@ public class LoginAbsoluteLayout extends JFrame {
 				System.out.println("User name: " + userText.getText());
 				System.out.println("Password: "
 						+ String.valueOf(passwordText.getPassword()));
-				dispose();
+				
 
 			}
 		});
@@ -167,5 +184,8 @@ public class LoginAbsoluteLayout extends JFrame {
 	public Boolean getLogedin() {
 		return logedin;
 	}
-
+	
+	private void errorLabelDisappear(){
+		
+	}
 }
