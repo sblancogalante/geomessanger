@@ -135,7 +135,7 @@ public class MainWindow extends JFrame {
 		userPhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 118, 118);
 		//userPhotoImage = new ImageIcon("Images/luisFoto.jpg");
 		userPhotoLabel = new JLabel(userPhotoImage);
-		userNameLabel = new JLabel("Name");
+		userNameLabel = new JLabel(actualUser.getUserName());
 		userStateLabel = new JLabel("State");
 
 		searchUserText = new JTextField();
@@ -194,6 +194,7 @@ public class MainWindow extends JFrame {
 			DefaultListModel<EmployeeVO> employeeListModel = new DefaultListModel<EmployeeVO>();
 			fillDefaultListFromArray(employeeMgt.getEmployees(), employeeListModel);
 			userList.setModel(employeeListModel);
+			listEmployee = actualizarContactos(employeeMgt, userList);
 			
 		} 
 		
@@ -205,9 +206,10 @@ public class MainWindow extends JFrame {
 				            // Get item index
 				        	
 				            int index = list.locationToIndex(evt.getPoint());
+				            System.out.println(index);
 				            ChatRoom2 chatRoom = new ChatRoom2(listEmployee.get(index));
 				            chatRoom.setVisible(true);
-				           System.out.println(index); 
+				           
 				        } 
 				    }
 				});
@@ -316,7 +318,7 @@ public class MainWindow extends JFrame {
 		}
 		
 	}
-	
+	//resize image
 	public ImageIcon rescaleImage(File source,int maxHeight, int maxWidth){
 	     int newHeight = 0, newWidth = 0;        // Variables for the new height and width
 	     int priorHeight = 0, priorWidth = 0;
