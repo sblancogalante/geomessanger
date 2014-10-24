@@ -3,16 +3,21 @@ package uy.edu.um.laboratoriotic.ui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -61,7 +66,7 @@ public class MainWindow extends JFrame {
 				.getEmployeeMgt();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 550);
+		setBounds(100, 100, 600, 620);
 		Dimension d = new Dimension(600, 550);
 		this.setMinimumSize(d);
 
@@ -127,9 +132,8 @@ public class MainWindow extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-
-		userPhotoImage = new ImageIcon(
-				"Images/Foto.png");
+		userPhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 118, 118);
+		//userPhotoImage = new ImageIcon("Images/luisFoto.jpg");
 		userPhotoLabel = new JLabel(userPhotoImage);
 		userNameLabel = new JLabel("Name");
 		userStateLabel = new JLabel("State");
@@ -226,115 +230,52 @@ public class MainWindow extends JFrame {
 		});
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane
-				.setHorizontalGroup(gl_contentPane
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								gl_contentPane
-										.createSequentialGroup()
-										.addGroup(
-												gl_contentPane
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_contentPane
-																		.createSequentialGroup()
-																		.addGap(1)
-																		.addComponent(
-																				separator,
-																				GroupLayout.DEFAULT_SIZE,
-																				574,
-																				Short.MAX_VALUE))
-														.addGroup(
-																gl_contentPane
-																		.createSequentialGroup()
-																		.addGap(18)
-																		.addGroup(
-																				gl_contentPane
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addGroup(
-																								gl_contentPane
-																										.createSequentialGroup()
-																										.addComponent(
-																												userPhotoLabel)
-																										.addGap(12)
-																										.addGroup(
-																												gl_contentPane
-																														.createParallelGroup(
-																																Alignment.LEADING)
-																														.addComponent(
-																																userNameLabel,
-																																GroupLayout.PREFERRED_SIZE,
-																																61,
-																																GroupLayout.PREFERRED_SIZE)
-																														.addComponent(
-																																userStateLabel,
-																																GroupLayout.PREFERRED_SIZE,
-																																237,
-																																GroupLayout.PREFERRED_SIZE)))
-																						.addGroup(
-																								gl_contentPane
-																										.createSequentialGroup()
-																										.addComponent(
-																												searchUserText,
-																												GroupLayout.PREFERRED_SIZE,
-																												466,
-																												GroupLayout.PREFERRED_SIZE)
-																										.addPreferredGap(
-																												ComponentPlacement.RELATED)
-																										.addComponent(
-																												searchButton))
-																						.addComponent(
-																								userList,
-																								GroupLayout.DEFAULT_SIZE,
-																								557,
-																								Short.MAX_VALUE))))
-										.addGap(15)));
-		gl_contentPane
-				.setVerticalGroup(gl_contentPane
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_contentPane
-										.createSequentialGroup()
-										.addGap(18)
-										.addGroup(
-												gl_contentPane
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																userPhotoLabel)
-														.addGroup(
-																gl_contentPane
-																		.createSequentialGroup()
-																		.addGap(30)
-																		.addComponent(
-																				userNameLabel)
-																		.addGap(12)
-																		.addComponent(
-																				userStateLabel)))
-										.addGap(12)
-										.addComponent(separator,
-												GroupLayout.PREFERRED_SIZE, 12,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addGroup(
-												gl_contentPane
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																searchUserText,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																searchButton))
-										.addGap(18)
-										.addComponent(userList,
-												GroupLayout.DEFAULT_SIZE, 311,
-												Short.MAX_VALUE)
-										.addContainerGap()));
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(1)
+							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(18)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(userPhotoLabel, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(userNameLabel, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
+										.addComponent(userStateLabel, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(221)
+									.addComponent(searchUserText, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(searchButton))
+								.addComponent(userList, GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE))))
+					.addGap(15))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(46)
+							.addComponent(userNameLabel)
+							.addGap(12)
+							.addComponent(userStateLabel))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(16)
+							.addComponent(userPhotoLabel, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 12, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(searchUserText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(searchButton))
+					.addGap(12)
+					.addComponent(userList, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 		contentPane.setLayout(gl_contentPane);
 
 		this.setVisible(false);
@@ -375,4 +316,57 @@ public class MainWindow extends JFrame {
 		}
 		
 	}
+	
+	public ImageIcon rescaleImage(File source,int maxHeight, int maxWidth){
+	     int newHeight = 0, newWidth = 0;        // Variables for the new height and width
+	     int priorHeight = 0, priorWidth = 0;
+	     BufferedImage image = null;
+	     ImageIcon sizeImage;
+
+	     try {
+	             image = ImageIO.read(source);        // get the image
+	     } catch (Exception e) {
+
+	             e.printStackTrace();
+	             System.out.println("Picture upload attempted & failed");
+	     }
+
+	     sizeImage = new ImageIcon(image);
+
+	     if(sizeImage != null){
+	    	 
+	         priorHeight = sizeImage.getIconHeight(); 
+	         priorWidth = sizeImage.getIconWidth();
+	     }
+
+	     // Calculate the correct new height and width
+	     if((float)priorHeight/(float)priorWidth > (float)maxHeight/(float)maxWidth){
+	     
+	         newHeight = maxHeight;
+	         newWidth = (int)(((float)priorWidth/(float)priorHeight)*(float)newHeight);
+	     }else{
+	    	 
+	         newWidth = maxWidth;
+	         newHeight = (int)(((float)priorHeight/(float)priorWidth)*(float)newWidth);
+	     }
+
+
+	     // Resize the image
+
+	     // 1. Create a new Buffered Image and Graphic2D object
+	     BufferedImage resizedImg = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+	     Graphics2D g2 = resizedImg.createGraphics();
+
+	     // 2. Use the Graphic object to draw a new image to the image in the buffer
+	     g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	     g2.drawImage(image, 0, 0, newWidth, newHeight, null);
+	     g2.dispose();
+
+	     // 3. Convert the buffered image into an ImageIcon for return
+	     return (new ImageIcon(resizedImg));
+	 }
+	
+	
+	
+	
 }
