@@ -38,7 +38,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	 * Methods
 	 */
 	public static EmployeeMgr getInstance() {
-		
+
 		if (instance == null) {
 			instance = new EmployeeMgr();
 		}
@@ -54,8 +54,8 @@ public class EmployeeMgr implements EmployeeMgt {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		
-		// Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);		
+
+		// Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
 
 		Employee oEmployee = new Employee(oEmployeeVO.getEmployeeID(),
 				oEmployeeVO.getID(), oEmployeeVO.getName(),
@@ -64,7 +64,7 @@ public class EmployeeMgr implements EmployeeMgt {
 				oEmployeeVO.getSector(), oEmployeeVO.getMail(),
 				oEmployeeVO.getPosition(), oEmployeeVO.getWorkingHour(),
 				oEmployeeVO.getProfilePicture(), oEmployeeVO.getStatus());
-		
+
 		try {
 			oNewDAOEmployee.addEmployee(oEmployee);
 		} catch (RemoteException e) {
@@ -128,8 +128,8 @@ public class EmployeeMgr implements EmployeeMgt {
 		EmployeeVO oEmployeeVO;
 		ArrayList<EmployeeVO> oListToReturn = new ArrayList<>();
 		ArrayList<Employee> oList = new ArrayList<>();
-	
-		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();		
+
+		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 
 		try {
 			oList = oDAOEmployee.getEmployees();
@@ -166,7 +166,8 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 
 	@Override
-	public boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO) throws DataBaseConnection {
+	public boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO)
+			throws DataBaseConnection {
 
 		boolean toReturn = false;
 
@@ -182,6 +183,24 @@ public class EmployeeMgr implements EmployeeMgt {
 		}
 		return toReturn;
 
+	}
+
+	@Override
+	public Employee getLoginEmployee(String oUserName, String oPassword)
+			throws DataBaseConnection {
+
+		Employee oEmployeeToReturn = null;
+
+		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
+
+		try {
+			oEmployeeToReturn = oDAOEmployee.getLoginEmployee(oUserName, oPassword);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return oEmployeeToReturn;
 	}
 
 	/*

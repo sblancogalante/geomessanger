@@ -136,4 +136,22 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 		return toReturn;
 	}
 	
+	@Override
+	public EmployeeVO getLoginEmployee(String oUserName, String oPassword) throws RemoteException {
+		
+		Employee oEmployeeToReturn = null;
+		
+		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
+				.getEmployeeFactory().getEmployeeMgt();	
+		
+		try {			
+			oEmployeeToReturn = oEmployeeMgt.getLoginEmployee(oUserName, oPassword);			
+			
+		} catch(DataBaseConnection e){
+			// TODO Auto-generated catch block
+		}
+		
+		return oEmployeeToReturn.toVO();
+	}
+	
 }
