@@ -70,15 +70,26 @@ public interface EmployeeMgt {
 			throws DataBaseConnection;
 
 	/**
-	 * This method makes sure that the database returns a boolean with the 
+	 * This method makes sure that the database returns a boolean with the
 	 * assertion of the login
 	 * 
 	 * @param oEmployee
 	 * @return
 	 * @throws DataBaseConnection
 	 */
-	boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO) throws DataBaseConnection;
+	public boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO)
+			throws DataBaseConnection;
 
-	
+	/**
+	 * This method makes sure that the database returns an employee after the
+	 * assertion of the login
+	 * 
+	 * @param oUserName
+	 * @param oPassword
+	 * @return
+	 * @throws DataBaseConnection
+	 */
+	public Employee getLoginEmployee(String oUserName, String oPassword)
+			throws DataBaseConnection;
 
 }

@@ -57,7 +57,20 @@ public interface EmployeeMgt {
 	 * @throws RemoteException
 	 * @throws NotBoundException
 	 */
-	boolean checkLogin(EmployeeFilterVO oEmployeeVO)throws RemoteException,
+	public boolean checkLogin(EmployeeFilterVO oEmployeeVO)throws RemoteException,
 	NotBoundException;
+
+	/**
+	 * This method is the one that communicates with the commons interface to
+	 * enter the menu of an asserted log in employee
+	 * 
+	 * @param oUserName
+	 * @param oPassword
+	 * @return
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 */
+	public EmployeeVO getLoginEmployee(String oUserName, String oPassword)
+			throws RemoteException, NotBoundException;
 
 }

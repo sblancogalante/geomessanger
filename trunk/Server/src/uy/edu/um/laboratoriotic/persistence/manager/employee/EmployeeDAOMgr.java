@@ -311,8 +311,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public boolean checkLogin(String oUserName, String oPassword) throws DataBaseConnection,
-			RemoteException {
+	public boolean checkLogin(String oUserName, String oPassword)
+			throws DataBaseConnection, RemoteException {
 
 		boolean toReturn = false;
 		Connection oConnection = null;
@@ -328,8 +328,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String userName = oResultSet.getString(5);
 				String password = oResultSet.getString(6);
 
-				if (oUserName.equals(userName)
-						&& oPassword.equals(password)) {
+				if (oUserName.equals(userName) && oPassword.equals(password)) {
 					toReturn = true;
 				}
 			}
@@ -351,6 +350,47 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		}
 
 		return toReturn;
+	}
+
+	@Override
+	public Employee getLoginEmployee(String oUserName, String oPassword) throws DataBaseConnection, RemoteException{
+
+		Employee oEmployeeToReturn = null;
+		Connection oConnection = null;
+		try {
+			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+			Statement oStatement = oConnection.createStatement();
+			ResultSet oResultSet = oStatement
+					.executeQuery("SELECT userName, password FROM Employees WHERE (Employees.userName = '"
+							+ oUserName + "');");
+
+			while (oResultSet.next()) {
+
+				String userName = oResultSet.getString(5);
+				String password = oResultSet.getString(6);
+
+				if (oUserName.equals(userName) && oPassword.equals(password)) {
+					oEmployeeToReturn = new Employee(userName, password);
+				}
+			}
+
+			oResultSet.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RemoteException();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return oEmployeeToReturn;
 	}
 
 	/*

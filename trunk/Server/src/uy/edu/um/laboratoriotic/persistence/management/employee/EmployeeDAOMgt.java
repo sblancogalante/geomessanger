@@ -75,4 +75,16 @@ public interface EmployeeDAOMgt {
 	public boolean checkLogin(String oUserName, String oPassword)
 			throws DataBaseConnection, RemoteException;
 
+	/**
+	 * This method gets the user of the login
+	 * 
+	 * @param oUserName
+	 * @param oPassword
+	 * @return
+	 * @throws DataBaseConnection
+	 * @throws RemoteException
+	 */
+	public Employee getLoginEmployee(String oUserName, String oPassword)
+			throws DataBaseConnection, RemoteException;
+
 }

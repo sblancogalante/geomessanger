@@ -87,6 +87,17 @@ public class EmployeeMgr implements EmployeeMgt {
 		
 		return toReturn;
 	}
+	
+	@Override
+	public EmployeeVO getLoginEmployee(String oUserName, String oPassword) throws RemoteException, NotBoundException{
+		
+		EmployeeVO oEmployeeVOToReturn = null;
+		
+		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);	
+		oEmployeeVOToReturn = oEmployeeRemoteMgt.getLoginEmployee(oUserName, oPassword);
+		
+		return oEmployeeVOToReturn;		
+	}
 
 	/*
 	 * Helping methods
