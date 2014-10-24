@@ -1,6 +1,9 @@
 package uy.edu.um.laboratoriotic.persistence.manager.employee;
 
+import java.math.BigInteger;
 import java.rmi.RemoteException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,7 +30,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	private static EmployeeDAOMgr instance = null;
 	private static final String DRIVER_JDBC = "org.hsqldb.jdbc.JDBCDriver";
 	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
-	private static final String CREATE_TABLE_EMPLOYEES = "CREATE TABLE Employees (employeeID INT PRIMARY KEY NOT NULL, iD VARCHAR(20) NOT NULL, name VARCHAR(20), lastName VARCHAR(20), userName VARCHAR(20) NOT NULL, password VARCHAR(20) NOT NULL, location VARCHAR(30) NOT NULL, sector VARCHAR(30), mail VARCHAR(30) NOT NULL, position VARCHAR(30), workingHour VARCHAR(20), profilePicture BLOB, status BOOLEAN NOT NULL)";
+	private static final String CREATE_TABLE_EMPLOYEES = "CREATE TABLE Employees (employeeID INT PRIMARY KEY NOT NULL, iD VARCHAR(20) NOT NULL, name VARCHAR(20), lastName VARCHAR(20), userName VARCHAR(20) NOT NULL, password VARCHAR(100) NOT NULL, location VARCHAR(30) NOT NULL, sector VARCHAR(30), mail VARCHAR(30) NOT NULL, position VARCHAR(30), workingHour VARCHAR(20), profilePicture BLOB, status BOOLEAN NOT NULL)";
 
 	/*
 	 * Constructor of the class
@@ -91,7 +94,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oStatement.execute(sInsert);
 
 			System.out.println("Se agrego con exito al empleado "
-					+ oEmployee.getUserName());
+					+ oEmployee.getUserName() + " " + oEmployee.getPassword());
 
 		} catch (SQLException e) {
 			throw new RemoteException();
@@ -319,16 +322,23 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		try {
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 			Statement oStatement = oConnection.createStatement();
-			ResultSet oResultSet = oStatement
-					.executeQuery("SELECT userName, password FROM Employees WHERE (Employees.userName = '"
-							+ oUserName + "');");
+			String oQuery = "SELECT userName, password FROM Employees WHERE (Employees.userName = '"
+					+ oUserName
+					+ "' AND Employees.password = '"
+					+ hashEncriptation(oPassword) + "');";
+			ResultSet oResultSet = oStatement.executeQuery(oQuery);
+
+			System.out.println(oQuery);
 
 			while (oResultSet.next()) {
 
-				String userName = oResultSet.getString(5);
-				String password = oResultSet.getString(6);
+				String userName = oResultSet.getString(1);
+				String password = oResultSet.getString(2);
 
-				if (oUserName.equals(userName) && oPassword.equals(password)) {
+				// System.out.println(userName + " " + password);
+
+				if (oUserName.equals(userName)
+						&& hashEncriptation(oPassword).equals(password)) {
 					toReturn = true;
 				}
 			}
@@ -353,7 +363,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public Employee getLoginEmployee(String oUserName, String oPassword) throws DataBaseConnection, RemoteException{
+	public Employee getLoginEmployee(String oUserName, String oPassword)
+			throws DataBaseConnection, RemoteException {
 
 		Employee oEmployeeToReturn = null;
 		Connection oConnection = null;
@@ -369,7 +380,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String userName = oResultSet.getString(5);
 				String password = oResultSet.getString(6);
 
-				if (oUserName.equals(userName) && oPassword.equals(password)) {
+				if (oUserName.equals(userName)
+						&& hashEncriptation(oPassword).equals(password)) {
 					oEmployeeToReturn = new Employee(userName, password);
 				}
 			}
@@ -421,6 +433,24 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		}
 
 		return oResult;
+	}
+
+	public String hashEncriptation(String oPassword) {
+
+		String newPassword = null;
+
+		try {
+
+			MessageDigest md5 = MessageDigest.getInstance("MD5");
+			md5.update(oPassword.getBytes());
+			BigInteger hash = new BigInteger(1, md5.digest());
+			newPassword = hash.toString(16);
+
+		} catch (NoSuchAlgorithmException e) {
+			// No hacer nada
+		}
+
+		return newPassword;
 	}
 
 	// /**

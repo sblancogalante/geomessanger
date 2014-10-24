@@ -144,14 +144,14 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 			String sQuery = null;
 
 			for (Employee iEmployee : oReceivers) {
-				sQuery = "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.date"
+				sQuery = "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.textMessageID, tm.text, tm.date, tm.isConference"
 						+ " FROM Employees e, TextMessages tm, MessagesEmployees m "
 						+ "WHERE tm.employeeReceiverID = e.employeeID AND m.textMessageID = tm.textMessageID AND tm.employeeSenderID ="
 						+ oSender.getEmployeeID()
 						+ " AND tm.employeeReceiverID ="
 						+ iEmployee.getEmployeeID()						
 						+ " UNION "
-						+ "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.date"
+						+ "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.textMessageID, tm.text, tm.date, tm.isConference"
 						+ " FROM Employees e, TextMessages tm, MessagesEmployees m "
 						+ "WHERE tm.employeeReceiverID = e.employeeID AND m.textMessageID = tm.textMessageID AND tm.employeeSenderID ="
 						+ iEmployee.getEmployeeID()
@@ -165,12 +165,12 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 			while (oResultSet.next()) {
 
-				int sID = oResultSet.getInt(1);
-				String sTextMessage = oResultSet.getString(2);
+				int sID = oResultSet.getInt(8);
+				String sTextMessage = oResultSet.getString(9);
 				Employee sSender = oSender;
 				HashSet<Employee> sReceivers = oReceivers;
-				Timestamp sDate = oResultSet.getTimestamp(5);
-				boolean sIsConference = oResultSet.getBoolean(6);
+				Timestamp sDate = oResultSet.getTimestamp(10);
+				boolean sIsConference = oResultSet.getBoolean(11);
 
 				TextMessage oTextMessages = new TextMessage(sID, sTextMessage,
 						sSender, sReceivers, sDate, sIsConference);

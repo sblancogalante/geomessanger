@@ -78,12 +78,10 @@ public class EmployeeMgr implements EmployeeMgt {
 	
 	@Override
 	public boolean checkLogin(EmployeeFilterVO oEmployeeVO) throws RemoteException, NotBoundException {
-		// TODO Auto-generated method stub
-		
-		boolean toReturn = false;
+		// TODO Auto-generated method stub		
 		
 		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);		
-		toReturn = oEmployeeRemoteMgt.checkLogin(oEmployeeVO);
+		boolean toReturn = oEmployeeRemoteMgt.checkLogin(oEmployeeVO);
 		
 		return toReturn;
 	}

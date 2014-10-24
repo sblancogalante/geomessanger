@@ -19,11 +19,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import uy.edu.um.laboratoriotic.exceptions.employee.UserNameAlreadyExists;
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
-import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 public class LoginAbsoluteLayout extends JFrame {
 

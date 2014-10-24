@@ -1,5 +1,8 @@
 package uy.edu.um.laboratoriotic.business.entities.employee;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Blob;
 
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -34,7 +37,7 @@ public class Employee {
 		this.name = oName;
 		this.lastName = oLastName;
 		this.userName = oUserName;
-		this.password = oPassword;
+		this.password = this.hashEncriptation(oPassword);
 		this.location = oLocation;
 		this.sector = oSector;
 		this.mail = oMail;
@@ -50,7 +53,7 @@ public class Employee {
 		
 		this.employeeID = oEmployeeID;
 		this.userName = oUserName;
-		this.password = oPassword;
+		this.password = this.hashEncriptation(oPassword);
 		this.location = oLocation;
 		this.sector = oSector;
 		this.status = oStatus;
@@ -60,12 +63,12 @@ public class Employee {
 	public Employee(String oUserName, String oPassword) {
 
 		this.userName = oUserName;
-		this.password = oPassword;
+		this.password = this.hashEncriptation(oPassword);
 		
 	}
 
 	/*
-	 * Auxiliary methods
+	 * Helping methods
 	 */
 	public EmployeeVO toVO() {
 
@@ -73,6 +76,24 @@ public class Employee {
 				password, location, sector, mail, position, workingHour,
 				profilePicture, status);
 
+	}	
+	
+	public String hashEncriptation(String oPassword) {
+
+		String newPassword = null;
+
+		try {
+
+			MessageDigest md5 = MessageDigest.getInstance("MD5");
+			md5.update(oPassword.getBytes());
+			BigInteger hash = new BigInteger(1, md5.digest());
+			newPassword = hash.toString(16);
+
+		} catch (NoSuchAlgorithmException e) {
+			// No hacer nada
+		}
+
+		return newPassword;
 	}
 
 	/*
@@ -119,11 +140,11 @@ public class Employee {
 	}
 
 	public String getPassword() {
-		return password;
+		return this.hashEncriptation(password);
 	}
 
 	public void setPassword(String oPassword) {
-		this.password = oPassword;
+		this.password = hashEncriptation(oPassword);
 	}
 
 	public String getLocation() {
