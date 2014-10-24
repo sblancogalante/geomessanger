@@ -70,7 +70,7 @@ public interface EmployeeMgt {
 	 * @throws RemoteException
 	 * @throws NotBoundException
 	 */
-	public EmployeeVO getLoginEmployee(String oUserName, String oPassword)
+	public EmployeeVO getLoginEmployee(EmployeeFilterVO oEmployeeFIlterVO)
 			throws RemoteException, NotBoundException;
 
 }
