@@ -25,6 +25,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 
+import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
+import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
+
 public class Login extends JFrame {
 
 	private JPanel contentPane;
@@ -39,7 +43,7 @@ public class Login extends JFrame {
 		setBounds(100, 100, 147, 234);
 		
 		
-		
+		final EmployeeMgt employeeMgr =  EmployeeFactory.getInstance().getEmployeeMgt();
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
@@ -100,8 +104,14 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				MainWindow wind;
 				try {
-					wind = new MainWindow();
-					wind.setVisible(true);
+					
+					String inputUserName = userText.getText();
+					String inputPassword = String.valueOf(passwordText.getPassword());
+					EmployeeFilterVO inputEmployeeVO = new EmployeeFilterVO(inputUserName, inputPassword);
+					if(employeeMgr.checkLogin(inputEmployeeVO)){
+						wind = new MainWindow(inputEmployeeVO );
+						wind.setVisible(true);
+					}
 				} catch (RemoteException | NotBoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

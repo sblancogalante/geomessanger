@@ -100,6 +100,9 @@ public class ChatRoom2 extends JFrame {
 		JScrollPane scrollPane_2 = new JScrollPane();
 		
 		JSeparator separator = new JSeparator();
+
+		final JTextArea converTextArea = new JTextArea();
+		converTextArea.setEditable(false);
 	
 		
 		JButton btnNewButton = new JButton("Send");
@@ -109,6 +112,7 @@ public class ChatRoom2 extends JFrame {
 				TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),employee,recivers,null,false);
 				try {
 					textMgt.addTextMessage(message);
+					converTextArea.append(message.toString());
 					
 				} catch (RemoteException | NotBoundException e) {
 					// TODO Auto-generated catch block
@@ -191,8 +195,6 @@ public class ChatRoom2 extends JFrame {
 		
 		scrollPane_2.setViewportView(messageTextArea);
 		
-		JTextArea converTextArea = new JTextArea();
-		converTextArea.setEditable(false);
 		scrollPane_1.setViewportView(converTextArea);
 		contentPane.setLayout(gl_contentPane);
 	}

@@ -8,6 +8,7 @@ public class MainClient {
 
 		LoginAbsoluteLayout oLogin = new LoginAbsoluteLayout();
 		oLogin.setVisible(true);
+		
 
 	}
 }

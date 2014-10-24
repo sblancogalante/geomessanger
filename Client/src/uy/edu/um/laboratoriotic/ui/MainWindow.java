@@ -178,6 +178,8 @@ public class MainWindow extends JFrame {
 					oLabel.setForeground(Color.BLUE);
 				}
 				oLabel.setText(value.getName()+" "+value.getLastName());
+				
+				
 				return oLabel;
 			}
 		});
