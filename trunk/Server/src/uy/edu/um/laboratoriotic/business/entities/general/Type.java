@@ -13,26 +13,41 @@ public class Type {
 	/*
 	 * Attributes of the class
 	 */
-	private String type, value;
 	private int typeID;
+	private String typeCountry, typeSector;
+	private boolean type; // true is is country, false if is sector
 
 	/*
 	 * Constructors
 	 */
-	public Type(int oTypeID, String oType, String oValue) {
+	public Type(int oTypeID, String oTypeCountry, String oTypeSector,
+			boolean oType) {
 
 		this.typeID = oTypeID;
+		this.typeCountry = oTypeCountry;
+		this.typeSector = oTypeSector;
 		this.type = oType;
-		this.value = oValue;
 	}
 
-	public Type() {
+	public Type(String oValue) {
 
+		if (type) {
+			this.typeCountry = oValue;
+		} else {
+			this.typeSector = oValue;
+		}
 	}
-	
+
+	/*
+	 * Helping methods
+	 */
 	public TypeVO toVO() {
 
-		return new TypeVO(typeID, type, value);
+		if (type) {
+			return new TypeVO(typeID, typeCountry, typeSector, true);
+		} else {
+			return new TypeVO(typeID, typeCountry, typeSector, false);
+		}
 
 	}
 
@@ -47,20 +62,28 @@ public class Type {
 		this.typeID = oTypeID;
 	}
 
-	public String getType() {
+	public String getTypeCountry() {
+		return typeCountry;
+	}
+
+	public void setTypeCountry(String oTypeCountry) {
+		this.typeCountry = oTypeCountry;
+	}
+
+	public String getTypeSector() {
+		return typeSector;
+	}
+
+	public void setTypeSector(String oTypeSector) {
+		this.typeSector = oTypeSector;
+	}
+
+	public boolean isType() {
 		return type;
 	}
 
-	public void setType(String oType) {
+	public void setType(boolean oType) {
 		this.type = oType;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String oValue) {
-		this.value = oValue;
 	}
 
 }

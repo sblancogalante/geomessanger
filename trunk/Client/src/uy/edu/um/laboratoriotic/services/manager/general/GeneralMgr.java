@@ -4,6 +4,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.services.management.general.GeneralMgt;
 import uy.edu.um.laboratoriotic.services.management.general.GeneralRemoteMgt;
@@ -66,6 +67,19 @@ public class GeneralMgr implements GeneralMgt {
 		return null;
 	}
 	
+	@Override
+	public ArrayList<TypeVO> getTypes(String oType) throws RemoteException,
+			NotBoundException {
+		// TODO Auto-generated method stub
+
+		ArrayList<TypeVO> oListToReturn = new ArrayList<>();
+
+		GeneralRemoteMgt oGeneralRemoteMgt = lookUp("GeneralRemoteMgr", 1099);
+		oListToReturn = oGeneralRemoteMgt.getTypes(oType);
+
+		return oListToReturn;		
+	}
+	
 	/*
 	 * Helping methods
 	 */
@@ -79,7 +93,6 @@ public class GeneralMgr implements GeneralMgt {
 
 		return oReturn;
 
-	}
-	
+	}	
 
 }

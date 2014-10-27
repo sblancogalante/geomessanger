@@ -1,12 +1,16 @@
 package uy.edu.um.laboratoriotic.communication.manager.general;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
 import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.business.factory.general.GeneralFactory;
+import uy.edu.um.laboratoriotic.business.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.business.management.general.GeneralMgt;
+import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.services.management.general.GeneralRemoteMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
 
 /**
@@ -47,9 +51,8 @@ public class GeneralRemoteMgr implements GeneralRemoteMgt {
 
 		GeneralMgt oGeneralMgt = BusinessFacade.getInstance()
 				.getGeneralFactory().getGeneralMgt();
-		Type oNewGeneralToAdd = new Type(oTypeVO.getTypeID(),
-				oTypeVO.getType(), oTypeVO.getValue());
-		oGeneralMgt.addType(oNewGeneralToAdd);
+
+		oGeneralMgt.addType(oTypeVO);
 
 	}
 
@@ -59,8 +62,8 @@ public class GeneralRemoteMgr implements GeneralRemoteMgt {
 
 		GeneralMgt oRemoteGeneral = GeneralFactory.getInstance()
 				.getGeneralMgt();
-		Type oType = oRemoteGeneral.getType(oTypeVO);
-		oRemoteGeneral.removeType(oType.getType());
+		// Type oType = oRemoteGeneral.getType(oTypeVO);
+		oRemoteGeneral.removeType(oTypeVO);
 
 	}
 
@@ -71,12 +74,21 @@ public class GeneralRemoteMgr implements GeneralRemoteMgt {
 		GeneralMgt oGeneralMgt = (GeneralMgt) BusinessFacade.getInstance()
 				.getGeneralRemoteFactory();
 
-		Type oType = oGeneralMgt.getType(oTypeVO);
+		return oGeneralMgt.searchType(oTypeVO).toVO();
+	}
 
-		TypeVO oTYpeVOToReturn = new TypeVO(oType.getTypeID(), oType.getType(),
-				oType.getValue());
+	@Override
+	public ArrayList<TypeVO> getTypes(String oType) throws RemoteException {
+		// TODO Auto-generated method stub
 
-		return oTYpeVOToReturn;
+		ArrayList<TypeVO> oListToReturn = new ArrayList<>();
+
+		GeneralMgt oGeneralMgt = BusinessFacade.getInstance()
+				.getGeneralFactory().getGeneralMgt();
+
+		oListToReturn = oGeneralMgt.getTypes(oType);
+
+		return oListToReturn;
 	}
 
 }
