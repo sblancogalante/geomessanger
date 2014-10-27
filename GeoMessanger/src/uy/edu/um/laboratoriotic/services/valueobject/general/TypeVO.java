@@ -3,38 +3,34 @@ package uy.edu.um.laboratoriotic.services.valueobject.general;
 import java.io.Serializable;
 
 /**
- * This is the entity that we use to travel from the server to the client and backwards
+ * This is the entity that we use to travel from the server to the client and
+ * backwards
+ * 
  * @author sblanco1
  *
  */
-public class TypeVO implements Serializable{
+public class TypeVO implements Serializable {
 
 	/*
 	 * Attributes of the class
 	 */
-	private String type, value;
 	private int typeID;
+	private String typeCountry, typeSector;
+	private boolean type; // true is is country, false if is sector
 
 	/*
 	 * Constructors
 	 */
-	public TypeVO(int oTypeID, String oType, String oValue) {
+	public TypeVO(int oTypeID, String oTypeCountry, String oTypeSector,
+			boolean oType) {
 
 		this.typeID = oTypeID;
+		this.typeCountry = oTypeCountry;
+		this.typeSector = oTypeSector;
 		this.type = oType;
-		this.value = oValue;
 	}
 
 	public TypeVO() {
-
-	}
-
-	/*
-	 * Helping methods
-	 */
-	public TypeVO toVO() {
-
-		return new TypeVO(typeID, type, value);
 
 	}
 
@@ -49,20 +45,28 @@ public class TypeVO implements Serializable{
 		this.typeID = oTypeID;
 	}
 
-	public String getType() {
+	public String getTypeCountry() {
+		return typeCountry;
+	}
+
+	public void setTypeCountry(String oTypeCountry) {
+		this.typeCountry = oTypeCountry;
+	}
+
+	public String getTypeSector() {
+		return typeSector;
+	}
+
+	public void setTypeSector(String oTypeSector) {
+		this.typeSector = oTypeSector;
+	}
+
+	public boolean isType() {
 		return type;
 	}
 
-	public void setType(String oType) {
+	public void setType(boolean oType) {
 		this.type = oType;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String oValue) {
-		this.value = oValue;
 	}
 
 }

@@ -2,6 +2,7 @@ package uy.edu.um.laboratoriotic.services.management.general;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
 
@@ -45,5 +46,17 @@ public interface GeneralMgt {
 	 * @throws NotBoundException
 	 */
 	public TypeVO getType(TypeVO oTypeVO) throws RemoteException,
+			NotBoundException;
+
+	/**
+	 * This method is the one that communicates with the commons interface to
+	 * get a list of types
+	 * 
+	 * @param oType
+	 * @return
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 */
+	public ArrayList<TypeVO> getTypes(String oType) throws RemoteException,
 			NotBoundException;
 }

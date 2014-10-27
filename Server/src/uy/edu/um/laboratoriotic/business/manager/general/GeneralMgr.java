@@ -1,13 +1,22 @@
 package uy.edu.um.laboratoriotic.business.manager.general;
 
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+
+import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.business.management.general.GeneralMgt;
+import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.factory.general.GeneralDAOFactory;
+import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
 import uy.edu.um.laboratoriotic.persistence.management.general.GeneralDAOMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
 
 /**
  * This class is the implementation of GeneralMgt
+ * 
  * @author sblanco1
  *
  */
@@ -26,6 +35,7 @@ public class GeneralMgr implements GeneralMgt {
 	}
 
 	public static GeneralMgr getInstance() {
+
 		if (instance == null) {
 			instance = new GeneralMgr();
 		}
@@ -37,63 +47,97 @@ public class GeneralMgr implements GeneralMgt {
 	 * This are the management implementation methods
 	 */
 	@Override
-	public void addType(Type oType) {
+	public void addType(TypeVO oTypeVO) {
 		// TODO Auto-generated method stub
 
 		GeneralDAOMgt oNewDAOGeneral = GeneralDAOFactory.getGeneralDAOMgt();
-		Type oNewType = oType;
+		Type oNewType = null;
+
+		if (oTypeVO.isType()) {
+			oNewType = new Type(oTypeVO.getTypeID(), oTypeVO.getTypeCountry(),
+					oTypeVO.getTypeSector(), true);
+		} else {
+			oNewType = new Type(oTypeVO.getTypeID(), oTypeVO.getTypeCountry(),
+					oTypeVO.getTypeSector(), false);
+		}
+
 		oNewDAOGeneral.addType(oNewType);
 
 	}
 
 	@Override
-	public void removeType(String oType) {
+	public void removeType(TypeVO oTypeVO) {
 		// TODO Auto-generated method stub
 
 		GeneralDAOMgt oNewDAOGeneral = GeneralDAOFactory.getGeneralDAOMgt();
-		oNewDAOGeneral.removeType(oType);
+		Type oConvert = null;
+
+		if (oTypeVO.isType()) {
+			oConvert = new Type(oTypeVO.getTypeID(), oTypeVO.getTypeCountry(),
+					oTypeVO.getTypeSector(), false);
+		} else {
+			oConvert = new Type(oTypeVO.getTypeID(), oTypeVO.getTypeCountry(),
+					oTypeVO.getTypeSector(), true);
+		}
+
+		oNewDAOGeneral.removeType(oConvert);
 
 	}
 
 	@Override
-	public Type modifyType(Type oType) {
+	public Type modifyType(TypeVO oTypeVO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Type searchType(String oValue) {
+	public Type searchType(TypeVO oTypeVO) {
 		// TODO Auto-generated method stub
 
-		Type oResult = null;
+		Type oToReturn = null;
+		Type oConvert = null;
 
 		GeneralDAOMgt oNewDAOGeneral = GeneralDAOFactory.getGeneralDAOMgt();
-		Type oType = oNewDAOGeneral.searchType(oValue);
 
-		if (oType != null) {
-			oResult = oType;
+		if (oTypeVO.isType()) {
+			oConvert = new Type(oTypeVO.getTypeID(), oTypeVO.getTypeCountry(),
+					oTypeVO.getTypeSector(), true);
 		} else {
-			System.out.println("No se encontro al Type con valor " + oValue);
+			oConvert = new Type(oTypeVO.getTypeID(), oTypeVO.getTypeCountry(),
+					oTypeVO.getTypeSector(), false);
 		}
 
-		Type oToReturn = new Type(oResult.getTypeID(), oResult.getType(),
-				oResult.getValue());
+		Type oTypeDAO = oNewDAOGeneral.searchType(oConvert);
+
+		if (oTypeVO.isType()) {
+			oToReturn = new Type(oTypeDAO.getTypeID(),
+					oTypeDAO.getTypeCountry(), oTypeDAO.getTypeSector(), true);
+		} else {
+			oToReturn = new Type(oTypeDAO.getTypeID(),
+					oTypeDAO.getTypeCountry(), oTypeDAO.getTypeSector(), false);
+		}
 
 		return oToReturn;
-
 	}
 
 	@Override
-	public Type getType(TypeVO oTypeVO) {
+	public ArrayList<TypeVO> getTypes(String oType) {
 		// TODO Auto-generated method stub
 
-		GeneralDAOMgt oDAOGeneral = GeneralDAOFactory.getGeneralDAOMgt();
-		Type oNewType = oDAOGeneral.searchType(oTypeVO.getType());
+		TypeVO oTypeVO;
+		ArrayList<TypeVO> oListToReturn = new ArrayList<>();
+		ArrayList<Type> oList = new ArrayList<>();
 
-		Type oTypeToReturn = oNewType;
+		GeneralDAOMgt oDAOType = GeneralDAOFactory.getGeneralDAOMgt();
 
-		return oTypeToReturn;
+		oList = oDAOType.getTypes(oType);
 
+		for (Type iType : oList) {
+			oTypeVO = iType.toVO();
+			oListToReturn.add(oTypeVO);
+		}
+
+		return oListToReturn;
 	}
 
 }

@@ -33,7 +33,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	private static final String CREATE_TABLE_TEXT_MESSAGES = "CREATE TABLE TextMessages (textMessageID int PRIMARY KEY, text VARCHAR(300), employeeSenderID int NOT NULL FOREIGN KEY REFERENCES Employees, employeeReceiverID int NOT NULL FOREIGN KEY REFERENCES Employees, date DATE NOT NULL, isConference boolean NOT NULL)";
 	private static final String CREATE_TABLE_MESSAGES_EMPLOYEES = "CREATE TABLE MessagesEmployees (textMessageID int FOREIGN KEY REFERENCES TextMessages, EmployeeID int FOREIGN KEY REFERENCES Employees)";
 
-	private static int identifierNumber = 0;
+	private static long identifierNumber = 0;
 
 	/*
 	 * Constructor
@@ -71,7 +71,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 
-			int sID = TextMessageDAOMgr.identifierNumber++;
+			long sID = TextMessageDAOMgr.identifierNumber++;
 			String sText = oTextMessage.getTextMessage();
 			int sIDSender = oTextMessage.getSender().getEmployeeID();
 			HashSet<Employee> sReceivers = oTextMessage.getReceivers();
@@ -87,7 +87,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 				oPrepStatement = oConnection.prepareStatement(sInsert1);
 
-				oPrepStatement.setInt(1, sID);
+				oPrepStatement.setLong(1, sID);
 				oPrepStatement.setString(2, sText);
 				oPrepStatement.setInt(3, sIDSender);
 				oPrepStatement.setInt(4, iEmployee.getEmployeeID());
@@ -96,7 +96,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 				System.out
 						.println("Se agrego con exito a la tabla de mensajes:"
-								+ sID + " que con el texto: " + sText
+								+ sID + " con el texto: " + sText
 								+ " enviado por " + sIDSender
 								+ " para " + sReceivers + ", con la fecha " + sDate);
 

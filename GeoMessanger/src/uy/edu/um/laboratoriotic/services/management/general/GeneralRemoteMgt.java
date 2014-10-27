@@ -2,6 +2,7 @@ package uy.edu.um.laboratoriotic.services.management.general;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
 
@@ -19,5 +20,7 @@ public interface GeneralRemoteMgt extends Remote {
 	public void removeType(TypeVO oTypeVO) throws RemoteException;
 
 	public TypeVO getType(TypeVO oTypeVO) throws RemoteException;
+
+	public ArrayList<TypeVO> getTypes(String oType) throws RemoteException;	
 
 }
