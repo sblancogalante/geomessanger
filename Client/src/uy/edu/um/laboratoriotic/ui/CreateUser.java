@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.Blob;
-import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -43,7 +42,7 @@ public class CreateUser extends JDialog {
 
 	
 	public CreateUser() {
-		setBounds(100, 100, 600, 625);
+		setBounds(100, 100, 600, 600);
 		
 		Dimension d = new Dimension(600,600);
 		this.setMinimumSize(d);
@@ -87,13 +86,11 @@ public class CreateUser extends JDialog {
 					.addContainerGap())
 		);
 		
-		String[] comboBoxDefaultArray = {"<<Default>>"};
+String[] comboBoxDefaultArray = {"<<Default>>"};
 		
 		final JComboBox locationComboBox = new JComboBox(comboBoxDefaultArray);
 		
 		final JComboBox sectorComboBox = new JComboBox(comboBoxDefaultArray);
-		
-		
 		
 		
 		
@@ -104,7 +101,7 @@ public class CreateUser extends JDialog {
 				Blob profilePic = null;
 				EmployeeVO oEmployee = new EmployeeVO(Integer.parseInt(employeeIDText.getText()), iDText.getText(), nameText.getText(),
 						lastNameText.getText(), userNameText.getText(), passwordText.getText(), (String)locationComboBox.getSelectedItem() ,
-						(String)sectorComboBox.getSelectedItem(), eMailText.getText(), workingHours, positionText.getText(), profilePic,
+						(String)sectorComboBox.getSelectedItem(), eMailText.getText(), positionText.getText(),  workingHours, profilePic,
 						false);
 				System.out.println(oEmployee.toString());
 				EmployeeMgt employeeMgt = EmployeeFactory.getInstance().getEmployeeMgt();
@@ -120,9 +117,7 @@ public class CreateUser extends JDialog {
 				
 			}
 			
-		});
-		
-		
+		});		
 		
 		
 		
@@ -151,6 +146,100 @@ public class CreateUser extends JDialog {
 					.addContainerGap())
 		);
 		panel_4.setLayout(gl_panel_4);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setToolTipText("");
+		tabbedPane.addTab("Account", null, panel_1, null);
+		
+		JLabel lblNoteTheFields = new JLabel("<<NOTE: The fields with (*) are obligatory.>>");
+		
+		employeeIDText = new JTextField();
+		employeeIDText.setColumns(10);
+		
+		userNameText = new JTextField();
+		userNameText.setColumns(10);
+		
+		passwordText = new JTextField();
+		passwordText.setColumns(10);
+		
+		JLabel lblEmployeeid = new JLabel("EmployeeID: (*)");
+		
+		JLabel lblName = new JLabel("User name: (*)");
+		
+		JLabel lblLastName = new JLabel("Password: (*)");
+		
+		JLabel lblNewLabel = new JLabel("Location: (*)");
+		
+		JLabel lblNewLabel_1 = new JLabel("Sector: (*)");		
+		
+		
+		JSeparator separator = new JSeparator();
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(65)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblEmployeeid)
+						.addComponent(lblName)
+						.addComponent(lblLastName))
+					.addGap(18)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(userNameText, GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+						.addComponent(employeeIDText, GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(2)
+							.addComponent(passwordText, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)))
+					.addGap(35))
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(50)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(locationComboBox, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel))
+					.addPreferredGap(ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(sectorComboBox, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_1))
+					.addGap(43))
+				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(separator, GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+					.addContainerGap())
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNoteTheFields, GroupLayout.PREFERRED_SIZE, 303, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(234, Short.MAX_VALUE))
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(38)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(employeeIDText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblEmployeeid))
+					.addGap(18)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblName)
+						.addComponent(userNameText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(24)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(passwordText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblLastName))
+					.addGap(32)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel)
+						.addComponent(lblNewLabel_1))
+					.addGap(18)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(locationComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(sectorComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(77)
+					.addComponent(lblNoteTheFields)
+					.addContainerGap())
+		);
+		panel_1.setLayout(gl_panel_1);
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("User Details", null, panel_2, null);
@@ -233,117 +322,6 @@ public class CreateUser extends JDialog {
 					.addContainerGap())
 		);
 		panel_2.setLayout(gl_panel_2);
-		
-		
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setToolTipText("");
-		tabbedPane.addTab("Account", null, panel_1, null);
-		
-		JLabel lblNoteTheFields = new JLabel("<<NOTE: The fields with (*) are obligatory.>>");
-		
-		employeeIDText = new JTextField();
-		employeeIDText.setColumns(10);
-		
-		userNameText = new JTextField();
-		userNameText.setColumns(10);
-		
-		passwordText = new JTextField();
-		passwordText.setColumns(10);
-		
-		JLabel lblEmployeeid = new JLabel("EmployeeID: (*)");
-		
-		JLabel lblName = new JLabel("User name: (*)");
-		
-		JLabel lblLastName = new JLabel("Password: (*)");
-		
-		JLabel lblNewLabel = new JLabel("Location: (*)");
-		
-		JLabel lblNewLabel_1 = new JLabel("Sector: (*)");
-		
-		
-		
-		JSeparator separator = new JSeparator();
-		
-		JButton btnAddLocation = new JButton("Add Location");
-		
-		JButton btnAddSector = new JButton("Add Sector");
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGap(65)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblEmployeeid)
-						.addComponent(lblName)
-						.addComponent(lblLastName))
-					.addGap(18)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(userNameText, GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
-						.addComponent(employeeIDText, GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGap(2)
-							.addComponent(passwordText, GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)))
-					.addGap(35))
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(separator, GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
-					.addContainerGap())
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(lblNoteTheFields, GroupLayout.PREFERRED_SIZE, 303, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(242, Short.MAX_VALUE))
-				.addGroup(Alignment.LEADING, gl_panel_1.createSequentialGroup()
-					.addGap(50)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(locationComboBox, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGap(6)
-							.addComponent(btnAddLocation)))
-					.addPreferredGap(ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGap(6)
-							.addComponent(btnAddSector))
-						.addComponent(lblNewLabel_1)
-						.addComponent(sectorComboBox, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
-					.addGap(47))
-		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGap(38)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(employeeIDText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblEmployeeid))
-					.addGap(18)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblName)
-						.addComponent(userNameText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(24)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(passwordText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblLastName))
-					.addGap(32)
-					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(lblNewLabel_1))
-					.addGap(18)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(locationComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(sectorComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnAddLocation)
-						.addComponent(btnAddSector))
-					.addGap(42)
-					.addComponent(lblNoteTheFields)
-					.addContainerGap())
-		);
-		panel_1.setLayout(gl_panel_1);
 		
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Other", null, panel_3, null);

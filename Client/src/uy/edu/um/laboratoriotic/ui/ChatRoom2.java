@@ -1,10 +1,8 @@
 package uy.edu.um.laboratoriotic.ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -15,27 +13,25 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
-import javax.swing.JButton;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
 
-import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.factory.message.TextMessageFactory;
-import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
@@ -68,8 +64,8 @@ public class ChatRoom2 extends JFrame {
 	public ChatRoom2(final EmployeeVO employee) {
 		
 		final JTextArea messageTextArea = new JTextArea("Message...");
-		final HashSet<EmployeeVO> recivers = new HashSet<EmployeeVO>();
-		recivers.add(employee);
+		final HashSet<EmployeeVO> receivers = new HashSet<EmployeeVO>();
+		receivers.add(employee);
 		
 	
 		final TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
@@ -109,10 +105,10 @@ public class ChatRoom2 extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
 				
-				TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),employee,recivers,null,false);
+				TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),employee,receivers,null,false);
 				try {
 					textMgt.addTextMessage(message);
-					converTextArea.append(message.toString());
+					converTextArea.append(message.getTextMessage());
 					
 				} catch (RemoteException | NotBoundException e) {
 					// TODO Auto-generated catch block
