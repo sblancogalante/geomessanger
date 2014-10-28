@@ -37,7 +37,7 @@ public class Login extends JFrame {
 
 	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 147, 234);
+		setBounds(100, 100, 147, 273);
 		
 		
 		final EmployeeMgt employeeMgr =  EmployeeFactory.getInstance().getEmployeeMgt();
@@ -45,9 +45,13 @@ public class Login extends JFrame {
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		
-		JLabel lblLoginIn = new JLabel("Log in");
-		lblLoginIn.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLoginIn.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		JLabel loginLabel = new JLabel("Log in");
+		loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		loginLabel.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		
+		final JLabel errorLabel = new JLabel("Incorrect Password!");
+		errorLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		errorLabel.setForeground(Color.RED);
 		
 		userText = new JTextField("User name");
 		userText.setForeground(Color.LIGHT_GRAY);
@@ -60,6 +64,7 @@ public class Login extends JFrame {
 							userText.setText("");
 							userText.setForeground(Color.BLACK);
 						}
+						errorLabel.setVisible(false);
 					}
 
 					public void focusLost(FocusEvent e) {
@@ -81,6 +86,7 @@ public class Login extends JFrame {
 							passwordText.setText("");
 							passwordText.setForeground(Color.BLACK);
 						}
+						errorLabel.setVisible(false);
 					}
 
 					public void focusLost(FocusEvent e) {
@@ -105,9 +111,13 @@ public class Login extends JFrame {
 					String inputUserName = userText.getText();
 					String inputPassword = String.valueOf(passwordText.getPassword());
 					EmployeeFilterVO inputEmployeeVO = new EmployeeFilterVO(inputUserName, inputPassword);
+		
 					if(employeeMgr.checkLogin(inputEmployeeVO)){
 						wind = new MainWindow(inputEmployeeVO );
 						wind.setVisible(true);
+						dispose();
+					}else{
+						errorLabel.setVisible(true);
 					}
 				} catch (RemoteException | NotBoundException e1) {
 					// TODO Auto-generated catch block
@@ -116,7 +126,7 @@ public class Login extends JFrame {
 				System.out.println("User name: " + userText.getText());
 				System.out.println("Password: "
 						+ String.valueOf(passwordText.getPassword()));
-				dispose();
+				
 
 			}
 		});
@@ -129,6 +139,8 @@ public class Login extends JFrame {
 		});
 		
 		JSeparator separator = new JSeparator();
+		
+		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -145,20 +157,23 @@ public class Login extends JFrame {
 							.addComponent(separator, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(32)
-							.addComponent(lblLoginIn, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
+							.addComponent(loginLabel, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(userText, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(passwordText, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(51, Short.MAX_VALUE))
+							.addComponent(passwordText, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(errorLabel)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblLoginIn)
+					.addComponent(loginLabel)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 9, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
@@ -169,7 +184,9 @@ public class Login extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
 						.addComponent(quitButton, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(47, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(errorLabel)
+					.addContainerGap(32, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}

@@ -25,6 +25,10 @@ import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 
 public class LoginAbsoluteLayout extends JFrame {
 
+	
+	
+	//Hy6QA4Kc6YB6
+	
 	private JPanel contentPane;
 	private JLabel loginLabel;
 	private JLabel imageLabel;
@@ -33,13 +37,13 @@ public class LoginAbsoluteLayout extends JFrame {
 	private JButton quitButton;
 	private JButton loginButton;
 
-	boolean logedin;
+	
 
 	private ImageIcon imageLogo;
 
 	public LoginAbsoluteLayout() {
 
-		logedin = false;
+		
 		
 		final EmployeeMgt employeeMgr =  EmployeeFactory.getInstance().getEmployeeMgt();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -131,7 +135,7 @@ public class LoginAbsoluteLayout extends JFrame {
 		loginButton = new JButton("Log in");
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				logedin = true;
+				
 				MainWindow wind;
 				String inputUserName = userText.getText();
 				String inputPassword = String.valueOf(passwordText.getPassword());
@@ -144,7 +148,7 @@ public class LoginAbsoluteLayout extends JFrame {
 						dispose();
 					}else{
 						errorLabel.setVisible(true);
-						errorLabelDisappear();
+						
 					}
 					
 					
@@ -179,11 +183,6 @@ public class LoginAbsoluteLayout extends JFrame {
 		return this;
 	}
 
-	public Boolean getLogedin() {
-		return logedin;
-	}
+
 	
-	private void errorLabelDisappear(){
-		
-	}
 }
