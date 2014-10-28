@@ -108,7 +108,8 @@ public class ChatRoom2 extends JFrame {
 				TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),employee,receivers,null,false);
 				try {
 					textMgt.addTextMessage(message);
-					converTextArea.append(message.getTextMessage());
+					converTextArea.append(message.getTextMessage() + "\n");
+					messageTextArea.setText("");
 					
 				} catch (RemoteException | NotBoundException e) {
 					// TODO Auto-generated catch block

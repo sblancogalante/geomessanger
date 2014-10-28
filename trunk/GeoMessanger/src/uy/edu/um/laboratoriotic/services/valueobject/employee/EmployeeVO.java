@@ -65,6 +65,12 @@ public class EmployeeVO implements Serializable {
 		
 	}
 
+	public String toString(){
+		String oReturn = "Name: " +  name + "\nLastName: " + lastName;
+		
+		return oReturn;
+	}
+
 	/*
 	 * Getters & setters
 	 */
