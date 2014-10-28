@@ -377,8 +377,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			while (oResultSet.next()) {
 
-				String userName = oResultSet.getString(5);
-				String password = oResultSet.getString(6);
+				String userName = oResultSet.getString(1);
+				String password = oResultSet.getString(2);
 
 				if (oUserName.equals(userName)
 						&& hashEncriptation(oPassword).equals(password)) {
