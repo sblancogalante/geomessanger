@@ -1,6 +1,7 @@
 package uy.edu.um.laboratoriotic.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
 import java.awt.Font;
 
 public class NewLocation extends JDialog {
@@ -42,6 +44,10 @@ public class NewLocation extends JDialog {
 		setBounds(100, 100, 450, 373);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		Dimension d = new Dimension(450,373);
+		this.setMaximumSize(d);
+		this.setMinimumSize(d);
+		
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
 		JLabel lblCreateLocation = new JLabel("Create Location");
@@ -52,6 +58,8 @@ public class NewLocation extends JDialog {
 		JScrollPane scrollPane = new JScrollPane();
 		
 		JLabel lblNewLocation = new JLabel("New Location: ");
+		
+		
 		
 		textField = new JTextField();
 		textField.setColumns(10);

@@ -59,12 +59,16 @@ public class MainWindow extends JFrame {
 	private JMenuItem exitMenuItem;
 	private JMenuItem mntmProfile;
 	private ArrayList<EmployeeVO> listEmployee;
+	private EmployeeVO actualUser;
 
-	public MainWindow(EmployeeFilterVO actualUser) throws RemoteException, NotBoundException {
+	public MainWindow(EmployeeFilterVO actualFilterUser) throws RemoteException, NotBoundException {
 
 		final EmployeeMgt employeeMgt = EmployeeFactory.getInstance()
 				.getEmployeeMgt();
-
+		
+		
+		actualUser = employeeMgt.getLoginEmployee(actualFilterUser);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 620);
 		Dimension d = new Dimension(600, 550);
@@ -135,7 +139,7 @@ public class MainWindow extends JFrame {
 		userPhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 118, 118);
 		//userPhotoImage = new ImageIcon("Images/luisFoto.jpg");
 		userPhotoLabel = new JLabel(userPhotoImage);
-		userNameLabel = new JLabel(actualUser.getUserName());
+		userNameLabel = new JLabel(actualUser.getName());
 		userStateLabel = new JLabel("State");
 
 		searchUserText = new JTextField();
