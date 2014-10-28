@@ -62,6 +62,7 @@ public class NewLocation extends JDialog {
 		
 		
 		textField = new JTextField();
+		textField.setEditable(false);
 		textField.setColumns(10);
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
