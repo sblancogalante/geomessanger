@@ -40,8 +40,8 @@ public class EmployeeVO implements Serializable {
 		this.sector = oSector;
 		this.mail = oMail;
 		this.position = oPosition;
-		this.profilePicture = oProfilePicture;
 		this.workingHour = oWorkingHour;
+		this.profilePicture = oProfilePicture;	
 		this.status = oStatus;
 
 	}	
