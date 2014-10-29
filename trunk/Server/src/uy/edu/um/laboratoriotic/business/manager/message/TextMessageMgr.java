@@ -53,8 +53,7 @@ public class TextMessageMgr implements TextMessageMgt {
 		TextMessageDAOMgt oNewDAOTextMessage = TextMessageDAOFactory
 				.getTextMessageDAOMgt();
 
-		Employee oSenderEmployee = new Employee(oTextMessageVO.getSender()
-				.getEmployeeID(), oTextMessageVO.getSender().getID(),
+		Employee oSenderEmployee = new Employee(oTextMessageVO.getSender().getID(),
 				oTextMessageVO.getSender().getName(), oTextMessageVO
 						.getSender().getLastName(), oTextMessageVO.getSender()
 						.getUserName(), oTextMessageVO.getSender()
@@ -70,8 +69,7 @@ public class TextMessageMgr implements TextMessageMgt {
 
 		for (EmployeeVO iEmployeeVO : oTextMessageVO.getReceivers()) {
 
-			Employee oReceiverEmployee = new Employee(
-					iEmployeeVO.getEmployeeID(), iEmployeeVO.getID(),
+			Employee oReceiverEmployee = new Employee(iEmployeeVO.getID(),
 					iEmployeeVO.getName(), iEmployeeVO.getLastName(),
 					iEmployeeVO.getUserName(), iEmployeeVO.getPassword(),
 					iEmployeeVO.getLocation(), iEmployeeVO.getSector(),
@@ -113,8 +111,7 @@ public class TextMessageMgr implements TextMessageMgt {
 		TextMessageDAOMgt oDAOTextMessage = TextMessageDAOFactory
 				.getTextMessageDAOMgt();
 
-		Employee oSender = new Employee(oSenderVO.getEmployeeID(),
-				oSenderVO.getID(), oSenderVO.getName(),
+		Employee oSender = new Employee(oSenderVO.getID(), oSenderVO.getName(),
 				oSenderVO.getLastName(), oSenderVO.getUserName(),
 				oSenderVO.getPassword(), oSenderVO.getLocation(),
 				oSenderVO.getSector(), oSenderVO.getMail(),
@@ -122,8 +119,7 @@ public class TextMessageMgr implements TextMessageMgt {
 				oSenderVO.getProfilePicture(), oSenderVO.getStatus());
 
 		for (EmployeeVO iEmployeeVO : oReceiversVO) {
-			oEmployee = new Employee(iEmployeeVO.getEmployeeID(),
-					iEmployeeVO.getID(), iEmployeeVO.getName(),
+			oEmployee = new Employee(iEmployeeVO.getID(), iEmployeeVO.getName(),
 					iEmployeeVO.getLastName(), iEmployeeVO.getUserName(),
 					iEmployeeVO.getPassword(), iEmployeeVO.getLocation(),
 					iEmployeeVO.getSector(), iEmployeeVO.getMail(),

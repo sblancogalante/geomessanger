@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Blob;
 
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
 /**
@@ -27,12 +28,11 @@ public class Employee {
 	/*
 	 * Constructors
 	 */
-	public Employee(int oEmployeeID, String oID, String oName,
-			String oLastName, String oUserName, String oPassword,
-			String oLocation, String oSector, String oMail, String oPosition,
+	public Employee(String oID, String oName, String oLastName,
+			String oUserName, String oPassword, String oLocation,
+			String oSector, String oMail, String oPosition,
 			String oWorkingHour, Blob oProfilePicture, boolean oStatus) {
 
-		this.employeeID = oEmployeeID;
 		this.iD = oID;
 		this.name = oName;
 		this.lastName = oLastName;
@@ -48,23 +48,22 @@ public class Employee {
 
 	}
 
-	public Employee(int oEmployeeID, String oUserName, String oPassword,
-			String oLocation, String oSector, boolean oStatus) {
-		
-		this.employeeID = oEmployeeID;
+	public Employee(String oUserName, String oPassword, String oLocation,
+			String oSector, boolean oStatus) {
+
 		this.userName = oUserName;
 		this.password = this.hashEncriptation(oPassword);
 		this.location = oLocation;
 		this.sector = oSector;
 		this.status = oStatus;
-		
+
 	}
 
 	public Employee(String oUserName, String oPassword) {
 
 		this.userName = oUserName;
 		this.password = this.hashEncriptation(oPassword);
-		
+
 	}
 
 	/*
@@ -72,12 +71,16 @@ public class Employee {
 	 */
 	public EmployeeVO toVO() {
 
-		return new EmployeeVO(employeeID, iD, name, lastName, userName,
-				password, location, sector, mail, position, workingHour,
-				profilePicture, status);
+		return new EmployeeVO(iD, name, lastName, userName, password, location,
+				sector, mail, position, workingHour, profilePicture, status);
 
-	}	
-	
+	}
+
+	public EmployeeFilterVO toFilterVO() {
+
+		return new EmployeeFilterVO(userName, password);
+	}
+
 	public String hashEncriptation(String oPassword) {
 
 		String newPassword = null;

@@ -25,12 +25,11 @@ public class EmployeeVO implements Serializable {
 	/*
 	 * Constructors
 	 */
-	public EmployeeVO(int oEmployeeID, String oID, String oName,
+	public EmployeeVO(String oID, String oName,
 			String oLastName, String oUserName, String oPassword,
 			String oLocation, String oSector, String oMail, String oPosition,
 			String oWorkingHour, Blob oProfilePicture, boolean oStatus) {
-
-		this.employeeID = oEmployeeID;
+		
 		this.iD = oID;
 		this.name = oName;
 		this.lastName = oLastName;
@@ -46,10 +45,9 @@ public class EmployeeVO implements Serializable {
 
 	}	
 
-	public EmployeeVO(int oEmployeeID, String oUserName, String oPassword,
+	public EmployeeVO(String oUserName, String oPassword,
 			String oLocation, String oSector, boolean oStatus) {
-		
-		this.employeeID = oEmployeeID;
+				
 		this.userName = oUserName;
 		this.password = oPassword;
 		this.location = oLocation;
@@ -65,12 +63,6 @@ public class EmployeeVO implements Serializable {
 		
 	}
 
-	public String toString(){
-		String oReturn = "Name: " +  name + "\nLastName: " + lastName;
-		
-		return oReturn;
-	}
-
 	/*
 	 * Getters & setters
 	 */
@@ -81,7 +73,7 @@ public class EmployeeVO implements Serializable {
 	public void setEmployeeID(int oEmployeeID) {
 		this.employeeID = oEmployeeID;
 	}
-
+	
 	public String getID() {
 		return iD;
 	}
@@ -176,6 +168,6 @@ public class EmployeeVO implements Serializable {
 
 	public void setStatus(boolean oStatus) {
 		this.status = oStatus;
-	}
+	}	
 
 }

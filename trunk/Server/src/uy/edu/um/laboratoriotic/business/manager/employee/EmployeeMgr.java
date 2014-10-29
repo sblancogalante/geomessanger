@@ -57,7 +57,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 		// Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
 
-		Employee oEmployee = new Employee(oEmployeeVO.getEmployeeID(),
+		Employee oEmployee = new Employee(
 				oEmployeeVO.getID(), oEmployeeVO.getName(),
 				oEmployeeVO.getLastName(), oEmployeeVO.getUserName(),
 				oEmployeeVO.getPassword(), oEmployeeVO.getLocation(),

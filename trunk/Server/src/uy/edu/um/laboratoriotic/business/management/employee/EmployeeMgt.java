@@ -48,7 +48,7 @@ public interface EmployeeMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 */
-	public Employee searchEmployee(int oemployeeID) throws DataBaseConnection;
+	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection;
 
 	/**
 	 * This method makes sure that the database returns a list with all the
