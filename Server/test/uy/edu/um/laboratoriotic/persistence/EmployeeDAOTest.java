@@ -13,7 +13,7 @@ public class EmployeeDAOTest {
 	@Test
 	public void test() {
 
-		Employee oEmployee = new Employee(1, "5.062.081-0", "Santiago",
+		Employee oEmployee = new Employee("5.062.081-0", "Santiago",
 				"Blanco", "sblanco", "asdfg", "Uruguay", "Desarrollo",
 				"sblanco1@correo.um.edu.uy", "Programador", null, null, false);
 

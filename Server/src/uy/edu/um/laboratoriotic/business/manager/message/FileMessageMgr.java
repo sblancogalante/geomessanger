@@ -45,8 +45,7 @@ public class FileMessageMgr implements FileMessageMgt {
 		FileMessageDAOMgt oNewDAOFileMessage = FileMessageDAOFactory
 				.getFileMessageDAOMgt();
 
-		Employee oSenderEmployee = new Employee(oFileMessageVO.getSender()
-				.getEmployeeID(), oFileMessageVO.getSender().getID(),
+		Employee oSenderEmployee = new Employee(oFileMessageVO.getSender().getID(),
 				oFileMessageVO.getSender().getName(), oFileMessageVO
 						.getSender().getLastName(), oFileMessageVO.getSender()
 						.getUserName(), oFileMessageVO.getSender()
@@ -62,8 +61,7 @@ public class FileMessageMgr implements FileMessageMgt {
 
 		for (EmployeeVO iEmployeeVO : oFileMessageVO.getReceivers()) {
 
-			Employee oReceiverEmployee = new Employee(
-					iEmployeeVO.getEmployeeID(), iEmployeeVO.getID(),
+			Employee oReceiverEmployee = new Employee(iEmployeeVO.getID(),
 					iEmployeeVO.getName(), iEmployeeVO.getLastName(),
 					iEmployeeVO.getUserName(), iEmployeeVO.getPassword(),
 					iEmployeeVO.getLocation(), iEmployeeVO.getSector(),

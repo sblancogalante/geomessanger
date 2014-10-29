@@ -48,7 +48,7 @@ public class TextMessage extends Message {
 		HashSet<EmployeeVO> oReceiversToReturn = new HashSet<>();
 
 		for (Employee iEmployee : receivers) {
-			EmployeeVO oEmployeeVO = new EmployeeVO(iEmployee.getEmployeeID(),
+			EmployeeVO oEmployeeVO = new EmployeeVO(
 					iEmployee.getID(), iEmployee.getName(),
 					iEmployee.getLastName(), iEmployee.getUserName(),
 					iEmployee.getPassword(), iEmployee.getLocation(),

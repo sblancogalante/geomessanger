@@ -32,6 +32,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
 	private static final String CREATE_TABLE_EMPLOYEES = "CREATE TABLE Employees (employeeID INT PRIMARY KEY NOT NULL, iD VARCHAR(20) NOT NULL, name VARCHAR(20), lastName VARCHAR(20), userName VARCHAR(20) NOT NULL, password VARCHAR(100) NOT NULL, location VARCHAR(30) NOT NULL, sector VARCHAR(30), mail VARCHAR(30) NOT NULL, position VARCHAR(30), workingHour VARCHAR(20), profilePicture BLOB, status BOOLEAN NOT NULL)";
 
+	private static long identifierNumber = 0;
+
 	/*
 	 * Constructor of the class
 	 */
@@ -63,9 +65,11 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 
+			long sID = EmployeeDAOMgr.identifierNumber++;
+
 			oStatement = oConnection.createStatement();
 			String sInsert = "INSERT INTO Employees (employeeID, iD, name, lastName, userName, password, location, sector, mail, position, workingHour, profilePicture, status) VALUES ("
-					+ oEmployee.getEmployeeID()
+					+ sID
 					+ ",'"
 					+ oEmployee.getID()
 					+ "','"
@@ -91,12 +95,14 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 					+ ","
 					+ oEmployee.getStatus() + ");";
 
+			System.out.println(sInsert);
 			oStatement.execute(sInsert);
 
 			System.out.println("Se agrego con exito al empleado "
 					+ oEmployee.getUserName() + " " + oEmployee.getPassword());
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new RemoteException();
 		} finally {
 			if (oConnection != null) {
@@ -127,7 +133,6 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			while (oResultSet.next()) {
 
-				int sResultEmployeeID = oResultSet.getInt(1);
 				String sResultID = oResultSet.getString(2);
 				String sResultName = oResultSet.getString(3);
 				String sResultLastName = oResultSet.getString(4);
@@ -141,10 +146,10 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				Blob sResultProfilePicture = oResultSet.getBlob(12);
 				boolean sResultStatus = oResultSet.getBoolean(13);
 
-				Employee oEmployee = new Employee(sResultEmployeeID, sResultID,
-						sResultName, sResultLastName, sResultUserName,
-						sResultPassword, sResultLocation, sResultSector,
-						sResultMail, sResultPosition, sResultWorkingHour,
+				Employee oEmployee = new Employee(sResultID, sResultName,
+						sResultLastName, sResultUserName, sResultPassword,
+						sResultLocation, sResultSector, sResultMail,
+						sResultPosition, sResultWorkingHour,
 						sResultProfilePicture, sResultStatus);
 
 				oList.add(oEmployee);
@@ -174,8 +179,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection,
-			RemoteException {
+	public Employee searchEmployee(int oEmployeeID)
+			throws DataBaseConnection, RemoteException {
 
 		Employee oEmployee = null;
 		Statement oStatement = null;
@@ -190,8 +195,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 
 			while (oResultSet.next()) {
-
-				int sResultEmployeeID = oResultSet.getInt(1);
+				
+				int sResultEmployeeID = oResultSet.getInt(1);				
 				String sResultID = oResultSet.getString(2);
 				String sResultName = oResultSet.getString(3);
 				String sResultLastName = oResultSet.getString(4);
@@ -205,12 +210,14 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				Blob sResultProfilePicture = oResultSet.getBlob(12);
 				boolean sResultStatus = oResultSet.getBoolean(13);
 
-				oEmployee = new Employee(sResultEmployeeID, sResultID,
-						sResultName, sResultLastName, sResultUserName,
-						sResultPassword, sResultLocation, sResultSector,
-						sResultMail, sResultPosition, sResultWorkingHour,
+				oEmployee = new Employee(sResultID, sResultName,
+						sResultLastName, sResultUserName, sResultPassword,
+						sResultLocation, sResultSector, sResultMail,
+						sResultPosition, sResultWorkingHour,
 						sResultProfilePicture, sResultStatus);
 
+				oEmployee.setEmployeeID(sResultEmployeeID);
+				
 				System.out
 						.println("El empleado hallado es: " + sResultUserName);
 

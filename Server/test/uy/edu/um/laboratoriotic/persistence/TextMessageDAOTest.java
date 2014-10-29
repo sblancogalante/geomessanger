@@ -17,11 +17,11 @@ public class TextMessageDAOTest {
 	@Test
 	public void test() {
 
-		Employee oSender = new Employee(1, "5.062.081-0", "Santiago", "Blanco",
+		Employee oSender = new Employee("5.062.081-0", "Santiago", "Blanco",
 				"sblanco", "asdfg", "Uruguay", "Desarrollo",
 				"sblanco1@correo.um.edu.uy", "Programador", null, null, false);
 
-		Employee oReceiver = new Employee(2, "1.814.930-7", "Antonio",
+		Employee oReceiver = new Employee("1.814.930-7", "Antonio",
 				"Blanco", "ablanco", "qwerty", "Uruguay", "Soporte",
 				"ablancoa@correo.um.edu.uy", "Programador", null, null, false);
 
