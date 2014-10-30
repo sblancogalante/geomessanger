@@ -47,6 +47,27 @@ public class Employee {
 		this.status = oStatus;
 
 	}
+	
+	public Employee(int oEmployeeID, String oID, String oName, String oLastName,
+			String oUserName, String oPassword, String oLocation,
+			String oSector, String oMail, String oPosition,
+			String oWorkingHour, Blob oProfilePicture, boolean oStatus) {
+
+		this.employeeID = oEmployeeID;
+		this.iD = oID;
+		this.name = oName;
+		this.lastName = oLastName;
+		this.userName = oUserName;
+		this.password = this.hashEncriptation(oPassword);
+		this.location = oLocation;
+		this.sector = oSector;
+		this.mail = oMail;
+		this.position = oPosition;
+		this.workingHour = oWorkingHour;
+		this.profilePicture = oProfilePicture;
+		this.status = oStatus;
+
+	}
 
 	public Employee(String oUserName, String oPassword, String oLocation,
 			String oSector, boolean oStatus) {
@@ -71,7 +92,7 @@ public class Employee {
 	 */
 	public EmployeeVO toVO() {
 
-		return new EmployeeVO(iD, name, lastName, userName, password, location,
+		return new EmployeeVO(employeeID, iD, name, lastName, userName, password, location,
 				sector, mail, position, workingHour, profilePicture, status);
 
 	}
