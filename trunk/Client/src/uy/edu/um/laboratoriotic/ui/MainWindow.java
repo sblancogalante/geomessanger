@@ -209,12 +209,12 @@ public class MainWindow extends JFrame {
 				return userPanel;
 			}
 		});
-		
+		DefaultListModel<EmployeeVO> employeeListModel;
 		//AGREGA LOS EMPLEADOS CONOCIDOS
 		if (employeeMgt.getEmployees() != null && employeeMgt.getEmployees().size() > 0) {
-			
-			DefaultListModel<EmployeeVO> employeeListModel = new DefaultListModel<EmployeeVO>();
-			fillDefaultListFromArray(actualUser,employeeMgt.getEmployees(), employeeListModel);
+			 
+			employeeListModel = new DefaultListModel<EmployeeVO>();
+			fillDefaultListModelFromArray(actualUser,employeeMgt.getEmployees(), employeeListModel);
 			userList.setModel(employeeListModel);
 			listEmployee = actualizarContactos(employeeMgt, userList);
 			
@@ -223,13 +223,13 @@ public class MainWindow extends JFrame {
 		// Add a listener for mouse clicks
 				userList.addMouseListener(new MouseAdapter() {
 				    public void mouseClicked(MouseEvent evt) {
+				    	
 				        JList list = (JList)evt.getSource();
 				        if (evt.getClickCount() == 2) {          // Double-click
-				            // Get item index
-				        	
-				            int index = list.locationToIndex(evt.getPoint());
-				            System.out.println(index);
-				            ChatRoom2 chatRoom = new ChatRoom2(listEmployee.get(index),actualUser);
+				            // Get item indexçç
+				        					        	
+				            System.out.println(list.getSelectedIndex());
+				            ChatRoom2 chatRoom = new ChatRoom2((EmployeeVO)list.getModel().getElementAt(list.getSelectedIndex()),actualUser);
 				            chatRoom.setVisible(true);
 				           
 				        } 
@@ -318,7 +318,7 @@ public class MainWindow extends JFrame {
 		if (oListEmployee != null && oListEmployee.size() > 0) {
 			
 			DefaultListModel<EmployeeVO> lModel = new DefaultListModel<EmployeeVO>();
-			fillDefaultListFromArray(actualUser, oListEmployee,lModel);
+			fillDefaultListModelFromArray(actualUser, oListEmployee,lModel);
 			userList.setModel(lModel);
 			
 			
@@ -333,7 +333,7 @@ public class MainWindow extends JFrame {
 	}
 	
 	
-	private void fillDefaultListFromArray(EmployeeVO actualUser, ArrayList<EmployeeVO> arrayList,DefaultListModel<EmployeeVO> lModel){
+	private void fillDefaultListModelFromArray(EmployeeVO actualUser, ArrayList<EmployeeVO> arrayList,DefaultListModel<EmployeeVO> lModel){
 		
 		for(EmployeeVO employee : arrayList){
 			if(!employee.getUserName().equals( actualUser.getUserName())){
