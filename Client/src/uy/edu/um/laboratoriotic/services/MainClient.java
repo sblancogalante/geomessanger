@@ -2,6 +2,12 @@ package uy.edu.um.laboratoriotic.services;
 
 import uy.edu.um.laboratoriotic.ui.Login;
 
+/**
+ * This is the class that starts the UI
+ * 
+ * @author sblanco1
+ * 
+ */
 public class MainClient {
 
 	public static void main(String[] args) {
