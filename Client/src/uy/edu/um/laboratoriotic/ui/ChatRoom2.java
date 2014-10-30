@@ -3,19 +3,25 @@ package uy.edu.um.laboratoriotic.ui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,32 +47,16 @@ public class ChatRoom2 extends JFrame {
 	private JPanel contentPane;
 	private JTextField scrollPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EmployeeVO oEmployee = new EmployeeVO("luisgur","asdfg");
-					ChatRoom2 frame = new ChatRoom2(oEmployee);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public ChatRoom2(final EmployeeVO employee) {
+	public ChatRoom2(final EmployeeVO reciverEmployee, final EmployeeVO senderEmployee) { 
 		
 		final JTextArea messageTextArea = new JTextArea("Message...");
 		messageTextArea.setLineWrap(true);
 		final HashSet<EmployeeVO> receivers = new HashSet<EmployeeVO>();
-		receivers.add(employee);
+		receivers.add(reciverEmployee);
 		
 	
 		final TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
@@ -88,9 +78,34 @@ public class ChatRoom2 extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JLabel lblNewLabel = new JLabel("FOTO");
+		ImageIcon reciverPhotoImage;
 		
-		JLabel lblFoto = new JLabel("FOTO");
+		if(reciverEmployee.getProfilePicture() == null){	
+			
+			reciverPhotoImage = rescaleImage(new File("Images/Foto.png"), 118,118);
+			
+		}else{
+			
+			reciverPhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 118, 118);
+			//userPhotoImage = new ImageIcon("Images/luisFoto.jpg");
+			
+		}
+		
+		JLabel reciverPhotoLabel = new JLabel(reciverPhotoImage);
+		
+		ImageIcon senderPhotoImage;
+		if(senderEmployee.getProfilePicture() == null){	
+			
+			senderPhotoImage = rescaleImage(new File("Images/Foto.png"), 118,118);
+			
+		}else{
+			
+			senderPhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 118, 118);
+			
+			
+		}
+		
+		JLabel senderPhotoLabel = new JLabel(senderPhotoImage);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		
@@ -107,7 +122,7 @@ public class ChatRoom2 extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
 				
-				TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),employee,receivers,null,false);
+				TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),senderEmployee,receivers,null,false);
 				try {
 					textMgt.addTextMessage(message);
 					converTextArea.append(message.getTextMessage() + "\n");
@@ -121,7 +136,7 @@ public class ChatRoom2 extends JFrame {
 				
 		});
 		
-		JLabel lblNewLabel_1 = new JLabel("Chatting with " + employee.getName()+  " " + employee.getLastName());
+		JLabel lblNewLabel_1 = new JLabel("Chatting with " + reciverEmployee.getName()+  " " + reciverEmployee.getLastName());
 		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -130,8 +145,8 @@ public class ChatRoom2 extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(21)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblFoto, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
+						.addComponent(reciverPhotoLabel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
+						.addComponent(senderPhotoLabel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
@@ -149,9 +164,9 @@ public class ChatRoom2 extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+							.addComponent(reciverPhotoLabel, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED, 280, Short.MAX_VALUE)
-							.addComponent(lblFoto, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE))
+							.addComponent(senderPhotoLabel, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(50)
 							.addComponent(lblNewLabel_1)
@@ -213,7 +228,7 @@ public class ChatRoom2 extends JFrame {
 	}
 	
 	
-private void fillDefaultListFromArray(ArrayList<EmployeeVO> arrayList,DefaultListModel<EmployeeVO> lModel){
+	private void fillDefaultListFromArray(ArrayList<EmployeeVO> arrayList,DefaultListModel<EmployeeVO> lModel){
 		
 		for(EmployeeVO employee : arrayList){
 			lModel.add(lModel.getSize(),employee);
@@ -221,6 +236,56 @@ private void fillDefaultListFromArray(ArrayList<EmployeeVO> arrayList,DefaultLis
 		
 		
 	}
+	
+	//resize image
+	public ImageIcon rescaleImage(File source,int maxHeight, int maxWidth){
+	     int newHeight = 0, newWidth = 0;        // Variables for the new height and width
+	     int priorHeight = 0, priorWidth = 0;
+	     BufferedImage image = null;
+	     ImageIcon sizeImage;
+
+	     try {
+	             image = ImageIO.read(source);        // get the image
+	     } catch (Exception e) {
+
+	             e.printStackTrace();
+	             System.out.println("Picture upload attempted & failed");
+	     }
+
+	     sizeImage = new ImageIcon(image);
+
+	     if(sizeImage != null){
+	    	 
+	         priorHeight = sizeImage.getIconHeight(); 
+	         priorWidth = sizeImage.getIconWidth();
+	     }
+
+	     // Calculate the correct new height and width
+	     if((float)priorHeight/(float)priorWidth > (float)maxHeight/(float)maxWidth){
+	     
+	         newHeight = maxHeight;
+	         newWidth = (int)(((float)priorWidth/(float)priorHeight)*(float)newHeight);
+	     }else{
+	    	 
+	         newWidth = maxWidth;
+	         newHeight = (int)(((float)priorHeight/(float)priorWidth)*(float)newWidth);
+	     }
+
+
+	     // Resize the image
+
+	     // 1. Create a new Buffered Image and Graphic2D object
+	     BufferedImage resizedImg = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+	     Graphics2D g2 = resizedImg.createGraphics();
+
+	     // 2. Use the Graphic object to draw a new image to the image in the buffer
+	     g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	     g2.drawImage(image, 0, 0, newWidth, newHeight, null);
+	     g2.dispose();
+
+	     // 3. Convert the buffered image into an ImageIcon for return
+	     return (new ImageIcon(resizedImg));
+	 }
 	
 	
 	
