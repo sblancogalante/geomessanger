@@ -25,6 +25,9 @@ public class BusinessFacade {
 	 */
 	private static BusinessFacade instance = null;
 
+	/*
+	 * Constructor
+	 */
 	private BusinessFacade() {
 
 	}

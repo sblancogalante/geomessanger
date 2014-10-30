@@ -32,7 +32,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
 	private static final String CREATE_TABLE_EMPLOYEES = "CREATE TABLE Employees (employeeID INT PRIMARY KEY NOT NULL, iD VARCHAR(20) NOT NULL, name VARCHAR(20), lastName VARCHAR(20), userName VARCHAR(20) NOT NULL, password VARCHAR(100) NOT NULL, location VARCHAR(30) NOT NULL, sector VARCHAR(30), mail VARCHAR(30) NOT NULL, position VARCHAR(30), workingHour VARCHAR(20), profilePicture BLOB, status BOOLEAN NOT NULL)";
 
-	private static long identifierNumber = 0;
+	private static int identifierNumber = 0;
 
 	/*
 	 * Constructor of the class
@@ -65,7 +65,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 
-			long sID = EmployeeDAOMgr.identifierNumber++;
+			int sID = EmployeeDAOMgr.identifierNumber++;
+			
+			oEmployee.setEmployeeID(sID);
 
 			oStatement = oConnection.createStatement();
 			String sInsert = "INSERT INTO Employees (employeeID, iD, name, lastName, userName, password, location, sector, mail, position, workingHour, profilePicture, status) VALUES ("
@@ -132,6 +134,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			while (oResultSet.next()) {
 
+				int sResultEmployeeID = oResultSet.getInt(1);
 				String sResultID = oResultSet.getString(2);
 				String sResultName = oResultSet.getString(3);
 				String sResultLastName = oResultSet.getString(4);
@@ -151,6 +154,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 						sResultPosition, sResultWorkingHour,
 						sResultProfilePicture, sResultStatus);
 
+				oEmployee.setEmployeeID(sResultEmployeeID);
+				
 				oList.add(oEmployee);
 
 				System.out.println("El empleado encontrado es:\n"
@@ -332,16 +337,13 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 					+ oUserName
 					+ "' AND Employees.password = '"
 					+ hashEncriptation(oPassword) + "');";
-			ResultSet oResultSet = oStatement.executeQuery(oQuery);
-
-			System.out.println(oQuery);
+			
+			ResultSet oResultSet = oStatement.executeQuery(oQuery);			
 
 			while (oResultSet.next()) {
 
 				String userName = oResultSet.getString(1);
-				String password = oResultSet.getString(2);
-
-				// System.out.println(userName + " " + password);
+				String password = oResultSet.getString(2);				
 
 				if (oUserName.equals(userName)
 						&& hashEncriptation(oPassword).equals(password)) {

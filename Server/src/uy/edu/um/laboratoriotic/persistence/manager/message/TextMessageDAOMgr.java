@@ -70,19 +70,17 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 
+			// FIXME
 			long sID = TextMessageDAOMgr.identifierNumber++;
 			String sText = oTextMessage.getTextMessage();
 			int sIDSender = oTextMessage.getSender().getEmployeeID();
 			int sIDReceiver = oTextMessage.getReceiver().getEmployeeID();
-
 			// FIXME
 			Timestamp sDate = new Timestamp(System.currentTimeMillis());
 			boolean sIsConf = oTextMessage.getIsConference();
 
 			String sInsert1 = "INSERT INTO TextMessages (textMessageID, text, employeeSenderID, employeeReceiverID, date, isConference) VALUES (?,?,?,?,?,?)";
-			// + sID + "," + sIDSender + "," + sDate + ",'"
-			// + sText + "'," + sConf + ")";
-
+			
 			oPrepStatement = oConnection.prepareStatement(sInsert1);
 
 			oPrepStatement.setLong(1, sID);
