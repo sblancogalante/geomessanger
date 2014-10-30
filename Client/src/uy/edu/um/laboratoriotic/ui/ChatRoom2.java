@@ -56,7 +56,8 @@ public class ChatRoom2 extends JFrame {
 	
 		final TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//HACER UN 
 		setBounds(100, 100, 500, 500);
 		Dimension d = new Dimension(500,500);
 		this.setMinimumSize(d);
@@ -223,14 +224,7 @@ public class ChatRoom2 extends JFrame {
 	}
 	
 	
-	private void fillDefaultListFromArray(ArrayList<EmployeeVO> arrayList,DefaultListModel<EmployeeVO> lModel){
-		
-		for(EmployeeVO employee : arrayList){
-			lModel.add(lModel.getSize(),employee);
-		}
-		
-		
-	}
+
 	
 	//resize image
 	public ImageIcon rescaleImage(File source,int maxHeight, int maxWidth){
