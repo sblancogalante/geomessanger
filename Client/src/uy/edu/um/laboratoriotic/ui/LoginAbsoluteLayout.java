@@ -25,8 +25,7 @@ import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 
 public class LoginAbsoluteLayout extends JFrame {
 
-	
-	
+		
 	//Hy6QA4Kc6YB6
 	
 	private JPanel contentPane;
@@ -37,17 +36,13 @@ public class LoginAbsoluteLayout extends JFrame {
 	private JButton quitButton;
 	private JButton loginButton;
 
-	
-
 	private ImageIcon imageLogo;
 
 	public LoginAbsoluteLayout() {
 
-		
-		
 		final EmployeeMgt employeeMgr =  EmployeeFactory.getInstance().getEmployeeMgt();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 200, 300);
+		setBounds(200, 200, 200, 300);
 		Dimension d = new Dimension(200, 300);
 		this.setMaximumSize(d);
 		this.setMinimumSize(d);
