@@ -22,7 +22,7 @@ public interface FileMessageMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 */
-//	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender, HashSet<EmployeeVO> oReceivers)
+//	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender, EmployeeVO oReceiver)
 //			throws DataBaseConnection;
 
 

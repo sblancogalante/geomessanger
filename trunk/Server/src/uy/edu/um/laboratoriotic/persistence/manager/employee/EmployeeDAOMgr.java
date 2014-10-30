@@ -95,11 +95,10 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 					+ ","
 					+ oEmployee.getStatus() + ");";
 
-			System.out.println(sInsert);
 			oStatement.execute(sInsert);
 
 			System.out.println("Se agrego con exito al empleado "
-					+ oEmployee.getUserName() + " " + oEmployee.getPassword());
+					+ oEmployee.getUserName());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -179,8 +178,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public Employee searchEmployee(int oEmployeeID)
-			throws DataBaseConnection, RemoteException {
+	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection,
+			RemoteException {
 
 		Employee oEmployee = null;
 		Statement oStatement = null;
@@ -195,8 +194,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 
 			while (oResultSet.next()) {
-				
-				int sResultEmployeeID = oResultSet.getInt(1);				
+
+				int sResultEmployeeID = oResultSet.getInt(1);
 				String sResultID = oResultSet.getString(2);
 				String sResultName = oResultSet.getString(3);
 				String sResultLastName = oResultSet.getString(4);
@@ -217,7 +216,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 						sResultProfilePicture, sResultStatus);
 
 				oEmployee.setEmployeeID(sResultEmployeeID);
-				
+
 				System.out
 						.println("El empleado hallado es: " + sResultUserName);
 
@@ -379,17 +378,36 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 			Statement oStatement = oConnection.createStatement();
 			ResultSet oResultSet = oStatement
-					.executeQuery("SELECT userName, password FROM Employees WHERE (Employees.userName = '"
+					.executeQuery("SELECT * FROM Employees WHERE (Employees.userName = '"
 							+ oUserName + "');");
 
 			while (oResultSet.next()) {
 
-				String userName = oResultSet.getString(1);
-				String password = oResultSet.getString(2);
+				int sResultEmployeeID = oResultSet.getInt(1);
+				String sResultID = oResultSet.getString(2);
+				String sResultName = oResultSet.getString(3);
+				String sResultLastName = oResultSet.getString(4);
+				String sResultUserName = oResultSet.getString(5);
+				String sResultPassword = oResultSet.getString(6);
+				String sResultLocation = oResultSet.getString(7);
+				String sResultSector = oResultSet.getString(8);
+				String sResultMail = oResultSet.getString(9);
+				String sResultPosition = oResultSet.getString(10);
+				String sResultWorkingHour = oResultSet.getString(11);
+				Blob sResultProfilePicture = oResultSet.getBlob(12);
+				boolean sResultStatus = oResultSet.getBoolean(13);
 
-				if (oUserName.equals(userName)
-						&& hashEncriptation(oPassword).equals(password)) {
-					oEmployeeToReturn = new Employee(userName, password);
+				if (oUserName.equals(sResultUserName)
+						&& hashEncriptation(oPassword).equals(sResultPassword)) {
+					
+					oEmployeeToReturn = new Employee(sResultID, sResultName,
+							sResultLastName, sResultUserName, sResultPassword,
+							sResultLocation, sResultSector, sResultMail,
+							sResultPosition, sResultWorkingHour,
+							sResultProfilePicture, sResultStatus);
+					
+					oEmployeeToReturn.setEmployeeID(sResultEmployeeID);
+
 				}
 			}
 

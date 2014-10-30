@@ -1,10 +1,8 @@
 package uy.edu.um.laboratoriotic.business.entities.message;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
-import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 
 /**
@@ -20,7 +18,7 @@ public class TextMessage extends Message {
 	 */
 	private String textMessage;
 	private Employee sender;
-	private HashSet<Employee> receivers;
+	private Employee receiver;
 	private Timestamp date;
 	private boolean isConference;
 
@@ -28,13 +26,13 @@ public class TextMessage extends Message {
 	 * Constructor
 	 */
 	public TextMessage(int oIDMessage, String oTextMessage, Employee oSender,
-			HashSet<Employee> oReceivers, Timestamp oDate, boolean oIsConference) {
+			Employee oReceiver, Timestamp oDate, boolean oIsConference) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
 
 		this.textMessage = oTextMessage;
 		this.sender = oSender;
-		this.receivers = oReceivers;
+		this.receiver = oReceiver;
 		this.date = oDate;
 		this.isConference = oIsConference;
 
@@ -45,21 +43,8 @@ public class TextMessage extends Message {
 	 */
 	public TextMessageVO toVO() {
 
-		HashSet<EmployeeVO> oReceiversToReturn = new HashSet<>();
-
-		for (Employee iEmployee : receivers) {
-			EmployeeVO oEmployeeVO = new EmployeeVO(
-					iEmployee.getID(), iEmployee.getName(),
-					iEmployee.getLastName(), iEmployee.getUserName(),
-					iEmployee.getPassword(), iEmployee.getLocation(),
-					iEmployee.getSector(), iEmployee.getMail(),
-					iEmployee.getPosition(), iEmployee.getWorkingHour(),
-					iEmployee.getProfilePicture(), iEmployee.getStatus());
-			oReceiversToReturn.add(oEmployeeVO);
-		}
-
 		return new TextMessageVO(this.getIDMessage(), textMessage, sender.toVO(),
-				oReceiversToReturn, date, isConference);
+				receiver.toVO(), date, isConference);
 	}
 
 	/*
@@ -82,12 +67,12 @@ public class TextMessage extends Message {
 		this.sender = oSender;
 	}
 
-	public HashSet<Employee> getReceivers() {
-		return receivers;
+	public Employee getReceiver() {
+		return receiver;
 	}
 
-	public void setReceivers(HashSet<Employee> oReceivers) {
-		this.receivers = oReceivers;
+	public void setReceiver(Employee oReceiver) {
+		this.receiver = oReceiver;
 	}
 
 	public Timestamp getDate() {

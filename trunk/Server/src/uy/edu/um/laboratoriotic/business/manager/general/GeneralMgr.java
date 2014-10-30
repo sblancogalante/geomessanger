@@ -1,17 +1,11 @@
 package uy.edu.um.laboratoriotic.business.manager.general;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.business.management.general.GeneralMgt;
-import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
-import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.factory.general.GeneralDAOFactory;
-import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
 import uy.edu.um.laboratoriotic.persistence.management.general.GeneralDAOMgt;
-import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
 
 /**

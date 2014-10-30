@@ -5,7 +5,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageMgt;
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageRemoteMgt;
@@ -50,7 +49,7 @@ public class FileMessageMgr implements FileMessageMgt {
 		
 	}
 
-	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender, HashSet<EmployeeVO> oReceivers) throws RemoteException, NotBoundException {
+	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender, EmployeeVO oReceiver) throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
 		
 		ArrayList<FileMessageVO> oArrayListToReturn = new ArrayList<>();
@@ -58,7 +57,7 @@ public class FileMessageMgr implements FileMessageMgt {
 		FileMessageRemoteMgt oFileMessageRemoteMgt = lookUp(
 				"FileMessageRemoteMgr", 1099);
 		
-		oArrayListToReturn = oFileMessageRemoteMgt.getFileMessages(oSender, oReceivers);
+		oArrayListToReturn = oFileMessageRemoteMgt.getFileMessages(oSender, oReceiver);
 		
 		return oArrayListToReturn;
 	}
