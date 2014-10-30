@@ -138,9 +138,7 @@ public class Login extends JFrame {
 			}
 		});
 		
-		JSeparator separator = new JSeparator();
-		
-		
+		JSeparator separator = new JSeparator();		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(

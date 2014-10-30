@@ -2,7 +2,6 @@ package uy.edu.um.laboratoriotic.ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
@@ -15,7 +14,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
@@ -51,13 +49,10 @@ public class ChatRoom2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ChatRoom2(final EmployeeVO reciverEmployee, final EmployeeVO senderEmployee) { 
+	public ChatRoom2(final EmployeeVO receiverEmployee, final EmployeeVO senderEmployee) { 
 		
 		final JTextArea messageTextArea = new JTextArea("Message...");
-		messageTextArea.setLineWrap(true);
-		final HashSet<EmployeeVO> receivers = new HashSet<EmployeeVO>();
-		receivers.add(reciverEmployee);
-		
+		messageTextArea.setLineWrap(true);		
 	
 		final TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
 		
@@ -78,20 +73,20 @@ public class ChatRoom2 extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		ImageIcon reciverPhotoImage;
+		ImageIcon receiverPhotoImage;
 		
-		if(reciverEmployee.getProfilePicture() == null){	
+		if(receiverEmployee.getProfilePicture() == null){	
 			
-			reciverPhotoImage = rescaleImage(new File("Images/Foto.png"), 118,118);
+			receiverPhotoImage = rescaleImage(new File("Images/Foto.png"), 118,118);
 			
 		}else{
 			
-			reciverPhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 118, 118);
+			receiverPhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 118, 118);
 			//userPhotoImage = new ImageIcon("Images/luisFoto.jpg");
 			
 		}
 		
-		JLabel reciverPhotoLabel = new JLabel(reciverPhotoImage);
+		JLabel receiverPhotoLabel = new JLabel(receiverPhotoImage);
 		
 		ImageIcon senderPhotoImage;
 		if(senderEmployee.getProfilePicture() == null){	
@@ -122,7 +117,7 @@ public class ChatRoom2 extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
 				
-				TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),senderEmployee,receivers,null,false);
+				TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),senderEmployee,receiverEmployee,null,false);
 				try {
 					textMgt.addTextMessage(message);
 					converTextArea.append(message.getTextMessage() + "\n");
@@ -136,7 +131,7 @@ public class ChatRoom2 extends JFrame {
 				
 		});
 		
-		JLabel lblNewLabel_1 = new JLabel("Chatting with " + reciverEmployee.getName()+  " " + reciverEmployee.getLastName());
+		JLabel lblNewLabel_1 = new JLabel("Chatting with " + receiverEmployee.getName()+  " " + receiverEmployee.getLastName());
 		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -145,7 +140,7 @@ public class ChatRoom2 extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(21)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(reciverPhotoLabel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
+						.addComponent(receiverPhotoLabel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
 						.addComponent(senderPhotoLabel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -164,7 +159,7 @@ public class ChatRoom2 extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(reciverPhotoLabel, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+							.addComponent(receiverPhotoLabel, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED, 280, Short.MAX_VALUE)
 							.addComponent(senderPhotoLabel, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
@@ -214,7 +209,7 @@ public class ChatRoom2 extends JFrame {
 	}
 	
 	private Collection<TextMessageVO> actualizarMensajes(TextMessageMgt textMgt,
-			JList<TextMessageVO> messageList, EmployeeVO oSender, HashSet<EmployeeVO> oReceiver){
+			JList<TextMessageVO> messageList, EmployeeVO oSender, EmployeeVO oReceiver){
 		
 			Collection<TextMessageVO> oListMessages = null;
 			try {
