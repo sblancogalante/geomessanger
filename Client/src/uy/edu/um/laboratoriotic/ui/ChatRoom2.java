@@ -64,6 +64,7 @@ public class ChatRoom2 extends JFrame {
 	public ChatRoom2(final EmployeeVO employee) {
 		
 		final JTextArea messageTextArea = new JTextArea("Message...");
+		messageTextArea.setLineWrap(true);
 		final HashSet<EmployeeVO> receivers = new HashSet<EmployeeVO>();
 		receivers.add(employee);
 		
@@ -99,6 +100,7 @@ public class ChatRoom2 extends JFrame {
 
 		final JTextArea converTextArea = new JTextArea();
 		converTextArea.setEditable(false);
+		converTextArea.setLineWrap(true);
 	
 		
 		JButton btnNewButton = new JButton("Send");

@@ -117,9 +117,9 @@ public class CreateUser extends JDialog {
 				String workingHours = null;
 				Blob profilePic = null;
 				//EmployeeID lo puse en 0
-				EmployeeVO oEmployee = new EmployeeVO(eMailText.getText(), nameText.getText(),
+				EmployeeVO oEmployee = new EmployeeVO(documentText.getText(), nameText.getText(),
 						lastNameText.getText(), userNameText.getText(), String.valueOf(repeatPasswordText.getPassword()), (String)locationComboBox.getSelectedItem() ,
-						(String)sectorComboBox.getSelectedItem(), documentText.getText(), workingHours, positionText.getText(), profilePic,
+						(String)sectorComboBox.getSelectedItem(), eMailText.getText(), workingHours, positionText.getText(), profilePic,
 						false);
 				System.out.println(oEmployee.toString());
 				EmployeeMgt employeeMgt = EmployeeFactory.getInstance().getEmployeeMgt();
