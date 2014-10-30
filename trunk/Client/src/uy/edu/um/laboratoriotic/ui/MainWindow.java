@@ -136,8 +136,19 @@ public class MainWindow extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		userPhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 118, 118);
-		//userPhotoImage = new ImageIcon("Images/luisFoto.jpg");
+		
+		
+		if(actualUser.getProfilePicture() == null){	
+			
+			userPhotoImage = rescaleImage(new File("Images/Foto.png"), 118,118);
+			
+		}else{
+			
+			userPhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 118, 118);
+			//userPhotoImage = new ImageIcon("Images/luisFoto.jpg");
+			
+		}
+		
 		userPhotoLabel = new JLabel(userPhotoImage);
 		userNameLabel = new JLabel(actualUser.getName());
 		userStateLabel = new JLabel("State");
@@ -180,15 +191,22 @@ public class MainWindow extends JFrame {
 					int index, boolean isSelected, boolean cellHasFocus) {
 
 				
-				//HACER UN PANEL MEDIO SALADO
-				JLabel oLabel = new JLabel();
+				
+				displayUserPanel userPanel = new displayUserPanel(value);
 				if(isSelected){
-					oLabel.setForeground(Color.BLUE);
+					userPanel.setBackground(Color.LIGHT_GRAY);
+					
 				}
-				oLabel.setText(value.getName()+" "+value.getLastName());
+				
+				//HACER UN PANEL MEDIO SALADO
+				//JLabel oLabel = new JLabel();
+				//	if(isSelected){
+				//	oLabel.setForeground(Color.BLUE);
+				//}
+				//oLabel.setText(value.getName()+" "+value.getLastName());
 				
 				
-				return oLabel;
+				return userPanel;
 			}
 		});
 		
@@ -196,7 +214,7 @@ public class MainWindow extends JFrame {
 		if (employeeMgt.getEmployees() != null && employeeMgt.getEmployees().size() > 0) {
 			
 			DefaultListModel<EmployeeVO> employeeListModel = new DefaultListModel<EmployeeVO>();
-			fillDefaultListFromArray(employeeMgt.getEmployees(), employeeListModel);
+			fillDefaultListFromArray(actualUser,employeeMgt.getEmployees(), employeeListModel);
 			userList.setModel(employeeListModel);
 			listEmployee = actualizarContactos(employeeMgt, userList);
 			
@@ -211,7 +229,7 @@ public class MainWindow extends JFrame {
 				        	
 				            int index = list.locationToIndex(evt.getPoint());
 				            System.out.println(index);
-				            ChatRoom2 chatRoom = new ChatRoom2(listEmployee.get(index));
+				            ChatRoom2 chatRoom = new ChatRoom2(listEmployee.get(index),actualUser);
 				            chatRoom.setVisible(true);
 				           
 				        } 
@@ -300,7 +318,7 @@ public class MainWindow extends JFrame {
 		if (oListEmployee != null && oListEmployee.size() > 0) {
 			
 			DefaultListModel<EmployeeVO> lModel = new DefaultListModel<EmployeeVO>();
-			fillDefaultListFromArray(oListEmployee,lModel);
+			fillDefaultListFromArray(actualUser, oListEmployee,lModel);
 			userList.setModel(lModel);
 			
 			
@@ -315,13 +333,18 @@ public class MainWindow extends JFrame {
 	}
 	
 	
-	private void fillDefaultListFromArray(ArrayList<EmployeeVO> arrayList,DefaultListModel<EmployeeVO> lModel){
+	private void fillDefaultListFromArray(EmployeeVO actualUser, ArrayList<EmployeeVO> arrayList,DefaultListModel<EmployeeVO> lModel){
 		
 		for(EmployeeVO employee : arrayList){
-			lModel.add(lModel.getSize(),employee);
+			if(!employee.getUserName().equals( actualUser.getUserName())){
+				lModel.add(lModel.getSize(),employee);
+			}
 		}
 		
 	}
+	
+	
+	
 	//resize image
 	public ImageIcon rescaleImage(File source,int maxHeight, int maxWidth){
 	     int newHeight = 0, newWidth = 0;        // Variables for the new height and width
