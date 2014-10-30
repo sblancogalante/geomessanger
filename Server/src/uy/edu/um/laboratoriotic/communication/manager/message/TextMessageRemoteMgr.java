@@ -2,7 +2,6 @@ package uy.edu.um.laboratoriotic.communication.manager.message;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
 import uy.edu.um.laboratoriotic.business.management.message.TextMessageMgt;
@@ -62,7 +61,7 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 
 	@Override
 	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSenderVO,
-			HashSet<EmployeeVO> oReceiversVO) throws RemoteException {
+			EmployeeVO oReceiverVO) throws RemoteException {
 		// TODO Auto-generated method stub
 
 		ArrayList<TextMessageVO> oListToReturn = new ArrayList<>();
@@ -71,7 +70,7 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 				.getTextMessageFactory().getTextMessageMgt();
 
 		try {
-			oListToReturn = oTextMessageMgt.getTextMessages(oSenderVO, oReceiversVO);			
+			oListToReturn = oTextMessageMgt.getTextMessages(oSenderVO, oReceiverVO);			
 
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block

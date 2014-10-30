@@ -2,10 +2,8 @@ package uy.edu.um.laboratoriotic.business.entities.message;
 
 import java.sql.Blob;
 import java.sql.Timestamp;
-import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
-import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
 
 /**
@@ -22,7 +20,7 @@ public class FileMessage extends Message {
 	private Blob file;
 	private String name;
 	private Employee sender;
-	private HashSet<Employee> receivers;
+	private Employee receiver;
 	private Timestamp date;
 	private boolean isConference;
 
@@ -30,7 +28,7 @@ public class FileMessage extends Message {
 	 * Constructor
 	 */
 	public FileMessage(int oIDMessage, Blob oFile, String oName,
-			Employee oSender, HashSet<Employee> oReceivers, Timestamp oDate,
+			Employee oSender, Employee oReceiver, Timestamp oDate,
 			boolean oIsConference) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
@@ -38,7 +36,7 @@ public class FileMessage extends Message {
 		this.file = oFile;
 		this.name = oName;
 		this.sender = oSender;
-		this.receivers = oReceivers;
+		this.receiver = oReceiver;
 		this.date = oDate;
 		this.isConference = oIsConference;
 	}
@@ -48,21 +46,8 @@ public class FileMessage extends Message {
 	 */
 	public FileMessageVO toVO() {
 
-		HashSet<EmployeeVO> oReceiversToReturn = new HashSet<>();
-
-		for (Employee iEmployee : receivers) {
-			EmployeeVO oEmployeeVO = new EmployeeVO(
-					iEmployee.getID(), iEmployee.getName(),
-					iEmployee.getLastName(), iEmployee.getUserName(),
-					iEmployee.getPassword(), iEmployee.getLocation(),
-					iEmployee.getSector(), iEmployee.getMail(),
-					iEmployee.getPosition(), iEmployee.getWorkingHour(),
-					iEmployee.getProfilePicture(), iEmployee.getStatus());
-			oReceiversToReturn.add(oEmployeeVO);
-		}
-
 		return new FileMessageVO(this.getIDMessage(), file, name,
-				sender.toVO(), oReceiversToReturn, date, isConference);
+				sender.toVO(), receiver.toVO(), date, isConference);
 	}
 
 	/*
@@ -92,12 +77,12 @@ public class FileMessage extends Message {
 		this.sender = oSender;
 	}
 
-	public HashSet<Employee> getReceivers() {
-		return receivers;
+	public Employee getReceiver() {
+		return receiver;
 	}
 
-	public void setReceivers(HashSet<Employee> oReceivers) {
-		this.receivers = oReceivers;
+	public void setReceiver(Employee oReceiver) {
+		this.receiver = oReceiver;
 	}
 
 	public Timestamp getDate() {

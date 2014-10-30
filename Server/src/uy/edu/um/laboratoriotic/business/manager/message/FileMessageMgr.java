@@ -1,7 +1,6 @@
 package uy.edu.um.laboratoriotic.business.manager.message;
 
 import java.rmi.RemoteException;
-import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.FileMessage;
@@ -9,7 +8,6 @@ import uy.edu.um.laboratoriotic.business.management.message.FileMessageMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.factory.message.FileMessageDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.management.message.FileMessageDAOMgt;
-import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
 
 public class FileMessageMgr implements FileMessageMgt {
@@ -45,37 +43,34 @@ public class FileMessageMgr implements FileMessageMgt {
 		FileMessageDAOMgt oNewDAOFileMessage = FileMessageDAOFactory
 				.getFileMessageDAOMgt();
 
-		Employee oSenderEmployee = new Employee(oFileMessageVO.getSender().getID(),
-				oFileMessageVO.getSender().getName(), oFileMessageVO
-						.getSender().getLastName(), oFileMessageVO.getSender()
-						.getUserName(), oFileMessageVO.getSender()
-						.getPassword(), oFileMessageVO.getSender()
-						.getLocation(), oFileMessageVO.getSender().getSector(),
-				oFileMessageVO.getSender().getMail(), oFileMessageVO
-						.getSender().getPosition(), oFileMessageVO.getSender()
-						.getWorkingHour(), oFileMessageVO.getSender()
-						.getProfilePicture(), oFileMessageVO.getSender()
+		Employee oSenderEmployee = new Employee(oFileMessageVO.getSender()
+				.getID(), oFileMessageVO.getSender().getName(), oFileMessageVO
+				.getSender().getLastName(), oFileMessageVO.getSender()
+				.getUserName(), oFileMessageVO.getSender().getPassword(),
+				oFileMessageVO.getSender().getLocation(), oFileMessageVO
+						.getSender().getSector(), oFileMessageVO.getSender()
+						.getMail(), oFileMessageVO.getSender().getPosition(),
+				oFileMessageVO.getSender().getWorkingHour(), oFileMessageVO
+						.getSender().getProfilePicture(), oFileMessageVO
+						.getSender().getStatus());
+
+		Employee oReceiverEmployee = new Employee(oFileMessageVO.getReceiver()
+				.getID(), oFileMessageVO.getReceiver().getName(),
+				oFileMessageVO.getReceiver().getLastName(), oFileMessageVO
+						.getReceiver().getUserName(), oFileMessageVO
+						.getReceiver().getPassword(), oFileMessageVO
+						.getReceiver().getLocation(), oFileMessageVO
+						.getReceiver().getSector(), oFileMessageVO
+						.getReceiver().getMail(), oFileMessageVO.getReceiver()
+						.getPosition(), oFileMessageVO.getReceiver()
+						.getWorkingHour(), oFileMessageVO.getReceiver()
+						.getProfilePicture(), oFileMessageVO.getReceiver()
 						.getStatus());
-
-		HashSet<Employee> oReceiversEmployees = new HashSet<>();
-
-		for (EmployeeVO iEmployeeVO : oFileMessageVO.getReceivers()) {
-
-			Employee oReceiverEmployee = new Employee(iEmployeeVO.getID(),
-					iEmployeeVO.getName(), iEmployeeVO.getLastName(),
-					iEmployeeVO.getUserName(), iEmployeeVO.getPassword(),
-					iEmployeeVO.getLocation(), iEmployeeVO.getSector(),
-					iEmployeeVO.getMail(), iEmployeeVO.getPosition(),
-					iEmployeeVO.getWorkingHour(),
-					iEmployeeVO.getProfilePicture(), iEmployeeVO.getStatus());
-
-			oReceiversEmployees.add(oReceiverEmployee);
-		}
 
 		FileMessage oFileMessage = new FileMessage(
 				oFileMessageVO.getIDMessage(), oFileMessageVO.getFileMessage(),
 				oFileMessageVO.getFileMessageName(), oSenderEmployee,
-				oReceiversEmployees, oFileMessageVO.getDate(),
+				oReceiverEmployee, oFileMessageVO.getDate(),
 				oFileMessageVO.getIsConference());
 
 		try {
@@ -91,7 +86,7 @@ public class FileMessageMgr implements FileMessageMgt {
 
 	// @Override
 	// public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSenderVO,
-	// HashSet<EmployeeVO> oReceiversVO)
+	// EmployeeVO oReceiverVO)
 	// throws DataBaseConnection {
 	// // TODO Auto-generated method stub
 	//
@@ -99,7 +94,7 @@ public class FileMessageMgr implements FileMessageMgt {
 	// FileMessageDAOFactory.getFileMessageDAOMgt();
 	// ArrayList<FileMessage> list = new ArrayList<FileMessage>();
 	// try {
-	// list = oDAOFileMessage.getFileMessages(oSender, oReceivers);
+	// list = oDAOFileMessage.getFileMessages(oSender, oReceiver);
 	// } catch (RemoteException e) {
 	// // TODO Auto-generated catch block
 	// e.printStackTrace();

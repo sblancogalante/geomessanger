@@ -2,7 +2,6 @@ package uy.edu.um.laboratoriotic.persistence;
 
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
-import java.util.HashSet;
 
 import org.junit.Test;
 
@@ -25,12 +24,8 @@ public class TextMessageDAOTest {
 				"Blanco", "ablanco", "qwerty", "Uruguay", "Soporte",
 				"ablancoa@correo.um.edu.uy", "Programador", null, null, false);
 
-		HashSet<Employee> oReceivers = new HashSet<>();
-
-		oReceivers.add(oReceiver);
-
 		TextMessage oTextMessage = new TextMessage(1, "Hola Mundo", oSender,
-				oReceivers, new Timestamp(System.currentTimeMillis()), false);
+				oReceiver, new Timestamp(System.currentTimeMillis()), false);
 
 		try {
 			
@@ -44,7 +39,7 @@ public class TextMessageDAOTest {
 			TextMessageDAOFactory.getTextMessageDAOMgt().addTextMessage(
 					oTextMessage);
 			TextMessageDAOFactory.getTextMessageDAOMgt().getTextMessages(
-					oSender, oReceivers);
+					oSender, oReceiver);
 
 		} catch (DataBaseConnection e) {
 			test();

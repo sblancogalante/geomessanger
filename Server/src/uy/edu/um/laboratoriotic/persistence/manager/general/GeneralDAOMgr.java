@@ -1,6 +1,5 @@
 package uy.edu.um.laboratoriotic.persistence.manager.general;
 
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.persistence.management.general.GeneralDAOMgt;
 

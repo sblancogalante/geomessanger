@@ -2,7 +2,6 @@ package uy.edu.um.laboratoriotic.services.valueobject.message;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
@@ -20,7 +19,7 @@ public class TextMessageVO extends MessageVO implements Serializable {
 	 */
 	private String textMessage;
 	private EmployeeVO sender;
-	private HashSet<EmployeeVO> receivers;
+	private EmployeeVO receiver;
 	private Timestamp date;
 	private boolean isConference;
 
@@ -28,14 +27,14 @@ public class TextMessageVO extends MessageVO implements Serializable {
 	 * Constructor
 	 */
 	public TextMessageVO(int oIDMessage, String oTextMessage,
-			EmployeeVO oSender, HashSet<EmployeeVO> oReceivers, Timestamp oDate,
+			EmployeeVO oSender, EmployeeVO oReceiver, Timestamp oDate,
 			boolean oIsConference) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
 
 		this.textMessage = oTextMessage;
 		this.sender = oSender;
-		this.receivers = oReceivers;
+		this.receiver = oReceiver;
 		this.date = oDate;
 		this.isConference = oIsConference;
 
@@ -61,12 +60,12 @@ public class TextMessageVO extends MessageVO implements Serializable {
 		this.sender = oSender;
 	}
 
-	public HashSet<EmployeeVO> getReceivers() {
-		return receivers;
+	public EmployeeVO getReceiver() {
+		return receiver;
 	}
 
-	public void setReceivers(HashSet<EmployeeVO> oReceivers) {
-		this.receivers = oReceivers;
+	public void setReceiver(EmployeeVO oReceiver) {
+		this.receiver = oReceiver;
 	}
 
 	public Timestamp getDate() {

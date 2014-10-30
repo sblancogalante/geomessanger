@@ -2,7 +2,6 @@ package uy.edu.um.laboratoriotic.business.manager.message;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
@@ -65,24 +64,21 @@ public class TextMessageMgr implements TextMessageMgt {
 						.getProfilePicture(), oTextMessageVO.getSender()
 						.getStatus());
 
-		HashSet<Employee> oReceiversEmployees = new HashSet<>();
-
-		for (EmployeeVO iEmployeeVO : oTextMessageVO.getReceivers()) {
-
-			Employee oReceiverEmployee = new Employee(iEmployeeVO.getID(),
-					iEmployeeVO.getName(), iEmployeeVO.getLastName(),
-					iEmployeeVO.getUserName(), iEmployeeVO.getPassword(),
-					iEmployeeVO.getLocation(), iEmployeeVO.getSector(),
-					iEmployeeVO.getMail(), iEmployeeVO.getPosition(),
-					iEmployeeVO.getWorkingHour(),
-					iEmployeeVO.getProfilePicture(), iEmployeeVO.getStatus());
-
-			oReceiversEmployees.add(oReceiverEmployee);
-		}
+		Employee oReceiverEmployee = new Employee(oTextMessageVO.getReceiver().getID(),
+				oTextMessageVO.getReceiver().getName(), oTextMessageVO
+						.getReceiver().getLastName(), oTextMessageVO.getReceiver()
+						.getUserName(), oTextMessageVO.getReceiver()
+						.getPassword(), oTextMessageVO.getReceiver()
+						.getLocation(), oTextMessageVO.getReceiver().getSector(),
+				oTextMessageVO.getReceiver().getMail(), oTextMessageVO
+						.getReceiver().getPosition(), oTextMessageVO.getReceiver()
+						.getWorkingHour(), oTextMessageVO.getReceiver()
+						.getProfilePicture(), oTextMessageVO.getReceiver()
+						.getStatus());		
 
 		TextMessage oTextMessage = new TextMessage(
 				oTextMessageVO.getIDMessage(), oTextMessageVO.getTextMessage(),
-				oSenderEmployee, oReceiversEmployees, oTextMessageVO.getDate(),
+				oSenderEmployee, oReceiverEmployee, oTextMessageVO.getDate(),
 				oTextMessageVO.getIsConference());
 
 		try {
@@ -98,38 +94,32 @@ public class TextMessageMgr implements TextMessageMgt {
 
 	@Override
 	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSenderVO,
-			HashSet<EmployeeVO> oReceiversVO) throws DataBaseConnection {
+			EmployeeVO oReceiverVO) throws DataBaseConnection {
 		// TODO Auto-generated method stub
 
 		TextMessageVO oTextMessageVO;
 		ArrayList<TextMessage> oArrayList = new ArrayList<>();
 		ArrayList<TextMessageVO> oListToReturn = new ArrayList<>();
-
-		Employee oEmployee;
-		HashSet<Employee> oReceivers = new HashSet<>();
-
+		
 		TextMessageDAOMgt oDAOTextMessage = TextMessageDAOFactory
 				.getTextMessageDAOMgt();
 
-		Employee oSender = new Employee(oSenderVO.getID(), oSenderVO.getName(),
+		Employee oSenderEmployee = new Employee(oSenderVO.getID(), oSenderVO.getName(),
 				oSenderVO.getLastName(), oSenderVO.getUserName(),
 				oSenderVO.getPassword(), oSenderVO.getLocation(),
 				oSenderVO.getSector(), oSenderVO.getMail(),
 				oSenderVO.getPosition(), oSenderVO.getWorkingHour(),
 				oSenderVO.getProfilePicture(), oSenderVO.getStatus());
 
-		for (EmployeeVO iEmployeeVO : oReceiversVO) {
-			oEmployee = new Employee(iEmployeeVO.getID(), iEmployeeVO.getName(),
-					iEmployeeVO.getLastName(), iEmployeeVO.getUserName(),
-					iEmployeeVO.getPassword(), iEmployeeVO.getLocation(),
-					iEmployeeVO.getSector(), iEmployeeVO.getMail(),
-					iEmployeeVO.getPosition(), iEmployeeVO.getWorkingHour(),
-					iEmployeeVO.getProfilePicture(), iEmployeeVO.getStatus());
-			oReceivers.add(oEmployee);
-		}
+		Employee oReceiverEmployee = new Employee(oReceiverVO.getID(), oReceiverVO.getName(),
+				oReceiverVO.getLastName(), oReceiverVO.getUserName(),
+				oReceiverVO.getPassword(), oReceiverVO.getLocation(),
+				oReceiverVO.getSector(), oReceiverVO.getMail(),
+				oReceiverVO.getPosition(), oReceiverVO.getWorkingHour(),
+				oReceiverVO.getProfilePicture(), oReceiverVO.getStatus());
 
 		try {
-			oArrayList = oDAOTextMessage.getTextMessages(oSender, oReceivers);
+			oArrayList = oDAOTextMessage.getTextMessages(oSenderEmployee, oReceiverEmployee);
 
 			for (TextMessage iTextMessage : oArrayList) {
 				oTextMessageVO = iTextMessage.toVO();
