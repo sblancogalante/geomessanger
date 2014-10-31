@@ -150,8 +150,8 @@ public class MainWindow extends JFrame {
 		}
 		
 		userPhotoLabel = new JLabel(userPhotoImage);
-		userNameLabel = new JLabel(actualUser.getName());
-		userStateLabel = new JLabel("State");
+		userNameLabel = new JLabel(actualUser.getName() + " " + actualUser.getLastName());
+		userStateLabel = new JLabel(String.valueOf(actualUser.getStatus()));
 
 		searchUserText = new JTextField();
 		searchUserText.setText("Search user");
@@ -197,14 +197,6 @@ public class MainWindow extends JFrame {
 					userPanel.setBackground(Color.LIGHT_GRAY);
 					
 				}
-				
-				//HACER UN PANEL MEDIO SALADO
-				//JLabel oLabel = new JLabel();
-				//	if(isSelected){
-				//	oLabel.setForeground(Color.BLUE);
-				//}
-				//oLabel.setText(value.getName()+" "+value.getLastName());
-				
 				
 				return userPanel;
 			}
@@ -268,7 +260,7 @@ public class MainWindow extends JFrame {
 									.addComponent(userPhotoLabel, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(userNameLabel, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
+										.addComponent(userNameLabel, GroupLayout.PREFERRED_SIZE, 292, GroupLayout.PREFERRED_SIZE)
 										.addComponent(userStateLabel, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(221)
@@ -297,7 +289,7 @@ public class MainWindow extends JFrame {
 						.addComponent(searchUserText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(searchButton))
 					.addGap(12)
-					.addComponent(userList, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+					.addComponent(userList, GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);
@@ -336,8 +328,11 @@ public class MainWindow extends JFrame {
 	private void fillDefaultListModelFromArray(EmployeeVO actualUser, ArrayList<EmployeeVO> arrayList,DefaultListModel<EmployeeVO> lModel){
 		
 		for(EmployeeVO employee : arrayList){
+			boolean deleateRoot = employee.getUserName().equals("root");
 			if(!employee.getUserName().equals( actualUser.getUserName())){
-				lModel.add(lModel.getSize(),employee);
+				if(!deleateRoot){
+					lModel.add(lModel.getSize(),employee);
+				}
 			}
 		}
 		

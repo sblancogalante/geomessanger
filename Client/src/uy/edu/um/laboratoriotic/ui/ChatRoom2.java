@@ -132,9 +132,12 @@ public class ChatRoom2 extends JFrame {
 				
 		});
 		
-		JLabel lblNewLabel_1 = new JLabel("Chatting with " + receiverEmployee.getName()+  " " + receiverEmployee.getLastName());
+		JLabel chattingWithLabel = new JLabel("Chatting with " + receiverEmployee.getName()+  " " + receiverEmployee.getLastName());
 		
-		
+		JLabel offLineLabel = new JLabel("<<The user is Offline>>");
+		offLineLabel.setForeground(Color.RED);
+		offLineLabel.setVisible(!receiverEmployee.getStatus());
+		 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -145,14 +148,15 @@ public class ChatRoom2 extends JFrame {
 						.addComponent(senderPhotoLabel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-								.addComponent(separator, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-								.addComponent(scrollPane_2, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE))
+						.addComponent(chattingWithLabel, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(offLineLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+								.addComponent(scrollPane_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+								.addComponent(separator, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+								.addComponent(scrollPane_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -164,8 +168,10 @@ public class ChatRoom2 extends JFrame {
 							.addPreferredGap(ComponentPlacement.RELATED, 280, Short.MAX_VALUE)
 							.addComponent(senderPhotoLabel, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(50)
-							.addComponent(lblNewLabel_1)
+							.addGap(16)
+							.addComponent(offLineLabel)
+							.addGap(18)
+							.addComponent(chattingWithLabel)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -275,9 +281,4 @@ public class ChatRoom2 extends JFrame {
 	     // 3. Convert the buffered image into an ImageIcon for return
 	     return (new ImageIcon(resizedImg));
 	 }
-	
-	
-	
-	
-
 }

@@ -180,7 +180,7 @@ public class DeleteUser extends JDialog {
 								employeeMgt.removeEmployee(userList.getSelectedValue());
 								dispose();
 							} catch (RemoteException | NotBoundException e) {
-								// TODO Auto-generated catch block
+								//Crear un Dialogo 	que diga que no se pudo eliminar el usuario.
 								e.printStackTrace();
 							}
 							
