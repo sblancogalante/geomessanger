@@ -21,13 +21,14 @@ public class displayUserPanel extends JPanel {
 	public displayUserPanel(EmployeeVO employee) {
 		
 		boolean status = employee.getStatus();
+		
 		if(status){
 			userPhotoImage = new ImageIcon("Images/OnlineImage.png");
 		}else{
 			userPhotoImage = new ImageIcon("Images/OfflineImage.png");
 		}
 		
-		userPhotoImage = new ImageIcon("Images/OnlineImage.png");
+		
 		JLabel onLinePhotoLabel = new JLabel(userPhotoImage);
 		
 		this.setBackground(Color.WHITE);
@@ -39,18 +40,20 @@ public class displayUserPanel extends JPanel {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(onLinePhotoLabel, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-					.addGap(16)
-					.addComponent(employeeNameLabel, GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-					.addGap(101))
+					.addGap(12)
+					.addComponent(employeeNameLabel, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+					.addGap(105))
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(9, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(onLinePhotoLabel, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(employeeNameLabel))
-					.addContainerGap())
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(employeeNameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(4)))
+					.addGap(8))
 		);
 		setLayout(groupLayout);
 
