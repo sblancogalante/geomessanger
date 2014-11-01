@@ -180,7 +180,8 @@ public class DeleteUser extends JDialog {
 								employeeMgt.removeEmployee(userList.getSelectedValue());
 								dispose();
 							} catch (RemoteException | NotBoundException e) {
-								//Crear un Dialogo 	que diga que no se pudo eliminar el usuario.
+								ErrorDialog errorDialog = new ErrorDialog("Se ha producido un error al intentar eliminar el usuario."
+										+ " \n \n ERROR: " + e.getMessage());
 								e.printStackTrace();
 							}
 							

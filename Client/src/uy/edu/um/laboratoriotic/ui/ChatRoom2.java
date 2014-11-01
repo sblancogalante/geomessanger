@@ -57,7 +57,8 @@ public class ChatRoom2 extends JFrame {
 		final TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
 		
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//HACER UN 
+		//HACE UN COSO PARA QE CIERRE BIEN, no esta liberanod los recursos
+		
 		setBounds(100, 100, 500, 500);
 		Dimension d = new Dimension(500,500);
 		this.setMinimumSize(d);
@@ -218,7 +219,7 @@ public class ChatRoom2 extends JFrame {
 	private Collection<TextMessageVO> actualizarMensajes(TextMessageMgt textMgt,
 			JList<TextMessageVO> messageList, EmployeeVO oSender, EmployeeVO oReceiver){
 		
-			Collection<TextMessageVO> oListMessages = null;
+			Collection<TextMessageVO> oListMessages = new ArrayList<TextMessageVO>();
 			try {
 				oListMessages = textMgt.getTextMessages(oSender, oReceiver);
 			} catch (RemoteException | NotBoundException e) {
