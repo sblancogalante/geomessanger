@@ -40,6 +40,7 @@ import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import javax.swing.JScrollPane;
 
 public class MainWindow extends JFrame {
 
@@ -60,6 +61,7 @@ public class MainWindow extends JFrame {
 	private JMenuItem mntmProfile;
 	private ArrayList<EmployeeVO> listEmployee;
 	private EmployeeVO actualUser;
+	private JScrollPane scrollPane;
 
 	public MainWindow(EmployeeFilterVO actualFilterUser) throws RemoteException, NotBoundException {
 
@@ -157,6 +159,11 @@ public class MainWindow extends JFrame {
 		searchUserText.setText("Search user");
 		searchUserText.setForeground(Color.LIGHT_GRAY);
 		searchUserText.setColumns(10);
+		
+		scrollPane = new JScrollPane();
+		userList = new JList<EmployeeVO>();
+		scrollPane.setViewportView(userList);
+		
 		// User name text field,changes of color when foucs
 		searchUserText.addFocusListener(new FocusListener() {
 
@@ -176,31 +183,6 @@ public class MainWindow extends JFrame {
 		});
 
 		JSeparator separator = new JSeparator();
-		
-		
-		
-		//INICIALIZATION OF THE JLIST 
-		
-		userList = new JList<EmployeeVO>();
-		
-		userList.setCellRenderer(new ListCellRenderer<EmployeeVO>() {
-
-			@Override
-			public Component getListCellRendererComponent(
-					JList<? extends EmployeeVO> list, EmployeeVO value,
-					int index, boolean isSelected, boolean cellHasFocus) {
-
-				
-				
-				displayUserPanel userPanel = new displayUserPanel(value);
-				if(isSelected){
-					userPanel.setBackground(Color.LIGHT_GRAY);
-					
-				}
-				
-				return userPanel;
-			}
-		});
 		DefaultListModel<EmployeeVO> employeeListModel;
 		//AGREGA LOS EMPLEADOS CONOCIDOS
 		if (employeeMgt.getEmployees() != null && employeeMgt.getEmployees().size() > 0) {
@@ -211,22 +193,6 @@ public class MainWindow extends JFrame {
 			listEmployee = actualizarContactos(employeeMgt, userList);
 			
 		} 
-		
-		// Add a listener for mouse clicks
-				userList.addMouseListener(new MouseAdapter() {
-				    public void mouseClicked(MouseEvent evt) {
-				    	
-				        JList list = (JList)evt.getSource();
-				        if (evt.getClickCount() == 2) {          // Double-click
-				            // Get item indexçç
-				        					        	
-				            System.out.println(list.getSelectedIndex());
-				            ChatRoom2 chatRoom = new ChatRoom2((EmployeeVO)list.getModel().getElementAt(list.getSelectedIndex()),actualUser);
-				            chatRoom.setVisible(true);
-				           
-				        } 
-				    }
-				});
 		
 		
 		
@@ -244,6 +210,8 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
+		
+		
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -252,7 +220,7 @@ public class MainWindow extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(1)
-							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE))
+							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(18)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -267,8 +235,9 @@ public class MainWindow extends JFrame {
 									.addComponent(searchUserText, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(searchButton))
-								.addComponent(userList, GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE))))
-					.addGap(15))
+								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE))
+							.addGap(0)))
+					.addGap(13))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -289,9 +258,50 @@ public class MainWindow extends JFrame {
 						.addComponent(searchUserText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(searchButton))
 					.addGap(12)
-					.addComponent(userList, GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
 					.addContainerGap())
 		);
+		
+		
+		
+		//INICIALIZATION OF THE JLIST 
+		
+		
+		
+		userList.setCellRenderer(new ListCellRenderer<EmployeeVO>() {
+
+			@Override
+			public Component getListCellRendererComponent(
+					JList<? extends EmployeeVO> list, EmployeeVO value,
+					int index, boolean isSelected, boolean cellHasFocus) {
+
+				
+				
+				displayUserPanel userPanel = new displayUserPanel(value);
+				if(isSelected){
+					userPanel.setBackground(Color.LIGHT_GRAY);
+					
+				}
+				
+				return userPanel;
+			}
+		});
+		
+		// Add a listener for mouse clicks
+				userList.addMouseListener(new MouseAdapter() {
+				    public void mouseClicked(MouseEvent evt) {
+				    	
+				        JList list = (JList)evt.getSource();
+				        if (evt.getClickCount() == 2) {          // Double-click
+				            // Get item indexçç
+				        					        	
+				            System.out.println(list.getSelectedIndex());
+				            ChatRoom2 chatRoom = new ChatRoom2((EmployeeVO)list.getModel().getElementAt(list.getSelectedIndex()),actualUser);
+				            chatRoom.setVisible(true);
+				           
+				        } 
+				    }
+				});
 		contentPane.setLayout(gl_contentPane);
 
 		this.setVisible(false);
