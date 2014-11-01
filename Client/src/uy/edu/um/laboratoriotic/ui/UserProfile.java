@@ -33,10 +33,10 @@ public class UserProfile extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public UserProfile(EmployeeVO employee) {
+	public UserProfile(EmployeeVO employee, Boolean isEditable) {
 		
 		this.setTitle("User Profile");
-		setBounds(100, 100, 475, 400);
+		setBounds(100, 100, 475, 470);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -59,12 +59,22 @@ public class UserProfile extends JDialog {
 		JLabel lblNewLabel_2 = new JLabel(employee.getLastName());
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
+		
+		JPanel editPanel = new JPanel();
+		
+		if(isEditable){
+			editPanel.setVisible(true);
+		}else{
+			editPanel.setVisible(false);
+			setBounds(100,100,475,400);
+		}
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
+				.addGroup(Alignment.LEADING, gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(editPanel, GroupLayout.PREFERRED_SIZE, 452, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
@@ -78,17 +88,37 @@ public class UserProfile extends JDialog {
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE, false)
 						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addGap(81)
-							.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(lblNewLabel_1)
 							.addGap(7)
 							.addComponent(lblNewLabel_2)))
 					.addGap(18)
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
-					.addGap(4))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(editPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addGap(22))
 		);
+		
+		JButton btnNewButton = new JButton("EditProfile");
+		GroupLayout gl_panel_1 = new GroupLayout(editPanel);
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(167)
+					.addComponent(btnNewButton)
+					.addContainerGap(168, Short.MAX_VALUE))
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnNewButton)
+					.addContainerGap(20, Short.MAX_VALUE))
+		);
+		editPanel.setLayout(gl_panel_1);
 		JLabel idLabel = new JLabel("ID: " + employee.getID());
 		JLabel userNameLabel = new JLabel("User Name: " + employee.getUserName());
 		JLabel eMailLabel = new JLabel("EMail: " + employee.getMail());
@@ -188,6 +218,4 @@ public class UserProfile extends JDialog {
 		     // 3. Convert the buffered image into an ImageIcon for return
 		     return (new ImageIcon(resizedImg));
 		 }
-		
-
 }

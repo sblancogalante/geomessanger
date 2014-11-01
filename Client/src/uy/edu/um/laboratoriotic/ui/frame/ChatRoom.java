@@ -53,7 +53,7 @@ public class ChatRoom extends JFrame {
 		
 		final JTextArea messageTextArea = new JTextArea("Message...");
 		messageTextArea.setLineWrap(true);		
-	
+		
 		final TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
 		
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -115,15 +115,18 @@ public class ChatRoom extends JFrame {
 		converTextArea.setLineWrap(true);
 	
 		
-		JButton btnNewButton = new JButton("Send");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton sendButton = new JButton("Send");
+		this.getRootPane().setDefaultButton(sendButton);
+		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
 				
 				TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),senderEmployee,receiverEmployee,null,false);
 				try {
-					textMgt.addTextMessage(message);
-					converTextArea.append(message.getTextMessage() + "\n");
-					messageTextArea.setText("");
+					if(!messageTextArea.getText().equals("Message...")){
+						textMgt.addTextMessage(message);
+						converTextArea.append(message.getTextMessage() + "\n");
+						messageTextArea.setText("");
+					}
 					
 				} catch (RemoteException | NotBoundException e) {
 					// TODO Auto-generated catch block
@@ -157,7 +160,7 @@ public class ChatRoom extends JFrame {
 								.addComponent(separator, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
 								.addComponent(scrollPane_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -179,7 +182,7 @@ public class ChatRoom extends JFrame {
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(44)
-									.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE))
+									.addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(18)
 									.addComponent(separator, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
