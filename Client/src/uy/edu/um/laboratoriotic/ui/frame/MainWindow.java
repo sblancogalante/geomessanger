@@ -12,6 +12,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.rmi.NotBoundException;
@@ -38,6 +39,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
@@ -167,6 +169,35 @@ public class MainWindow extends JFrame {
 		}
 		
 		userPhotoLabel = new JLabel(userPhotoImage);
+		userPhotoLabel.setBorder(new LineBorder(Color.BLACK,1));
+		userPhotoLabel.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					UserProfile userProfile = new UserProfile(actualUser, true);
+					userProfile.setVisible(true);
+				}
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				userPhotoLabel.setBorder(new LineBorder(Color.BLUE,1));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				userPhotoLabel.setBorder(new LineBorder(Color.BLACK,1));
+			}
+			
+		});
+		
+		
 		userNameLabel = new JLabel(actualUser.getName() + " " + actualUser.getLastName());
 		userStateLabel = new JLabel(String.valueOf(actualUser.getStatus()));
 
