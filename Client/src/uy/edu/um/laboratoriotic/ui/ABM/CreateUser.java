@@ -1,4 +1,4 @@
-package uy.edu.um.laboratoriotic.ui;
+package uy.edu.um.laboratoriotic.ui.ABM;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -34,6 +34,7 @@ import javax.swing.border.EmptyBorder;
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import uy.edu.um.laboratoriotic.ui.ErrorDialog;
 
 import javax.swing.JCheckBox;
 import javax.swing.border.LineBorder;
@@ -64,6 +65,8 @@ public class CreateUser extends JDialog {
 	private JLabel testPhotoLabel;
 
 	public CreateUser() {
+		
+		this.setTitle("Create User");
 		setBounds(100, 100, 600, 635);
 
 		Dimension d = new Dimension(600, 635);
@@ -133,6 +136,7 @@ public class CreateUser extends JDialog {
 		final JComboBox sectorComboBox = new JComboBox(comboBoxDefaultArray);
 
 		JButton createUserButton = new JButton("Create User");
+		this.getRootPane().setDefaultButton(createUserButton);
 		createUserButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 

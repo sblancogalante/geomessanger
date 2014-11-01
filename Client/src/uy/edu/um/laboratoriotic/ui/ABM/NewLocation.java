@@ -1,4 +1,4 @@
-package uy.edu.um.laboratoriotic.ui;
+package uy.edu.um.laboratoriotic.ui.ABM;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,6 +27,7 @@ import uy.edu.um.laboratoriotic.services.factory.general.GeneralFactory;
 import uy.edu.um.laboratoriotic.services.management.general.GeneralMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
+import uy.edu.um.laboratoriotic.ui.ErrorDialog;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -59,7 +60,7 @@ public class NewLocation extends JDialog {
 	 */
 	public NewLocation() {
 		
-		
+		this.setTitle("Create Location");
 		setBounds(100, 100, 450, 373);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
