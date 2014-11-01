@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -13,8 +14,12 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
-public class LoginErrorDialog extends JDialog {
+public class ErrorDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
@@ -23,7 +28,7 @@ public class LoginErrorDialog extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			LoginErrorDialog dialog = new LoginErrorDialog();
+			ErrorDialog dialog = new ErrorDialog("An error has occured.");
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -34,15 +39,15 @@ public class LoginErrorDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public LoginErrorDialog() {
-		setBounds(100, 100, 450, 146);
+	public ErrorDialog(String errorString) {
+		setBounds(100, 100, 450, 300);
+		this.setTitle("An error has occured!");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
-		JLabel errorLabel = new JLabel("An error has occured!");
-		errorLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		errorLabel.setForeground(Color.RED);
+		JLabel errorImageLabel = new JLabel(new ImageIcon("Images/errorImage.png"));
+		JScrollPane scrollPane = new JScrollPane();
 		
 		
 		
@@ -51,16 +56,29 @@ public class LoginErrorDialog extends JDialog {
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(errorLabel, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(268, Short.MAX_VALUE))
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(errorImageLabel, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE))
+					.addGap(5))
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(errorImageLabel, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(errorLabel)
-					.addContainerGap(41, Short.MAX_VALUE))
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
+		
+		JTextArea errorTextArea = new JTextArea();
+		errorTextArea.setEditable(false);
+		errorTextArea.setLineWrap(true);
+		errorTextArea.append(errorString);
+		
+		
+		scrollPane.setViewportView(errorTextArea);
+		
 		contentPanel.setLayout(gl_contentPanel);
 		{
 			JPanel buttonPane = new JPanel();
@@ -70,11 +88,21 @@ public class LoginErrorDialog extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				buttonPane.add(cancelButton);
 			}
 		}
