@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.rmi.NotBoundException;
@@ -33,12 +35,15 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import uy.edu.um.laboratoriotic.services.factory.message.TextMessageFactory;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
+import uy.edu.um.laboratoriotic.ui.UserProfile;
 
 public class ChatRoom extends JFrame {
 
@@ -88,7 +93,35 @@ public class ChatRoom extends JFrame {
 			
 		}
 		
-		JLabel receiverPhotoLabel = new JLabel(receiverPhotoImage);
+		final JLabel receiverPhotoLabel = new JLabel(receiverPhotoImage);
+		receiverPhotoLabel.setBorder(new LineBorder(Color.BLACK,1));
+		
+		receiverPhotoLabel.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					UserProfile userProfile = new UserProfile(receiverEmployee, false);
+					userProfile.setVisible(true);
+				}
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				receiverPhotoLabel.setBorder(new LineBorder(Color.BLUE,1));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				receiverPhotoLabel.setBorder(new LineBorder(Color.BLACK,1));
+			}
+			
+		});
 		
 		ImageIcon senderPhotoImage;
 		if(senderEmployee.getProfilePicture() == null){	
@@ -102,7 +135,35 @@ public class ChatRoom extends JFrame {
 			
 		}
 		
-		JLabel senderPhotoLabel = new JLabel(senderPhotoImage);
+		final JLabel senderPhotoLabel = new JLabel(senderPhotoImage);
+		senderPhotoLabel.setBorder(new LineBorder(Color.BLACK,1));
+		senderPhotoLabel.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					UserProfile userProfile = new UserProfile(senderEmployee, true);
+					userProfile.setVisible(true);
+				}
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				senderPhotoLabel.setBorder(new LineBorder(Color.BLUE,1));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				senderPhotoLabel.setBorder(new LineBorder(Color.BLACK,1));
+			}
+			
+		});
+		
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		
@@ -150,17 +211,19 @@ public class ChatRoom extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addComponent(receiverPhotoLabel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
 						.addComponent(senderPhotoLabel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(chattingWithLabel, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(18)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 								.addComponent(offLineLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
 								.addComponent(scrollPane_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
 								.addComponent(separator, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-								.addComponent(scrollPane_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE))
+								.addComponent(scrollPane_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(chattingWithLabel, GroupLayout.PREFERRED_SIZE, 281, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
