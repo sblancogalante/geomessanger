@@ -1,6 +1,6 @@
 package uy.edu.um.laboratoriotic.services;
 
-import uy.edu.um.laboratoriotic.ui.Login;
+import uy.edu.um.laboratoriotic.ui.frame.Login;
 
 /**
  * This is the class that starts the UI

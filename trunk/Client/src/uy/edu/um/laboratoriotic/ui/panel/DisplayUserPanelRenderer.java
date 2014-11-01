@@ -1,4 +1,4 @@
-package uy.edu.um.laboratoriotic.ui;
+package uy.edu.um.laboratoriotic.ui.panel;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -13,12 +13,12 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
-public class displayUserPanel extends JPanel {
+public class DisplayUserPanelRenderer extends JPanel {
 	private ImageIcon userPhotoImage;
 	/**
 	 * Create the panel.
 	 */
-	public displayUserPanel(EmployeeVO employee) {
+	public DisplayUserPanelRenderer(EmployeeVO employee) {
 		
 		boolean status = employee.getStatus();
 		

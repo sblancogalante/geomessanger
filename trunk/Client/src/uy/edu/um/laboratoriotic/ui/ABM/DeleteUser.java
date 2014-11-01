@@ -1,4 +1,4 @@
-package uy.edu.um.laboratoriotic.ui;
+package uy.edu.um.laboratoriotic.ui.ABM;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -33,6 +33,7 @@ import javax.swing.border.EmptyBorder;
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import uy.edu.um.laboratoriotic.ui.ErrorDialog;
 
 public class DeleteUser extends JDialog {
 
@@ -45,6 +46,8 @@ public class DeleteUser extends JDialog {
 		final EmployeeMgt employeeMgt = EmployeeFactory.getInstance()
 				.getEmployeeMgt();
 		
+		
+		this.setTitle("Delete User");
 		setBounds(100, 100, 450, 410);
 		Dimension d = new Dimension(450,410);
 		//this.setMaximumSize(d);
@@ -167,6 +170,7 @@ public class DeleteUser extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton deleteButton = new JButton("DELETE");
+				this.getRootPane().setDefaultButton(deleteButton);
 				deleteButton.setBackground(UIManager.getColor("Button.foreground"));
 				deleteButton.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent arg0) {

@@ -1,4 +1,4 @@
-package uy.edu.um.laboratoriotic.ui;
+package uy.edu.um.laboratoriotic.ui.frame;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
@@ -37,6 +39,7 @@ public class Login extends JFrame {
 
 	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setTitle("Log in");
 		setBounds(100, 100, 147, 273);
 		
 		
@@ -103,6 +106,9 @@ public class Login extends JFrame {
 		passwordText.setColumns(10);
 		
 		loginButton = new JButton("Log in");
+		//Hace que el Login button ejecute el action performed del listener cunado se apreta ENTER
+		this.getRootPane().setDefaultButton(loginButton);
+		
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MainWindow wind;
@@ -132,6 +138,7 @@ public class Login extends JFrame {
 			
 			
 		});
+		
 		
 		quitButton = new JButton("Quit");
 		quitButton.addActionListener(new ActionListener() {
@@ -188,6 +195,7 @@ public class Login extends JFrame {
 					.addComponent(errorLabel)
 					.addContainerGap(32, Short.MAX_VALUE))
 		);
+		
 		contentPane.setLayout(gl_contentPane);
 	}
 	

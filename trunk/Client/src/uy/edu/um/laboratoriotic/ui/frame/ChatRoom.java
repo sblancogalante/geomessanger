@@ -1,4 +1,4 @@
-package uy.edu.um.laboratoriotic.ui;
+package uy.edu.um.laboratoriotic.ui.frame;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -40,7 +40,7 @@ import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 
-public class ChatRoom2 extends JFrame {
+public class ChatRoom extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField scrollPane;
@@ -49,7 +49,7 @@ public class ChatRoom2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ChatRoom2(final EmployeeVO receiverEmployee, final EmployeeVO senderEmployee) { 
+	public ChatRoom(final EmployeeVO receiverEmployee, final EmployeeVO senderEmployee) { 
 		
 		final JTextArea messageTextArea = new JTextArea("Message...");
 		messageTextArea.setLineWrap(true);		
@@ -58,7 +58,7 @@ public class ChatRoom2 extends JFrame {
 		
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//HACE UN COSO PARA QE CIERRE BIEN, no esta liberanod los recursos
-		
+		this.setTitle("Chat Room");
 		setBounds(100, 100, 500, 500);
 		Dimension d = new Dimension(500,500);
 		this.setMinimumSize(d);

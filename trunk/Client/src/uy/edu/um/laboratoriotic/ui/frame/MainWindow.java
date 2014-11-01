@@ -1,9 +1,10 @@
-package uy.edu.um.laboratoriotic.ui;
+package uy.edu.um.laboratoriotic.ui.frame;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.PopupMenu;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,16 +31,23 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListCellRenderer;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import uy.edu.um.laboratoriotic.ui.UserProfile;
+import uy.edu.um.laboratoriotic.ui.ABM.CreateUser;
+import uy.edu.um.laboratoriotic.ui.ABM.DeleteUser;
+import uy.edu.um.laboratoriotic.ui.panel.DisplayUserPanelRenderer;
+
 import javax.swing.JScrollPane;
 
 public class MainWindow extends JFrame {
@@ -72,6 +80,7 @@ public class MainWindow extends JFrame {
 		actualUser = employeeMgt.getLoginEmployee(actualFilterUser);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setTitle("Main Window");
 		setBounds(100, 100, 600, 620);
 		Dimension d = new Dimension(600, 550);
 		this.setMinimumSize(d);
@@ -164,6 +173,44 @@ public class MainWindow extends JFrame {
 		userList = new JList<EmployeeVO>();
 		scrollPane.setViewportView(userList);
 		
+		userList.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				final JList list = (JList)e.getSource();
+				
+				if(SwingUtilities.isRightMouseButton(e)){
+					//SE CREA UN POP UP MENU
+					JPopupMenu popUpMenu = new JPopupMenu();
+					JMenuItem seeProfileMenuItem =new JMenuItem("Ver Perfil",new ImageIcon("Images/seeProfileImage.png"));
+					seeProfileMenuItem.addActionListener(new ActionListener(){
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							UserProfile userProfile = new UserProfile((EmployeeVO)list.getModel().getElementAt(list.getSelectedIndex()));
+							userProfile.setVisible(true);
+							
+						}
+						
+					});
+					popUpMenu.add(seeProfileMenuItem);
+					JMenuItem sendMessageMenuItem = new JMenuItem("Mandar Mensaje", new ImageIcon("Images/sendMessageImage.png"));
+					sendMessageMenuItem.addActionListener(new ActionListener(){
+						
+						public void actionPerformed(ActionEvent e){
+							ChatRoom chatRoom = new ChatRoom((EmployeeVO)list.getModel().getElementAt(list.getSelectedIndex()),actualUser);
+							chatRoom.setVisible(true);
+						}
+					});
+					
+					popUpMenu.add(sendMessageMenuItem);
+					userList.setSelectedIndex(userList.locationToIndex(e.getPoint()));
+					System.out.println(userList.getSelectedIndex());
+					popUpMenu.show(userList,e.getX(),e.getY());
+					
+					
+				}
+			}
+		});
+		
 		// User name text field,changes of color when foucs
 		searchUserText.addFocusListener(new FocusListener() {
 
@@ -197,6 +244,7 @@ public class MainWindow extends JFrame {
 		
 		
 		JButton searchButton = new JButton("Search");
+		this.getRootPane().setDefaultButton(searchButton);
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
 				try {
@@ -277,7 +325,7 @@ public class MainWindow extends JFrame {
 
 				
 				
-				displayUserPanel userPanel = new displayUserPanel(value);
+				DisplayUserPanelRenderer userPanel = new DisplayUserPanelRenderer(value);
 				if(isSelected){
 					userPanel.setBackground(Color.LIGHT_GRAY);
 					
@@ -296,7 +344,7 @@ public class MainWindow extends JFrame {
 				            // Get item indexçç
 				        					        	
 				            System.out.println(list.getSelectedIndex());
-				            ChatRoom2 chatRoom = new ChatRoom2((EmployeeVO)list.getModel().getElementAt(list.getSelectedIndex()),actualUser);
+				            ChatRoom chatRoom = new ChatRoom((EmployeeVO)list.getModel().getElementAt(list.getSelectedIndex()),actualUser);
 				            chatRoom.setVisible(true);
 				           
 				        } 
