@@ -650,6 +650,7 @@ public class CreateUser extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser jFileChooser = new JFileChooser();
 				photoPath = pickPath(jFileChooser);
+				
 			}
 		});
 		
@@ -692,6 +693,7 @@ public class CreateUser extends JDialog {
 		//ImageIcon testPhoto = rescaleImage(new File(photoPath),384,256);
 		
 		testPhotoLabel = new JLabel("");
+		
 		
 		
 		

@@ -66,7 +66,7 @@ public class MainWindow extends JFrame {
 	private JMenuItem createUserMenuItem;
 	private JMenuItem deleteUserMenuItem;
 	private JMenuItem exitMenuItem;
-	private JMenuItem mntmProfile;
+	private JMenuItem menuItemEditProfile;
 	private ArrayList<EmployeeVO> listEmployee;
 	private EmployeeVO actualUser;
 	private JScrollPane scrollPane;
@@ -94,8 +94,14 @@ public class MainWindow extends JFrame {
 		editMenu = new JMenu("Edit");
 		menuBar.add(editMenu);
 
-		mntmProfile = new JMenuItem("Profile");
-		editMenu.add(mntmProfile);
+		menuItemEditProfile = new JMenuItem("Profile");
+		menuItemEditProfile.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				UserProfile userProfile = new UserProfile(actualUser,true);
+				userProfile.setVisible(true);
+			}
+		});
+		editMenu.add(menuItemEditProfile);
 
 		adminMenu = new JMenu("Admin.");
 		/*
@@ -185,13 +191,14 @@ public class MainWindow extends JFrame {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							UserProfile userProfile = new UserProfile((EmployeeVO)list.getModel().getElementAt(list.getSelectedIndex()));
+							UserProfile userProfile = new UserProfile((EmployeeVO)list.getModel().getElementAt(list.getSelectedIndex()), false);
 							userProfile.setVisible(true);
 							
 						}
 						
 					});
 					popUpMenu.add(seeProfileMenuItem);
+					popUpMenu.add(new JSeparator());
 					JMenuItem sendMessageMenuItem = new JMenuItem("Mandar Mensaje", new ImageIcon("Images/sendMessageImage.png"));
 					sendMessageMenuItem.addActionListener(new ActionListener(){
 						
