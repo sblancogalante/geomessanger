@@ -1,6 +1,7 @@
 package uy.edu.um.laboratoriotic.ui.frame;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -10,6 +11,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.rmi.NotBoundException;
@@ -123,6 +125,20 @@ public class ChatRoom extends JFrame {
 			
 		});
 		
+		receiverPhotoLabel.addMouseMotionListener(new MouseMotionListener(){
+
+			@Override
+			public void mouseDragged(MouseEvent e) {	
+			} 
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+		        receiverPhotoLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		       
+			}
+			
+		});
+		
 		ImageIcon senderPhotoImage;
 		if(senderEmployee.getProfilePicture() == null){	
 			
@@ -160,6 +176,19 @@ public class ChatRoom extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				senderPhotoLabel.setBorder(new LineBorder(Color.BLACK,1));
+			}
+			
+		});
+		senderPhotoLabel.addMouseMotionListener(new MouseMotionListener(){
+
+			@Override
+			public void mouseDragged(MouseEvent e) {	
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+		        senderPhotoLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		       
 			}
 			
 		});
