@@ -265,6 +265,24 @@ public class MainWindow extends JFrame {
 			}
 		});
 		
+		userList.addMouseMotionListener(new MouseMotionListener() {
+		    @Override
+		    public void mouseMoved(MouseEvent e) {
+		        final int x = e.getX();
+		        final int y = e.getY();
+		        final Rectangle cellBounds = userList.getCellBounds(0, userList.getModel().getSize() - 1);
+		        if (cellBounds != null && cellBounds.contains(x, y)) {
+		            userList.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		        } else {
+		            userList.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+		        }
+		    }
+
+		    @Override
+		    public void mouseDragged(MouseEvent e) {
+		    }
+		});
+		
 		// User name text field,changes of color when foucs
 		searchUserText.addFocusListener(new FocusListener() {
 
