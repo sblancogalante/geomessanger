@@ -29,6 +29,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
@@ -41,6 +42,7 @@ import javax.swing.border.LineBorder;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.IOException;
 
 public class CreateUser extends JDialog {
 
@@ -72,13 +74,16 @@ public class CreateUser extends JDialog {
 		Dimension d = new Dimension(600, 635);
 		this.setMinimumSize(d);
 		this.setMaximumSize(d);
-
+		
+		
+		photoPath = "Images/Foto.png";
+		
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
 		titlePanel = new JPanel();
-
+		 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
 		JPanel panel_4 = new JPanel();
@@ -658,6 +663,27 @@ public class CreateUser extends JDialog {
 		panel.setBorder(new LineBorder(new Color(192, 192, 192), 2, true));
 		
 		
+		testPhotoLabel = new JLabel(rescaleImage(new File(photoPath),384,256));
+		final ImageIcon testPhoto = rescaleImage(new File(photoPath),384,256);
+		JButton refreshPhotoButton = new JButton("Refresh Photo");
+		refreshPhotoButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(testPhoto != null){
+					if(photoPath!=null){
+						final ImageIcon testPhoto = rescaleImage(new File(photoPath),384,256);
+						testPhotoLabel.setIcon(testPhoto);
+					}else{
+						photoPath = "Images/Foto.png";
+						final ImageIcon testPhoto = rescaleImage(new File(photoPath),384,256);
+						testPhotoLabel.setIcon(testPhoto);
+					}
+					
+				}
+			}
+		});
+		
 		GroupLayout gl_panel_3 = new GroupLayout(otherPanel);
 		gl_panel_3.setHorizontalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
@@ -673,7 +699,9 @@ public class CreateUser extends JDialog {
 								.addGroup(gl_panel_3.createSequentialGroup()
 									.addComponent(addPhotoLabel)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(selectPhotoButton)))))
+									.addComponent(selectPhotoButton)
+									.addGap(18)
+									.addComponent(refreshPhotoButton)))))
 					.addContainerGap(78, Short.MAX_VALUE))
 		);
 		gl_panel_3.setVerticalGroup(
@@ -682,17 +710,14 @@ public class CreateUser extends JDialog {
 					.addGap(50)
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
 						.addComponent(addPhotoLabel)
-						.addComponent(selectPhotoButton))
+						.addComponent(selectPhotoButton)
+						.addComponent(refreshPhotoButton))
 					.addGap(18)
 					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
 					.addGap(18)
 					.addComponent(label_1)
 					.addContainerGap())
 		);
-		
-		//ImageIcon testPhoto = rescaleImage(new File(photoPath),384,256);
-		
-		testPhotoLabel = new JLabel("");
 		
 		
 		
@@ -772,7 +797,7 @@ public class CreateUser extends JDialog {
 	
 
 	//resize image
-	public ImageIcon rescaleImage(File source,int maxHeight, int maxWidth){
+	public ImageIcon rescaleImage(File source,int maxHeight, int maxWidth) {
 	     int newHeight = 0, newWidth = 0;        // Variables for the new height and width
 	     int priorHeight = 0, priorWidth = 0;
 	     BufferedImage image = null;
@@ -781,9 +806,10 @@ public class CreateUser extends JDialog {
 	     try {
 	             image = ImageIO.read(source);        // get the image
 	     } catch (Exception e) {
-
+	    	 	ErrorDialog error = new ErrorDialog("Se ha producido un error, al intentar cargar una imagen. \n\n ERROR: "+ e.getMessage());
+	    	 	error.setVisible(true);
 	             e.printStackTrace();
-	             System.out.println("Picture upload attempted & failed");
+	     
 	     }
 
 	     sizeImage = new ImageIcon(image);
