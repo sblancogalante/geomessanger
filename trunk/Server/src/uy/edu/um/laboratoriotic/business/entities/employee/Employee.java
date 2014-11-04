@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Blob;
 
+import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
@@ -20,8 +21,8 @@ public class Employee {
 	 * Attributes of the class
 	 */
 	private int employeeID;
-	private String iD, name, lastName, userName, password, location, sector,
-			mail, position, workingHour;
+	private String iD, name, lastName, userName, password, mail, position, workingHour;
+	private Type location, sector;
 	private Blob profilePicture;
 	private boolean status;
 
@@ -29,8 +30,8 @@ public class Employee {
 	 * Constructors
 	 */
 	public Employee(String oID, String oName, String oLastName,
-			String oUserName, String oPassword, String oLocation,
-			String oSector, String oMail, String oPosition,
+			String oUserName, String oPassword, Type oLocation,
+			Type oSector, String oMail, String oPosition,
 			String oWorkingHour, Blob oProfilePicture, boolean oStatus) {
 
 		this.iD = oID;
@@ -49,8 +50,8 @@ public class Employee {
 	}
 	
 	public Employee(int oEmployeeID, String oID, String oName, String oLastName,
-			String oUserName, String oPassword, String oLocation,
-			String oSector, String oMail, String oPosition,
+			String oUserName, String oPassword, Type oLocation,
+			Type oSector, String oMail, String oPosition,
 			String oWorkingHour, Blob oProfilePicture, boolean oStatus) {
 
 		this.employeeID = oEmployeeID;
@@ -69,8 +70,8 @@ public class Employee {
 
 	}
 
-	public Employee(String oUserName, String oPassword, String oLocation,
-			String oSector, boolean oStatus) {
+	public Employee(String oUserName, String oPassword, Type oLocation,
+			Type oSector, boolean oStatus) {
 
 		this.userName = oUserName;
 		this.password = this.hashEncriptation(oPassword);
@@ -92,8 +93,8 @@ public class Employee {
 	 */
 	public EmployeeVO toVO() {
 
-		return new EmployeeVO(employeeID, iD, name, lastName, userName, password, location,
-				sector, mail, position, workingHour, profilePicture, status);
+		return new EmployeeVO(employeeID, iD, name, lastName, userName, password, location.toVO(),
+				sector.toVO(), mail, position, workingHour, profilePicture, status);
 
 	}
 
@@ -171,19 +172,19 @@ public class Employee {
 		this.password = hashEncriptation(oPassword);
 	}
 
-	public String getLocation() {
+	public Type getLocation() {
 		return location;
 	}
 
-	public void setLocation(String oLocation) {
+	public void setLocation(Type oLocation) {
 		this.location = oLocation;
 	}
 
-	public String getSector() {
+	public Type getSector() {
 		return sector;
 	}
 
-	public void setSector(String oSector) {
+	public void setSector(Type oSector) {
 		this.sector = oSector;
 	}
 

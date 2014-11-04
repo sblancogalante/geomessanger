@@ -2,7 +2,8 @@ package uy.edu.um.laboratoriotic.services.valueobject.employee;
 
 import java.io.Serializable;
 import java.sql.Blob;
-import java.util.Date;
+
+import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
 
 /**
  * This is the entity that we use to travel from the server to the client and
@@ -17,19 +18,20 @@ public class EmployeeVO implements Serializable {
 	 * Attributes of the class
 	 */
 	private int employeeID;
-	private String iD, name, lastName, userName, password, location, sector,
-			mail, position, workingHour;
+	private String iD, name, lastName, userName, password, mail, position,
+			workingHour;
+	private TypeVO location, sector;
 	private Blob profilePicture;
 	private boolean status;
 
 	/*
 	 * Constructors
 	 */
-	public EmployeeVO(String oID, String oName,
-			String oLastName, String oUserName, String oPassword,
-			String oLocation, String oSector, String oMail, String oPosition,
+	public EmployeeVO(String oID, String oName, String oLastName,
+			String oUserName, String oPassword, TypeVO oLocation,
+			TypeVO oSector, String oMail, String oPosition,
 			String oWorkingHour, Blob oProfilePicture, boolean oStatus) {
-		
+
 		this.iD = oID;
 		this.name = oName;
 		this.lastName = oLastName;
@@ -40,16 +42,16 @@ public class EmployeeVO implements Serializable {
 		this.mail = oMail;
 		this.position = oPosition;
 		this.workingHour = oWorkingHour;
-		this.profilePicture = oProfilePicture;	
+		this.profilePicture = oProfilePicture;
 		this.status = oStatus;
 
-	}	
-	
+	}
+
 	public EmployeeVO(int oEmployeeID, String oID, String oName,
 			String oLastName, String oUserName, String oPassword,
-			String oLocation, String oSector, String oMail, String oPosition,
+			TypeVO oLocation, TypeVO oSector, String oMail, String oPosition,
 			String oWorkingHour, Blob oProfilePicture, boolean oStatus) {
-		
+
 		this.employeeID = oEmployeeID;
 		this.iD = oID;
 		this.name = oName;
@@ -61,27 +63,27 @@ public class EmployeeVO implements Serializable {
 		this.mail = oMail;
 		this.position = oPosition;
 		this.workingHour = oWorkingHour;
-		this.profilePicture = oProfilePicture;	
+		this.profilePicture = oProfilePicture;
 		this.status = oStatus;
 
-	}	
+	}
 
-	public EmployeeVO(String oUserName, String oPassword,
-			String oLocation, String oSector, boolean oStatus) {
-				
+	public EmployeeVO(String oUserName, String oPassword, TypeVO oLocation,
+			TypeVO oSector, boolean oStatus) {
+
 		this.userName = oUserName;
 		this.password = oPassword;
 		this.location = oLocation;
 		this.sector = oSector;
 		this.status = oStatus;
-		
+
 	}
-	
+
 	public EmployeeVO(String oUserName, String oPassword) {
 
 		this.userName = oUserName;
 		this.password = oPassword;
-		
+
 	}
 
 	/*
@@ -94,7 +96,7 @@ public class EmployeeVO implements Serializable {
 	public void setEmployeeID(int oEmployeeID) {
 		this.employeeID = oEmployeeID;
 	}
-	
+
 	public String getID() {
 		return iD;
 	}
@@ -135,19 +137,19 @@ public class EmployeeVO implements Serializable {
 		this.password = oPassword;
 	}
 
-	public String getLocation() {
+	public TypeVO getLocation() {
 		return location;
 	}
 
-	public void setLocation(String oLocation) {
+	public void setLocation(TypeVO oLocation) {
 		this.location = oLocation;
 	}
 
-	public String getSector() {
+	public TypeVO getSector() {
 		return sector;
 	}
 
-	public void setSector(String oSector) {
+	public void setSector(TypeVO oSector) {
 		this.sector = oSector;
 	}
 
@@ -189,6 +191,6 @@ public class EmployeeVO implements Serializable {
 
 	public void setStatus(boolean oStatus) {
 		this.status = oStatus;
-	}	
+	}
 
 }

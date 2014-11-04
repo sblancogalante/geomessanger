@@ -1,6 +1,7 @@
 package uy.edu.um.laboratoriotic.ui.ABM;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -8,20 +9,20 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.Blob;
-import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -29,20 +30,14 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
 import uy.edu.um.laboratoriotic.ui.ErrorDialog;
-
-import javax.swing.JCheckBox;
-import javax.swing.border.LineBorder;
-
-import java.awt.Color;
-import java.io.File;
-import java.io.IOException;
 
 public class CreateUser extends JDialog {
 
@@ -67,23 +62,22 @@ public class CreateUser extends JDialog {
 	private JLabel testPhotoLabel;
 
 	public CreateUser() {
-		
+
 		this.setTitle("Create User");
 		setBounds(100, 100, 600, 635);
 
 		Dimension d = new Dimension(600, 635);
 		this.setMinimumSize(d);
 		this.setMaximumSize(d);
-		
-		
+
 		photoPath = "Images/Foto.png";
-		
+
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
 		titlePanel = new JPanel();
-		 
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
 		JPanel panel_4 = new JPanel();
@@ -149,43 +143,45 @@ public class CreateUser extends JDialog {
 
 				String workingHours = null;
 				Blob profilePic = null;
-				
-				
-				
+
+				TypeVO oTypeVOLocation = new TypeVO("Location",
+						(String) locationComboBox.getSelectedItem());
+				TypeVO oTypeVOSector = new TypeVO("Sector",
+						(String) sectorComboBox.getSelectedItem());
+
 				EmployeeVO oEmployee = new EmployeeVO(documentText.getText(),
 						nameText.getText(), lastNameText.getText(),
 						userNameText.getText(), String
 								.valueOf(repeatPasswordText.getPassword()),
-						(String) locationComboBox.getSelectedItem(),
-						(String) sectorComboBox.getSelectedItem(), eMailText
-								.getText(), positionText.getText(),
-						workingHours, profilePic, false);
-				
+						oTypeVOLocation, oTypeVOSector, eMailText.getText(),
+						positionText.getText(), workingHours, profilePic, false);
+
 				EmployeeMgt employeeMgt = EmployeeFactory.getInstance()
 						.getEmployeeMgt();
-				
-				
+
 				try {
 					String pass1 = String.valueOf(passwordText.getPassword());
-					String pass2 = String.valueOf(repeatPasswordText.getPassword());
-					if(pass1.equals(pass2)){
+					String pass2 = String.valueOf(repeatPasswordText
+							.getPassword());
+					if (pass1.equals(pass2)) {
 						employeeMgt.addEmployee(oEmployee);
 						System.out.println("Se ha creado: "
 								+ oEmployee.getUserName());
 						dispose();
-					}else{
-						ErrorDialog errorDialog = new ErrorDialog("Se ha detectado un error, las contraseñas ingresadas deben ser iguales. Porfavor intente nuevamente.");
+					} else {
+						ErrorDialog errorDialog = new ErrorDialog(
+								"Se ha detectado un error, las contraseñas ingresadas deben ser iguales. Porfavor intente nuevamente.");
 						errorDialog.setVisible(true);
 						passwordText.setText("");
 						repeatPasswordText.setText("");
 					}
 				} catch (RemoteException | NotBoundException e) {
-					ErrorDialog errorDialog = new ErrorDialog("Se ha producido un error al intentar guardar el usuario. \n \n ERROR: " + e.getMessage());
+					ErrorDialog errorDialog = new ErrorDialog(
+							"Se ha producido un error al intentar guardar el usuario. \n \n ERROR: "
+									+ e.getMessage());
 					errorDialog.setVisible(true);
 					e.printStackTrace();
 				}
-
-				
 
 			}
 
@@ -437,8 +433,8 @@ public class CreateUser extends JDialog {
 		JSeparator separator = new JSeparator();
 
 		JButton addLocationButton = new JButton("Add Location");
-		addLocationButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+		addLocationButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				NewLocation newLocation = new NewLocation();
 				newLocation.setVisible(true);
 			}
@@ -655,78 +651,110 @@ public class CreateUser extends JDialog {
 				"<<NOTE: The fields with (*) are obligatory.>>");
 
 		JLabel addPhotoLabel = new JLabel("Add Photo: ");
-		testPhotoLabel = new JLabel(rescaleImage(new File(photoPath),384,256));
-		final ImageIcon testPhoto = rescaleImage(new File(photoPath),384,256);
-		
+		testPhotoLabel = new JLabel(rescaleImage(new File(photoPath), 384, 256));
+		final ImageIcon testPhoto = rescaleImage(new File(photoPath), 384, 256);
+
 		JButton selectPhotoButton = new JButton("Select photo ");
 		selectPhotoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser jFileChooser = new JFileChooser();
 				photoPath = pickPath(jFileChooser);
-				if(testPhoto != null){
-					if(photoPath!=null){
-						final ImageIcon testPhoto = rescaleImage(new File(photoPath),384,256);
+				if (testPhoto != null) {
+					if (photoPath != null) {
+						final ImageIcon testPhoto = rescaleImage(new File(
+								photoPath), 384, 256);
 						testPhotoLabel.setIcon(testPhoto);
-					}else{
+					} else {
 						photoPath = "Images/Foto.png";
-						final ImageIcon testPhoto = rescaleImage(new File(photoPath),384,256);
+						final ImageIcon testPhoto = rescaleImage(new File(
+								photoPath), 384, 256);
 						testPhotoLabel.setIcon(testPhoto);
 					}
-					
-				}	
+
+				}
 			}
 		});
-		
+
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(192, 192, 192), 2, true));
-		
-		
+
 		GroupLayout gl_panel_3 = new GroupLayout(otherPanel);
-		gl_panel_3.setHorizontalGroup(
-			gl_panel_3.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_3.createSequentialGroup()
-					.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_3.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 303, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel_3.createSequentialGroup()
-							.addGap(73)
-							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_panel_3.createSequentialGroup()
-									.addComponent(addPhotoLabel)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(selectPhotoButton)))))
-					.addContainerGap(78, Short.MAX_VALUE))
-		);
-		gl_panel_3.setVerticalGroup(
-			gl_panel_3.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_3.createSequentialGroup()
-					.addGap(50)
-					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(addPhotoLabel)
-						.addComponent(selectPhotoButton))
-					.addGap(18)
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(label_1)
-					.addContainerGap())
-		);
+		gl_panel_3
+				.setHorizontalGroup(gl_panel_3
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_panel_3
+										.createSequentialGroup()
+										.addGroup(
+												gl_panel_3
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_panel_3
+																		.createSequentialGroup()
+																		.addContainerGap()
+																		.addComponent(
+																				label_1,
+																				GroupLayout.PREFERRED_SIZE,
+																				303,
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																gl_panel_3
+																		.createSequentialGroup()
+																		.addGap(73)
+																		.addGroup(
+																				gl_panel_3
+																						.createParallelGroup(
+																								Alignment.LEADING)
+																						.addComponent(
+																								panel,
+																								GroupLayout.PREFERRED_SIZE,
+																								400,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addGroup(
+																								gl_panel_3
+																										.createSequentialGroup()
+																										.addComponent(
+																												addPhotoLabel)
+																										.addPreferredGap(
+																												ComponentPlacement.UNRELATED)
+																										.addComponent(
+																												selectPhotoButton)))))
+										.addContainerGap(78, Short.MAX_VALUE)));
+		gl_panel_3
+				.setVerticalGroup(gl_panel_3
+						.createParallelGroup(Alignment.TRAILING)
+						.addGroup(
+								gl_panel_3
+										.createSequentialGroup()
+										.addGap(50)
+										.addGroup(
+												gl_panel_3
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																addPhotoLabel)
+														.addComponent(
+																selectPhotoButton))
+										.addGap(18)
+										.addComponent(panel,
+												GroupLayout.DEFAULT_SIZE, 272,
+												Short.MAX_VALUE).addGap(18)
+										.addComponent(label_1)
+										.addContainerGap()));
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(testPhotoLabel, GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(testPhotoLabel, GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-					.addContainerGap())
-		);
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_panel.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(testPhotoLabel, GroupLayout.DEFAULT_SIZE,
+								384, Short.MAX_VALUE).addContainerGap()));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_panel.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(testPhotoLabel, GroupLayout.DEFAULT_SIZE,
+								256, Short.MAX_VALUE).addContainerGap()));
 		panel.setLayout(gl_panel);
 		otherPanel.setLayout(gl_panel_3);
 
@@ -735,36 +763,43 @@ public class CreateUser extends JDialog {
 
 		JSeparator separator_1 = new JSeparator();
 		GroupLayout gl_panel1 = new GroupLayout(titlePanel);
-		gl_panel1.setHorizontalGroup(gl_panel1
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel1.createSequentialGroup()
-								.addGroup(
-										gl_panel1.createParallelGroup(
-												Alignment.TRAILING)
-												.addGroup(
-														gl_panel1.createSequentialGroup()
-																.addGap(191)
-																.addComponent(
-																		createUserLabel)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED,
-																		182,
-																		Short.MAX_VALUE))
-												.addGroup(
-														gl_panel1.createSequentialGroup()
-																.addContainerGap()
-																.addComponent(
-																		separator_1,
-																		GroupLayout.DEFAULT_SIZE,
-																		523,
-																		Short.MAX_VALUE)))
-								.addContainerGap()));
+		gl_panel1
+				.setHorizontalGroup(gl_panel1
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_panel1
+										.createSequentialGroup()
+										.addGroup(
+												gl_panel1
+														.createParallelGroup(
+																Alignment.TRAILING)
+														.addGroup(
+																gl_panel1
+																		.createSequentialGroup()
+																		.addGap(191)
+																		.addComponent(
+																				createUserLabel)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED,
+																				182,
+																				Short.MAX_VALUE))
+														.addGroup(
+																gl_panel1
+																		.createSequentialGroup()
+																		.addContainerGap()
+																		.addComponent(
+																				separator_1,
+																				GroupLayout.DEFAULT_SIZE,
+																				523,
+																				Short.MAX_VALUE)))
+										.addContainerGap()));
 		gl_panel1.setVerticalGroup(gl_panel1.createParallelGroup(
 				Alignment.LEADING).addGroup(
-				gl_panel1.createSequentialGroup()
+				gl_panel1
+						.createSequentialGroup()
 						.addGap(5)
-						.addComponent(createUserLabel, GroupLayout.DEFAULT_SIZE,
+						.addComponent(createUserLabel,
+								GroupLayout.DEFAULT_SIZE,
 								GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addGap(18)
 						.addComponent(separator_1, GroupLayout.PREFERRED_SIZE,
@@ -773,77 +808,74 @@ public class CreateUser extends JDialog {
 		titlePanel.setLayout(gl_panel1);
 		contentPanel.setLayout(gl_contentPanel);
 	}
-	
-	
-	
-	
-	
-	
-	
-	//METODOS
-	
-	
-	
-	public static String pickPath(JFileChooser fileChooser){
-		  String path=null;
-		  JDialog dialog=new JDialog();
-		  int returnVal=fileChooser.showOpenDialog(dialog);
-		  if (returnVal == JFileChooser.APPROVE_OPTION) {
-		    path=fileChooser.getSelectedFile().getPath();
-		  }
-		  return path;
+
+	// METODOS
+
+	public static String pickPath(JFileChooser fileChooser) {
+		String path = null;
+		JDialog dialog = new JDialog();
+		int returnVal = fileChooser.showOpenDialog(dialog);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			path = fileChooser.getSelectedFile().getPath();
 		}
-	
+		return path;
+	}
 
-	//resize image
-	public ImageIcon rescaleImage(File source,int maxHeight, int maxWidth) {
-	     int newHeight = 0, newWidth = 0;        // Variables for the new height and width
-	     int priorHeight = 0, priorWidth = 0;
-	     BufferedImage image = null;
-	     ImageIcon sizeImage;
+	// resize image
+	public ImageIcon rescaleImage(File source, int maxHeight, int maxWidth) {
+		int newHeight = 0, newWidth = 0; // Variables for the new height and
+											// width
+		int priorHeight = 0, priorWidth = 0;
+		BufferedImage image = null;
+		ImageIcon sizeImage;
 
-	     try {
-	             image = ImageIO.read(source);        // get the image
-	     } catch (Exception e) {
-	    	 	ErrorDialog error = new ErrorDialog("Se ha producido un error, al intentar cargar una imagen. \n\n ERROR: "+ e.getMessage());
-	    	 	error.setVisible(true);
-	             e.printStackTrace();
-	     
-	     }
+		try {
+			image = ImageIO.read(source); // get the image
+		} catch (Exception e) {
+			ErrorDialog error = new ErrorDialog(
+					"Se ha producido un error, al intentar cargar una imagen. \n\n ERROR: "
+							+ e.getMessage());
+			error.setVisible(true);
+			e.printStackTrace();
 
-	     sizeImage = new ImageIcon(image);
+		}
 
-	     if(sizeImage != null){
-	    	 
-	         priorHeight = sizeImage.getIconHeight(); 
-	         priorWidth = sizeImage.getIconWidth();
-	     }
+		sizeImage = new ImageIcon(image);
 
-	     // Calculate the correct new height and width
-	     if((float)priorHeight/(float)priorWidth > (float)maxHeight/(float)maxWidth){
-	     
-	         newHeight = maxHeight;
-	         newWidth = (int)(((float)priorWidth/(float)priorHeight)*(float)newHeight);
-	     }else{
-	    	 
-	         newWidth = maxWidth;
-	         newHeight = (int)(((float)priorHeight/(float)priorWidth)*(float)newWidth);
-	     }
+		if (sizeImage != null) {
 
+			priorHeight = sizeImage.getIconHeight();
+			priorWidth = sizeImage.getIconWidth();
+		}
 
-	     // Resize the image
+		// Calculate the correct new height and width
+		if ((float) priorHeight / (float) priorWidth > (float) maxHeight
+				/ (float) maxWidth) {
 
-	     // 1. Create a new Buffered Image and Graphic2D object
-	     BufferedImage resizedImg = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
-	     Graphics2D g2 = resizedImg.createGraphics();
+			newHeight = maxHeight;
+			newWidth = (int) (((float) priorWidth / (float) priorHeight) * (float) newHeight);
+		} else {
 
-	     // 2. Use the Graphic object to draw a new image to the image in the buffer
-	     g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	     g2.drawImage(image, 0, 0, newWidth, newHeight, null);
-	     g2.dispose();
+			newWidth = maxWidth;
+			newHeight = (int) (((float) priorHeight / (float) priorWidth) * (float) newWidth);
+		}
 
-	     // 3. Convert the buffered image into an ImageIcon for return
-	     return (new ImageIcon(resizedImg));
-	 }
-	
+		// Resize the image
+
+		// 1. Create a new Buffered Image and Graphic2D object
+		BufferedImage resizedImg = new BufferedImage(newWidth, newHeight,
+				BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2 = resizedImg.createGraphics();
+
+		// 2. Use the Graphic object to draw a new image to the image in the
+		// buffer
+		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2.drawImage(image, 0, 0, newWidth, newHeight, null);
+		g2.dispose();
+
+		// 3. Convert the buffered image into an ImageIcon for return
+		return (new ImageIcon(resizedImg));
+	}
+
 }

@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import org.junit.Test;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
+import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
 
@@ -13,8 +14,11 @@ public class EmployeeDAOTest {
 	@Test
 	public void test() {
 
-		Employee oEmployee = new Employee("5.062.081-0", "Santiago",
-				"Blanco", "sblanco", "asdfg", "Uruguay", "Desarrollo",
+		Type oTypeLocation = new Type("Location", "Uruguay");
+		Type oTypeSector = new Type("Sector", "Desarrollo");
+
+		Employee oEmployee = new Employee("5.062.081-0", "Santiago", "Blanco",
+				"sblanco", "asdfg", oTypeLocation, oTypeSector,
 				"sblanco1@correo.um.edu.uy", "Programador", null, null, false);
 
 		/*
