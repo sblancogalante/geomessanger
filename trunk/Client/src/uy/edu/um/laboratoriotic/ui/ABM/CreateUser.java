@@ -436,7 +436,13 @@ public class CreateUser extends JDialog {
 
 		JSeparator separator = new JSeparator();
 
-		JButton addLoactionButton = new JButton("Add Location");
+		JButton addLocationButton = new JButton("Add Location");
+		addLocationButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				NewLocation newLocation = new NewLocation();
+				newLocation.setVisible(true);
+			}
+		});
 
 		JButton addSectorButton = new JButton("Add Sector");
 
@@ -471,7 +477,7 @@ public class CreateUser extends JDialog {
 																		.createSequentialGroup()
 																		.addGap(6)
 																		.addComponent(
-																				addLoactionButton)))
+																				addLocationButton)))
 										.addPreferredGap(
 												ComponentPlacement.RELATED,
 												191, Short.MAX_VALUE)
@@ -634,7 +640,7 @@ public class CreateUser extends JDialog {
 														.createParallelGroup(
 																Alignment.BASELINE)
 														.addComponent(
-																addLoactionButton)
+																addLocationButton)
 														.addComponent(
 																addSectorButton))
 										.addGap(42)
@@ -649,27 +655,14 @@ public class CreateUser extends JDialog {
 				"<<NOTE: The fields with (*) are obligatory.>>");
 
 		JLabel addPhotoLabel = new JLabel("Add Photo: ");
-
+		testPhotoLabel = new JLabel(rescaleImage(new File(photoPath),384,256));
+		final ImageIcon testPhoto = rescaleImage(new File(photoPath),384,256);
+		
 		JButton selectPhotoButton = new JButton("Select photo ");
 		selectPhotoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser jFileChooser = new JFileChooser();
 				photoPath = pickPath(jFileChooser);
-				
-			}
-		});
-		
-		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(192, 192, 192), 2, true));
-		
-		
-		testPhotoLabel = new JLabel(rescaleImage(new File(photoPath),384,256));
-		final ImageIcon testPhoto = rescaleImage(new File(photoPath),384,256);
-		JButton refreshPhotoButton = new JButton("Refresh Photo");
-		refreshPhotoButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
 				if(testPhoto != null){
 					if(photoPath!=null){
 						final ImageIcon testPhoto = rescaleImage(new File(photoPath),384,256);
@@ -680,9 +673,13 @@ public class CreateUser extends JDialog {
 						testPhotoLabel.setIcon(testPhoto);
 					}
 					
-				}
+				}	
 			}
 		});
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(192, 192, 192), 2, true));
+		
 		
 		GroupLayout gl_panel_3 = new GroupLayout(otherPanel);
 		gl_panel_3.setHorizontalGroup(
@@ -699,9 +696,7 @@ public class CreateUser extends JDialog {
 								.addGroup(gl_panel_3.createSequentialGroup()
 									.addComponent(addPhotoLabel)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(selectPhotoButton)
-									.addGap(18)
-									.addComponent(refreshPhotoButton)))))
+									.addComponent(selectPhotoButton)))))
 					.addContainerGap(78, Short.MAX_VALUE))
 		);
 		gl_panel_3.setVerticalGroup(
@@ -710,18 +705,13 @@ public class CreateUser extends JDialog {
 					.addGap(50)
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
 						.addComponent(addPhotoLabel)
-						.addComponent(selectPhotoButton)
-						.addComponent(refreshPhotoButton))
+						.addComponent(selectPhotoButton))
 					.addGap(18)
 					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
 					.addGap(18)
 					.addComponent(label_1)
 					.addContainerGap())
 		);
-		
-		
-		
-		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -783,6 +773,15 @@ public class CreateUser extends JDialog {
 		titlePanel.setLayout(gl_panel1);
 		contentPanel.setLayout(gl_contentPanel);
 	}
+	
+	
+	
+	
+	
+	
+	
+	//METODOS
+	
 	
 	
 	public static String pickPath(JFileChooser fileChooser){
@@ -847,16 +846,4 @@ public class CreateUser extends JDialog {
 	     return (new ImageIcon(resizedImg));
 	 }
 	
-	private void refreshView(){
-		
-		ImageIcon testPhoto = rescaleImage(new File(photoPath),384,256);
-		if(testPhoto != null){
-			testPhotoLabel = new JLabel(testPhoto);
-		}else{
-			testPhotoLabel = new JLabel("");
-		}
-		
-		
-		
-	}
 }

@@ -158,7 +158,7 @@ public class NewLocation extends JDialog {
 			typesList.setModel(typesListModel); 
 			
 		} catch (RemoteException | NotBoundException e) {
-			ErrorDialog errorDialog = new ErrorDialog("Se ha producido un error al intentar buscr las locations conocidas."
+			ErrorDialog errorDialog = new ErrorDialog("Se ha producido un error al intentar buscar las locations conocidas."
 					+ " \n \n ERROR: " + e.getMessage());
 			errorDialog.setVisible(true);
 			e.printStackTrace();
@@ -181,14 +181,15 @@ public class NewLocation extends JDialog {
 								+ newLocationText.getText() + " ?");
 					
 								if (nvalue == 0){
-									//DEELTE USER
 									try {
 										TypeVO oType = new TypeVO(1,newLocationText.getText(),null,true);
 										generalMgt.addType(oType);
 										dispose();
 									} catch (RemoteException | NotBoundException e) {
-										ErrorDialog errorDialog = new ErrorDialog("Se ha producido un error al intentar eliminar el usuario."
+										ErrorDialog errorDialog = new ErrorDialog("Se ha producido un error al intentar agregar la siguiente localizacion "
+												+ newLocationText.getText() + "."
 												+ " \n \n ERROR: " + e.getMessage());
+										errorDialog.setVisible(true);
 										e.printStackTrace();
 									}
 									
