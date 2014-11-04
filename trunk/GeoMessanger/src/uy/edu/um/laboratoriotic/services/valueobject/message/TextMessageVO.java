@@ -20,23 +20,20 @@ public class TextMessageVO extends MessageVO implements Serializable {
 	private String textMessage;
 	private EmployeeVO sender;
 	private EmployeeVO receiver;
-	private Timestamp date;
-	private boolean isConference;
+	private Timestamp date;	
 
 	/*
 	 * Constructor
 	 */
 	public TextMessageVO(int oIDMessage, String oTextMessage,
-			EmployeeVO oSender, EmployeeVO oReceiver, Timestamp oDate,
-			boolean oIsConference) {
+			EmployeeVO oSender, EmployeeVO oReceiver, Timestamp oDate) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
 
 		this.textMessage = oTextMessage;
 		this.sender = oSender;
 		this.receiver = oReceiver;
-		this.date = oDate;
-		this.isConference = oIsConference;
+		this.date = oDate;	
 
 	}
 
@@ -74,14 +71,6 @@ public class TextMessageVO extends MessageVO implements Serializable {
 
 	public void setDate(Timestamp oDate) {
 		this.date = oDate;
-	}
-
-	public boolean getIsConference() {
-		return isConference;
-	}
-
-	public void setIsconference(boolean oIsConference) {
-		this.isConference = oIsConference;
-	}
+	}	
 
 }

@@ -78,8 +78,7 @@ public class TextMessageMgr implements TextMessageMgt {
 
 		TextMessage oTextMessage = new TextMessage(
 				oTextMessageVO.getIDMessage(), oTextMessageVO.getTextMessage(),
-				oSenderEmployee, oReceiverEmployee, oTextMessageVO.getDate(),
-				oTextMessageVO.getIsConference());
+				oSenderEmployee, oReceiverEmployee, oTextMessageVO.getDate());
 
 		try {
 			oNewDAOTextMessage.addTextMessage(oTextMessage);
