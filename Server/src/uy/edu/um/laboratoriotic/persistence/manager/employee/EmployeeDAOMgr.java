@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
+import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
 
@@ -83,9 +84,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 					+ "','"
 					+ oEmployee.getPassword()
 					+ "','"
-					+ oEmployee.getLocation()
+					+ oEmployee.getLocation().getValue()
 					+ "','"
-					+ oEmployee.getSector()
+					+ oEmployee.getSector().getValue()
 					+ "','"
 					+ oEmployee.getMail()
 					+ "','"
@@ -123,7 +124,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 		ArrayList<Employee> oList = new ArrayList<>();
 		Statement oStatement = null;
-		Connection oConnection = null;
+		Connection oConnection = null;		
 
 		try {
 
@@ -147,10 +148,13 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String sResultWorkingHour = oResultSet.getString(11);
 				Blob sResultProfilePicture = oResultSet.getBlob(12);
 				boolean sResultStatus = oResultSet.getBoolean(13);
+				
+				Type oTypeLocation = new Type ("Location", sResultLocation);
+				Type oTypeSector = new Type("Sector", sResultSector);
 
 				Employee oEmployee = new Employee(sResultID, sResultName,
 						sResultLastName, sResultUserName, sResultPassword,
-						sResultLocation, sResultSector, sResultMail,
+						oTypeLocation, oTypeSector, sResultMail,
 						sResultPosition, sResultWorkingHour,
 						sResultProfilePicture, sResultStatus);
 
@@ -213,10 +217,13 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String sResultWorkingHour = oResultSet.getString(11);
 				Blob sResultProfilePicture = oResultSet.getBlob(12);
 				boolean sResultStatus = oResultSet.getBoolean(13);
+				
+				Type oTypeLocation = new Type ("Location", sResultLocation);
+				Type oTypeSector = new Type("Sector", sResultSector);
 
 				oEmployee = new Employee(sResultID, sResultName,
 						sResultLastName, sResultUserName, sResultPassword,
-						sResultLocation, sResultSector, sResultMail,
+						oTypeLocation, oTypeSector, sResultMail,
 						sResultPosition, sResultWorkingHour,
 						sResultProfilePicture, sResultStatus);
 
@@ -312,6 +319,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
 			throw new RemoteException();
 		} finally {
 			if (oConnection != null) {
@@ -402,13 +410,15 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				if (oUserName.equals(sResultUserName)
 						&& hashEncriptation(oPassword).equals(sResultPassword)) {
 					
-					oEmployeeToReturn = new Employee(sResultID, sResultName,
-							sResultLastName, sResultUserName, sResultPassword,
-							sResultLocation, sResultSector, sResultMail,
-							sResultPosition, sResultWorkingHour,
-							sResultProfilePicture, sResultStatus);
+					Type oTypeLocation = new Type ("Location", sResultLocation);
+					Type oTypeSector = new Type("Sector", sResultSector);
+
 					
-					oEmployeeToReturn.setEmployeeID(sResultEmployeeID);
+					oEmployeeToReturn = new Employee(sResultEmployeeID, sResultID, sResultName,
+							sResultLastName, sResultUserName, sResultPassword,
+							oTypeLocation, oTypeSector, sResultMail,
+							sResultPosition, sResultWorkingHour,
+							sResultProfilePicture, sResultStatus);				
 
 				}
 			}

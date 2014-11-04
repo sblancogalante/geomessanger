@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
+import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
 import uy.edu.um.laboratoriotic.business.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
@@ -52,29 +53,45 @@ public class TextMessageMgr implements TextMessageMgt {
 		TextMessageDAOMgt oNewDAOTextMessage = TextMessageDAOFactory
 				.getTextMessageDAOMgt();
 
-		Employee oSenderEmployee = new Employee(oTextMessageVO.getSender().getID(),
-				oTextMessageVO.getSender().getName(), oTextMessageVO
-						.getSender().getLastName(), oTextMessageVO.getSender()
-						.getUserName(), oTextMessageVO.getSender()
-						.getPassword(), oTextMessageVO.getSender()
-						.getLocation(), oTextMessageVO.getSender().getSector(),
-				oTextMessageVO.getSender().getMail(), oTextMessageVO
-						.getSender().getPosition(), oTextMessageVO.getSender()
+		Type oTypeLocationSender = new Type(oTextMessageVO.getSender()
+				.getLocation().getTypeID(), oTextMessageVO.getSender()
+				.getLocation().getType(), oTextMessageVO.getSender()
+				.getLocation().getValue());
+		Type oTypeSectorSender = new Type(oTextMessageVO.getSender()
+				.getSector().getTypeID(), oTextMessageVO.getSender()
+				.getSector().getType(), oTextMessageVO.getSender().getSector()
+				.getValue());
+
+		Employee oSenderEmployee = new Employee(oTextMessageVO.getSender()
+				.getID(), oTextMessageVO.getSender().getName(), oTextMessageVO
+				.getSender().getLastName(), oTextMessageVO.getSender()
+				.getUserName(), oTextMessageVO.getSender().getPassword(),
+				oTypeLocationSender, oTypeSectorSender, oTextMessageVO
+						.getSender().getMail(), oTextMessageVO.getSender()
+						.getPosition(), oTextMessageVO.getSender()
 						.getWorkingHour(), oTextMessageVO.getSender()
 						.getProfilePicture(), oTextMessageVO.getSender()
 						.getStatus());
 
-		Employee oReceiverEmployee = new Employee(oTextMessageVO.getReceiver().getID(),
-				oTextMessageVO.getReceiver().getName(), oTextMessageVO
-						.getReceiver().getLastName(), oTextMessageVO.getReceiver()
-						.getUserName(), oTextMessageVO.getReceiver()
-						.getPassword(), oTextMessageVO.getReceiver()
-						.getLocation(), oTextMessageVO.getReceiver().getSector(),
-				oTextMessageVO.getReceiver().getMail(), oTextMessageVO
-						.getReceiver().getPosition(), oTextMessageVO.getReceiver()
-						.getWorkingHour(), oTextMessageVO.getReceiver()
-						.getProfilePicture(), oTextMessageVO.getReceiver()
-						.getStatus());		
+		Type oTypeLocationReceiver = new Type(oTextMessageVO.getSender()
+				.getLocation().getTypeID(), oTextMessageVO.getSender()
+				.getLocation().getType(), oTextMessageVO.getSender()
+				.getLocation().getValue());
+		Type oTypeSectorReceiver = new Type(oTextMessageVO.getReceiver()
+				.getSector().getTypeID(), oTextMessageVO.getReceiver()
+				.getSector().getType(), oTextMessageVO.getReceiver()
+				.getSector().getValue());
+
+		Employee oReceiverEmployee = new Employee(oTextMessageVO.getReceiver()
+				.getID(), oTextMessageVO.getReceiver().getName(),
+				oTextMessageVO.getReceiver().getLastName(), oTextMessageVO
+						.getReceiver().getUserName(), oTextMessageVO
+						.getReceiver().getPassword(), oTypeLocationReceiver,
+				oTypeSectorReceiver, oTextMessageVO.getReceiver().getMail(),
+				oTextMessageVO.getReceiver().getPosition(), oTextMessageVO
+						.getReceiver().getWorkingHour(), oTextMessageVO
+						.getReceiver().getProfilePicture(), oTextMessageVO
+						.getReceiver().getStatus());
 
 		TextMessage oTextMessage = new TextMessage(
 				oTextMessageVO.getIDMessage(), oTextMessageVO.getTextMessage(),
@@ -99,26 +116,42 @@ public class TextMessageMgr implements TextMessageMgt {
 		TextMessageVO oTextMessageVO;
 		ArrayList<TextMessage> oArrayList = new ArrayList<>();
 		ArrayList<TextMessageVO> oListToReturn = new ArrayList<>();
-		
+
 		TextMessageDAOMgt oDAOTextMessage = TextMessageDAOFactory
 				.getTextMessageDAOMgt();
 
-		Employee oSenderEmployee = new Employee(oSenderVO.getID(), oSenderVO.getName(),
-				oSenderVO.getLastName(), oSenderVO.getUserName(),
-				oSenderVO.getPassword(), oSenderVO.getLocation(),
-				oSenderVO.getSector(), oSenderVO.getMail(),
+		Type oTypeLocationSender = new Type(
+				oSenderVO.getLocation().getTypeID(), oSenderVO.getLocation()
+						.getType(), oSenderVO.getLocation().getValue());
+		Type oTypeSectorSender = new Type(oSenderVO.getSector().getTypeID(),
+				oSenderVO.getSector().getType(), oSenderVO.getSector()
+						.getValue());
+
+		Employee oSenderEmployee = new Employee(oSenderVO.getID(),
+				oSenderVO.getName(), oSenderVO.getLastName(),
+				oSenderVO.getUserName(), oSenderVO.getPassword(),
+				oTypeLocationSender, oTypeSectorSender, oSenderVO.getMail(),
 				oSenderVO.getPosition(), oSenderVO.getWorkingHour(),
 				oSenderVO.getProfilePicture(), oSenderVO.getStatus());
 
-		Employee oReceiverEmployee = new Employee(oReceiverVO.getID(), oReceiverVO.getName(),
-				oReceiverVO.getLastName(), oReceiverVO.getUserName(),
-				oReceiverVO.getPassword(), oReceiverVO.getLocation(),
-				oReceiverVO.getSector(), oReceiverVO.getMail(),
-				oReceiverVO.getPosition(), oReceiverVO.getWorkingHour(),
-				oReceiverVO.getProfilePicture(), oReceiverVO.getStatus());
+		Type oTypeLocationReceiver = new Type(oReceiverVO.getLocation()
+				.getTypeID(), oReceiverVO.getLocation().getType(), oReceiverVO
+				.getLocation().getValue());
+		Type oTypeSectorReceiver = new Type(
+				oReceiverVO.getSector().getTypeID(), oReceiverVO.getSector()
+						.getType(), oReceiverVO.getSector().getValue());
+
+		Employee oReceiverEmployee = new Employee(oReceiverVO.getID(),
+				oReceiverVO.getName(), oReceiverVO.getLastName(),
+				oReceiverVO.getUserName(), oReceiverVO.getPassword(),
+				oTypeLocationReceiver, oTypeSectorReceiver,
+				oReceiverVO.getMail(), oReceiverVO.getPosition(),
+				oReceiverVO.getWorkingHour(), oReceiverVO.getProfilePicture(),
+				oReceiverVO.getStatus());
 
 		try {
-			oArrayList = oDAOTextMessage.getTextMessages(oSenderEmployee, oReceiverEmployee);
+			oArrayList = oDAOTextMessage.getTextMessages(oSenderEmployee,
+					oReceiverEmployee);
 
 			for (TextMessage iTextMessage : oArrayList) {
 				oTextMessageVO = iTextMessage.toVO();

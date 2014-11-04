@@ -12,7 +12,7 @@ import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
  * This class is the implementation of GeneralMgt
  * 
  * @author sblanco1
- *
+ * 
  */
 public class GeneralMgr implements GeneralMgt {
 
@@ -47,13 +47,8 @@ public class GeneralMgr implements GeneralMgt {
 		GeneralDAOMgt oNewDAOGeneral = GeneralDAOFactory.getGeneralDAOMgt();
 		Type oNewType = null;
 
-		if (oTypeVO.isType()) {
-			oNewType = new Type(oTypeVO.getTypeID(), oTypeVO.getTypeCountry(),
-					oTypeVO.getTypeSector(), true);
-		} else {
-			oNewType = new Type(oTypeVO.getTypeID(), oTypeVO.getTypeCountry(),
-					oTypeVO.getTypeSector(), false);
-		}
+		oNewType = new Type(oTypeVO.getTypeID(), oTypeVO.getType(),
+				oTypeVO.getValue());
 
 		oNewDAOGeneral.addType(oNewType);
 
@@ -66,13 +61,8 @@ public class GeneralMgr implements GeneralMgt {
 		GeneralDAOMgt oNewDAOGeneral = GeneralDAOFactory.getGeneralDAOMgt();
 		Type oConvert = null;
 
-		if (oTypeVO.isType()) {
-			oConvert = new Type(oTypeVO.getTypeID(), oTypeVO.getTypeCountry(),
-					oTypeVO.getTypeSector(), false);
-		} else {
-			oConvert = new Type(oTypeVO.getTypeID(), oTypeVO.getTypeCountry(),
-					oTypeVO.getTypeSector(), true);
-		}
+		oConvert = new Type(oTypeVO.getTypeID(), oTypeVO.getType(),
+				oTypeVO.getValue());
 
 		oNewDAOGeneral.removeType(oConvert);
 
@@ -93,23 +83,13 @@ public class GeneralMgr implements GeneralMgt {
 
 		GeneralDAOMgt oNewDAOGeneral = GeneralDAOFactory.getGeneralDAOMgt();
 
-		if (oTypeVO.isType()) {
-			oConvert = new Type(oTypeVO.getTypeID(), oTypeVO.getTypeCountry(),
-					oTypeVO.getTypeSector(), true);
-		} else {
-			oConvert = new Type(oTypeVO.getTypeID(), oTypeVO.getTypeCountry(),
-					oTypeVO.getTypeSector(), false);
-		}
+		oConvert = new Type(oTypeVO.getTypeID(), oTypeVO.getType(),
+				oTypeVO.getValue());
 
 		Type oTypeDAO = oNewDAOGeneral.searchType(oConvert);
 
-		if (oTypeVO.isType()) {
-			oToReturn = new Type(oTypeDAO.getTypeID(),
-					oTypeDAO.getTypeCountry(), oTypeDAO.getTypeSector(), true);
-		} else {
-			oToReturn = new Type(oTypeDAO.getTypeID(),
-					oTypeDAO.getTypeCountry(), oTypeDAO.getTypeSector(), false);
-		}
+		oToReturn = new Type(oTypeDAO.getTypeID(), oTypeDAO.getType(),
+				oTypeDAO.getValue());
 
 		return oToReturn;
 	}

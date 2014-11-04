@@ -24,7 +24,7 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 	private static GeneralDAOMgr instance = null;
 	private static final String DRIVER_JDBC = "org.hsqldb.jdbc.JDBCDriver";
 	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
-	private static final String CREATE_TABLE_TYPE = "CREATE TABLE Types (typeID INT PRIMARY KEY NOT NULL, typeCountry VARCHAR(30) NOT NULL, typeSector VARCHAR(30) NOT NULL)";
+	private static final String CREATE_TABLE_TYPE = "CREATE TABLE Types (typeID INT PRIMARY KEY NOT NULL, type VARCHAR(30) NOT NULL, value VARCHAR(30) NOT NULL)";
 
 	/*
 	 * Constructor of the class
@@ -59,16 +59,16 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 			oStatement = oConnection.createStatement();
 
 			int sId = oType.getTypeID();
-			String sTypeCountry = oType.getTypeCountry();
-			String sTypeSector = oType.getTypeSector();
+			String sType = oType.getType();
+			String sValue = oType.getValue();
 
 			String sInsert = "INSERT INTO Type (typeID, type, value) VALUES (\'"
-					+ sId + "','" + sTypeCountry + "','" + sTypeSector + ")";
+					+ sId + "','" + sType + "','" + sValue + ")";
 
 			oStatement.execute(sInsert);
 
-			System.out.println("Se agrego con exito al pais " + sTypeCountry
-					+ " , y al sector " + sTypeSector);
+			System.out.println("Se agrego con exito al pais " + sType
+					+ " , y al sector " + sValue);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -91,11 +91,9 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 		Statement oStatement = null;
 		Connection oConnection = null;
 
-		String sQueryC = null;
-		String sQueryS = null;
+		String sQuery = null;
 
-		ResultSet oResultSetC = null;
-		ResultSet oResultSetS = null;
+		ResultSet oResultSet = null;
 
 		try {
 
@@ -113,21 +111,11 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 				System.out.println("Cantidad de Types: " + nCount);
 			}
 
-			if (oType.isType()) {
+			sQuery = "DELETE FROM Types where (Types.type = '"
+					+ oType.getType() + "' AND Types.value = '"
+					+ oType.getValue() + "') ;";
 
-				sQueryC = "DELETE FROM Types where (Types.typeCountry = '"
-						+ oType.getTypeCountry() + "') ;";
-
-				oResultSetC = oStatement.executeQuery(sQueryC);
-
-			} else {
-
-				sQueryS = "DELETE FROM Types where (Types.typeSector = '"
-						+ oType.getTypeSector() + "') ;";
-
-				oResultSetS = oStatement.executeQuery(sQueryS);
-
-			}
+			oResultSet = oStatement.executeQuery(sQuery);
 
 			ResultSet oResultSetCount2 = oStatement.executeQuery(sQueryCount);
 
@@ -138,8 +126,7 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 				System.out.println("Cantidad de Types: " + nCount);
 			}
 
-			oResultSetC.close();
-			oResultSetS.close();
+			oResultSet.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -176,13 +163,8 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 				String sResultType = oResultSet.getString(2);
 				String sResultValue = oResultSet.getString(3);
 
-				if (oType.isType()) {
-					oTypeToReturn = new Type(sResultTypeID, sResultType,
-							sResultValue, true);
-				} else {
-					oTypeToReturn = new Type(sResultTypeID, sResultType,
-							sResultValue, false);
-				}
+				oTypeToReturn = new Type(sResultTypeID, sResultType,
+						sResultValue);
 
 			}
 
@@ -216,24 +198,18 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 
 			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
 			oStatement = oConnection.createStatement();
-			String sQuery = "SELECT * FROM Types ORDER BY typeCountry ASC,typeSector ASC;";
+			String sQuery = "SELECT * FROM Types ORDER BY type ASC,value ASC;";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 			Type oTypeToReturn = null;
 
 			while (oResultSet.next()) {
 
 				int sResultTypeID = oResultSet.getInt(1);
-				String sResultCountry = oResultSet.getString(2);
-				String sResultSector = oResultSet.getString(3);
+				String sResultType = oResultSet.getString(2);
+				String sResultValue = oResultSet.getString(3);
 
-				if (oType.equals("pais")) {
-					oTypeToReturn = new Type(sResultTypeID, sResultCountry,
-							sResultSector, true);
-				}
-				if (oType.equals("sector")) {
-					oTypeToReturn = new Type(sResultTypeID, sResultCountry,
-							sResultSector, false);
-				}
+				oTypeToReturn = new Type(sResultTypeID, sResultType,
+						sResultValue);
 
 				oListToReturn.add(oTypeToReturn);
 

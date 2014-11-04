@@ -138,7 +138,7 @@ public class NewLocation extends JDialog {
 					JList<? extends TypeVO> list, TypeVO value,
 					int index, boolean isSelected, boolean cellHasFocus) {
 				
-				JLabel label = new JLabel(value.getTypeCountry());
+				JLabel label = new JLabel(value.getType());
 				
 				
 				if(isSelected){
@@ -182,7 +182,7 @@ public class NewLocation extends JDialog {
 					
 								if (nvalue == 0){
 									try {
-										TypeVO oType = new TypeVO(1,newLocationText.getText(),null,true);
+										TypeVO oType = new TypeVO(1,"Location",newLocationText.getText());
 										generalMgt.addType(oType);
 										dispose();
 									} catch (RemoteException | NotBoundException e) {

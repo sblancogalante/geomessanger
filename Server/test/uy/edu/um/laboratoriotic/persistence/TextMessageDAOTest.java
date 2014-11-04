@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import org.junit.Test;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
+import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
@@ -15,13 +16,16 @@ public class TextMessageDAOTest {
 
 	@Test
 	public void test() {
+		
+		Type oTypeLocation = new Type("Location", "Uruguay");
+		Type oTypeSector = new Type("Sector", "Desarrollo");
 
 		Employee oSender = new Employee("5.062.081-0", "Santiago", "Blanco",
-				"sblanco", "asdfg", "Uruguay", "Desarrollo",
+				"sblanco", "asdfg", oTypeLocation, oTypeSector,
 				"sblanco1@correo.um.edu.uy", "Programador", null, null, false);
 
 		Employee oReceiver = new Employee("1.814.930-7", "Antonio",
-				"Blanco", "ablanco", "qwerty", "Uruguay", "Soporte",
+				"Blanco", "ablanco", "qwerty", oTypeLocation, oTypeSector,
 				"ablancoa@correo.um.edu.uy", "Programador", null, null, false);
 
 		TextMessage oTextMessage = new TextMessage(1, "Hola Mundo", oSender,

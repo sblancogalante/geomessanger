@@ -138,7 +138,7 @@ public class NewSector extends JDialog {
 					JList<? extends TypeVO> list, TypeVO value,
 					int index, boolean isSelected, boolean cellHasFocus) {
 				
-				JLabel label = new JLabel(value.getTypeCountry());
+				JLabel label = new JLabel(value.getType());
 				
 				
 				if(isSelected){
@@ -183,7 +183,7 @@ public class NewSector extends JDialog {
 								if (nvalue == 0){
 									//DEELTE USER
 									try {
-										TypeVO oType = new TypeVO(1,null,newSectorText.getText(),true);
+										TypeVO oType = new TypeVO(1,"Sector",newSectorText.getText());
 										generalMgt.addType(oType);
 										dispose();
 									} catch (RemoteException | NotBoundException e) {

@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
+import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.business.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
@@ -56,12 +57,17 @@ public class EmployeeMgr implements EmployeeMgt {
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 
 		// Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
+		Type oTypeLocation = new Type(oEmployeeVO.getLocation().getTypeID(),
+				oEmployeeVO.getLocation().getType(), oEmployeeVO.getLocation()
+						.getValue());
+		Type oTypeSector = new Type(oEmployeeVO.getSector().getTypeID(),
+				oEmployeeVO.getSector().getType(), oEmployeeVO.getSector()
+						.getValue());
 
-		Employee oEmployee = new Employee(
-				oEmployeeVO.getID(), oEmployeeVO.getName(),
-				oEmployeeVO.getLastName(), oEmployeeVO.getUserName(),
-				oEmployeeVO.getPassword(), oEmployeeVO.getLocation(),
-				oEmployeeVO.getSector(), oEmployeeVO.getMail(),
+		Employee oEmployee = new Employee(oEmployeeVO.getID(),
+				oEmployeeVO.getName(), oEmployeeVO.getLastName(),
+				oEmployeeVO.getUserName(), oEmployeeVO.getPassword(),
+				oTypeLocation, oTypeSector, oEmployeeVO.getMail(),
 				oEmployeeVO.getPosition(), oEmployeeVO.getWorkingHour(),
 				oEmployeeVO.getProfilePicture(), oEmployeeVO.getStatus());
 
@@ -195,7 +201,8 @@ public class EmployeeMgr implements EmployeeMgt {
 		String crypted = this.hashEncriptation(oEmployeeFilterVO.getPassword());
 
 		try {
-			oEmployeeToReturn = oDAOEmployee.getLoginEmployee(oEmployeeFilterVO.getUserName(), crypted);
+			oEmployeeToReturn = oDAOEmployee.getLoginEmployee(
+					oEmployeeFilterVO.getUserName(), crypted);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

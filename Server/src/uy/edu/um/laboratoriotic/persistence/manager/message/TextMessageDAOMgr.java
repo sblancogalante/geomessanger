@@ -29,7 +29,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	private static TextMessageDAOMgr instance = null;
 	private static final String DRIVER_JDBC = "org.hsqldb.jdbc.JDBCDriver";
 	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
-	private static final String CREATE_TABLE_TEXT_MESSAGES = "CREATE TABLE TextMessages (textMessageID int IDENTITY NOT NULL, text VARCHAR(300), employeeID int NOT NULL FOREIGN KEY REFERENCES Employees, date TIMESTAMP NOT NULL)";
+	private static final String CREATE_TABLE_TEXT_MESSAGES = "CREATE TABLE TextMessages (textMessageID int IDENTITY NOT NULL, text VARCHAR(300), employeeID int NOT NULL, date TIMESTAMP NOT NULL)";
 
 	/*
 	 * Constructor
@@ -130,12 +130,12 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 			sQuery = "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.textMessageID, tm.text, tm.date"
 					+ " FROM Employees e, TextMessages tm"
-					+ "WHERE tm.employeeID = e.employeeID AND tm.employeeID = "
+					+ " WHERE tm.employeeID = e.employeeID AND tm.employeeID = "
 					+ oSender.getEmployeeID()
 					+ " UNION "
 					+ "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.textMessageID, tm.text, tm.date"
-					+ " FROM Employees e, TextMessages tm, MessagesEmployees m "
-					+ "WHERE tm.employeeID = e.employeeID AND tm.employeeID = "
+					+ " FROM Employees e, TextMessages tm"
+					+ " WHERE tm.employeeID = e.employeeID AND tm.employeeID = "
 					+ oReceiver.getEmployeeID()
 					+ " ORDER BY tm.date ASC;";
 			
@@ -194,7 +194,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 				System.out.println("Se ejecuto con exito");
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			// throw new RemoteException();
 			e.printStackTrace();
