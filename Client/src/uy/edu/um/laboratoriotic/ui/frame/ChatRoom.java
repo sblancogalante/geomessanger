@@ -210,7 +210,7 @@ public class ChatRoom extends JFrame {
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
 				
-				TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),senderEmployee,receiverEmployee,null,false);
+				TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),senderEmployee,receiverEmployee,null);
 				try {
 					if(!messageTextArea.getText().equals("Message...")){
 						textMgt.addTextMessage(message);

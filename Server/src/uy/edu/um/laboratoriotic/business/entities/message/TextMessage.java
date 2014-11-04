@@ -19,14 +19,13 @@ public class TextMessage extends Message {
 	private String textMessage;
 	private Employee sender;
 	private Employee receiver;
-	private Timestamp date;
-	private boolean isConference;
+	private Timestamp date;	
 
 	/*
 	 * Constructor
 	 */
 	public TextMessage(int oIDMessage, String oTextMessage, Employee oSender,
-			Employee oReceiver, Timestamp oDate, boolean oIsConference) {
+			Employee oReceiver, Timestamp oDate) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
 
@@ -34,8 +33,7 @@ public class TextMessage extends Message {
 		this.sender = oSender;
 		this.receiver = oReceiver;
 		this.date = oDate;
-		this.isConference = oIsConference;
-
+		
 	}
 
 	/*
@@ -44,7 +42,7 @@ public class TextMessage extends Message {
 	public TextMessageVO toVO() {
 
 		return new TextMessageVO(this.getIDMessage(), textMessage, sender.toVO(),
-				receiver.toVO(), date, isConference);
+				receiver.toVO(), date);
 	}
 
 	/*
@@ -81,14 +79,6 @@ public class TextMessage extends Message {
 
 	public void setDate(Timestamp oDate) {
 		this.date = oDate;
-	}
-
-	public boolean getIsConference() {
-		return isConference;
-	}
-
-	public void setIsconference(boolean oIsConference) {
-		this.isConference = oIsConference;
 	}
 
 }

@@ -25,7 +25,7 @@ public class TextMessageDAOTest {
 				"ablancoa@correo.um.edu.uy", "Programador", null, null, false);
 
 		TextMessage oTextMessage = new TextMessage(1, "Hola Mundo", oSender,
-				oReceiver, new Timestamp(System.currentTimeMillis()), false);
+				oReceiver, new Timestamp(System.currentTimeMillis()));
 
 		try {
 			
