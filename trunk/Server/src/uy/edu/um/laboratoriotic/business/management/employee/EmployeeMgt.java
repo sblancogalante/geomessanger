@@ -28,10 +28,10 @@ public interface EmployeeMgt {
 	/**
 	 * This method makes sure that the database removes an employee
 	 * 
-	 * @param oEmployeeID
+	 * @param oUserName
 	 * @throws DataBaseConnection
 	 */
-	public void removeEmployee(int oEmployeeID) throws DataBaseConnection, RemoteException;
+	public void removeEmployee(String oUserName) throws DataBaseConnection, RemoteException;
 
 	/**
 	 * This method makes sure that the database modifies the information of

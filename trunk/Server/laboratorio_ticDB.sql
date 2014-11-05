@@ -7,7 +7,7 @@ USE `laboratorio_tic` ;
 
 CREATE TABLE `Employees` (
 	`employeeID` INT(10) NOT NULL AUTO_INCREMENT,
-	`document` VARCHAR(30) NOT NULL, 
+	`document` VARCHAR(30) NOT NULL DEFAULT 'Cedula', 
 	`iD` VARCHAR(20) NOT NULL,
 	`name` VARCHAR(20),
 	`lastName` VARCHAR(20),

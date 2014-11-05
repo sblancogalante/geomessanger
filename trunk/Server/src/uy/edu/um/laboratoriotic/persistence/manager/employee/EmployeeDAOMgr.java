@@ -28,7 +28,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	 * Attributes of the class
 	 */
 	private static EmployeeDAOMgr instance = null;
-	
+
 	/*
 	 * Constructor of the class
 	 */
@@ -60,7 +60,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 
 			oStatement = oConnection.createStatement();
-			String sInsert = "INSERT INTO `Employees` (iD, name, lastName, userName, password, location, sector, mail, position, workingHour, profilePicture, status) VALUES ('"
+			String sInsert = "INSERT INTO `Employees` (document, iD, name, lastName, userName, password, location, sector, mail, position, workingHour, profilePicture, status, admin) VALUES ('"
+					+ oEmployee.getDocument().getValue()
+					+ "','"
 					+ oEmployee.getID()
 					+ "','"
 					+ oEmployee.getName()
@@ -83,7 +85,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 					+ "',"
 					+ oEmployee.getProfilePicture()
 					+ ","
-					+ oEmployee.getStatus() + ");";
+					+ oEmployee.getStatus() + "," + oEmployee.getAdmin() + ");";
 
 			oStatement.execute(sInsert);
 
@@ -115,6 +117,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
+			
 			String sQuery = "SELECT * FROM Employees ORDER BY location ASC,sector ASC,status ASC;";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 
@@ -140,8 +143,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				Type oTypeLocation = new Type("Location", sResultLocation);
 				Type oTypeSector = new Type("Sector", sResultSector);
 
-				 Employee oEmployee = new Employee(sResultEmployeeID, oTypeDocument,
-						sResultID, sResultName, sResultLastName,
+				Employee oEmployee = new Employee(sResultEmployeeID,
+						oTypeDocument, sResultID, sResultName, sResultLastName,
 						sResultUserName, sResultPassword, oTypeLocation,
 						oTypeSector, sResultMail, sResultPosition,
 						sResultWorkingHour, sResultProfilePicture,
@@ -240,7 +243,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public void removeEmployee(int oEmployeeID) throws DataBaseConnection {
+	public void removeEmployee(String oUserName) throws DataBaseConnection {
 		// TODO Auto-generated method stub
 
 		Statement oStatement = null;
@@ -262,8 +265,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				System.out.println("Cantidad de empleados: " + nCount);
 			}
 
-			String sQuery = "DELETE FROM Employees where (Employees.employeeID = '"
-					+ oEmployeeID + "') ;";
+			String sQuery = "DELETE FROM Employees where (Employees.userName = '"
+					+ oUserName + "') ;";
 			oStatement.execute(sQuery);
 			System.out.println(sQuery);
 
@@ -370,7 +373,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				Blob sResultProfilePicture = oResultSet.getBlob(12);
 				boolean sResultStatus = oResultSet.getBoolean(13);
 				boolean sResultAdmin = oResultSet.getBoolean(15);
-				
+
 				if (oUserName.equals(sResultUserName)
 						&& hashEncriptation(oPassword).equals(sResultPassword)) {
 
@@ -378,12 +381,12 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 					Type oTypeLocation = new Type("Location", sResultLocation);
 					Type oTypeSector = new Type("Sector", sResultSector);
 
-					oEmployeeToReturn = new Employee(sResultEmployeeID, oTypeDocument,
-							sResultID, sResultName, sResultLastName,
-							sResultUserName, sResultPassword, oTypeLocation,
-							oTypeSector, sResultMail, sResultPosition,
-							sResultWorkingHour, sResultProfilePicture,
-							sResultStatus, sResultAdmin);
+					oEmployeeToReturn = new Employee(sResultEmployeeID,
+							oTypeDocument, sResultID, sResultName,
+							sResultLastName, sResultUserName, sResultPassword,
+							oTypeLocation, oTypeSector, sResultMail,
+							sResultPosition, sResultWorkingHour,
+							sResultProfilePicture, sResultStatus, sResultAdmin);
 
 				}
 			}

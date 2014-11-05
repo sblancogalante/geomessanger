@@ -89,7 +89,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 		try {
 			oEmployee = oEmployeeMgt.searchEmployee(oEmployeeVO.getUserName());
-			oEmployeeMgt.removeEmployee(oEmployee.getEmployeeID());
+			oEmployeeMgt.removeEmployee(oEmployee.getUserName());
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 
