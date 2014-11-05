@@ -12,14 +12,15 @@ import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
 public class EmployeeDAOTest {
 
 	@Test
-	public void test() {
+	public void test() throws RemoteException {
 
+		Type oTypeDocument = new Type("Document", "Cedula");
 		Type oTypeLocation = new Type("Location", "Uruguay");
 		Type oTypeSector = new Type("Sector", "Desarrollo");
 
-		Employee oEmployee = new Employee("5.062.081-0", "Santiago", "Blanco",
+		Employee oEmployee = new Employee(oTypeDocument,"5.062.081-0", "Santiago", "Blanco",
 				"sblanco", "asdfg", oTypeLocation, oTypeSector,
-				"sblanco1@correo.um.edu.uy", "Programador", null, null, false);
+				"sblanco1@correo.um.edu.uy", "Programador", null, null, false, true);
 
 		/*
 		 * Employee oEmployee1 = new Employee("Luis", 48963214, "Chile",
@@ -30,7 +31,7 @@ public class EmployeeDAOTest {
 		 */
 
 		try {
-			EmployeeDAOFactory.getEmployeeDAOMgt().createTable();
+			
 			System.out
 					.println("//////////////////////Test de addEmployee()//////////////////////");
 
@@ -49,7 +50,7 @@ public class EmployeeDAOTest {
 					.println("//////////////////////Test de searchEmployee()/////////////////////");
 
 			EmployeeDAOFactory.getEmployeeDAOMgt().searchEmployee(
-					oEmployee.getEmployeeID());
+					oEmployee.getUserName());
 
 			System.out
 					.println("//////////////////////Test de removeEmployee()/////////////////////");
@@ -59,8 +60,6 @@ public class EmployeeDAOTest {
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 			test();
-		} catch (RemoteException r) {
-			r.printStackTrace();
 		}
 
 	}

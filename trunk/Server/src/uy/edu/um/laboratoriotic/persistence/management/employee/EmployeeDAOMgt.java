@@ -21,8 +21,7 @@ public interface EmployeeDAOMgt {
 	 * @throws DataBaseConnection
 	 * @throws RemoteException
 	 */
-	public void addEmployee(Employee oEmployee) throws DataBaseConnection,
-			RemoteException;
+	public void addEmployee(Employee oEmployee) throws DataBaseConnection;
 
 	/**
 	 * This method removes an employee from the database
@@ -31,19 +30,17 @@ public interface EmployeeDAOMgt {
 	 * @throws DataBaseConnection
 	 * @throws RemoteException
 	 */
-	public void removeEmployee(int oEmployeeID) throws DataBaseConnection,
-			RemoteException;
+	public void removeEmployee(int oEmployeeID) throws DataBaseConnection;
 
 	/**
 	 * This method searches an employee in the database
 	 * 
-	 * @param oEmployeeID
+	 * @param oUserName
 	 * @return
 	 * @throws DataBaseConnection
 	 * @throws RemoteException
 	 */
-	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection,
-			RemoteException;
+	public Employee searchEmployee(String oUserName) throws DataBaseConnection;
 
 	/**
 	 * This method return a list with all the employees of the database
@@ -52,16 +49,7 @@ public interface EmployeeDAOMgt {
 	 * @throws DataBaseConnection
 	 * @throws RemoteException
 	 */
-	public ArrayList<Employee> getEmployees() throws DataBaseConnection,
-			RemoteException;
-
-	/**
-	 * This method creates the database tables
-	 * 
-	 * @throws DataBaseConnection
-	 * @throws RemoteException
-	 */
-	public void createTable() throws DataBaseConnection, RemoteException;
+	public ArrayList<Employee> getEmployees() throws DataBaseConnection;
 
 	/**
 	 * This method checks the login
@@ -73,7 +61,7 @@ public interface EmployeeDAOMgt {
 	 * @throws RemoteException
 	 */
 	public boolean checkLogin(String oUserName, String oPassword)
-			throws DataBaseConnection, RemoteException;
+			throws DataBaseConnection;
 
 	/**
 	 * This method gets the user of the login
@@ -85,6 +73,6 @@ public interface EmployeeDAOMgt {
 	 * @throws RemoteException
 	 */
 	public Employee getLoginEmployee(String oUserName, String oPassword)
-			throws DataBaseConnection, RemoteException;
+			throws DataBaseConnection;
 
 }

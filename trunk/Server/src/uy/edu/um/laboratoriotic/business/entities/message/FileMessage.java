@@ -21,15 +21,13 @@ public class FileMessage extends Message {
 	private String name;
 	private Employee sender;
 	private Employee receiver;
-	private Timestamp date;
-	private boolean isConference;
+	private Timestamp date;	
 
 	/*
 	 * Constructor
 	 */
 	public FileMessage(int oIDMessage, Blob oFile, String oName,
-			Employee oSender, Employee oReceiver, Timestamp oDate,
-			boolean oIsConference) {
+			Employee oSender, Employee oReceiver, Timestamp oDate) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
 
@@ -38,7 +36,7 @@ public class FileMessage extends Message {
 		this.sender = oSender;
 		this.receiver = oReceiver;
 		this.date = oDate;
-		this.isConference = oIsConference;
+	
 	}
 
 	/*
@@ -47,7 +45,7 @@ public class FileMessage extends Message {
 	public FileMessageVO toVO() {
 
 		return new FileMessageVO(this.getIDMessage(), file, name,
-				sender.toVO(), receiver.toVO(), date, isConference);
+				sender.toVO(), receiver.toVO(), date);
 	}
 
 	/*
@@ -91,14 +89,6 @@ public class FileMessage extends Message {
 
 	public void setDate(Timestamp oDate) {
 		this.date = oDate;
-	}
-
-	public boolean getIsConference() {
-		return isConference;
-	}
-
-	public void setIsconference(boolean oIsConference) {
-		this.isConference = oIsConference;
-	}
+	}	
 
 }

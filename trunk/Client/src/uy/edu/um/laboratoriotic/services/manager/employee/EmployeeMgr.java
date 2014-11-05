@@ -32,7 +32,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 
 	public static EmployeeMgr getInstance() {
-		
+
 		if (instance == null) {
 			instance = new EmployeeMgr();
 		}
@@ -57,7 +57,7 @@ public class EmployeeMgr implements EmployeeMgt {
 	public ArrayList<EmployeeVO> getEmployees() throws RemoteException,
 			NotBoundException {
 		// TODO Auto-generated method stub
-		
+
 		ArrayList<EmployeeVO> oListToReturn = new ArrayList<EmployeeVO>();
 
 		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
@@ -70,31 +70,60 @@ public class EmployeeMgr implements EmployeeMgt {
 	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
 			NotBoundException {
 		// TODO Auto-generated method stub
-		
+
 		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
 		oEmployeeRemoteMgt.removeEmployee(oEmployeeVO);
 
 	}
-	
+
 	@Override
-	public boolean checkLogin(EmployeeFilterVO oEmployeeVO) throws RemoteException, NotBoundException {
-		// TODO Auto-generated method stub		
-		
-		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);		
+	public EmployeeVO searchEmployee(String oUserName) throws RemoteException,
+			NotBoundException {
+		// TODO Auto-generated method stub
+
+		EmployeeVO oEmployeeVOToReturn = null;
+
+		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
+		oEmployeeVOToReturn = oEmployeeRemoteMgt.searchEmployee(oUserName);
+
+		return oEmployeeVOToReturn;
+	}
+
+	@Override
+	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO)
+			throws RemoteException, NotBoundException {
+		// TODO Auto-generated method stub
+
+		EmployeeVO oEmployeeVOToReturn = null;
+
+		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
+		oEmployeeVOToReturn = oEmployeeRemoteMgt.modifyEmployee(oEmployeeVO);
+
+		return oEmployeeVOToReturn;
+	}
+
+	@Override
+	public boolean checkLogin(EmployeeFilterVO oEmployeeVO)
+			throws RemoteException, NotBoundException {
+		// TODO Auto-generated method stub
+
+		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
 		boolean toReturn = oEmployeeRemoteMgt.checkLogin(oEmployeeVO);
-		
+
 		return toReturn;
 	}
-	
+
 	@Override
-	public EmployeeVO getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO) throws RemoteException, NotBoundException{
-		
+	public EmployeeVO getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO)
+			throws RemoteException, NotBoundException {
+
 		EmployeeVO oEmployeeVOToReturn = null;
-		
-		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);	
-		oEmployeeVOToReturn = oEmployeeRemoteMgt.getLoginEmployee(oEmployeeFilterVO);
-		
-		return oEmployeeVOToReturn;		
+
+		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
+		oEmployeeVOToReturn = oEmployeeRemoteMgt
+				.getLoginEmployee(oEmployeeFilterVO);
+
+		return oEmployeeVOToReturn;
 	}
 
 	/*

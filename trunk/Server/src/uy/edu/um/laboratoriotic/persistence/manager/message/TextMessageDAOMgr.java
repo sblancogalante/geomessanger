@@ -1,8 +1,6 @@
 package uy.edu.um.laboratoriotic.persistence.manager.message;
 
-import java.rmi.RemoteException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +11,7 @@ import java.util.ArrayList;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.persistence.DataBaseConnectionMgr;
 import uy.edu.um.laboratoriotic.persistence.management.message.TextMessageDAOMgt;
 
 /**
@@ -26,10 +25,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	/*
 	 * Attributes of the class
 	 */
-	private static TextMessageDAOMgr instance = null;
-	private static final String DRIVER_JDBC = "org.hsqldb.jdbc.JDBCDriver";
-	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
-	private static final String CREATE_TABLE_TEXT_MESSAGES = "CREATE TABLE TextMessages (textMessageID int IDENTITY NOT NULL, text VARCHAR(300), employeeID int NOT NULL, date TIMESTAMP NOT NULL)";
+	private static TextMessageDAOMgr instance = null;	
 
 	/*
 	 * Constructor
@@ -56,16 +52,15 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	 */
 	@Override
 	public void addTextMessage(TextMessage oTextMessage)
-			throws DataBaseConnection, RemoteException {
+			throws DataBaseConnection {
 		// TODO Auto-generated method stub
 
 		Connection oConnection = null;
-		PreparedStatement oPrepStatement = null;
-		PreparedStatement oPrepStatement2 = null;
+		PreparedStatement oPrepStatement = null;	
 		
 		try {
 
-			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			
 			String sText = oTextMessage.getTextMessage();
 			int sIDSender = oTextMessage.getSender().getEmployeeID();
@@ -73,24 +68,16 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 			// FIXME
 			Timestamp sDate = new Timestamp(System.currentTimeMillis());			
 
-			String sInsert1 = "INSERT INTO TextMessages (text, employeeID, date) VALUES (?,?,?)";
-			String sInsert2 = "INSERT INTO TextMessages (text, employeeID, date) VALUES (?,?,?)";
+			String sInsert = "INSERT INTO TextMessages (text, employeeSenderID, employeeReceiverID, date) VALUES (?,?,?,?)";
 			
-			oPrepStatement = oConnection.prepareStatement(sInsert1);
+			oPrepStatement = oConnection.prepareStatement(sInsert);
 			
 			oPrepStatement.setString(1, sText);
-			oPrepStatement.setInt(2, sIDSender);			
+			oPrepStatement.setInt(2, sIDSender);
+			oPrepStatement.setInt(3, sIDReceiver);
 			oPrepStatement.setTimestamp(3, sDate);	
 			
-			oPrepStatement.execute();
-			
-			oPrepStatement2 = oConnection.prepareStatement(sInsert2);
-			
-			oPrepStatement2.setString(1, sText);
-			oPrepStatement2.setInt(2, sIDReceiver);			
-			oPrepStatement2.setTimestamp(3, sDate);		
-
-			oPrepStatement2.execute();	
+			oPrepStatement.execute();			
 			
 			System.out.println("Se agrego con exito a la tabla de mensajes con el texto: " + sText + " enviado por "
 					+ sIDSender + " para " + sIDReceiver + ", con la fecha "
@@ -98,8 +85,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new RemoteException();
+			e.printStackTrace();			
 		} finally {
 			if (oConnection != null) {
 				try {
@@ -114,7 +100,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 	@Override
 	public ArrayList<TextMessage> getTextMessages(Employee oSender,
-			Employee oReceiver) throws RemoteException {
+			Employee oReceiver) {
 		// TODO Auto-generated method stub
 
 		ArrayList<TextMessage> oList = new ArrayList<>();
@@ -123,7 +109,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 		try {
 
-			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
 			ResultSet oResultSet = null;
 			String sQuery = null;
@@ -159,8 +145,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new RemoteException();
+			e.printStackTrace();			
 		} finally {
 			if (oConnection != null) {
 				try {
@@ -173,70 +158,6 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 		}
 
 		return oList;
-	}
-
-	@Override
-	public void createTable() throws DataBaseConnection, RemoteException {
-		// TODO Auto-generated method stub
-
-		Connection oConnection = null;
-		Statement oStatement;		
-		boolean bValue = false;		
-
-		oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
-
-		try {
-
-			oStatement = oConnection.createStatement();			
-			bValue = oStatement.execute(CREATE_TABLE_TEXT_MESSAGES);			
-
-			if (!bValue) {
-				System.out.println("Se ejecuto con exito");
-			}
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			// throw new RemoteException();
-			e.printStackTrace();
-		} finally {
-			if (oConnection != null) {
-				try {
-					oConnection.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	/*
-	 * Helping methods
-	 */
-	/**
-	 * This method establishes the connection with the data base
-	 * 
-	 * @param oDBDriver
-	 * @param dBDirection
-	 * @return
-	 */
-	private Connection connect(String oDBDriver, String dBDirection) {
-
-		Connection oResult = null;
-
-		try {
-
-			Class.forName(oDBDriver);
-			oResult = DriverManager.getConnection(dBDirection);
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return oResult;
-	}
+	}	
 
 }

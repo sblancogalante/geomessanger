@@ -1,5 +1,6 @@
 package uy.edu.um.laboratoriotic.business.management.message;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
@@ -22,7 +23,7 @@ public interface TextMessageMgt {
 	 * @throws DataBaseConnection
 	 */
 	public void addTextMessage(TextMessageVO oTextMessageVO)
-			throws DataBaseConnection;
+			throws DataBaseConnection, RemoteException;
 
 	/**
 	 * This method makes sure that the database returns a list with all the
@@ -33,6 +34,6 @@ public interface TextMessageMgt {
 	 * @throws DataBaseConnection
 	 */
 	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSender, EmployeeVO oReceiver)
-			throws DataBaseConnection;
+			throws DataBaseConnection, RemoteException;
 
 }

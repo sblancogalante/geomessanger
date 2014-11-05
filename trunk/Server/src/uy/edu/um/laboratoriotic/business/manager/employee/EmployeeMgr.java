@@ -7,7 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
-import uy.edu.um.laboratoriotic.business.entities.general.Type;
+import uy.edu.um.laboratoriotic.business.helper.Helper;
 import uy.edu.um.laboratoriotic.business.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
@@ -51,84 +51,32 @@ public class EmployeeMgr implements EmployeeMgt {
 	 * This are the management implementation methods
 	 */
 	@Override
-	public void addEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection {
+	public void addEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection,
+			RemoteException {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 
-		// Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
-		Type oTypeLocation = new Type(oEmployeeVO.getLocation().getTypeID(),
-				oEmployeeVO.getLocation().getType(), oEmployeeVO.getLocation()
-						.getValue());
-		Type oTypeSector = new Type(oEmployeeVO.getSector().getTypeID(),
-				oEmployeeVO.getSector().getType(), oEmployeeVO.getSector()
-						.getValue());
+		// Employee oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);		
 
-		Employee oEmployee = new Employee(oEmployeeVO.getID(),
-				oEmployeeVO.getName(), oEmployeeVO.getLastName(),
-				oEmployeeVO.getUserName(), oEmployeeVO.getPassword(),
-				oTypeLocation, oTypeSector, oEmployeeVO.getMail(),
-				oEmployeeVO.getPosition(), oEmployeeVO.getWorkingHour(),
-				oEmployeeVO.getProfilePicture(), oEmployeeVO.getStatus());
-
-		try {
-			oNewDAOEmployee.addEmployee(oEmployee);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Employee oEmployee = Helper.modularizeEmployee(oEmployeeVO);
+		oNewDAOEmployee.addEmployee(oEmployee);
 
 	}
 
 	@Override
-	public void removeEmployee(int oEmployeeID) throws DataBaseConnection {
+	public void removeEmployee(int oEmployeeID) throws DataBaseConnection,
+			RemoteException {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		try {
-			oNewDAOEmployee.removeEmployee(oEmployeeID);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		oNewDAOEmployee.removeEmployee(oEmployeeID);
 
 	}
 
 	@Override
-	public Employee modifyEmployee(EmployeeVO oEmployeeVO) {
-		// TODO Auto-generated method stub
-		// EmployeeDAOMgt oNewDAOEmployee =
-		// EmployeeDAOFactory.getEmployeeDAOMgt();
-
-		return null;
-	}
-
-	@Override
-	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection {
-		// TODO Auto-generated method stub
-
-		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		Employee oEmployee;
-		Employee oEmployeeToReturn = null;
-		try {
-			oEmployee = oNewDAOEmployee.searchEmployee(oEmployeeID);
-			if (oEmployee != null) {
-				oEmployeeToReturn = oEmployee;
-			} else {
-				System.out
-						.println("No se encontro el usuario con identificacion "
-								+ oEmployeeID);
-			}
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return oEmployeeToReturn;
-	}
-
-	@Override
-	public ArrayList<EmployeeVO> getEmployees() throws DataBaseConnection {
+	public ArrayList<EmployeeVO> getEmployees() throws DataBaseConnection,
+			RemoteException {
 		// TODO Auto-generated method stub
 
 		EmployeeVO oEmployeeVO;
@@ -137,35 +85,52 @@ public class EmployeeMgr implements EmployeeMgt {
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 
-		try {
-			oList = oDAOEmployee.getEmployees();
+		oList = oDAOEmployee.getEmployees();
 
-			for (Employee iEmployee : oList) {
-				oEmployeeVO = iEmployee.toVO();
-				oListToReturn.add(oEmployeeVO);
-			}
-
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for (Employee iEmployee : oList) {
+			oEmployeeVO = iEmployee.toVO();
+			oListToReturn.add(oEmployeeVO);
 		}
 
 		return oListToReturn;
 	}
 
 	@Override
-	public Employee getEmployee(EmployeeVO oEmployeeVO)
-			throws DataBaseConnection {
+	public Employee searchEmployee(String oUserName) throws DataBaseConnection,
+			RemoteException {
+		// TODO Auto-generated method stub
 
-		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
+		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
+		Employee oEmployee;
+		Employee oEmployeeToReturn = null;
+		oEmployee = oNewDAOEmployee.searchEmployee(oUserName);
+
+		if (oEmployee != null) {
+			oEmployeeToReturn = oEmployee;
+		} else {
+			System.out.println("No se encontro el usuario con identificacion "
+					+ oUserName);
+		}
+
+		return oEmployeeToReturn;
+	}
+
+	@Override
+	public Employee modifyEmployee(EmployeeVO oEmployeeVO)
+			throws DataBaseConnection, RemoteException {
+		// TODO Auto-generated method stub
+
+		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
+		Employee oEmployee;
 		Employee oEmployeeToReturn = null;
 
-		try {
-			oEmployeeToReturn = oDAOEmployee.searchEmployee(oEmployeeVO
-					.getEmployeeID());
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		oEmployee = oNewDAOEmployee.searchEmployee(oEmployeeVO.getUserName());
+
+		if (oEmployee != null) {
+			oEmployeeToReturn = modifyEmployee(oEmployeeVO);
+		} else {
+			System.out.println("No se encontro el usuario con identificacion "
+					+ oEmployeeVO.getEmployeeID());
 		}
 
 		return oEmployeeToReturn;
@@ -173,40 +138,30 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO)
-			throws DataBaseConnection {
+			throws DataBaseConnection, RemoteException {
 
 		boolean toReturn = false;
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		String crypted = this.hashEncriptation(oEmployeeFilterVO.getPassword());
 
-		try {
-			toReturn = oDAOEmployee.checkLogin(oEmployeeFilterVO.getUserName(),
-					crypted);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		toReturn = oDAOEmployee.checkLogin(oEmployeeFilterVO.getUserName(),
+				crypted);
 		return toReturn;
 
 	}
 
 	@Override
 	public Employee getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO)
-			throws DataBaseConnection {
+			throws DataBaseConnection, RemoteException {
 
 		Employee oEmployeeToReturn = null;
 
 		EmployeeDAOMgt oDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		String crypted = this.hashEncriptation(oEmployeeFilterVO.getPassword());
 
-		try {
-			oEmployeeToReturn = oDAOEmployee.getLoginEmployee(
-					oEmployeeFilterVO.getUserName(), crypted);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		oEmployeeToReturn = oDAOEmployee.getLoginEmployee(
+				oEmployeeFilterVO.getUserName(), crypted);
 
 		return oEmployeeToReturn;
 	}
