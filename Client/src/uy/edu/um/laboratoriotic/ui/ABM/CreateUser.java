@@ -134,6 +134,13 @@ public class CreateUser extends JDialog {
 
 		final JComboBox sectorComboBox = new JComboBox(comboBoxDefaultArray);
 
+		final JCheckBox isAdminCheckBox = new JCheckBox("is Admin");
+
+		final JLabel lblTypeOfDocument = new JLabel("Type of Document: ");
+
+		final JComboBox typeDocumentComboBox = new JComboBox(
+				comboBoxDefaultArray);
+
 		JButton createUserButton = new JButton("Create User");
 		this.getRootPane().setDefaultButton(createUserButton);
 		createUserButton.addActionListener(new ActionListener() {
@@ -144,17 +151,20 @@ public class CreateUser extends JDialog {
 				String workingHours = null;
 				Blob profilePic = null;
 
+				TypeVO oTypeVODocument = new TypeVO("Document",
+						(String) locationComboBox.getSelectedItem());
 				TypeVO oTypeVOLocation = new TypeVO("Location",
 						(String) locationComboBox.getSelectedItem());
 				TypeVO oTypeVOSector = new TypeVO("Sector",
 						(String) sectorComboBox.getSelectedItem());
 
-				EmployeeVO oEmployee = new EmployeeVO(documentText.getText(),
-						nameText.getText(), lastNameText.getText(),
-						userNameText.getText(), String
+				EmployeeVO oEmployee = new EmployeeVO(oTypeVODocument,
+						documentText.getText(), nameText.getText(),
+						lastNameText.getText(), userNameText.getText(), String
 								.valueOf(repeatPasswordText.getPassword()),
 						oTypeVOLocation, oTypeVOSector, eMailText.getText(),
-						positionText.getText(), workingHours, profilePic, false);
+						positionText.getText(), workingHours, profilePic,
+						false, isAdminCheckBox.isSelected());
 
 				EmployeeMgt employeeMgt = EmployeeFactory.getInstance()
 						.getEmployeeMgt();
@@ -262,10 +272,6 @@ public class CreateUser extends JDialog {
 		positionText = new JTextField();
 		positionText.setColumns(10);
 
-		JLabel lblTypeOfDocument = new JLabel("Type of Document: ");
-
-		JComboBox isAdmin = new JComboBox(comboBoxDefaultArray);
-
 		GroupLayout gl_panel_2 = new GroupLayout(userDetailsPanel);
 		gl_panel_2
 				.setHorizontalGroup(gl_panel_2
@@ -320,7 +326,7 @@ public class CreateUser extends JDialog {
 										.addGap(198)
 										.addComponent(lblTypeOfDocument)
 										.addGap(18)
-										.addComponent(isAdmin,
+										.addComponent(typeDocumentComboBox,
 												GroupLayout.PREFERRED_SIZE,
 												105, GroupLayout.PREFERRED_SIZE)
 										.addContainerGap(106, Short.MAX_VALUE)));
@@ -338,7 +344,7 @@ public class CreateUser extends JDialog {
 														.addComponent(
 																lblTypeOfDocument)
 														.addComponent(
-																isAdmin,
+																typeDocumentComboBox,
 																GroupLayout.PREFERRED_SIZE,
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE))
@@ -447,8 +453,7 @@ public class CreateUser extends JDialog {
 		passwordText = new JPasswordField();
 		passwordText.setColumns(10);
 
-		JCheckBox chckbxAdmin = new JCheckBox("is Admin");
-		chckbxAdmin.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		isAdminCheckBox.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		GroupLayout gl_panel_1 = new GroupLayout(accountPanel);
 		gl_panel_1
 				.setHorizontalGroup(gl_panel_1
@@ -548,7 +553,7 @@ public class CreateUser extends JDialog {
 														.createParallelGroup(
 																Alignment.TRAILING)
 														.addComponent(
-																chckbxAdmin)
+																isAdminCheckBox)
 														.addComponent(
 																lblNoteTheFields,
 																GroupLayout.PREFERRED_SIZE,
@@ -604,7 +609,7 @@ public class CreateUser extends JDialog {
 												GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
 												ComponentPlacement.UNRELATED)
-										.addComponent(chckbxAdmin)
+										.addComponent(isAdminCheckBox)
 										.addGap(31)
 										.addGroup(
 												gl_panel_1

@@ -48,7 +48,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 		// TODO Auto-generated method stub
 
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
-				.getEmployeeFactory().getEmployeeMgt();	
+				.getEmployeeFactory().getEmployeeMgt();
 
 		try {
 			oEmployeeMgt.addEmployee(oEmployeeVO);
@@ -63,11 +63,11 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	public ArrayList<EmployeeVO> getEmployees() throws RemoteException {
 		// TODO Auto-generated method stub
 
-		ArrayList<EmployeeVO> oListToReturn = new ArrayList<>();	
+		ArrayList<EmployeeVO> oListToReturn = new ArrayList<>();
 
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
 				.getEmployeeFactory().getEmployeeMgt();
-		
+
 		try {
 			oListToReturn = oEmployeeMgt.getEmployees();
 		} catch (DataBaseConnection e) {
@@ -79,18 +79,36 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	}
 
 	@Override
-	public EmployeeVO getEmployee(EmployeeVO oEmployeeVO)
-			throws RemoteException {
+	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException {
+		// TODO Auto-generated method stub
+
+		Employee oEmployee;
+
+		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
+				.getEmployeeFactory().getEmployeeMgt();
+
+		try {
+			oEmployee = oEmployeeMgt.searchEmployee(oEmployeeVO.getUserName());
+			oEmployeeMgt.removeEmployee(oEmployee.getEmployeeID());
+		} catch (DataBaseConnection e) {
+			// TODO Auto-generated catch block
+
+		}
+
+	}
+
+	@Override
+	public EmployeeVO searchEmployee(String oUserName) throws RemoteException {
 		// TODO Auto-generated method stub
 
 		Employee oEmployee;
 		EmployeeVO oEmployeeVOToReturn = null;
-		
+
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
-				.getEmployeeFactory().getEmployeeMgt();		
-		
+				.getEmployeeFactory().getEmployeeMgt();
+
 		try {
-			oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
+			oEmployee = oEmployeeMgt.searchEmployee(oUserName);
 			oEmployeeVOToReturn = oEmployee.toVO();
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
@@ -101,31 +119,36 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	}
 
 	@Override
-	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException {
+	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO)
+			throws RemoteException {
 		// TODO Auto-generated method stub
 
 		Employee oEmployee;
-		
+		EmployeeVO oEmployeeVOToReturn = null;
+
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
-				.getEmployeeFactory().getEmployeeMgt();		
-		
+				.getEmployeeFactory().getEmployeeMgt();
+
 		try {
-			oEmployee = oEmployeeMgt.getEmployee(oEmployeeVO);
-			oEmployeeMgt.removeEmployee(oEmployee.getEmployeeID());
+			oEmployee = oEmployeeMgt.modifyEmployee(oEmployeeVO);
+			oEmployeeVOToReturn = oEmployee.toVO();
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 
 		}
 
+		return oEmployeeVOToReturn;
+
 	}
 
 	@Override
-	public boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO) throws RemoteException {
+	public boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO)
+			throws RemoteException {
 
 		boolean toReturn = false;
 
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
-				.getEmployeeFactory().getEmployeeMgt();		
+				.getEmployeeFactory().getEmployeeMgt();
 
 		try {
 			toReturn = oEmployeeMgt.checkLogin(oEmployeeFilterVO);
@@ -135,23 +158,25 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 		return toReturn;
 	}
-	
+
 	@Override
-	public EmployeeVO getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO) throws RemoteException {
-		
+	public EmployeeVO getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO)
+			throws RemoteException {
+
 		Employee oEmployeeToReturn = null;
-		
+
 		EmployeeMgt oEmployeeMgt = BusinessFacade.getInstance()
-				.getEmployeeFactory().getEmployeeMgt();	
-		
-		try {			
-			oEmployeeToReturn = oEmployeeMgt.getLoginEmployee(oEmployeeFilterVO);			
-			
-		} catch(DataBaseConnection e){
+				.getEmployeeFactory().getEmployeeMgt();
+
+		try {
+			oEmployeeToReturn = oEmployeeMgt
+					.getLoginEmployee(oEmployeeFilterVO);
+
+		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 		}
-		
+
 		return oEmployeeToReturn.toVO();
 	}
-	
+
 }

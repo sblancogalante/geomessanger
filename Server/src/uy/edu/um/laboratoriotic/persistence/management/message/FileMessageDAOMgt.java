@@ -22,13 +22,5 @@ public interface FileMessageDAOMgt {
 	 */
 	public void addFileMessage(FileMessage oFileMessage)
 			throws DataBaseConnection, RemoteException;
-	
-	/**
-	 * This method creates the database tables
-	 * 
-	 * @throws DataBaseConnection
-	 * @throws RemoteException
-	 */
-	public void createTable() throws DataBaseConnection, RemoteException;
-	
+		
 }

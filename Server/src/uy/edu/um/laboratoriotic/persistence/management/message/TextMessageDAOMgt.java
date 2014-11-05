@@ -23,7 +23,7 @@ public interface TextMessageDAOMgt {
 	 * @throws RemoteException
 	 */
 	public void addTextMessage(TextMessage oTextMessage)
-			throws DataBaseConnection, RemoteException;
+			throws DataBaseConnection;
 
 	/**
 	 * This method return a list with all the messages of the database
@@ -34,14 +34,6 @@ public interface TextMessageDAOMgt {
 	 * @throws RemoteException
 	 */
 	public ArrayList<TextMessage> getTextMessages(Employee oSender, Employee oReceiverEmployee)
-			throws DataBaseConnection, RemoteException;
-
-	/**
-	 * This method creates the database tables
-	 * 
-	 * @throws DataBaseConnection
-	 * @throws RemoteException
-	 */
-	public void createTable() throws DataBaseConnection, RemoteException;
+			throws DataBaseConnection;
 
 }

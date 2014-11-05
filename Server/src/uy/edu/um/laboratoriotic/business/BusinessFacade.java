@@ -1,6 +1,9 @@
 package uy.edu.um.laboratoriotic.business;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.Properties;
 
 import uy.edu.um.laboratoriotic.business.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.business.factory.general.GeneralFactory;
@@ -87,6 +90,22 @@ public class BusinessFacade {
 			throws RemoteException {
 
 		return FileMessageRemoteFactory.getInstance();
+	}
+	
+	/*
+	 * This is a helping method
+	 */
+	public int getPort() {
+		
+		Properties oProperties= new Properties();
+		
+		try {
+			oProperties.load(new FileInputStream("dataSource.properties"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return Integer.parseInt(oProperties.getProperty("port"));
 	}
 
 }

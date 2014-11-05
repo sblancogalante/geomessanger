@@ -38,12 +38,22 @@ public interface EmployeeRemoteMgt extends Remote {
 	 * This method communicates the server that the client is searching an
 	 * employee
 	 * 
-	 * @param oEmployee
+	 * @param oUserName
 	 * @return
 	 * @throws RemoteException
 	 */
-	public EmployeeVO getEmployee(EmployeeVO oEmployee) throws RemoteException;
-
+	public EmployeeVO searchEmployee(String oUserName) throws RemoteException;
+	
+	/**
+	 * This method communicates the server that the client wants to 
+	 * modify an employee
+	 * 
+	 * @param oEmployeeVO
+	 * @return
+	 * @throws RemoteException
+	 */
+	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO) throws RemoteException;
+	
 	/**
 	 * This method communicates the server that the client wants to obtain all
 	 * the employees

@@ -47,6 +47,30 @@ public interface EmployeeMgt {
 	 */
 	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
 			NotBoundException;
+	
+	/**
+	 * This method is the one that communicates with the commons interface to
+	 * search an employee
+	 * 
+	 * @param oUserName
+	 * @return
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 */
+	public EmployeeVO searchEmployee(String oUserName) throws RemoteException,
+			NotBoundException;
+	
+	/**
+	 * This method is the one that communicates with the commons interface to 
+	 * modify an employee
+	 * 
+	 * @param oEmployeeVO
+	 * @return
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 */
+	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
+	NotBoundException;
 
 	/**
 	 * This method is the one that communicates with the commons interface to

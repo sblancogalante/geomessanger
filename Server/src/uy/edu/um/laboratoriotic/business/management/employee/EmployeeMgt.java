@@ -1,5 +1,6 @@
 package uy.edu.um.laboratoriotic.business.management.employee;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
@@ -22,7 +23,7 @@ public interface EmployeeMgt {
 	 * @param oEmployee
 	 * @throws DataBaseConnection
 	 */
-	public void addEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection;
+	public void addEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection, RemoteException;
 
 	/**
 	 * This method makes sure that the database removes an employee
@@ -30,7 +31,7 @@ public interface EmployeeMgt {
 	 * @param oEmployeeID
 	 * @throws DataBaseConnection
 	 */
-	public void removeEmployee(int oEmployeeID) throws DataBaseConnection;
+	public void removeEmployee(int oEmployeeID) throws DataBaseConnection, RemoteException;
 
 	/**
 	 * This method makes sure that the database modifies the information of
@@ -39,16 +40,16 @@ public interface EmployeeMgt {
 	 * @param oEmployee
 	 * @return
 	 */
-	public Employee modifyEmployee(EmployeeVO oEmployeeVO);
+	public Employee modifyEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection, RemoteException;
 
 	/**
 	 * This method makes sure that the database searches an employee
 	 * 
-	 * @param oemployeeID
+	 * @param oUserName
 	 * @return
 	 * @throws DataBaseConnection
 	 */
-	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection;
+	public Employee searchEmployee(String oUserName) throws DataBaseConnection, RemoteException;
 
 	/**
 	 * This method makes sure that the database returns a list with all the
@@ -57,17 +58,7 @@ public interface EmployeeMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 */
-	public ArrayList<EmployeeVO> getEmployees() throws DataBaseConnection;
-
-	/**
-	 * This is an auxiliary method
-	 * 
-	 * @param oEmployeeVO
-	 * @return
-	 * @throws DataBaseConnection
-	 */
-	public Employee getEmployee(EmployeeVO oEmployeeVO)
-			throws DataBaseConnection;
+	public ArrayList<EmployeeVO> getEmployees() throws DataBaseConnection, RemoteException;
 
 	/**
 	 * This method makes sure that the database returns a boolean with the
@@ -78,7 +69,7 @@ public interface EmployeeMgt {
 	 * @throws DataBaseConnection
 	 */
 	public boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO)
-			throws DataBaseConnection;
+			throws DataBaseConnection, RemoteException;
 
 	/**
 	 * This method makes sure that the database returns an employee after the
@@ -90,6 +81,6 @@ public interface EmployeeMgt {
 	 * @throws DataBaseConnection
 	 */
 	public Employee getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO)
-			throws DataBaseConnection;
+			throws DataBaseConnection, RemoteException;
 
 }

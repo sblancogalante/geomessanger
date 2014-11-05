@@ -22,39 +22,20 @@ public class Employee {
 	 */
 	private int employeeID;
 	private String iD, name, lastName, userName, password, mail, position, workingHour;
-	private Type location, sector;
+	private Type document, location, sector;
 	private Blob profilePicture;
-	private boolean status;
+	private boolean status, admin;
 
 	/*
 	 * Constructors
 	 */
-	public Employee(String oID, String oName, String oLastName,
+	public Employee(int oEmployeeID, Type oDocument, String oID, String oName, String oLastName,
 			String oUserName, String oPassword, Type oLocation,
 			Type oSector, String oMail, String oPosition,
-			String oWorkingHour, Blob oProfilePicture, boolean oStatus) {
-
-		this.iD = oID;
-		this.name = oName;
-		this.lastName = oLastName;
-		this.userName = oUserName;
-		this.password = this.hashEncriptation(oPassword);
-		this.location = oLocation;
-		this.sector = oSector;
-		this.mail = oMail;
-		this.position = oPosition;
-		this.workingHour = oWorkingHour;
-		this.profilePicture = oProfilePicture;
-		this.status = oStatus;
-
-	}
-	
-	public Employee(int oEmployeeID, String oID, String oName, String oLastName,
-			String oUserName, String oPassword, Type oLocation,
-			Type oSector, String oMail, String oPosition,
-			String oWorkingHour, Blob oProfilePicture, boolean oStatus) {
+			String oWorkingHour, Blob oProfilePicture, boolean oStatus, boolean oAdmin) {
 
 		this.employeeID = oEmployeeID;
+		this.setDocument(oDocument);
 		this.iD = oID;
 		this.name = oName;
 		this.lastName = oLastName;
@@ -67,8 +48,32 @@ public class Employee {
 		this.workingHour = oWorkingHour;
 		this.profilePicture = oProfilePicture;
 		this.status = oStatus;
+		this.setAdmin(oAdmin);
 
 	}
+
+	
+	public Employee(Type oDocument, String oID, String oName, String oLastName,
+			String oUserName, String oPassword, Type oLocation,
+			Type oSector, String oMail, String oPosition,
+			String oWorkingHour, Blob oProfilePicture, boolean oStatus, boolean oAdmin) {
+
+		this.document = oDocument;
+		this.iD = oID;
+		this.name = oName;
+		this.lastName = oLastName;
+		this.userName = oUserName;
+		this.password = this.hashEncriptation(oPassword);
+		this.location = oLocation;
+		this.sector = oSector;
+		this.mail = oMail;
+		this.position = oPosition;
+		this.workingHour = oWorkingHour;
+		this.profilePicture = oProfilePicture;
+		this.status = oStatus;
+		this.admin = oAdmin;
+		
+	}	
 
 	public Employee(String oUserName, String oPassword, Type oLocation,
 			Type oSector, boolean oStatus) {
@@ -93,8 +98,8 @@ public class Employee {
 	 */
 	public EmployeeVO toVO() {
 
-		return new EmployeeVO(employeeID, iD, name, lastName, userName, password, location.toVO(),
-				sector.toVO(), mail, position, workingHour, profilePicture, status);
+		return new EmployeeVO(employeeID, document.toVO(), iD, name, lastName, userName, password, location.toVO(),
+				sector.toVO(), mail, position, workingHour, profilePicture, status, admin);
 
 	}
 
@@ -130,6 +135,15 @@ public class Employee {
 
 	public void setEmployeeID(int oEmployeeID) {
 		this.employeeID = oEmployeeID;
+	}
+
+	public Type getDocument() {
+		return document;
+	}
+
+
+	public void setDocument(Type document) {
+		this.document = document;
 	}
 
 	public String getID() {
@@ -226,6 +240,15 @@ public class Employee {
 
 	public void setStatus(boolean oStatus) {
 		this.status = oStatus;
+	}
+
+	public boolean getAdmin() {
+		return admin;
+	}
+
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 }

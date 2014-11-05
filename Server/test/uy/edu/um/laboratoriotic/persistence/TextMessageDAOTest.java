@@ -15,31 +15,30 @@ import uy.edu.um.laboratoriotic.persistence.factory.message.TextMessageDAOFactor
 public class TextMessageDAOTest {
 
 	@Test
-	public void test() {
-		
+	public void test() throws RemoteException {
+
+		Type oTypeDocument = new Type("Documento", "Cedula");
 		Type oTypeLocation = new Type("Location", "Uruguay");
 		Type oTypeSector = new Type("Sector", "Desarrollo");
 
-		Employee oSender = new Employee("5.062.081-0", "Santiago", "Blanco",
-				"sblanco", "asdfg", oTypeLocation, oTypeSector,
-				"sblanco1@correo.um.edu.uy", "Programador", null, null, false);
+		Employee oSender = new Employee(oTypeDocument, "5.062.081-0",
+				"Santiago", "Blanco", "sblanco", "asdfg", oTypeLocation,
+				oTypeSector, "sblanco1@correo.um.edu.uy", "Programador", null,
+				null, false, true);
 
-		Employee oReceiver = new Employee("1.814.930-7", "Antonio",
-				"Blanco", "ablanco", "qwerty", oTypeLocation, oTypeSector,
-				"ablancoa@correo.um.edu.uy", "Programador", null, null, false);
+		Employee oReceiver = new Employee(oTypeDocument, "1.814.930-7",
+				"Antonio", "Blanco", "ablanco", "qwerty", oTypeLocation,
+				oTypeSector, "ablancoa@correo.um.edu.uy", "Programador", null,
+				null, false, false);
 
 		TextMessage oTextMessage = new TextMessage(1, "Hola Mundo", oSender,
 				oReceiver, new Timestamp(System.currentTimeMillis()));
 
 		try {
-			
-			EmployeeDAOFactory.getEmployeeDAOMgt().createTable();
-			
+
 			EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oSender);
 			EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oReceiver);
-
-			TextMessageDAOFactory.getTextMessageDAOMgt().createTable();
-
+			
 			TextMessageDAOFactory.getTextMessageDAOMgt().addTextMessage(
 					oTextMessage);
 			TextMessageDAOFactory.getTextMessageDAOMgt().getTextMessages(
@@ -47,9 +46,6 @@ public class TextMessageDAOTest {
 
 		} catch (DataBaseConnection e) {
 			test();
-		} catch (RemoteException r) {
-			// TODO Auto-generated catch block
-			r.printStackTrace();
 		}
 
 	}

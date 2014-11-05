@@ -1,12 +1,10 @@
 package uy.edu.um.laboratoriotic.persistence.manager.employee;
 
 import java.math.BigInteger;
-import java.rmi.RemoteException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Blob;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,6 +13,7 @@ import java.util.ArrayList;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.persistence.DataBaseConnectionMgr;
 import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
 
 /**
@@ -29,12 +28,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	 * Attributes of the class
 	 */
 	private static EmployeeDAOMgr instance = null;
-	private static final String DRIVER_JDBC = "org.hsqldb.jdbc.JDBCDriver";
-	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
-	private static final String CREATE_TABLE_EMPLOYEES = "CREATE TABLE Employees (employeeID INT PRIMARY KEY NOT NULL, iD VARCHAR(20) NOT NULL, name VARCHAR(20), lastName VARCHAR(20), userName VARCHAR(20) NOT NULL, password VARCHAR(100) NOT NULL, location VARCHAR(30) NOT NULL, sector VARCHAR(30), mail VARCHAR(30) NOT NULL, position VARCHAR(30), workingHour VARCHAR(20), profilePicture BLOB, status BOOLEAN NOT NULL)";
-
-	private static int identifierNumber = 0;
-
+	
 	/*
 	 * Constructor of the class
 	 */
@@ -56,24 +50,17 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	 * This are the management implementation methods
 	 */
 	@Override
-	public void addEmployee(Employee oEmployee) throws DataBaseConnection,
-			RemoteException {
+	public void addEmployee(Employee oEmployee) throws DataBaseConnection {
 		// TODO Auto-generated method stub
 		Connection oConnection = null;
 		Statement oStatement = null;
 
 		try {
 
-			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
-
-			int sID = EmployeeDAOMgr.identifierNumber++;
-			
-			oEmployee.setEmployeeID(sID);
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 
 			oStatement = oConnection.createStatement();
-			String sInsert = "INSERT INTO Employees (employeeID, iD, name, lastName, userName, password, location, sector, mail, position, workingHour, profilePicture, status) VALUES ("
-					+ sID
-					+ ",'"
+			String sInsert = "INSERT INTO `Employees` (iD, name, lastName, userName, password, location, sector, mail, position, workingHour, profilePicture, status) VALUES ('"
 					+ oEmployee.getID()
 					+ "','"
 					+ oEmployee.getName()
@@ -105,7 +92,6 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RemoteException();
 		} finally {
 			if (oConnection != null) {
 				try {
@@ -119,16 +105,15 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public ArrayList<Employee> getEmployees() throws DataBaseConnection,
-			RemoteException {
+	public ArrayList<Employee> getEmployees() throws DataBaseConnection {
 
 		ArrayList<Employee> oList = new ArrayList<>();
 		Statement oStatement = null;
-		Connection oConnection = null;		
+		Connection oConnection = null;
 
 		try {
 
-			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
 			String sQuery = "SELECT * FROM Employees ORDER BY location ASC,sector ASC,status ASC;";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
@@ -136,30 +121,32 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			while (oResultSet.next()) {
 
 				int sResultEmployeeID = oResultSet.getInt(1);
-				String sResultID = oResultSet.getString(2);
-				String sResultName = oResultSet.getString(3);
-				String sResultLastName = oResultSet.getString(4);
-				String sResultUserName = oResultSet.getString(5);
-				String sResultPassword = oResultSet.getString(6);
-				String sResultLocation = oResultSet.getString(7);
-				String sResultSector = oResultSet.getString(8);
-				String sResultMail = oResultSet.getString(9);
-				String sResultPosition = oResultSet.getString(10);
-				String sResultWorkingHour = oResultSet.getString(11);
-				Blob sResultProfilePicture = oResultSet.getBlob(12);
-				boolean sResultStatus = oResultSet.getBoolean(13);
-				
-				Type oTypeLocation = new Type ("Location", sResultLocation);
+				String sResultDocument = oResultSet.getString(2);
+				String sResultID = oResultSet.getString(3);
+				String sResultName = oResultSet.getString(4);
+				String sResultLastName = oResultSet.getString(5);
+				String sResultUserName = oResultSet.getString(6);
+				String sResultPassword = oResultSet.getString(7);
+				String sResultLocation = oResultSet.getString(8);
+				String sResultSector = oResultSet.getString(9);
+				String sResultMail = oResultSet.getString(10);
+				String sResultPosition = oResultSet.getString(11);
+				String sResultWorkingHour = oResultSet.getString(12);
+				Blob sResultProfilePicture = oResultSet.getBlob(13);
+				boolean sResultStatus = oResultSet.getBoolean(14);
+				boolean sResultAdmin = oResultSet.getBoolean(15);
+
+				Type oTypeDocument = new Type("Document", sResultDocument);
+				Type oTypeLocation = new Type("Location", sResultLocation);
 				Type oTypeSector = new Type("Sector", sResultSector);
 
-				Employee oEmployee = new Employee(sResultID, sResultName,
-						sResultLastName, sResultUserName, sResultPassword,
-						oTypeLocation, oTypeSector, sResultMail,
-						sResultPosition, sResultWorkingHour,
-						sResultProfilePicture, sResultStatus);
+				 Employee oEmployee = new Employee(sResultEmployeeID, oTypeDocument,
+						sResultID, sResultName, sResultLastName,
+						sResultUserName, sResultPassword, oTypeLocation,
+						oTypeSector, sResultMail, sResultPosition,
+						sResultWorkingHour, sResultProfilePicture,
+						sResultStatus, sResultAdmin);
 
-				oEmployee.setEmployeeID(sResultEmployeeID);
-				
 				oList.add(oEmployee);
 
 				System.out.println("El empleado encontrado es:\n"
@@ -187,8 +174,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection,
-			RemoteException {
+	public Employee searchEmployee(String oUserName) throws DataBaseConnection {
 
 		Employee oEmployee = null;
 		Statement oStatement = null;
@@ -196,38 +182,40 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 		try {
 
-			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
-			String sQuery = "SELECT * FROM Employees where (Employees.employeeID = '"
-					+ oEmployeeID + "');";
+			String sQuery = "SELECT * FROM Employees where (Employees.userName = '"
+					+ oUserName + "');";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 
 			while (oResultSet.next()) {
 
 				int sResultEmployeeID = oResultSet.getInt(1);
-				String sResultID = oResultSet.getString(2);
-				String sResultName = oResultSet.getString(3);
-				String sResultLastName = oResultSet.getString(4);
-				String sResultUserName = oResultSet.getString(5);
-				String sResultPassword = oResultSet.getString(6);
-				String sResultLocation = oResultSet.getString(7);
-				String sResultSector = oResultSet.getString(8);
-				String sResultMail = oResultSet.getString(9);
-				String sResultPosition = oResultSet.getString(10);
-				String sResultWorkingHour = oResultSet.getString(11);
-				Blob sResultProfilePicture = oResultSet.getBlob(12);
-				boolean sResultStatus = oResultSet.getBoolean(13);
-				
-				Type oTypeLocation = new Type ("Location", sResultLocation);
+				String sResultDocument = oResultSet.getString(2);
+				String sResultID = oResultSet.getString(3);
+				String sResultName = oResultSet.getString(4);
+				String sResultLastName = oResultSet.getString(5);
+				String sResultUserName = oResultSet.getString(6);
+				String sResultPassword = oResultSet.getString(7);
+				String sResultLocation = oResultSet.getString(8);
+				String sResultSector = oResultSet.getString(9);
+				String sResultMail = oResultSet.getString(10);
+				String sResultPosition = oResultSet.getString(11);
+				String sResultWorkingHour = oResultSet.getString(12);
+				Blob sResultProfilePicture = oResultSet.getBlob(13);
+				boolean sResultStatus = oResultSet.getBoolean(14);
+				boolean sResultAdmin = oResultSet.getBoolean(15);
+
+				Type oTypeDocument = new Type("Document", sResultDocument);
+				Type oTypeLocation = new Type("Location", sResultLocation);
 				Type oTypeSector = new Type("Sector", sResultSector);
 
-				oEmployee = new Employee(sResultID, sResultName,
-						sResultLastName, sResultUserName, sResultPassword,
-						oTypeLocation, oTypeSector, sResultMail,
-						sResultPosition, sResultWorkingHour,
-						sResultProfilePicture, sResultStatus);
-
-				oEmployee.setEmployeeID(sResultEmployeeID);
+				oEmployee = new Employee(sResultEmployeeID, oTypeDocument,
+						sResultID, sResultName, sResultLastName,
+						sResultUserName, sResultPassword, oTypeLocation,
+						oTypeSector, sResultMail, sResultPosition,
+						sResultWorkingHour, sResultProfilePicture,
+						sResultStatus, sResultAdmin);
 
 				System.out
 						.println("El empleado hallado es: " + sResultUserName);
@@ -237,7 +225,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oResultSet.close();
 
 		} catch (SQLException e) {
-			throw new RemoteException();
+			e.printStackTrace();
 		} finally {
 			if (oConnection != null) {
 				try {
@@ -249,12 +237,10 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		}
 
 		return oEmployee;
-
 	}
 
 	@Override
-	public void removeEmployee(int oEmployeeID) throws DataBaseConnection,
-			RemoteException {
+	public void removeEmployee(int oEmployeeID) throws DataBaseConnection {
 		// TODO Auto-generated method stub
 
 		Statement oStatement = null;
@@ -262,7 +248,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 		try {
 
-			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
 
 			String sQueryCount = "SELECT COUNT(*) FROM Employees";
@@ -278,7 +264,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			String sQuery = "DELETE FROM Employees where (Employees.employeeID = '"
 					+ oEmployeeID + "') ;";
-			ResultSet oResultSet = oStatement.executeQuery(sQuery);
+			oStatement.execute(sQuery);
+			System.out.println(sQuery);
 
 			ResultSet oResultSetCount2 = oStatement.executeQuery(sQueryCount);
 
@@ -289,38 +276,10 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				System.out.println("Cantidad de empleados: " + nCount);
 			}
 
-			oResultSet.close();
+			oStatement.close();
 
 		} catch (SQLException e) {
-			throw new RemoteException();
-		} finally {
-			if (oConnection != null) {
-				try {
-					oConnection.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void createTable() throws DataBaseConnection, RemoteException {
-
-		Connection oConnection = null;
-		Statement oStatement;
-
-		oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
-
-		try {
-
-			oStatement = oConnection.createStatement();
-			oStatement.execute(CREATE_TABLE_EMPLOYEES);
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			throw new RemoteException();
 		} finally {
 			if (oConnection != null) {
 				try {
@@ -334,24 +293,26 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 	@Override
 	public boolean checkLogin(String oUserName, String oPassword)
-			throws DataBaseConnection, RemoteException {
+			throws DataBaseConnection {
 
 		boolean toReturn = false;
 		Connection oConnection = null;
+
 		try {
-			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = oConnection.createStatement();
 			String oQuery = "SELECT userName, password FROM Employees WHERE (Employees.userName = '"
 					+ oUserName
 					+ "' AND Employees.password = '"
 					+ hashEncriptation(oPassword) + "');";
-			
-			ResultSet oResultSet = oStatement.executeQuery(oQuery);			
+
+			ResultSet oResultSet = oStatement.executeQuery(oQuery);
 
 			while (oResultSet.next()) {
 
 				String userName = oResultSet.getString(1);
-				String password = oResultSet.getString(2);				
+				String password = oResultSet.getString(2);
 
 				if (oUserName.equals(userName)
 						&& hashEncriptation(oPassword).equals(password)) {
@@ -364,7 +325,6 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			throw new RemoteException();
 		} finally {
 			if (oConnection != null) {
 				try {
@@ -380,12 +340,14 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 	@Override
 	public Employee getLoginEmployee(String oUserName, String oPassword)
-			throws DataBaseConnection, RemoteException {
+			throws DataBaseConnection {
 
 		Employee oEmployeeToReturn = null;
 		Connection oConnection = null;
+
 		try {
-			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = oConnection.createStatement();
 			ResultSet oResultSet = oStatement
 					.executeQuery("SELECT * FROM Employees WHERE (Employees.userName = '"
@@ -394,6 +356,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			while (oResultSet.next()) {
 
 				int sResultEmployeeID = oResultSet.getInt(1);
+				String sResultDocument = oResultSet.getString(2);
 				String sResultID = oResultSet.getString(2);
 				String sResultName = oResultSet.getString(3);
 				String sResultLastName = oResultSet.getString(4);
@@ -406,19 +369,21 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				String sResultWorkingHour = oResultSet.getString(11);
 				Blob sResultProfilePicture = oResultSet.getBlob(12);
 				boolean sResultStatus = oResultSet.getBoolean(13);
-
+				boolean sResultAdmin = oResultSet.getBoolean(15);
+				
 				if (oUserName.equals(sResultUserName)
 						&& hashEncriptation(oPassword).equals(sResultPassword)) {
-					
-					Type oTypeLocation = new Type ("Location", sResultLocation);
+
+					Type oTypeDocument = new Type("Document", sResultDocument);
+					Type oTypeLocation = new Type("Location", sResultLocation);
 					Type oTypeSector = new Type("Sector", sResultSector);
 
-					
-					oEmployeeToReturn = new Employee(sResultEmployeeID, sResultID, sResultName,
-							sResultLastName, sResultUserName, sResultPassword,
-							oTypeLocation, oTypeSector, sResultMail,
-							sResultPosition, sResultWorkingHour,
-							sResultProfilePicture, sResultStatus);				
+					oEmployeeToReturn = new Employee(sResultEmployeeID, oTypeDocument,
+							sResultID, sResultName, sResultLastName,
+							sResultUserName, sResultPassword, oTypeLocation,
+							oTypeSector, sResultMail, sResultPosition,
+							sResultWorkingHour, sResultProfilePicture,
+							sResultStatus, sResultAdmin);
 
 				}
 			}
@@ -428,7 +393,6 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			throw new RemoteException();
 		} finally {
 			if (oConnection != null) {
 				try {
@@ -445,33 +409,6 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	/*
 	 * Helping methods
 	 */
-	/**
-	 * This method establishes the connection with the data base
-	 * 
-	 * @param oDBDriver
-	 * @param dBDirection
-	 * @return
-	 */
-	private Connection connect(String oDBDriver, String dBDirection) {
-
-		Connection oResult = null;
-
-		try {
-
-			Class.forName(oDBDriver);
-			oResult = DriverManager.getConnection(dBDirection);
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return oResult;
-	}
-
 	public String hashEncriptation(String oPassword) {
 
 		String newPassword = null;

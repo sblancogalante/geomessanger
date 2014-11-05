@@ -20,39 +20,21 @@ public class EmployeeVO implements Serializable {
 	private int employeeID;
 	private String iD, name, lastName, userName, password, mail, position,
 			workingHour;
-	private TypeVO location, sector;
+	private TypeVO document, location, sector;
 	private Blob profilePicture;
-	private boolean status;
+	private boolean status, admin;
 
 	/*
 	 * Constructors
 	 */
-	public EmployeeVO(String oID, String oName, String oLastName,
-			String oUserName, String oPassword, TypeVO oLocation,
-			TypeVO oSector, String oMail, String oPosition,
-			String oWorkingHour, Blob oProfilePicture, boolean oStatus) {
 
-		this.iD = oID;
-		this.name = oName;
-		this.lastName = oLastName;
-		this.userName = oUserName;
-		this.password = oPassword;
-		this.location = oLocation;
-		this.sector = oSector;
-		this.mail = oMail;
-		this.position = oPosition;
-		this.workingHour = oWorkingHour;
-		this.profilePicture = oProfilePicture;
-		this.status = oStatus;
-
-	}
-
-	public EmployeeVO(int oEmployeeID, String oID, String oName,
+	public EmployeeVO(int oEmployeeID, TypeVO oDocument, String oID, String oName,
 			String oLastName, String oUserName, String oPassword,
 			TypeVO oLocation, TypeVO oSector, String oMail, String oPosition,
-			String oWorkingHour, Blob oProfilePicture, boolean oStatus) {
+			String oWorkingHour, Blob oProfilePicture, boolean oStatus, boolean oAdmin) {
 
 		this.employeeID = oEmployeeID;
+		this.document = oDocument;
 		this.iD = oID;
 		this.name = oName;
 		this.lastName = oLastName;
@@ -65,6 +47,29 @@ public class EmployeeVO implements Serializable {
 		this.workingHour = oWorkingHour;
 		this.profilePicture = oProfilePicture;
 		this.status = oStatus;
+		this.admin = oAdmin;
+
+	}
+	
+	public EmployeeVO(TypeVO oDocument, String oID, String oName, String oLastName,
+			String oUserName, String oPassword, TypeVO oLocation,
+			TypeVO oSector, String oMail, String oPosition,
+			String oWorkingHour, Blob oProfilePicture, boolean oStatus, boolean oAdmin) {
+
+		this.setDocument(oDocument);
+		this.iD = oID;
+		this.name = oName;
+		this.lastName = oLastName;
+		this.userName = oUserName;
+		this.password = oPassword;
+		this.location = oLocation;
+		this.sector = oSector;
+		this.mail = oMail;
+		this.position = oPosition;
+		this.workingHour = oWorkingHour;
+		this.profilePicture = oProfilePicture;
+		this.status = oStatus;
+		this.setAdmin(oAdmin);
 
 	}
 
@@ -191,6 +196,22 @@ public class EmployeeVO implements Serializable {
 
 	public void setStatus(boolean oStatus) {
 		this.status = oStatus;
+	}
+
+	public TypeVO getDocument() {
+		return document;
+	}
+
+	public void setDocument(TypeVO oDocument) {
+		this.document = oDocument;
+	}
+
+	public boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean oAdmin) {
+		this.admin = oAdmin;
 	}
 
 }
