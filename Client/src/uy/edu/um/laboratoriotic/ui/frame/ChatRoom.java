@@ -37,6 +37,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -51,6 +52,7 @@ public class ChatRoom extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField scrollPane;
+	private ArrayList<TextMessageVO> messageList;
 
 
 	/**
@@ -72,6 +74,9 @@ public class ChatRoom extends JFrame {
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
+		
+	
+		
 		
 		JMenu mnNewMenu = new JMenu("Files");
 		menuBar.add(mnNewMenu);
@@ -305,16 +310,33 @@ public class ChatRoom extends JFrame {
 		});
 		
 		
+	Timer messageRefreshTimer = new Timer(2000, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				converTextArea.setText("");
+				messageList = actualizarMensajes(textMgt, senderEmployee, receiverEmployee);
+				for(TextMessageVO message : messageList){
+					converTextArea.append(message.getSender().getName() +" " +message.getSender().getLastName() + ": " +  message.getTextMessage());
+				}
+				
+				
+				
+			}
+		});
+	
+	messageRefreshTimer.start();
+		
+		
 		scrollPane_2.setViewportView(messageTextArea);
 		
 		scrollPane_1.setViewportView(converTextArea);
 		contentPane.setLayout(gl_contentPane);
 	}
 	
-	private Collection<TextMessageVO> actualizarMensajes(TextMessageMgt textMgt,
-			JList<TextMessageVO> messageList, EmployeeVO oSender, EmployeeVO oReceiver){
+	private ArrayList<TextMessageVO> actualizarMensajes(TextMessageMgt textMgt, EmployeeVO oSender, EmployeeVO oReceiver){
 		
-			Collection<TextMessageVO> oListMessages = new ArrayList<TextMessageVO>();
+			ArrayList<TextMessageVO> oListMessages = new ArrayList<TextMessageVO>();
 			try {
 				oListMessages = textMgt.getTextMessages(oSender, oReceiver);
 			} catch (RemoteException | NotBoundException e) {
@@ -324,6 +346,7 @@ public class ChatRoom extends JFrame {
 			return oListMessages;
 		
 	}
+
 	
 	
 
