@@ -12,6 +12,7 @@ import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.DataBaseConnectionMgr;
+import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.management.message.TextMessageDAOMgt;
 
 /**
@@ -25,7 +26,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	/*
 	 * Attributes of the class
 	 */
-	private static TextMessageDAOMgr instance = null;	
+	private static TextMessageDAOMgr instance = null;
 
 	/*
 	 * Constructor
@@ -56,36 +57,41 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 		// TODO Auto-generated method stub
 
 		Connection oConnection = null;
-		PreparedStatement oPrepStatement = null;	
-		
+		PreparedStatement oPrepStatement = null;
+
 		try {
 
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
-			
-			String sText = oTextMessage.getTextMessage();
-			int sIDSender = oTextMessage.getSender().getEmployeeID();
-			int sIDReceiver = oTextMessage.getReceiver().getEmployeeID();
-			// FIXME
-			Timestamp sDate = new Timestamp(System.currentTimeMillis());			
 
-			String sInsert = "INSERT INTO TextMessages (text, employeeSenderID, employeeReceiverID, date) VALUES (?,?,?,?)";
+			String sText = oTextMessage.getTextMessage();
+			int sIDSender = EmployeeDAOFactory.getEmployeeDAOMgt()
+					.searchEmployee(oTextMessage.getSender().getUserName())
+					.getEmployeeID();
+			int sIDReceiver = EmployeeDAOFactory.getEmployeeDAOMgt()
+					.searchEmployee(oTextMessage.getReceiver().getUserName())
+					.getEmployeeID();
 			
+			String sInsert = "INSERT INTO TextMessages (text, employeeSenderID, employeeReceiverID) VALUES (?,?,?)";
+
 			oPrepStatement = oConnection.prepareStatement(sInsert);
-			
+
 			oPrepStatement.setString(1, sText);
 			oPrepStatement.setInt(2, sIDSender);
-			oPrepStatement.setInt(3, sIDReceiver);
-			oPrepStatement.setTimestamp(3, sDate);	
-			
-			oPrepStatement.execute();			
-			
-			System.out.println("Se agrego con exito a la tabla de mensajes con el texto: " + sText + " enviado por "
-					+ sIDSender + " para " + sIDReceiver + ", con la fecha "
-					+ sDate);
+			oPrepStatement.setInt(3, sIDReceiver);			
+
+			oPrepStatement.execute();
+
+			System.out
+					.println("Se agrego con exito a la tabla de mensajes con el texto: "
+							+ sText
+							+ " enviado por "
+							+ sIDSender
+							+ " para "
+							+ sIDReceiver);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();			
+			e.printStackTrace();
 		} finally {
 			if (oConnection != null) {
 				try {
@@ -100,7 +106,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 	@Override
 	public ArrayList<TextMessage> getTextMessages(Employee oSender,
-			Employee oReceiver) {
+			Employee oReceiver) throws DataBaseConnection {
 		// TODO Auto-generated method stub
 
 		ArrayList<TextMessage> oList = new ArrayList<>();
@@ -116,15 +122,19 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 			sQuery = "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.textMessageID, tm.text, tm.date"
 					+ " FROM Employees e, TextMessages tm"
-					+ " WHERE tm.employeeID = e.employeeID AND tm.employeeID = "
-					+ oSender.getEmployeeID()
-					+ " UNION "
+					+ " WHERE tm.employeeSenderID = e.employeeID AND tm.employeeSenderID = '"
+					+ EmployeeDAOFactory.getEmployeeDAOMgt()
+							.searchEmployee(oSender.getUserName())
+							.getEmployeeID()
+					+ "' UNION "
 					+ "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.textMessageID, tm.text, tm.date"
 					+ " FROM Employees e, TextMessages tm"
-					+ " WHERE tm.employeeID = e.employeeID AND tm.employeeID = "
-					+ oReceiver.getEmployeeID()
-					+ " ORDER BY tm.date ASC;";
-			
+					+ " WHERE tm.employeeReceiverID = e.employeeID AND tm.employeeReceiverID = '"
+					+ EmployeeDAOFactory.getEmployeeDAOMgt()
+							.searchEmployee(oReceiver.getUserName())
+							.getEmployeeID() + "' ORDER BY tm.date ASC;";
+
+			System.out.println(sQuery);
 			oResultSet = oStatement.executeQuery(sQuery);
 
 			while (oResultSet.next()) {
@@ -133,7 +143,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 				String sTextMessage = oResultSet.getString(9);
 				Employee sSender = oSender;
 				Employee sReceiver = oReceiver;
-				Timestamp sDate = oResultSet.getTimestamp(10);				
+				Timestamp sDate = oResultSet.getTimestamp(10);
 
 				TextMessage oTextMessages = new TextMessage(sID, sTextMessage,
 						sSender, sReceiver, sDate);
@@ -145,7 +155,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();			
+			e.printStackTrace();
 		} finally {
 			if (oConnection != null) {
 				try {
@@ -158,6 +168,6 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 		}
 
 		return oList;
-	}	
+	}
 
 }

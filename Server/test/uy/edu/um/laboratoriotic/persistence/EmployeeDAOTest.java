@@ -18,7 +18,7 @@ public class EmployeeDAOTest {
 		Type oTypeLocation = new Type("Location", "Uruguay");
 		Type oTypeSector = new Type("Sector", "Desarrollo");
 
-		Employee oEmployee = new Employee(oTypeDocument,"5.062.081-0", "Santiago", "Blanco",
+		Employee oEmployee = new Employee(oTypeDocument, "5.062.081-0", "Santiago", "Blanco",
 				"sblanco", "asdfg", oTypeLocation, oTypeSector,
 				"sblanco1@correo.um.edu.uy", "Programador", null, null, false, true);
 
@@ -56,7 +56,7 @@ public class EmployeeDAOTest {
 					.println("//////////////////////Test de removeEmployee()/////////////////////");
 
 			EmployeeDAOFactory.getEmployeeDAOMgt().removeEmployee(
-					oEmployee.getEmployeeID());
+					oEmployee.getUserName());
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 			test();

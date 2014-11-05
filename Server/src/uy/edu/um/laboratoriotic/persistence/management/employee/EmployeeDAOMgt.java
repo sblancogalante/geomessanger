@@ -26,11 +26,11 @@ public interface EmployeeDAOMgt {
 	/**
 	 * This method removes an employee from the database
 	 * 
-	 * @param oEmployeeID
+	 * @param oUserName
 	 * @throws DataBaseConnection
 	 * @throws RemoteException
 	 */
-	public void removeEmployee(int oEmployeeID) throws DataBaseConnection;
+	public void removeEmployee(String oUserName) throws DataBaseConnection;
 
 	/**
 	 * This method searches an employee in the database

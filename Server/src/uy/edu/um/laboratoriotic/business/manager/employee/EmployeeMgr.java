@@ -65,12 +65,12 @@ public class EmployeeMgr implements EmployeeMgt {
 	}
 
 	@Override
-	public void removeEmployee(int oEmployeeID) throws DataBaseConnection,
+	public void removeEmployee(String oUserName) throws DataBaseConnection,
 			RemoteException {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
-		oNewDAOEmployee.removeEmployee(oEmployeeID);
+		oNewDAOEmployee.removeEmployee(oUserName);
 
 	}
 
