@@ -40,7 +40,7 @@ public class Login extends JFrame {
 	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Log in");
-		setBounds(100, 100, 147, 273);
+		setBounds(100, 100, 172, 273);
 		
 		
 		final EmployeeMgt employeeMgr =  EmployeeFactory.getInstance().getEmployeeMgt();
