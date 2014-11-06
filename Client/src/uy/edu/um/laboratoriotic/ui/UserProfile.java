@@ -70,8 +70,8 @@ public class UserProfile extends JDialog {
 		}
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_contentPanel.createSequentialGroup()
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 						.addComponent(editPanel, GroupLayout.PREFERRED_SIZE, 452, GroupLayout.PREFERRED_SIZE)
@@ -95,7 +95,7 @@ public class UserProfile extends JDialog {
 							.addComponent(lblNewLabel_1)
 							.addGap(7)
 							.addComponent(lblNewLabel_2)))
-					.addGap(18)
+					.addGap(29)
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(editPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
@@ -122,31 +122,38 @@ public class UserProfile extends JDialog {
 		JLabel idLabel = new JLabel("ID: " + employee.getID());
 		JLabel userNameLabel = new JLabel("User Name: " + employee.getUserName());
 		JLabel eMailLabel = new JLabel("EMail: " + employee.getMail());
-		JLabel locationLabel = new JLabel("Loaction: " + employee.getLocation());
-		JLabel sectorLabel = new JLabel("Sector: " + employee.getSector());
+		JLabel locationLabel = new JLabel("Loaction: " + employee.getLocation().getValue());
+		JLabel sectorLabel = new JLabel("Sector: " + employee.getSector().getValue());
 		JLabel positionLabel = new JLabel("Position: " + employee.getPosition());
 		JLabel workingHoursLabel = new JLabel("Working Hours: " + employee.getWorkingHour());
 		JLabel statusLabel = new JLabel("Actual Status: " + employee.getStatus());
+		JLabel documentTypeLabel = new JLabel("Document Type: " + employee.getDocument().getValue());
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(idLabel, GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
-						.addComponent(userNameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(eMailLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(locationLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(sectorLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(positionLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(workingHoursLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(statusLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(119))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(idLabel, GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+								.addComponent(userNameLabel, GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+								.addComponent(eMailLabel, GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+								.addComponent(locationLabel, GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+								.addComponent(sectorLabel, GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+								.addComponent(positionLabel, GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+								.addComponent(workingHoursLabel, GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+								.addComponent(statusLabel, GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE))
+							.addGap(119))
+						.addComponent(documentTypeLabel)))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addContainerGap(20, Short.MAX_VALUE)
+					.addComponent(documentTypeLabel)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(idLabel)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(userNameLabel)
@@ -162,7 +169,7 @@ public class UserProfile extends JDialog {
 					.addComponent(workingHoursLabel)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(statusLabel)
-					.addContainerGap(44, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		panel.setLayout(gl_panel);
 		contentPanel.setLayout(gl_contentPanel);

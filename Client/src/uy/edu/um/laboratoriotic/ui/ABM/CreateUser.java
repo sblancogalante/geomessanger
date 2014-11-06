@@ -129,10 +129,21 @@ public class CreateUser extends JDialog {
 								Short.MAX_VALUE).addContainerGap()));
 
 		String[] comboBoxDefaultArray = { "<<Default>>" };
+		
+		JLabel workingHoursLabel = new JLabel("Working Hours: ");
+		
+		String[] hours = {"00","01","02","03","03","04","05","06","07","08","09","10","11","12",
+				"13","14","15","16","17","18","19","20","21","22","23"};
+		
+		final JComboBox firstHour = new JComboBox(hours);
+		
+		JLabel toLabel = new JLabel("to");
+		
+		final JComboBox<String> secondHour = new JComboBox(hours);
 
-		final JComboBox locationComboBox = new JComboBox(comboBoxDefaultArray);
+		final JComboBox<String> locationComboBox = new JComboBox(comboBoxDefaultArray);
 
-		final JComboBox sectorComboBox = new JComboBox(comboBoxDefaultArray);
+		final JComboBox<String> sectorComboBox = new JComboBox(comboBoxDefaultArray);
 
 		final JCheckBox isAdminCheckBox = new JCheckBox("is Admin");
 
@@ -148,11 +159,11 @@ public class CreateUser extends JDialog {
 
 				// Chequear contraseñas y tomar medidas.
 
-				String workingHours = null;
+				String workingHours = "From "+ firstHour.getSelectedItem() + " to " + secondHour.getSelectedItem();
 				Blob profilePic = null;
 
 				TypeVO oTypeVODocument = new TypeVO("Document",
-						(String) locationComboBox.getSelectedItem());
+						(String) typeDocumentComboBox.getSelectedItem());
 				TypeVO oTypeVOLocation = new TypeVO("Location",
 						(String) locationComboBox.getSelectedItem());
 				TypeVO oTypeVOSector = new TypeVO("Sector",
@@ -454,199 +465,100 @@ public class CreateUser extends JDialog {
 		passwordText.setColumns(10);
 
 		isAdminCheckBox.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		
+		
 		GroupLayout gl_panel_1 = new GroupLayout(accountPanel);
-		gl_panel_1
-				.setHorizontalGroup(gl_panel_1
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panel_1
-										.createSequentialGroup()
-										.addGap(50)
-										.addGroup(
-												gl_panel_1
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																locationComboBox,
-																GroupLayout.PREFERRED_SIZE,
-																133,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																locationLabel)
-														.addGroup(
-																gl_panel_1
-																		.createSequentialGroup()
-																		.addGap(6)
-																		.addComponent(
-																				addLocationButton)))
-										.addPreferredGap(
-												ComponentPlacement.RELATED,
-												191, Short.MAX_VALUE)
-										.addGroup(
-												gl_panel_1
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_panel_1
-																		.createSequentialGroup()
-																		.addGap(6)
-																		.addComponent(
-																				addSectorButton))
-														.addComponent(
-																sectorLabel)
-														.addComponent(
-																sectorComboBox,
-																GroupLayout.PREFERRED_SIZE,
-																130,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(47))
-						.addGroup(
-								gl_panel_1
-										.createSequentialGroup()
-										.addGap(73)
-										.addGroup(
-												gl_panel_1
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addComponent(
-																repeatPassLabel)
-														.addComponent(
-																userNameLabel)
-														.addComponent(
-																passwordLabel))
-										.addGap(18)
-										.addGroup(
-												gl_panel_1
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																repeatPasswordText,
-																GroupLayout.DEFAULT_SIZE,
-																337,
-																Short.MAX_VALUE)
-														.addComponent(
-																passwordText,
-																GroupLayout.DEFAULT_SIZE,
-																337,
-																Short.MAX_VALUE)
-														.addComponent(
-																userNameText,
-																GroupLayout.DEFAULT_SIZE,
-																337,
-																Short.MAX_VALUE))
-										.addGap(35))
-						.addGroup(
-								Alignment.TRAILING,
-								gl_panel_1
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(separator,
-												GroupLayout.DEFAULT_SIZE, 539,
-												Short.MAX_VALUE)
-										.addContainerGap())
-						.addGroup(
-								gl_panel_1
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												gl_panel_1
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addComponent(
-																isAdminCheckBox)
-														.addComponent(
-																lblNoteTheFields,
-																GroupLayout.PREFERRED_SIZE,
-																303,
-																GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(242, Short.MAX_VALUE)));
-		gl_panel_1
-				.setVerticalGroup(gl_panel_1
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								gl_panel_1
-										.createSequentialGroup()
-										.addGap(32)
-										.addGroup(
-												gl_panel_1
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																userNameLabel)
-														.addComponent(
-																userNameText,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(18)
-										.addGroup(
-												gl_panel_1
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																passwordLabel)
-														.addComponent(
-																passwordText,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(18)
-										.addGroup(
-												gl_panel_1
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																repeatPassLabel)
-														.addComponent(
-																repeatPasswordText,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(18)
-										.addComponent(separator,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addComponent(isAdminCheckBox)
-										.addGap(31)
-										.addGroup(
-												gl_panel_1
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																locationLabel)
-														.addComponent(
-																sectorLabel))
-										.addGap(18)
-										.addGroup(
-												gl_panel_1
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																locationComboBox,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																sectorComboBox,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												gl_panel_1
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																addLocationButton)
-														.addComponent(
-																addSectorButton))
-										.addGap(42)
-										.addComponent(lblNoteTheFields)
-										.addContainerGap()));
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(50)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(locationComboBox, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+						.addComponent(locationLabel)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(6)
+							.addComponent(addLocationButton)))
+					.addPreferredGap(ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(6)
+							.addComponent(addSectorButton))
+						.addComponent(sectorLabel)
+						.addComponent(sectorComboBox, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
+					.addGap(47))
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(73)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+						.addComponent(repeatPassLabel)
+						.addComponent(userNameLabel)
+						.addComponent(passwordLabel))
+					.addGap(18)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(repeatPasswordText, GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+						.addComponent(passwordText, GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+						.addComponent(userNameText, GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE))
+					.addGap(35))
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(separator, GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+					.addContainerGap())
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNoteTheFields, GroupLayout.PREFERRED_SIZE, 303, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(242, Short.MAX_VALUE))
+				.addGroup(Alignment.LEADING, gl_panel_1.createSequentialGroup()
+					.addGap(124)
+					.addComponent(isAdminCheckBox)
+					.addGap(49)
+					.addComponent(workingHoursLabel)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(firstHour, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(toLabel)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(secondHour, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(40, Short.MAX_VALUE))
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(32)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(userNameLabel)
+						.addComponent(userNameText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(passwordLabel)
+						.addComponent(passwordText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(repeatPassLabel)
+						.addComponent(repeatPasswordText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(isAdminCheckBox)
+						.addComponent(workingHoursLabel)
+						.addComponent(firstHour, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(toLabel)
+						.addComponent(secondHour, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(31)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(locationLabel)
+						.addComponent(sectorLabel))
+					.addGap(18)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(locationComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(sectorComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(addLocationButton)
+						.addComponent(addSectorButton))
+					.addGap(42)
+					.addComponent(lblNoteTheFields)
+					.addContainerGap())
+		);
 		accountPanel.setLayout(gl_panel_1);
 
 		JPanel otherPanel = new JPanel();

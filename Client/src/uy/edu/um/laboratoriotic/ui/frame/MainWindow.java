@@ -84,6 +84,10 @@ public class MainWindow extends JFrame {
 		
 		actualUser = employeeMgt.getLoginEmployee(actualFilterUser);
 		
+		actualUser.setStatus(true);
+		employeeMgt.modifyEmployee(actualUser);
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Main Window");
 		setBounds(100, 100, 600, 620);
