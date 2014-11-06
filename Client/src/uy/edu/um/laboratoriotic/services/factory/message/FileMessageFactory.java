@@ -17,7 +17,7 @@ public class FileMessageFactory {
 		
 	}
 	
-	public FileMessageFactory getInstance(){
+	public static FileMessageFactory getInstance(){
 		
 		if (instance == null) {
 			instance = new FileMessageFactory();

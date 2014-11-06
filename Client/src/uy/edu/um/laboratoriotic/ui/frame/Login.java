@@ -119,7 +119,7 @@ public class Login extends JFrame {
 					EmployeeFilterVO inputEmployeeVO = new EmployeeFilterVO(inputUserName, inputPassword);
 		
 					if(employeeMgr.checkLogin(inputEmployeeVO)){
-						wind = new MainWindow(inputEmployeeVO );
+						wind = new MainWindow(inputEmployeeVO);
 						wind.setVisible(true);
 						dispose();
 					}else{

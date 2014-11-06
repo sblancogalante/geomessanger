@@ -6,6 +6,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.services.ServiceFacade;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
@@ -48,7 +49,7 @@ public class EmployeeMgr implements EmployeeMgt {
 			NotBoundException {
 		// TODO Auto-generated method stub
 
-		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
+		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
 		oEmployeeRemoteMgt.addEmployee(oEmployeeVO);
 
 	}
@@ -60,7 +61,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 		ArrayList<EmployeeVO> oListToReturn = new ArrayList<EmployeeVO>();
 
-		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
+		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
 		oListToReturn = oEmployeeRemoteMgt.getEmployees();
 
 		return oListToReturn;
@@ -71,7 +72,7 @@ public class EmployeeMgr implements EmployeeMgt {
 			NotBoundException {
 		// TODO Auto-generated method stub
 
-		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
+		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
 		oEmployeeRemoteMgt.removeEmployee(oEmployeeVO);
 
 	}
@@ -83,7 +84,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 		EmployeeVO oEmployeeVOToReturn = null;
 
-		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
+		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
 		oEmployeeVOToReturn = oEmployeeRemoteMgt.searchEmployee(oUserName);
 
 		return oEmployeeVOToReturn;
@@ -96,7 +97,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 		EmployeeVO oEmployeeVOToReturn = null;
 
-		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
+		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
 		oEmployeeVOToReturn = oEmployeeRemoteMgt.modifyEmployee(oEmployeeVO);
 
 		return oEmployeeVOToReturn;
@@ -107,7 +108,7 @@ public class EmployeeMgr implements EmployeeMgt {
 			throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
 
-		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
+		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
 		boolean toReturn = oEmployeeRemoteMgt.checkLogin(oEmployeeVO);
 
 		return toReturn;
@@ -119,7 +120,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 		EmployeeVO oEmployeeVOToReturn = null;
 
-		EmployeeRemoteMgt oEmployeeRemoteMgt = lookUp("EmployeeRemoteMgr", 1099);
+		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
 		oEmployeeVOToReturn = oEmployeeRemoteMgt
 				.getLoginEmployee(oEmployeeFilterVO);
 
@@ -129,15 +130,18 @@ public class EmployeeMgr implements EmployeeMgt {
 	/*
 	 * Helping methods
 	 */
-	private EmployeeRemoteMgt lookUp(String sObjectService, int oPortNumber)
+	private EmployeeRemoteMgt newLookUp(String sObjectService)
 			throws RemoteException, NotBoundException {
 
-		EmployeeRemoteMgt oReturn;
+		EmployeeRemoteMgt oEmployeeRemoteMgtToReturn;
 
-		Registry oRegistry = LocateRegistry.getRegistry(oPortNumber);
-		oReturn = (EmployeeRemoteMgt) oRegistry.lookup(sObjectService);
+		Registry oRegistry = LocateRegistry
+				.getRegistry(ServiceFacade.getInstance().getHost(),
+						ServiceFacade.getInstance().getPort());
+		oEmployeeRemoteMgtToReturn = (EmployeeRemoteMgt) oRegistry
+				.lookup(sObjectService);
 
-		return oReturn;
+		return oEmployeeRemoteMgtToReturn;
 	}
 
 }
