@@ -103,6 +103,7 @@ public class EmployeeMgr implements EmployeeMgt {
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		Employee oEmployee;
 		Employee oEmployeeToReturn = null;
+		
 		oEmployee = oNewDAOEmployee.searchEmployee(oUserName);
 
 		if (oEmployee != null) {
@@ -127,7 +128,7 @@ public class EmployeeMgr implements EmployeeMgt {
 		oEmployee = oNewDAOEmployee.searchEmployee(oEmployeeVO.getUserName());
 
 		if (oEmployee != null) {
-			oEmployeeToReturn = modifyEmployee(oEmployeeVO);
+			oEmployeeToReturn = oNewDAOEmployee.modifyEmployee(oEmployee);
 		} else {
 			System.out.println("No se encontro el usuario con identificacion "
 					+ oEmployeeVO.getEmployeeID());

@@ -104,6 +104,37 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
+	public void removeEmployee(String oUserName) throws DataBaseConnection {
+		// TODO Auto-generated method stub
+
+		Statement oStatement = null;
+		Connection oConnection = null;
+
+		try {
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
+			oStatement = oConnection.createStatement();
+
+			String sQuery = "DELETE FROM Employees where (Employees.userName = '"
+					+ oUserName + "') ;";
+			oStatement.execute(sQuery);
+
+			oStatement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@Override
 	public ArrayList<Employee> getEmployees() throws DataBaseConnection {
 
 		ArrayList<Employee> oList = new ArrayList<>();
@@ -114,7 +145,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
-			
+
 			String sQuery = "SELECT * FROM Employees ORDER BY location ASC,sector ASC,status ASC;";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 
@@ -181,6 +212,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
+
 			String sQuery = "SELECT * FROM Employees where (Employees.userName = '"
 					+ oUserName + "');";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
@@ -234,21 +266,42 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public void removeEmployee(String oUserName) throws DataBaseConnection {
-		// TODO Auto-generated method stub
+	public Employee modifyEmployee(Employee oEmployee)
+			throws DataBaseConnection {
 
-		Statement oStatement = null;
+		Employee oEmployeeToReturn = null;
 		Connection oConnection = null;
+		Statement oStatement = null;
 
 		try {
 
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
-			
-			String sQuery = "DELETE FROM Employees where (Employees.userName = '"
-					+ oUserName + "') ;";
-			oStatement.execute(sQuery);
-						
+
+			if (oEmployee.getDocument().getValue() != null) {
+				updateDocument(oEmployee);
+			} else if (oEmployee.getID() != null) {
+				updateID(oEmployee);
+			} else if (oEmployee.getLocation().getValue() != null) {
+				updateLocation(oEmployee);
+			} else if (oEmployee.getSector().getValue() != null) {
+				updateSector(oEmployee);
+			} else if (oEmployee.getMail() != null) {
+				updateMail(oEmployee);
+			} else if (oEmployee.getPosition() != null) {
+				updatePosition(oEmployee);
+			} else if (oEmployee.getWorkingHour() != null) {
+				updateWorkingHour(oEmployee);
+			} else if (oEmployee.getProfilePicture() != null) {
+				updateProfilePicture(oEmployee);
+			} else if (oEmployee.getStatus()) {
+				updateStatus(oEmployee);
+			} else if (oEmployee.getAdmin()) {
+				updateAdmin(oEmployee);
+			}
+
+			oEmployeeToReturn = searchEmployee(oEmployee.getUserName());
+
 			oStatement.close();
 
 		} catch (SQLException e) {
@@ -262,6 +315,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				}
 			}
 		}
+
+		return oEmployeeToReturn;
 	}
 
 	@Override
@@ -382,7 +437,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	/*
 	 * Helping methods
 	 */
-	public String hashEncriptation(String oPassword) {
+	private String hashEncriptation(String oPassword) {
 
 		String newPassword = null;
 
@@ -400,22 +455,322 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		return newPassword;
 	}
 
-	// /**
-	// * This method converts from Date to String
-	// * @param oDate
-	// * @return
-	// */
-	// private String dateToString(Date oDate){
-	//
-	//
-	// DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-	//
-	// Date today = oDate;
-	//
-	// String reportDate = df.format(today);
-	//
-	// return reportDate;
-	//
-	// }
+	private void updateDocument(Employee oEmployee) {
+		// TODO Auto-generated method stub
+
+		Connection oConnection = null;
+		Statement oStatement = null;
+
+		try {
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
+			oStatement = oConnection.createStatement();
+
+			String sQuery = "UPDATE Employees set document = '"
+					+ oEmployee.getDocument()
+					+ "' WHERE Employees.userName = '"
+					+ oEmployee.getUserName() + "';";
+
+			oStatement.execute(sQuery);
+
+			oStatement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void updateID(Employee oEmployee) {
+
+		Connection oConnection = null;
+		Statement oStatement = null;
+
+		try {
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
+			oStatement = oConnection.createStatement();
+
+			String sQuery = "UPDATE Employees set iD = '" + oEmployee.getID()
+					+ "' WHERE Employees.userName = '"
+					+ oEmployee.getUserName() + "';";
+
+			oStatement.execute(sQuery);
+
+			oStatement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void updateLocation(Employee oEmployee) {
+
+		Connection oConnection = null;
+		Statement oStatement = null;
+
+		try {
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
+			oStatement = oConnection.createStatement();
+
+			String sQuery = "UPDATE Employees set location = '"
+					+ oEmployee.getLocation().getValue()
+					+ "' WHERE Employees.userName = '"
+					+ oEmployee.getUserName() + "';";
+
+			oStatement.execute(sQuery);
+
+			oStatement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void updateSector(Employee oEmployee) {
+
+		Connection oConnection = null;
+		Statement oStatement = null;
+
+		try {
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
+			oStatement = oConnection.createStatement();
+
+			String sQuery = "UPDATE Employees set sector = '"
+					+ oEmployee.getSector().getValue()
+					+ "' WHERE Employees.userName = '"
+					+ oEmployee.getUserName() + "';";
+
+			oStatement.execute(sQuery);
+
+			oStatement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void updateMail(Employee oEmployee) {
+
+		Connection oConnection = null;
+		Statement oStatement = null;
+
+		try {
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
+			oStatement = oConnection.createStatement();
+
+			String sQuery = "UPDATE Employees set mail = '"
+					+ oEmployee.getMail() + "' WHERE Employees.userName = '"
+					+ oEmployee.getUserName() + "';";
+
+			oStatement.execute(sQuery);
+
+			oStatement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void updatePosition(Employee oEmployee) {
+
+		Connection oConnection = null;
+		Statement oStatement = null;
+
+		try {
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
+			oStatement = oConnection.createStatement();
+
+			String sQuery = "UPDATE Employees set position = '"
+					+ oEmployee.getPosition()
+					+ "' WHERE Employees.userName = '"
+					+ oEmployee.getUserName() + "';";
+
+			oStatement.execute(sQuery);
+
+			oStatement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void updateWorkingHour(Employee oEmployee) {
+
+		Connection oConnection = null;
+		Statement oStatement = null;
+
+		try {
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
+			oStatement = oConnection.createStatement();
+
+			String sQuery = "UPDATE Employees set workingHour = '"
+					+ oEmployee.getWorkingHour()
+					+ "' WHERE Employees.userName = '"
+					+ oEmployee.getUserName() + "';";
+
+			oStatement.execute(sQuery);
+
+			oStatement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void updateProfilePicture(Employee oEmployee) {
+
+		Connection oConnection = null;
+		Statement oStatement = null;
+
+		try {
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
+			oStatement = oConnection.createStatement();
+
+			String sQuery = "UPDATE Employees set profilePicture = '"
+					+ oEmployee.getWorkingHour()
+					+ "' WHERE Employees.userName = '"
+					+ oEmployee.getUserName() + "';";
+
+			oStatement.execute(sQuery);
+
+			oStatement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void updateStatus(Employee oEmployee) {
+
+		Connection oConnection = null;
+		Statement oStatement = null;
+
+		try {
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
+			oStatement = oConnection.createStatement();
+
+			String sQuery = "UPDATE Employees set status = '"
+					+ oEmployee.getStatus() + "' WHERE Employees.userName = '"
+					+ oEmployee.getUserName() + "';";
+
+			oStatement.execute(sQuery);
+
+			oStatement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void updateAdmin(Employee oEmployee) {
+
+		Connection oConnection = null;
+		Statement oStatement = null;
+
+		try {
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
+			oStatement = oConnection.createStatement();
+
+			String sQuery = "UPDATE Employees set admin = '"
+					+ oEmployee.getWorkingHour()
+					+ "' WHERE Employees.userName = '"
+					+ oEmployee.getUserName() + "';";
+
+			oStatement.execute(sQuery);
+
+			oStatement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 }
