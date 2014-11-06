@@ -43,6 +43,15 @@ public interface EmployeeDAOMgt {
 	public Employee searchEmployee(String oUserName) throws DataBaseConnection;
 
 	/**
+	 * This method returns an employee modified if the employee exists
+	 * 
+	 * @param oEmployee
+	 * @return
+	 * @throws DataBaseConnection
+	 */
+	public Employee modifyEmployee(Employee oEmployee) throws DataBaseConnection;
+	
+	/**
 	 * This method return a list with all the employees of the database
 	 * 
 	 * @return
