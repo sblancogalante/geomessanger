@@ -219,8 +219,8 @@ public class ChatRoom extends JFrame {
 				try {
 					if(!messageTextArea.getText().equals("Message...")){
 						textMgt.addTextMessage(message);
-						converTextArea.append(message.getTextMessage() + "\n");
 						messageTextArea.setText("");
+					
 					}
 					
 				} catch (RemoteException | NotBoundException e) {
@@ -245,7 +245,7 @@ public class ChatRoom extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addComponent(receiverPhotoLabel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
 						.addComponent(senderPhotoLabel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(18)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
@@ -253,7 +253,7 @@ public class ChatRoom extends JFrame {
 								.addComponent(scrollPane_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
 								.addComponent(separator, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
 								.addComponent(scrollPane_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(chattingWithLabel, GroupLayout.PREFERRED_SIZE, 281, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -317,7 +317,7 @@ public class ChatRoom extends JFrame {
 				converTextArea.setText("");
 				messageList = actualizarMensajes(textMgt, senderEmployee, receiverEmployee);
 				for(TextMessageVO message : messageList){
-					converTextArea.append(message.getSender().getName() +" " +message.getSender().getLastName() + ": " +  message.getTextMessage());
+					converTextArea.append(message.getSender().getName() +" " +message.getSender().getLastName() + ": " +  message.getTextMessage()+"\n");
 				}
 				
 				
