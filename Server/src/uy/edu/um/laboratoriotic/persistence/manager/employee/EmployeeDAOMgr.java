@@ -89,9 +89,6 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oStatement.execute(sInsert);
 
-			System.out.println("Se agrego con exito al empleado "
-					+ oEmployee.getUserName());
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -151,9 +148,6 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 						sResultStatus, sResultAdmin);
 
 				oList.add(oEmployee);
-
-				System.out.println("El empleado encontrado es:\n"
-						+ sResultUserName);
 
 			}
 
@@ -220,9 +214,6 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 						sResultWorkingHour, sResultProfilePicture,
 						sResultStatus, sResultAdmin);
 
-				System.out
-						.println("El empleado hallado es: " + sResultUserName);
-
 			}
 
 			oResultSet.close();
@@ -253,32 +244,11 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
-
-			String sQueryCount = "SELECT COUNT(*) FROM Employees";
-
-			ResultSet oResultSetCount = oStatement.executeQuery(sQueryCount);
-
-			if (oResultSetCount.next()) {
-
-				int nCount = oResultSetCount.getInt(1);
-
-				System.out.println("Cantidad de empleados: " + nCount);
-			}
-
+			
 			String sQuery = "DELETE FROM Employees where (Employees.userName = '"
 					+ oUserName + "') ;";
 			oStatement.execute(sQuery);
-			System.out.println(sQuery);
-
-			ResultSet oResultSetCount2 = oStatement.executeQuery(sQueryCount);
-
-			if (oResultSetCount2.next()) {
-
-				int nCount = oResultSetCount2.getInt(1);
-
-				System.out.println("Cantidad de empleados: " + nCount);
-			}
-
+						
 			oStatement.close();
 
 		} catch (SQLException e) {
@@ -360,18 +330,18 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 				int sResultEmployeeID = oResultSet.getInt(1);
 				String sResultDocument = oResultSet.getString(2);
-				String sResultID = oResultSet.getString(2);
-				String sResultName = oResultSet.getString(3);
-				String sResultLastName = oResultSet.getString(4);
-				String sResultUserName = oResultSet.getString(5);
-				String sResultPassword = oResultSet.getString(6);
-				String sResultLocation = oResultSet.getString(7);
-				String sResultSector = oResultSet.getString(8);
-				String sResultMail = oResultSet.getString(9);
-				String sResultPosition = oResultSet.getString(10);
-				String sResultWorkingHour = oResultSet.getString(11);
-				Blob sResultProfilePicture = oResultSet.getBlob(12);
-				boolean sResultStatus = oResultSet.getBoolean(13);
+				String sResultID = oResultSet.getString(3);
+				String sResultName = oResultSet.getString(4);
+				String sResultLastName = oResultSet.getString(5);
+				String sResultUserName = oResultSet.getString(6);
+				String sResultPassword = oResultSet.getString(7);
+				String sResultLocation = oResultSet.getString(8);
+				String sResultSector = oResultSet.getString(9);
+				String sResultMail = oResultSet.getString(10);
+				String sResultPosition = oResultSet.getString(11);
+				String sResultWorkingHour = oResultSet.getString(12);
+				Blob sResultProfilePicture = oResultSet.getBlob(13);
+				boolean sResultStatus = oResultSet.getBoolean(14);
 				boolean sResultAdmin = oResultSet.getBoolean(15);
 
 				if (oUserName.equals(sResultUserName)

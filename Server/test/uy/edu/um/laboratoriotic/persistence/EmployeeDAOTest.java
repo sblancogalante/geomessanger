@@ -22,41 +22,18 @@ public class EmployeeDAOTest {
 				"sblanco", "asdfg", oTypeLocation, oTypeSector,
 				"sblanco1@correo.um.edu.uy", "Programador", null, null, false, true);
 
-		/*
-		 * Employee oEmployee1 = new Employee("Luis", 48963214, "Chile",
-		 * "Testing", true);
-		 * 
-		 * Employee oEmployee2 = new Employee("Paul", 42735684, "Uruguay",
-		 * "Testing", true);
-		 */
-
-		try {
+		try {			
 			
-			System.out
-					.println("//////////////////////Test de addEmployee()//////////////////////");
-
 			EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oEmployee);
 
-			// EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oEmployee1);
-
-			// EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oEmployee2);
-
-			System.out
-					.println("//////////////////////Test de getEmployees()/////////////////////");
-
 			EmployeeDAOFactory.getEmployeeDAOMgt().getEmployees();
-
-			System.out
-					.println("//////////////////////Test de searchEmployee()/////////////////////");
 
 			EmployeeDAOFactory.getEmployeeDAOMgt().searchEmployee(
 					oEmployee.getUserName());
 
-			System.out
-					.println("//////////////////////Test de removeEmployee()/////////////////////");
-
 			EmployeeDAOFactory.getEmployeeDAOMgt().removeEmployee(
 					oEmployee.getUserName());
+			
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 			test();

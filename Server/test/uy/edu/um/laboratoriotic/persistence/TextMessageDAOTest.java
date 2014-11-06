@@ -36,8 +36,8 @@ public class TextMessageDAOTest {
 
 		try {
 
-			// EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oSender);
-			// EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oReceiver);
+			//EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oSender);
+			//EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oReceiver);
 
 			EmployeeDAOFactory.getEmployeeDAOMgt().getEmployees();
 			TextMessageDAOFactory.getTextMessageDAOMgt().addTextMessage(
