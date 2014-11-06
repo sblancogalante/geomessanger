@@ -294,11 +294,10 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				updateWorkingHour(oEmployee);
 			} else if (oEmployee.getProfilePicture() != null) {
 				updateProfilePicture(oEmployee);
-			} else if (oEmployee.getStatus()) {
-				updateStatus(oEmployee);
-			} else if (oEmployee.getAdmin()) {
-				updateAdmin(oEmployee);
 			}
+
+			updateStatus(oEmployee);
+			updateAdmin(oEmployee);
 
 			oEmployeeToReturn = searchEmployee(oEmployee.getUserName());
 
@@ -467,7 +466,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oStatement = oConnection.createStatement();
 
 			String sQuery = "UPDATE Employees set document = '"
-					+ oEmployee.getDocument()
+					+ oEmployee.getDocument().getValue()
 					+ "' WHERE Employees.userName = '"
 					+ oEmployee.getUserName() + "';";
 
@@ -714,14 +713,15 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 		Connection oConnection = null;
 		Statement oStatement = null;
+		int statusValue = oEmployee.getStatus() ? 1 : 0;
 
 		try {
 
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
 
-			String sQuery = "UPDATE Employees set status = '"
-					+ oEmployee.getStatus() + "' WHERE Employees.userName = '"
+			String sQuery = "UPDATE Employees set status = '" + statusValue
+					+ "' WHERE Employees.userName = '"
 					+ oEmployee.getUserName() + "';";
 
 			oStatement.execute(sQuery);
@@ -745,14 +745,14 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 		Connection oConnection = null;
 		Statement oStatement = null;
+		int adminValue = oEmployee.getAdmin() ? 1 : 0;
 
 		try {
 
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
 
-			String sQuery = "UPDATE Employees set admin = '"
-					+ oEmployee.getWorkingHour()
+			String sQuery = "UPDATE Employees set admin = '" + adminValue
 					+ "' WHERE Employees.userName = '"
 					+ oEmployee.getUserName() + "';";
 
