@@ -19,7 +19,7 @@ public class TextMessage extends Message {
 	private String textMessage;
 	private Employee sender;
 	private Employee receiver;
-	private Timestamp date;	
+	private Timestamp date;
 
 	/*
 	 * Constructor
@@ -33,7 +33,18 @@ public class TextMessage extends Message {
 		this.sender = oSender;
 		this.receiver = oReceiver;
 		this.date = oDate;
-		
+
+	}
+
+	public TextMessage(int oIDMessage, String oTextMessage, Employee oSender,
+			Employee oReceiver) {
+		// TODO Auto-generated constructor stub
+		super(oIDMessage);
+
+		this.textMessage = oTextMessage;
+		this.sender = oSender;
+		this.receiver = oReceiver;
+
 	}
 
 	/*
@@ -41,8 +52,8 @@ public class TextMessage extends Message {
 	 */
 	public TextMessageVO toVO() {
 
-		return new TextMessageVO(this.getIDMessage(), textMessage, sender.toVO(),
-				receiver.toVO(), date);
+		return new TextMessageVO(this.getIDMessage(), textMessage,
+				sender.toVO(), receiver.toVO(), date);
 	}
 
 	/*

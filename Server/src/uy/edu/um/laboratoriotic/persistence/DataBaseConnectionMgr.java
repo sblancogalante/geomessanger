@@ -32,7 +32,7 @@ public class DataBaseConnectionMgr {
 		
 		try {
 			
-			propiedades.load(new FileInputStream("datasource.properties"));
+			propiedades.load(new FileInputStream("dataSource.properties"));
 			dataSource = BasicDataSourceFactory.createDataSource(propiedades);
 			
 		} catch (FileNotFoundException e) {

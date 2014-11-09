@@ -79,7 +79,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 			oPrepStatement.setInt(2, sIDSender);
 			oPrepStatement.setInt(3, sIDReceiver);
 
-			oPrepStatement.execute();		
+			oPrepStatement.execute();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -121,12 +121,17 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 					+ " FROM Employees e, TextMessages tm"
 					+ " WHERE tm.employeeSenderID = e.employeeID AND tm.employeeSenderID = "
 					+ oSenderID
+					+ " AND tm.employeeReceiverID = "
+					+ oReceiverID
 					+ " UNION "
 					+ "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.textMessageID, tm.text, tm.date"
 					+ " FROM Employees e, TextMessages tm"
-					+ " WHERE tm.employeeReceiverID = e.employeeID AND tm.employeeReceiverID = "
-					+ oReceiverID + " ) as result ORDER BY result.date ASC;";
-			
+					+ " WHERE tm.employeeReceiverID = e.employeeID AND tm.employeeSenderID = "
+					+ oReceiverID
+					+ " AND tm.employeeReceiverID = "
+					+ oSenderID
+					+ " ) as result ORDER BY result.date ASC;";
+
 			oResultSet = oStatement.executeQuery(sQuery);
 
 			while (oResultSet.next()) {
@@ -141,7 +146,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 						sSender, sReceiver, sDate);
 
 				oList.add(oTextMessages);
-				
+
 			}
 
 			oResultSet.close();
