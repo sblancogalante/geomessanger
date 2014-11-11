@@ -6,13 +6,14 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.services.ServiceFacade;
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageMgt;
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageRemoteMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
 
 public class FileMessageMgr implements FileMessageMgt {
-	
+
 	/*
 	 * Attributes of the class
 	 */
@@ -42,39 +43,41 @@ public class FileMessageMgr implements FileMessageMgt {
 			throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
 
-		FileMessageRemoteMgt oFileMessageRemoteMgt = lookUp(
-				"FileMessageRemoteMgr", 1099);
+		FileMessageRemoteMgt oFileMessageRemoteMgt = newLookUp("FileMessageRemoteMgr");
 
 		oFileMessageRemoteMgt.addFileMessage(oFileMessageVO);
-		
+
 	}
 
-	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender, EmployeeVO oReceiver) throws RemoteException, NotBoundException {
+	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender,
+			EmployeeVO oReceiver) throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
-		
+
 		ArrayList<FileMessageVO> oArrayListToReturn = new ArrayList<>();
-		
-		FileMessageRemoteMgt oFileMessageRemoteMgt = lookUp(
-				"FileMessageRemoteMgr", 1099);
-		
-		oArrayListToReturn = oFileMessageRemoteMgt.getFileMessages(oSender, oReceiver);
-		
+
+		FileMessageRemoteMgt oFileMessageRemoteMgt = newLookUp("FileMessageRemoteMgr");
+
+		oArrayListToReturn = oFileMessageRemoteMgt.getFileMessages(oSender,
+				oReceiver);
+
 		return oArrayListToReturn;
 	}
 
 	/*
 	 * Helping methods
 	 */
-	private FileMessageRemoteMgt lookUp(String sObjectService, int oPortNumber)
+	private FileMessageRemoteMgt newLookUp(String sObjectService)
 			throws RemoteException, NotBoundException {
 
-		FileMessageRemoteMgt oReturn;
+		FileMessageRemoteMgt oFileMessageRemoteMgtToReturn;
 
-		Registry oRegistry = LocateRegistry.getRegistry(oPortNumber);
-		oReturn = (FileMessageRemoteMgt) oRegistry.lookup(sObjectService);
+		Registry oRegistry = LocateRegistry
+				.getRegistry(ServiceFacade.getInstance().getHost(),
+						ServiceFacade.getInstance().getPort());
+		oFileMessageRemoteMgtToReturn = (FileMessageRemoteMgt) oRegistry
+				.lookup(sObjectService);
 
-		return oReturn;
+		return oFileMessageRemoteMgtToReturn;
 	}
-
 
 }
