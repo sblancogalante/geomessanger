@@ -3,6 +3,9 @@ package uy.edu.um.laboratoriotic.communication.manager.message;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.business.BusinessFacade;
+import uy.edu.um.laboratoriotic.business.management.message.FileMessageMgt;
+import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageRemoteMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
@@ -13,7 +16,7 @@ import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
  * @author sblanco1
  *
  */
-public class FileMessageRemoteMgr implements FileMessageRemoteMgt{
+public class FileMessageRemoteMgr implements FileMessageRemoteMgt {
 
 	/*
 	 * Attributes of the class
@@ -35,7 +38,7 @@ public class FileMessageRemoteMgr implements FileMessageRemoteMgt{
 
 		return instance;
 	}
-	
+
 	/*
 	 * Management implementation methods
 	 */
@@ -43,7 +46,17 @@ public class FileMessageRemoteMgr implements FileMessageRemoteMgt{
 	public void addFileMessage(FileMessageVO oFileMessageVO)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		
+
+		FileMessageMgt oFileMessageMgt = BusinessFacade.getInstance()
+				.getFileMessageFactory().getFileMessageMgt();
+
+		try {
+			oFileMessageMgt.addFileMessage(oFileMessageVO);
+		} catch (DataBaseConnection e) {
+			// TODO Auto-generated catch block
+			
+		}
+
 	}
 
 	@Override
@@ -57,7 +70,7 @@ public class FileMessageRemoteMgr implements FileMessageRemoteMgt{
 	public void clearHistory(EmployeeVO oSender, EmployeeVO oReceiver)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		
-	}	
-	
+
+	}
+
 }

@@ -5,7 +5,6 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 import uy.edu.um.laboratoriotic.business.entities.message.FileMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
@@ -57,31 +56,22 @@ public class FileMessageDAOMgr implements FileMessageDAOMgt {
 			Blob sFile = oFileMessage.getFileMessage();
 			int sIDSender = oFileMessage.getSender().getEmployeeID();
 			int sIDReceiver = oFileMessage.getReceiver().getEmployeeID();
-			// FIXME
-			Timestamp sDate = new Timestamp(System.currentTimeMillis());
+			
 
-			String sInsert1 = "INSERT INTO FileMessages (text, employeeSenderID, employeeReceiverID, date) VALUES (?,?,?,?)";
-			// + sID + "," + sIDSender + "," + sDate + ",'"
-			// + sFile + "'," + sConf + ")";
+			String sInsert = "INSERT INTO FileMessages (file, employeeSenderID, employeeReceiverID) VALUES (?,?,?)";
+		
 
-			oPrepStatement = oConnection.prepareStatement(sInsert1);
+			oPrepStatement = oConnection.prepareStatement(sInsert);
 
-			oPrepStatement.setBlob(2, sFile);
-			oPrepStatement.setInt(3, sIDSender);
-			oPrepStatement.setInt(3, sIDReceiver);
-			oPrepStatement.setTimestamp(5, sDate);
-
-			System.out
-					.println("Se agrego con exito a la tabla de mensajes con el texto: "
-							+ sFile	+ "enviado por " + sIDSender
-							+ " , con la fecha " + sDate);
+			oPrepStatement.setBlob(1, sFile);
+			oPrepStatement.setInt(2, sIDSender);
+			oPrepStatement.setInt(3, sIDReceiver);			
 
 			oPrepStatement.execute();			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new RemoteException();
+			e.printStackTrace();			
 		} finally {
 			if (oConnection != null) {
 				try {

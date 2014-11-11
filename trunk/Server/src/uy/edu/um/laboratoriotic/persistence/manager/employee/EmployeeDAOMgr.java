@@ -280,19 +280,26 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			if (oEmployee.getDocument().getValue() != null) {
 				updateDocument(oEmployee);
-			} else if (oEmployee.getID() != null) {
+			}
+			if (oEmployee.getID() != null) {
 				updateID(oEmployee);
-			} else if (oEmployee.getLocation().getValue() != null) {
+			}
+			if (oEmployee.getLocation().getValue() != null) {
 				updateLocation(oEmployee);
-			} else if (oEmployee.getSector().getValue() != null) {
+			}
+			if (oEmployee.getSector().getValue() != null) {
 				updateSector(oEmployee);
-			} else if (oEmployee.getMail() != null) {
+			}
+			if (oEmployee.getMail() != null) {
 				updateMail(oEmployee);
-			} else if (oEmployee.getPosition() != null) {
+			}
+			if (oEmployee.getPosition() != null) {
 				updatePosition(oEmployee);
-			} else if (oEmployee.getWorkingHour() != null) {
+			}
+			if (oEmployee.getWorkingHour() != null) {
 				updateWorkingHour(oEmployee);
-			} else if (oEmployee.getProfilePicture() != null) {
+			}
+			if (oEmployee.getProfilePicture() != null) {
 				updateProfilePicture(oEmployee);
 			}
 
