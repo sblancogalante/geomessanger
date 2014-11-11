@@ -1,13 +1,13 @@
 package uy.edu.um.laboratoriotic.persistence.manager.general;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.general.Type;
+import uy.edu.um.laboratoriotic.persistence.DataBaseConnectionMgr;
 import uy.edu.um.laboratoriotic.persistence.management.general.GeneralDAOMgt;
 
 /**
@@ -22,9 +22,6 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 	 * Attributes of the class
 	 */
 	private static GeneralDAOMgr instance = null;
-	private static final String DRIVER_JDBC = "org.hsqldb.jdbc.JDBCDriver";
-	private static final String URL_MEM_JDBC = "jdbc:hsqldb:mem:Server";
-	private static final String CREATE_TABLE_TYPE = "CREATE TABLE Types (typeID INT PRIMARY KEY NOT NULL, type VARCHAR(30) NOT NULL, value VARCHAR(30) NOT NULL)";
 
 	/*
 	 * Constructor of the class
@@ -44,7 +41,7 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 	}
 
 	/*
-	 * Management interface method implementations
+	 * Management method implementations
 	 */
 	@Override
 	public void addType(Type oType) {
@@ -54,7 +51,7 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 
 		try {
 
-			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 
 			oStatement = oConnection.createStatement();
 
@@ -97,7 +94,7 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 
 		try {
 
-			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
 
 			String sQueryCount = "SELECT COUNT(*) FROM Types";
@@ -150,7 +147,7 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 
 		try {
 
-			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
 
 			String sQuery = "SELECT * FROM Types where (Type.type = '" + oType
@@ -196,7 +193,7 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 
 		try {
 
-			oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
 			String sQuery = "SELECT * FROM Types ORDER BY type ASC,value ASC;";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
@@ -232,59 +229,6 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 		}
 
 		return oListToReturn;
-	}
-
-	/*
-	 * Helping methods
-	 */
-	private Connection connect(String oDBDriver, String dBDirection) {
-
-		Connection oResult = null;
-
-		try {
-
-			Class.forName(oDBDriver);
-			oResult = DriverManager.getConnection(dBDirection);
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return oResult;
-	}
-
-	public void createTable() {
-
-		Connection oConnection = null;
-		Statement oStatement;
-		boolean bValue = false;
-
-		oConnection = connect(DRIVER_JDBC, URL_MEM_JDBC);
-
-		try {
-
-			oStatement = oConnection.createStatement();
-			bValue = oStatement.execute(CREATE_TABLE_TYPE);
-			if (!bValue) {
-				System.out.println("Se ejecuto con exito");
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if (oConnection != null) {
-				try {
-					oConnection.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
 	}
 
 }
