@@ -126,9 +126,11 @@ public class EmployeeMgr implements EmployeeMgt {
 		Employee oEmployeeToReturn = null;
 
 		oEmployee = oNewDAOEmployee.searchEmployee(oEmployeeVO.getUserName());
+		
+		Employee oEmployeeAux = Helper.modularizeEmployee(oEmployeeVO);
 
 		if (oEmployee != null) {
-			oEmployeeToReturn = oNewDAOEmployee.modifyEmployee(oEmployee);
+			oEmployeeToReturn = oNewDAOEmployee.modifyEmployee(oEmployeeAux);
 		} else {
 			System.out.println("No se encontro el usuario con identificacion "
 					+ oEmployeeVO.getEmployeeID());
