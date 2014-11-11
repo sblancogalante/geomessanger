@@ -391,7 +391,7 @@ INSERT INTO `laboratorio_tic`.`Types`
 VALUES
 (
 "Documento",
-"Libreta de consucir"
+"Libreta de conducir"
 );
 
 INSERT INTO `laboratorio_tic`.`Types`

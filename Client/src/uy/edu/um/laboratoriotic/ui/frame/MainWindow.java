@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.PopupMenu;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
@@ -36,6 +35,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -52,8 +52,6 @@ import uy.edu.um.laboratoriotic.ui.UserProfile;
 import uy.edu.um.laboratoriotic.ui.ABM.CreateUser;
 import uy.edu.um.laboratoriotic.ui.ABM.DeleteUser;
 import uy.edu.um.laboratoriotic.ui.panel.DisplayUserPanelRenderer;
-
-import javax.swing.JScrollPane;
 
 public class MainWindow extends JFrame {
 
