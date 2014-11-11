@@ -6,6 +6,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.services.ServiceFacade;
+import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageRemoteMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -42,8 +44,8 @@ public class TextMessageMgr implements TextMessageMgt {
 			throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
 
-		TextMessageRemoteMgt oTextMessageRemoteMgt = lookUp(
-				"TextMessageRemoteMgr", 1099);
+		TextMessageRemoteMgt oTextMessageRemoteMgt = newLookUp(
+				"TextMessageRemoteMgr");
 
 		oTextMessageRemoteMgt.addTextMessage(oTextMessageVO);
 		
@@ -55,8 +57,8 @@ public class TextMessageMgr implements TextMessageMgt {
 		
 		ArrayList<TextMessageVO> oArrayListToReturn = new ArrayList<>();
 		
-		TextMessageRemoteMgt oTextMessageRemoteMgt = lookUp(
-				"TextMessageRemoteMgr", 1099);
+		TextMessageRemoteMgt oTextMessageRemoteMgt = newLookUp(
+				"TextMessageRemoteMgr");
 		
 		oArrayListToReturn = oTextMessageRemoteMgt.getTextMessages(oSender, oReceiver);
 		
@@ -65,16 +67,19 @@ public class TextMessageMgr implements TextMessageMgt {
 
 	/*
 	 * Helping methods
-	 */
-	private TextMessageRemoteMgt lookUp(String sObjectService, int oPortNumber)
+	 */	
+	private TextMessageRemoteMgt newLookUp(String sObjectService)
 			throws RemoteException, NotBoundException {
 
-		TextMessageRemoteMgt oReturn;
+		TextMessageRemoteMgt oTextMessageRemoteMgtToReturn;
 
-		Registry oRegistry = LocateRegistry.getRegistry(oPortNumber);
-		oReturn = (TextMessageRemoteMgt) oRegistry.lookup(sObjectService);
+		Registry oRegistry = LocateRegistry
+				.getRegistry(ServiceFacade.getInstance().getHost(),
+						ServiceFacade.getInstance().getPort());
+		oTextMessageRemoteMgtToReturn = (TextMessageRemoteMgt) oRegistry
+				.lookup(sObjectService);
 
-		return oReturn;
+		return oTextMessageRemoteMgtToReturn;
 	}
 
 }
