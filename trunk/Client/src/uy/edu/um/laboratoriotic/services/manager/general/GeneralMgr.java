@@ -6,6 +6,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.services.ServiceFacade;
 import uy.edu.um.laboratoriotic.services.management.general.GeneralMgt;
 import uy.edu.um.laboratoriotic.services.management.general.GeneralRemoteMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
@@ -45,7 +46,7 @@ public class GeneralMgr implements GeneralMgt {
 			NotBoundException {
 		// TODO Auto-generated method stub
 
-		GeneralRemoteMgt oGeneralRemoteMgt = lookUp("GeneralRemoteMgr", 1099);; 
+		GeneralRemoteMgt oGeneralRemoteMgt = newLookUp("GeneralRemoteMgr");; 
 		oGeneralRemoteMgt.addType(oTypeVO);
 		
 	}
@@ -55,7 +56,7 @@ public class GeneralMgr implements GeneralMgt {
 			NotBoundException {
 		// TODO Auto-generated method stub
 		
-		GeneralRemoteMgt oGeneralRemoteMgt = lookUp("GeneralRemoteMgr", 1099);; 
+		GeneralRemoteMgt oGeneralRemoteMgt = newLookUp("GeneralRemoteMgr");; 
 		oGeneralRemoteMgt.removeType(oTypeVO);
 
 	}
@@ -74,7 +75,7 @@ public class GeneralMgr implements GeneralMgt {
 
 		ArrayList<TypeVO> oListToReturn = new ArrayList<>();
 
-		GeneralRemoteMgt oGeneralRemoteMgt = lookUp("GeneralRemoteMgr", 1099);
+		GeneralRemoteMgt oGeneralRemoteMgt = newLookUp("GeneralRemoteMgr");
 		oListToReturn = oGeneralRemoteMgt.getTypes(oType);
 
 		return oListToReturn;		
@@ -82,17 +83,19 @@ public class GeneralMgr implements GeneralMgt {
 	
 	/*
 	 * Helping methods
-	 */
-	private GeneralRemoteMgt lookUp(String sObjectService, int oPortNumber)
+	 */	
+	private GeneralRemoteMgt newLookUp(String sObjectService)
 			throws RemoteException, NotBoundException {
-		
-		GeneralRemoteMgt oReturn;
 
-		Registry oRegistry = LocateRegistry.getRegistry(oPortNumber);
-		oReturn = (GeneralRemoteMgt) oRegistry.lookup(sObjectService);
+		GeneralRemoteMgt oGeneralRemoteMgtToReturn;
 
-		return oReturn;
+		Registry oRegistry = LocateRegistry
+				.getRegistry(ServiceFacade.getInstance().getHost(),
+						ServiceFacade.getInstance().getPort());
+		oGeneralRemoteMgtToReturn = (GeneralRemoteMgt) oRegistry
+				.lookup(sObjectService);
 
-	}	
+		return oGeneralRemoteMgtToReturn;
+	}
 
 }

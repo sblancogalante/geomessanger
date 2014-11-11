@@ -13,8 +13,7 @@ public class MainClient {
 	public static void main(String[] args) {
 
 		Login oLogin = new Login();
-		oLogin.setVisible(true);
-		
+		oLogin.setVisible(true);	
 
 	}
 }

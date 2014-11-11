@@ -7,7 +7,6 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.services.ServiceFacade;
-import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageRemoteMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -44,30 +43,30 @@ public class TextMessageMgr implements TextMessageMgt {
 			throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
 
-		TextMessageRemoteMgt oTextMessageRemoteMgt = newLookUp(
-				"TextMessageRemoteMgr");
+		TextMessageRemoteMgt oTextMessageRemoteMgt = newLookUp("TextMessageRemoteMgr");
 
 		oTextMessageRemoteMgt.addTextMessage(oTextMessageVO);
-		
+
 	}
 
 	@Override
-	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSender, EmployeeVO oReceiver) throws RemoteException, NotBoundException {
+	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSender,
+			EmployeeVO oReceiver) throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
-		
+
 		ArrayList<TextMessageVO> oArrayListToReturn = new ArrayList<>();
-		
-		TextMessageRemoteMgt oTextMessageRemoteMgt = newLookUp(
-				"TextMessageRemoteMgr");
-		
-		oArrayListToReturn = oTextMessageRemoteMgt.getTextMessages(oSender, oReceiver);
-		
+
+		TextMessageRemoteMgt oTextMessageRemoteMgt = newLookUp("TextMessageRemoteMgr");
+
+		oArrayListToReturn = oTextMessageRemoteMgt.getTextMessages(oSender,
+				oReceiver);
+
 		return oArrayListToReturn;
 	}
 
 	/*
 	 * Helping methods
-	 */	
+	 */
 	private TextMessageRemoteMgt newLookUp(String sObjectService)
 			throws RemoteException, NotBoundException {
 
@@ -81,5 +80,5 @@ public class TextMessageMgr implements TextMessageMgt {
 
 		return oTextMessageRemoteMgtToReturn;
 	}
-
+	
 }
