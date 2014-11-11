@@ -122,6 +122,16 @@ public class MainWindow extends JFrame {
 		exitMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
 				dispose();
+				actualUser.setStatus(false);
+				try {
+					employeeMgt.modifyEmployee(actualUser);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		fileMenu.add(exitMenuItem);

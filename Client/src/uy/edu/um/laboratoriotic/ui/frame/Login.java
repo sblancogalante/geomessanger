@@ -129,13 +129,8 @@ public class Login extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				System.out.println("User name: " + userText.getText());
-				System.out.println("Password: "
-						+ String.valueOf(passwordText.getPassword()));
 				
-
-			}
-			
+			}		
 			
 		});
 		
