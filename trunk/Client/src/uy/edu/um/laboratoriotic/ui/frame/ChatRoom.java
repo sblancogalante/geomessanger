@@ -53,6 +53,7 @@ public class ChatRoom extends JFrame {
 	private JPanel contentPane;
 	private JTextField scrollPane;
 	private ArrayList<TextMessageVO> messageList;
+	private ArrayList<TextMessageVO> pastMessageList;
 
 
 	/**
@@ -314,14 +315,16 @@ public class ChatRoom extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				converTextArea.setText("");
+				
 				messageList = actualizarMensajes(textMgt, senderEmployee, receiverEmployee);
+				
+				converTextArea.setText("");
+				
 				for(TextMessageVO message : messageList){
 					converTextArea.append(message.getSender().getName() +" " +message.getSender().getLastName() + ": " +  message.getTextMessage()+"\n");
 				}
 				
-				
-				
+				pastMessageList = actualizarMensajes(textMgt, senderEmployee, receiverEmployee);
 			}
 		});
 	
@@ -400,4 +403,7 @@ public class ChatRoom extends JFrame {
 	     // 3. Convert the buffered image into an ImageIcon for return
 	     return (new ImageIcon(resizedImg));
 	 }
+	
+	
+	
 }

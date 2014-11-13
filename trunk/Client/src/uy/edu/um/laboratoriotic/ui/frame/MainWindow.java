@@ -15,6 +15,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.rmi.NotBoundException;
@@ -83,10 +85,64 @@ public class MainWindow extends JFrame {
 		actualUser = employeeMgt.getLoginEmployee(actualFilterUser);
 		
 		actualUser.setStatus(true);
+		
 		employeeMgt.modifyEmployee(actualUser);
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		this.addWindowListener(new WindowListener(){
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				actualUser.setStatus(false);
+				try {
+					employeeMgt.modifyEmployee(actualUser);
+				} catch (RemoteException | NotBoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
 		this.setTitle("Main Window");
 		setBounds(100, 100, 600, 620);
 		Dimension d = new Dimension(600, 550);
@@ -121,7 +177,6 @@ public class MainWindow extends JFrame {
 		exitMenuItem = new JMenuItem("Exit");
 		exitMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
-				dispose();
 				actualUser.setStatus(false);
 				try {
 					employeeMgt.modifyEmployee(actualUser);
@@ -132,6 +187,7 @@ public class MainWindow extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				dispose();
 			}
 		});
 		fileMenu.add(exitMenuItem);

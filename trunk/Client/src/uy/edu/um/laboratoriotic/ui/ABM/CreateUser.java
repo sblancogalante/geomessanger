@@ -34,7 +34,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
+import uy.edu.um.laboratoriotic.services.factory.general.GeneralFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
+import uy.edu.um.laboratoriotic.services.management.general.GeneralMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
 import uy.edu.um.laboratoriotic.ui.ErrorDialog;
@@ -72,6 +74,12 @@ public class CreateUser extends JDialog {
 
 		photoPath = "Images/Foto.png";
 
+		final EmployeeMgt employeeMgt = EmployeeFactory.getInstance()
+				.getEmployeeMgt();
+		
+		final GeneralMgt generalMgr = GeneralFactory.getInstance().getGeneralMgt();
+			
+		
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -130,6 +138,12 @@ public class CreateUser extends JDialog {
 
 		String[] comboBoxDefaultArray = { "<<Default>>" };
 		
+		String[] comboBoxLocations;
+		
+		String[] comboBoxSectors;
+		
+		String[] comboBoxTypeDocument;
+		
 		JLabel workingHoursLabel = new JLabel("Working Hours: ");
 		
 		String[] hours = {"00","01","02","03","03","04","05","06","07","08","09","10","11","12",
@@ -177,8 +191,7 @@ public class CreateUser extends JDialog {
 						positionText.getText(), workingHours, profilePic,
 						false, isAdminCheckBox.isSelected());
 
-				EmployeeMgt employeeMgt = EmployeeFactory.getInstance()
-						.getEmployeeMgt();
+				
 
 				try {
 					String pass1 = String.valueOf(passwordText.getPassword());
