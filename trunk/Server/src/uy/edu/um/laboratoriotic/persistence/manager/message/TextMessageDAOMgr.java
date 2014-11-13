@@ -117,16 +117,16 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 			int oReceiverID = EmployeeDAOFactory.getEmployeeDAOMgt()
 					.searchEmployee(oReceiver.getUserName()).getEmployeeID();
 
-			sQuery = "SELECT * FROM (SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.textMessageID, tm.text, tm.date"
+			sQuery = "SELECT * FROM (SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.textMessageID, tm.text, tm.date, tm.employeeSenderID, tm.employeeReceiverID"
 					+ " FROM Employees e, TextMessages tm"
 					+ " WHERE tm.employeeSenderID = e.employeeID AND tm.employeeSenderID = "
 					+ oSenderID
 					+ " AND tm.employeeReceiverID = "
 					+ oReceiverID
-					+ " UNION "
-					+ "SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.textMessageID, tm.text, tm.date"
+					+ " UNION"
+					+ " SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.textMessageID, tm.text, tm.date, tm.employeeSenderID, tm.employeeReceiverID"
 					+ " FROM Employees e, TextMessages tm"
-					+ " WHERE tm.employeeReceiverID = e.employeeID AND tm.employeeSenderID = "
+					+ " WHERE tm.employeeSenderID = e.employeeID AND tm.employeeSenderID = "
 					+ oReceiverID
 					+ " AND tm.employeeReceiverID = "
 					+ oSenderID

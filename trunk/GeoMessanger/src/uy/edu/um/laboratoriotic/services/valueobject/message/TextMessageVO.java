@@ -36,6 +36,17 @@ public class TextMessageVO extends MessageVO implements Serializable {
 		this.date = oDate;	
 
 	}
+	
+	public TextMessageVO(int oIDMessage, String oTextMessage,
+			EmployeeVO oSender, EmployeeVO oReceiver) {
+		// TODO Auto-generated constructor stub
+		super(oIDMessage);
+
+		this.textMessage = oTextMessage;
+		this.sender = oSender;
+		this.receiver = oReceiver;		
+
+	}
 
 	/*
 	 * Getters & Setters
