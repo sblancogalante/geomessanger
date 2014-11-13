@@ -43,6 +43,16 @@ public interface EmployeeDAOMgt {
 	public Employee searchEmployee(String oUserName) throws DataBaseConnection;
 
 	/**
+	 * This method searches an employee in the database
+	 * 
+	 * @param oUserName
+	 * @return
+	 * @throws DataBaseConnection
+	 * @throws RemoteException
+	 */
+	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection;
+	
+	/**
 	 * This method returns an employee modified if the employee exists
 	 * 
 	 * @param oEmployee
@@ -83,5 +93,5 @@ public interface EmployeeDAOMgt {
 	 */
 	public Employee getLoginEmployee(String oUserName, String oPassword)
 			throws DataBaseConnection;
-
+	
 }

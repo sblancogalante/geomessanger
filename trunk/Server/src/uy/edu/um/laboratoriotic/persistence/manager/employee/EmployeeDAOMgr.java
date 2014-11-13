@@ -115,7 +115,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
 
-			String sQuery = "DELETE FROM Employees where (Employees.userName = '"
+			String sQuery = "DELETE FROM Employees WHERE (Employees.userName = '"
 					+ oUserName + "') ;";
 			oStatement.execute(sQuery);
 
@@ -215,6 +215,71 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			String sQuery = "SELECT * FROM Employees where (Employees.userName = '"
 					+ oUserName + "');";
+			ResultSet oResultSet = oStatement.executeQuery(sQuery);
+
+			while (oResultSet.next()) {
+
+				int sResultEmployeeID = oResultSet.getInt(1);
+				String sResultDocument = oResultSet.getString(2);
+				String sResultID = oResultSet.getString(3);
+				String sResultName = oResultSet.getString(4);
+				String sResultLastName = oResultSet.getString(5);
+				String sResultUserName = oResultSet.getString(6);
+				String sResultPassword = oResultSet.getString(7);
+				String sResultLocation = oResultSet.getString(8);
+				String sResultSector = oResultSet.getString(9);
+				String sResultMail = oResultSet.getString(10);
+				String sResultPosition = oResultSet.getString(11);
+				String sResultWorkingHour = oResultSet.getString(12);
+				Blob sResultProfilePicture = oResultSet.getBlob(13);
+				boolean sResultStatus = oResultSet.getBoolean(14);
+				boolean sResultAdmin = oResultSet.getBoolean(15);
+
+				Type oTypeDocument = new Type("Document", sResultDocument);
+				Type oTypeLocation = new Type("Location", sResultLocation);
+				Type oTypeSector = new Type("Sector", sResultSector);
+
+				oEmployee = new Employee(sResultEmployeeID, oTypeDocument,
+						sResultID, sResultName, sResultLastName,
+						sResultUserName, sResultPassword, oTypeLocation,
+						oTypeSector, sResultMail, sResultPosition,
+						sResultWorkingHour, sResultProfilePicture,
+						sResultStatus, sResultAdmin);
+
+			}
+
+			oResultSet.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (oConnection != null) {
+				try {
+					oConnection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return oEmployee;
+	}
+	
+	@Override
+	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection {
+	
+
+		Employee oEmployee = null;
+		Statement oStatement = null;
+		Connection oConnection = null;
+
+		try {
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
+			oStatement = oConnection.createStatement();
+
+			String sQuery = "SELECT * FROM Employees where (Employees.employeeID = '"
+					+ oEmployeeID + "');";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 
 			while (oResultSet.next()) {
