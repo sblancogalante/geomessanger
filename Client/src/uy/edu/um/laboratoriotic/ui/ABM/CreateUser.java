@@ -13,6 +13,7 @@ import java.io.File;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.Blob;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
@@ -69,6 +70,7 @@ public class CreateUser extends JDialog {
 		setBounds(100, 100, 600, 635);
 
 		Dimension d = new Dimension(600, 635);
+		
 		this.setMinimumSize(d);
 		this.setMaximumSize(d);
 
@@ -153,6 +155,23 @@ public class CreateUser extends JDialog {
 		
 		JLabel toLabel = new JLabel("to");
 		
+		try {
+			ArrayList<TypeVO> locationTypeArray = generalMgr.getTypes("Pais");
+			ArrayList<TypeVO> sectorTypeArray = generalMgr.getTypes("Sector");
+			ArrayList<TypeVO> documentTypeArray = generalMgr.getTypes("Documento");
+			ArrayList<String> locationArray = arrayTypeToString(locationTypeArray);
+			ArrayList<String> sectorArray = arrayTypeToString(sectorTypeArray);
+			ArrayList<String> documentArray = arrayTypeToString(documentTypeArray);
+			
+		} catch (RemoteException | NotBoundException e1) {
+			ErrorDialog typeError = new ErrorDialog("Se ha producido un error al comunicarse con la base de datos."
+					+ " No se consiguieron los paises, secotres ni documentos"
+					+ "existentes. \n \n ERROR: " + e1.getMessage());
+			typeError.setVisible(true);
+			e1.printStackTrace();
+		}
+		
+		
 		final JComboBox<String> secondHour = new JComboBox(hours);
 
 		final JComboBox<String> locationComboBox = new JComboBox(comboBoxDefaultArray);
@@ -161,9 +180,9 @@ public class CreateUser extends JDialog {
 
 		final JCheckBox isAdminCheckBox = new JCheckBox("is Admin");
 
-		final JLabel lblTypeOfDocument = new JLabel("Type of Document: ");
+		final JLabel documentTypeLabel = new JLabel("Type of Document: ");
 
-		final JComboBox typeDocumentComboBox = new JComboBox(
+		final JComboBox<String> typeDocumentComboBox = new JComboBox(
 				comboBoxDefaultArray);
 
 		JButton createUserButton = new JButton("Create User");
@@ -197,17 +216,25 @@ public class CreateUser extends JDialog {
 					String pass1 = String.valueOf(passwordText.getPassword());
 					String pass2 = String.valueOf(repeatPasswordText
 							.getPassword());
-					if (pass1.equals(pass2)) {
+					
+					EmployeeVO verifyUserName = employeeMgt.searchEmployee(oEmployee.getUserName());
+					
+					if (pass1.equals(pass2) && verifyUserName == null) {
 						employeeMgt.addEmployee(oEmployee);
 						System.out.println("Se ha creado: "
 								+ oEmployee.getUserName());
 						dispose();
-					} else {
-						ErrorDialog errorDialog = new ErrorDialog(
+					} else if(!pass1.equals(pass2)) {
+						ErrorDialog errorDialogPassword = new ErrorDialog(
 								"Se ha detectado un error, las contraseñas ingresadas deben ser iguales. Porfavor intente nuevamente.");
-						errorDialog.setVisible(true);
+						errorDialogPassword.setVisible(true);
 						passwordText.setText("");
 						repeatPasswordText.setText("");
+					}else if (!(verifyUserName == null)){
+						ErrorDialog errorDialogUserName = new ErrorDialog(
+								"Se ha detectado un error, el nombre de usuario ingresado ya existe. Porfavor intente nuevamente.");
+						userNameText.setText("");
+						errorDialogUserName.setVisible(true);
 					}
 				} catch (RemoteException | NotBoundException e) {
 					ErrorDialog errorDialog = new ErrorDialog(
@@ -348,7 +375,7 @@ public class CreateUser extends JDialog {
 								gl_panel_2
 										.createSequentialGroup()
 										.addGap(198)
-										.addComponent(lblTypeOfDocument)
+										.addComponent(documentTypeLabel)
 										.addGap(18)
 										.addComponent(typeDocumentComboBox,
 												GroupLayout.PREFERRED_SIZE,
@@ -366,7 +393,7 @@ public class CreateUser extends JDialog {
 														.createParallelGroup(
 																Alignment.BASELINE)
 														.addComponent(
-																lblTypeOfDocument)
+																documentTypeLabel)
 														.addComponent(
 																typeDocumentComboBox,
 																GroupLayout.PREFERRED_SIZE,
@@ -738,10 +765,19 @@ public class CreateUser extends JDialog {
 		titlePanel.setLayout(gl_panel1);
 		contentPanel.setLayout(gl_contentPanel);
 	}
-
+	
 	// METODOS
 
-	public static String pickPath(JFileChooser fileChooser) {
+
+	private ArrayList<String> arrayTypeToString(ArrayList<TypeVO> typeArray) {
+		ArrayList<String> oReturn = new ArrayList<String>();
+		for(TypeVO oType : typeArray){
+			oReturn.add(oType.getValue());
+		}
+		return oReturn;
+	}
+
+	private static String pickPath(JFileChooser fileChooser) {
 		String path = null;
 		JDialog dialog = new JDialog();
 		int returnVal = fileChooser.showOpenDialog(dialog);
@@ -752,7 +788,7 @@ public class CreateUser extends JDialog {
 	}
 
 	// resize image
-	public ImageIcon rescaleImage(File source, int maxHeight, int maxWidth) {
+	private ImageIcon rescaleImage(File source, int maxHeight, int maxWidth) {
 		int newHeight = 0, newWidth = 0; // Variables for the new height and
 											// width
 		int priorHeight = 0, priorWidth = 0;
