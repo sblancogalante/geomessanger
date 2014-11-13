@@ -53,7 +53,7 @@ public class TextMessage extends Message {
 	public TextMessageVO toVO() {
 
 		return new TextMessageVO(this.getIDMessage(), textMessage,
-				sender.toVO(), receiver.toVO(), date);
+				sender.toVO(), receiver.toVO());
 	}
 
 	/*

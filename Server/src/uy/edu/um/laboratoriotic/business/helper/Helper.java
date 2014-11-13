@@ -9,16 +9,16 @@ import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 
 /**
- * This class is a helper class to modularize the conversion of value object to 
+ * This class is a helper class to modularize the conversion of value object to
  * object
  * 
  * @author sblanco1
- *
+ * 
  */
 public class Helper {
 
 	/**
-	 * This method converts from EmployeeVO to Employee 
+	 * This method converts from EmployeeVO to Employee
 	 * 
 	 * @param oEmployeeVO
 	 * @return
@@ -35,7 +35,7 @@ public class Helper {
 				oEmployeeVO.getSector().getType(), oEmployeeVO.getSector()
 						.getValue());
 
-		Employee oEmployee = new Employee(oTypeDocument, oEmployeeVO.getID(),
+		Employee oEmployee = new Employee(oEmployeeVO.getEmployeeID(), oTypeDocument, oEmployeeVO.getID(),
 				oEmployeeVO.getName(), oEmployeeVO.getLastName(),
 				oEmployeeVO.getUserName(), oEmployeeVO.getPassword(),
 				oTypeLocation, oTypeSector, oEmployeeVO.getMail(),
@@ -45,7 +45,7 @@ public class Helper {
 
 		return oEmployee;
 	}
-	
+
 	/**
 	 * This method converts from TextMessageVO to TextMessage
 	 * 
@@ -67,17 +67,17 @@ public class Helper {
 				.getSector().getType(), oTextMessageVO.getSender().getSector()
 				.getValue());
 
-		Employee oSenderEmployee = new Employee(oTypeDocumentSender,
-				oTextMessageVO.getSender().getID(), oTextMessageVO.getSender()
-						.getName(), oTextMessageVO.getSender().getLastName(),
-				oTextMessageVO.getSender().getUserName(), oTextMessageVO
-						.getSender().getPassword(), oTypeLocationSender,
-				oTypeSectorSender, oTextMessageVO.getSender().getMail(),
-				oTextMessageVO.getSender().getPosition(), oTextMessageVO
-						.getSender().getWorkingHour(), oTextMessageVO
-						.getSender().getProfilePicture(), oTextMessageVO
-						.getSender().getStatus(), oTextMessageVO.getSender()
-						.getAdmin());
+		Employee oSenderEmployee = new Employee(oTextMessageVO.getSender()
+				.getEmployeeID(), oTypeDocumentSender, oTextMessageVO
+				.getSender().getID(), oTextMessageVO.getSender().getName(),
+				oTextMessageVO.getSender().getLastName(), oTextMessageVO
+						.getSender().getUserName(), oTextMessageVO.getSender()
+						.getPassword(), oTypeLocationSender, oTypeSectorSender,
+				oTextMessageVO.getSender().getMail(), oTextMessageVO
+						.getSender().getPosition(), oTextMessageVO.getSender()
+						.getWorkingHour(), oTextMessageVO.getSender()
+						.getProfilePicture(), oTextMessageVO.getSender()
+						.getStatus(), oTextMessageVO.getSender().getAdmin());
 
 		Type oTypeDocumentReceiver = new Type(oTextMessageVO.getReceiver()
 				.getDocument().getTypeID(), oTextMessageVO.getReceiver()
@@ -92,12 +92,12 @@ public class Helper {
 				.getSector().getType(), oTextMessageVO.getReceiver()
 				.getSector().getValue());
 
-		Employee oReceiverEmployee = new Employee(oTypeDocumentReceiver,
-				oTextMessageVO.getReceiver().getID(), oTextMessageVO
-						.getReceiver().getName(), oTextMessageVO.getReceiver()
-						.getLastName(), oTextMessageVO.getReceiver()
-						.getUserName(), oTextMessageVO.getReceiver()
-						.getPassword(), oTypeLocationReceiver,
+		Employee oReceiverEmployee = new Employee(oTextMessageVO.getReceiver()
+				.getEmployeeID(), oTypeDocumentReceiver, oTextMessageVO
+				.getReceiver().getID(), oTextMessageVO.getReceiver().getName(),
+				oTextMessageVO.getReceiver().getLastName(), oTextMessageVO
+						.getReceiver().getUserName(), oTextMessageVO
+						.getReceiver().getPassword(), oTypeLocationReceiver,
 				oTypeSectorReceiver, oTextMessageVO.getReceiver().getMail(),
 				oTextMessageVO.getReceiver().getPosition(), oTextMessageVO
 						.getReceiver().getWorkingHour(), oTextMessageVO
@@ -111,7 +111,7 @@ public class Helper {
 
 		return oTextMessage;
 	}
-	
+
 	/**
 	 * This method converts from FileMessageVO to FileMessage
 	 * 
@@ -178,5 +178,5 @@ public class Helper {
 
 		return oFileMessage;
 	}
-	
+
 }
