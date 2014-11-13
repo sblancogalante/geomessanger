@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.general.Type;
+import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.DataBaseConnectionMgr;
 import uy.edu.um.laboratoriotic.persistence.management.general.GeneralDAOMgt;
 
@@ -44,7 +45,7 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 	 * Management method implementations
 	 */
 	@Override
-	public void addType(Type oType) {
+	public void addType(Type oType) throws DataBaseConnection {
 		// TODO Auto-generated method stub
 		Connection oConnection = null;
 		Statement oStatement = null;
@@ -59,13 +60,10 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 			String sType = oType.getType();
 			String sValue = oType.getValue();
 
-			String sInsert = "INSERT INTO Type (typeID, type, value) VALUES (\'"
-					+ sId + "','" + sType + "','" + sValue + ")";
-
+			String sInsert = "INSERT INTO Types (typeID, type, value) VALUES ("
+					+ sId + ",'" + sType + "','" + sValue + "')";
+						
 			oStatement.execute(sInsert);
-
-			System.out.println("Se agrego con exito al pais " + sType
-					+ " , y al sector " + sValue);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -82,7 +80,7 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 	}
 
 	@Override
-	public void removeType(Type oType) {
+	public void removeType(String oValue) throws DataBaseConnection {
 		// TODO Auto-generated method stub
 
 		Statement oStatement = null;
@@ -90,40 +88,17 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 
 		String sQuery = null;
 
-		ResultSet oResultSet = null;
-
 		try {
 
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
 
-			String sQueryCount = "SELECT COUNT(*) FROM Types";
+			sQuery = "DELETE FROM Types WHERE (Types.value = '"
+					+ oValue + "') ;";			
+						
+			oStatement.execute(sQuery);
 
-			ResultSet oResultSetCount = oStatement.executeQuery(sQueryCount);
-
-			if (oResultSetCount.next()) {
-
-				int nCount = oResultSetCount.getInt(1);
-
-				System.out.println("Cantidad de Types: " + nCount);
-			}
-
-			sQuery = "DELETE FROM Types where (Types.type = '"
-					+ oType.getType() + "' AND Types.value = '"
-					+ oType.getValue() + "') ;";
-
-			oResultSet = oStatement.executeQuery(sQuery);
-
-			ResultSet oResultSetCount2 = oStatement.executeQuery(sQueryCount);
-
-			if (oResultSetCount2.next()) {
-
-				int nCount = oResultSetCount2.getInt(1);
-
-				System.out.println("Cantidad de Types: " + nCount);
-			}
-
-			oResultSet.close();
+			oStatement.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -139,7 +114,7 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 	}
 
 	@Override
-	public Type searchType(Type oType) {
+	public Type searchType(Type oType) throws DataBaseConnection {
 
 		Type oTypeToReturn = null;
 		Statement oStatement = null;
@@ -150,7 +125,8 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
 
-			String sQuery = "SELECT * FROM Types where (Type.type = '" + oType
+			String sQuery = "SELECT * FROM Types t WHERE (t.type = '"
+					+ oType.getType() + "' AND t.value = '" + oType.getValue()
 					+ "') ;";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 
@@ -184,7 +160,7 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 	}
 
 	@Override
-	public ArrayList<Type> getTypes(String oType) {
+	public ArrayList<Type> getTypes(String oType) throws DataBaseConnection {
 		// TODO Auto-generated method stub
 
 		ArrayList<Type> oListToReturn = new ArrayList<>();
@@ -195,7 +171,8 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
-			String sQuery = "SELECT * FROM Types ORDER BY type ASC,value ASC;";
+			String sQuery = "SELECT * FROM Types t WHERE t.type = '" + oType
+					+ "' ORDER BY 1 ASC,2 ASC;";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 			Type oTypeToReturn = null;
 

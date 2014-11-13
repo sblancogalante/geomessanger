@@ -3,6 +3,7 @@ package uy.edu.um.laboratoriotic.persistence.management.general;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.general.Type;
+import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 
 /**
  * This is the persistence interface
@@ -17,14 +18,14 @@ public interface GeneralDAOMgt {
 	 * 
 	 * @param oType
 	 */
-	public void addType(Type oType);
+	public void addType(Type oType) throws DataBaseConnection;
 
 	/**
 	 * This method removes a type from the database
 	 * 
 	 * @param oType
 	 */
-	public void removeType(Type oType);
+	public void removeType(String oValue) throws DataBaseConnection;
 
 	/**
 	 * This method searches a country in the database
@@ -32,7 +33,7 @@ public interface GeneralDAOMgt {
 	 * @param oType
 	 * @return
 	 */
-	public Type searchType(Type oType);
+	public Type searchType(Type oType) throws DataBaseConnection;
 
 	/**
 	 * This method obtains a list with the types asked
@@ -40,6 +41,6 @@ public interface GeneralDAOMgt {
 	 * @param oType
 	 * @return
 	 */
-	public ArrayList<Type> getTypes(String oType);
+	public ArrayList<Type> getTypes(String oType) throws DataBaseConnection;
 
 }

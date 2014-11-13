@@ -138,9 +138,13 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 				int sID = oResultSet.getInt(8);
 				String sTextMessage = oResultSet.getString(9);
-				Employee sSender = oSender;
-				Employee sReceiver = oReceiver;
 				Timestamp sDate = oResultSet.getTimestamp(10);
+				int sEmployeeSenderID = oResultSet.getInt(11);
+				int sEmployeeReceiverID = oResultSet.getInt(12);
+				Employee sSender = EmployeeDAOFactory.getEmployeeDAOMgt()
+						.searchEmployee(sEmployeeSenderID);
+				Employee sReceiver = EmployeeDAOFactory.getEmployeeDAOMgt()
+						.searchEmployee(sEmployeeReceiverID);
 
 				TextMessage oTextMessages = new TextMessage(sID, sTextMessage,
 						sSender, sReceiver, sDate);

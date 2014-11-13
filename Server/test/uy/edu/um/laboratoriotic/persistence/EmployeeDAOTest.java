@@ -18,9 +18,11 @@ public class EmployeeDAOTest {
 		Type oTypeLocation = new Type("Location", "Uruguay");
 		Type oTypeSector = new Type("Sector", "Desarrollo");
 
-		Employee oEmployee = new Employee(oTypeDocument, "5.062.081-0", "Santiago", "Blanco",
+		/*
+		 Employee oEmployee = new Employee(oTypeDocument, "5.062.081-0", "Santiago", "Blanco",
 				"sblanco", "asdfg", oTypeLocation, oTypeSector,
 				"sblanco1@correo.um.edu.uy", "Programador", null, null, false, true);
+		*/
 		
 		Employee oEmployee2 = new Employee(oTypeDocument, "1.814.930-7", "Antonio", "Blanco",
 				"ablanco", "qwerty", oTypeLocation, oTypeSector,
@@ -28,21 +30,21 @@ public class EmployeeDAOTest {
 
 		try {			
 			
-			EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oEmployee);
-			
 			EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oEmployee2);
+			
+			//EmployeeDAOFactory.getEmployeeDAOMgt().addEmployee(oEmployee2);
 
 			EmployeeDAOFactory.getEmployeeDAOMgt().getEmployees();
 
 			EmployeeDAOFactory.getEmployeeDAOMgt().searchEmployee(
-					oEmployee.getUserName());
+					oEmployee2.getUserName());
 
 			EmployeeDAOFactory.getEmployeeDAOMgt().removeEmployee(
-					oEmployee.getUserName());
+					oEmployee2.getUserName());
 			
-			oEmployee2.setAdmin(false);
+			//oEmployee2.setAdmin(false);
 			
-			EmployeeDAOFactory.getEmployeeDAOMgt().modifyEmployee(oEmployee2);
+			//EmployeeDAOFactory.getEmployeeDAOMgt().modifyEmployee(oEmployee2);
 			
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block

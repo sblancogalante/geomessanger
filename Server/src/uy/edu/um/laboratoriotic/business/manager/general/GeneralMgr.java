@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.business.management.general.GeneralMgt;
+import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.factory.general.GeneralDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.management.general.GeneralDAOMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
@@ -50,7 +51,12 @@ public class GeneralMgr implements GeneralMgt {
 		oNewType = new Type(oTypeVO.getTypeID(), oTypeVO.getType(),
 				oTypeVO.getValue());
 
-		oNewDAOGeneral.addType(oNewType);
+		try {
+			oNewDAOGeneral.addType(oNewType);
+		} catch (DataBaseConnection e) {
+			// TODO Auto-generated catch block
+			
+		}
 
 	}
 
@@ -58,13 +64,14 @@ public class GeneralMgr implements GeneralMgt {
 	public void removeType(TypeVO oTypeVO) {
 		// TODO Auto-generated method stub
 
-		GeneralDAOMgt oNewDAOGeneral = GeneralDAOFactory.getGeneralDAOMgt();
-		Type oConvert = null;
+		GeneralDAOMgt oNewDAOGeneral = GeneralDAOFactory.getGeneralDAOMgt();		
 
-		oConvert = new Type(oTypeVO.getTypeID(), oTypeVO.getType(),
-				oTypeVO.getValue());
-
-		oNewDAOGeneral.removeType(oConvert);
+		try {
+			oNewDAOGeneral.removeType(oTypeVO.getValue());
+		} catch (DataBaseConnection e) {
+			// TODO Auto-generated catch block
+			
+		}
 
 	}
 
@@ -86,10 +93,18 @@ public class GeneralMgr implements GeneralMgt {
 		oConvert = new Type(oTypeVO.getTypeID(), oTypeVO.getType(),
 				oTypeVO.getValue());
 
-		Type oTypeDAO = oNewDAOGeneral.searchType(oConvert);
-
-		oToReturn = new Type(oTypeDAO.getTypeID(), oTypeDAO.getType(),
-				oTypeDAO.getValue());
+		Type oTypeDAO;
+		
+		try {
+			
+			oTypeDAO = oNewDAOGeneral.searchType(oConvert);
+			oToReturn = new Type(oTypeDAO.getTypeID(), oTypeDAO.getType(),
+					oTypeDAO.getValue());
+			
+		} catch (DataBaseConnection e) {
+			// TODO Auto-generated catch block
+			
+		}	
 
 		return oToReturn;
 	}
@@ -104,13 +119,20 @@ public class GeneralMgr implements GeneralMgt {
 
 		GeneralDAOMgt oDAOType = GeneralDAOFactory.getGeneralDAOMgt();
 
-		oList = oDAOType.getTypes(oType);
+		try {
+			
+			oList = oDAOType.getTypes(oType);
+			
+			for (Type iType : oList) {
+				oTypeVO = iType.toVO();
+				oListToReturn.add(oTypeVO);
+			}
 
-		for (Type iType : oList) {
-			oTypeVO = iType.toVO();
-			oListToReturn.add(oTypeVO);
+		} catch (DataBaseConnection e) {
+			// TODO Auto-generated catch block
+			
 		}
-
+		
 		return oListToReturn;
 	}
 
