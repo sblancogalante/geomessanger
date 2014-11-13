@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -213,6 +215,31 @@ public class ChatRoom extends JFrame {
 		
 		JButton sendButton = new JButton("Send");
 		this.getRootPane().setDefaultButton(sendButton);
+		
+		sendButton.addKeyListener(new KeyAdapter(){
+			public void KeyPressed(KeyEvent evt){
+				char car = (char) evt.getKeyCode();
+				if(car==KeyEvent.VK_ENTER){
+					TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),senderEmployee,receiverEmployee,null);
+					try {
+						if(!messageTextArea.getText().equals("Message...")){
+							textMgt.addTextMessage(message);
+							messageTextArea.setText("");
+						
+						}
+						
+					} catch (RemoteException | NotBoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			}
+			
+			
+			
+		});
+		
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
 				

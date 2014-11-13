@@ -174,7 +174,7 @@ public class MainWindow extends JFrame {
 		adminMenu.setVisible(esAdmin);
 		menuBar.add(adminMenu);
 
-		exitMenuItem = new JMenuItem("Exit");
+		exitMenuItem = new JMenuItem("Log off");
 		exitMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
 				actualUser.setStatus(false);
@@ -187,6 +187,8 @@ public class MainWindow extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				Login login = new Login();
+				login.setVisible(true);
 				dispose();
 			}
 		});
