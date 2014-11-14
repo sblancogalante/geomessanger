@@ -35,13 +35,13 @@ public class Helper {
 				oEmployeeVO.getSector().getType(), oEmployeeVO.getSector()
 						.getValue());
 
-		Employee oEmployee = new Employee(oEmployeeVO.getEmployeeID(), oTypeDocument, oEmployeeVO.getID(),
-				oEmployeeVO.getName(), oEmployeeVO.getLastName(),
-				oEmployeeVO.getUserName(), oEmployeeVO.getPassword(),
-				oTypeLocation, oTypeSector, oEmployeeVO.getMail(),
-				oEmployeeVO.getPosition(), oEmployeeVO.getWorkingHour(),
-				oEmployeeVO.getProfilePicture(), oEmployeeVO.getStatus(),
-				oEmployeeVO.getAdmin());
+		Employee oEmployee = new Employee(oEmployeeVO.getEmployeeID(),
+				oTypeDocument, oEmployeeVO.getID(), oEmployeeVO.getName(),
+				oEmployeeVO.getLastName(), oEmployeeVO.getUserName(),
+				oEmployeeVO.getPassword(), oTypeLocation, oTypeSector,
+				oEmployeeVO.getMail(), oEmployeeVO.getPosition(),
+				oEmployeeVO.getWorkingHour(), oEmployeeVO.getProfilePicture(),
+				oEmployeeVO.getStatus(), oEmployeeVO.getAdmin());
 
 		return oEmployee;
 	}
@@ -133,17 +133,17 @@ public class Helper {
 				.getSector().getType(), oFileMessageVO.getSender().getSector()
 				.getValue());
 
-		Employee oSenderEmployee = new Employee(oTypeDocumentSender,
-				oFileMessageVO.getSender().getID(), oFileMessageVO.getSender()
-						.getName(), oFileMessageVO.getSender().getLastName(),
-				oFileMessageVO.getSender().getUserName(), oFileMessageVO
-						.getSender().getPassword(), oTypeLocationSender,
-				oTypeSectorSender, oFileMessageVO.getSender().getMail(),
-				oFileMessageVO.getSender().getPosition(), oFileMessageVO
-						.getSender().getWorkingHour(), oFileMessageVO
-						.getSender().getProfilePicture(), oFileMessageVO
-						.getSender().getStatus(), oFileMessageVO.getSender()
-						.getAdmin());
+		Employee oSenderEmployee = new Employee(oFileMessageVO.getSender()
+				.getEmployeeID(), oTypeDocumentSender, oFileMessageVO
+				.getSender().getID(), oFileMessageVO.getSender().getName(),
+				oFileMessageVO.getSender().getLastName(), oFileMessageVO
+						.getSender().getUserName(), oFileMessageVO.getSender()
+						.getPassword(), oTypeLocationSender, oTypeSectorSender,
+				oFileMessageVO.getSender().getMail(), oFileMessageVO
+						.getSender().getPosition(), oFileMessageVO.getSender()
+						.getWorkingHour(), oFileMessageVO.getSender()
+						.getProfilePicture(), oFileMessageVO.getSender()
+						.getStatus(), oFileMessageVO.getSender().getAdmin());
 
 		Type oTypeDocumentReceiver = new Type(oFileMessageVO.getReceiver()
 				.getDocument().getTypeID(), oFileMessageVO.getReceiver()
@@ -158,12 +158,12 @@ public class Helper {
 				.getSector().getType(), oFileMessageVO.getReceiver()
 				.getSector().getValue());
 
-		Employee oReceiverEmployee = new Employee(oTypeDocumentReceiver,
-				oFileMessageVO.getReceiver().getID(), oFileMessageVO
-						.getReceiver().getName(), oFileMessageVO.getReceiver()
-						.getLastName(), oFileMessageVO.getReceiver()
-						.getUserName(), oFileMessageVO.getReceiver()
-						.getPassword(), oTypeLocationReceiver,
+		Employee oReceiverEmployee = new Employee(oFileMessageVO.getReceiver()
+				.getEmployeeID(), oTypeDocumentReceiver, oFileMessageVO
+				.getReceiver().getID(), oFileMessageVO.getReceiver().getName(),
+				oFileMessageVO.getReceiver().getLastName(), oFileMessageVO
+						.getReceiver().getUserName(), oFileMessageVO
+						.getReceiver().getPassword(), oTypeLocationReceiver,
 				oTypeSectorReceiver, oFileMessageVO.getReceiver().getMail(),
 				oFileMessageVO.getReceiver().getPosition(), oFileMessageVO
 						.getReceiver().getWorkingHour(), oFileMessageVO
