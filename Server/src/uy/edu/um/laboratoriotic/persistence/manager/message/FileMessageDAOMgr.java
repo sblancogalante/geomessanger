@@ -57,10 +57,8 @@ public class FileMessageDAOMgr implements FileMessageDAOMgt {
 			int sIDSender = oFileMessage.getSender().getEmployeeID();
 			int sIDReceiver = oFileMessage.getReceiver().getEmployeeID();
 			
-
 			String sInsert = "INSERT INTO FileMessages (file, employeeSenderID, employeeReceiverID) VALUES (?,?,?)";
 		
-
 			oPrepStatement = oConnection.prepareStatement(sInsert);
 
 			oPrepStatement.setBlob(1, sFile);
