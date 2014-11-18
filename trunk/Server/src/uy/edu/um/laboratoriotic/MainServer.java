@@ -9,9 +9,11 @@ import java.rmi.server.UnicastRemoteObject;
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
 import uy.edu.um.laboratoriotic.communication.factory.employee.EmployeeRemoteFactory;
 import uy.edu.um.laboratoriotic.communication.factory.general.GeneralRemoteFactory;
+import uy.edu.um.laboratoriotic.communication.factory.message.FileMessageRemoteFactory;
 import uy.edu.um.laboratoriotic.communication.factory.message.TextMessageRemoteFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
 import uy.edu.um.laboratoriotic.services.management.general.GeneralRemoteMgt;
+import uy.edu.um.laboratoriotic.services.management.message.FileMessageRemoteMgt;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageRemoteMgt;
 
 /**
@@ -71,6 +73,19 @@ public class MainServer {
 					.exportObject((Remote) oTextMessageRemoteMgt, 0);
 
 			oRegistry.rebind(nameTextMessage, oStubTextMessage);
+
+			/*
+			 * Establecemos la conexion RMI con los archivos
+			 */
+			String nameFileMessage = "FileMessageRemoteMgr";
+
+			FileMessageRemoteMgt oFileMessageRemoteMgt = FileMessageRemoteFactory
+					.getInstance().getFileMessageRemoteMgt();
+
+			FileMessageRemoteMgt oStubFileMessage = (FileMessageRemoteMgt) UnicastRemoteObject
+					.exportObject((Remote) oFileMessageRemoteMgt, 0);
+
+			oRegistry.rebind(nameFileMessage, oStubFileMessage);
 
 			System.out.println("Ready and waiting");
 
