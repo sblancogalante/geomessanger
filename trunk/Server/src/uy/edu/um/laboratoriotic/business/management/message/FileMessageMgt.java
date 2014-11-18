@@ -1,6 +1,10 @@
 package uy.edu.um.laboratoriotic.business.management.message;
 
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
 
 public interface FileMessageMgt {
@@ -21,9 +25,10 @@ public interface FileMessageMgt {
 	 * @param oTextMessage
 	 * @return
 	 * @throws DataBaseConnection
+	 * @throws RemoteException 
 	 */
-//	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender, EmployeeVO oReceiver)
-//			throws DataBaseConnection;
+	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender, EmployeeVO oReceiver)
+			throws DataBaseConnection, RemoteException;
 
 
 }

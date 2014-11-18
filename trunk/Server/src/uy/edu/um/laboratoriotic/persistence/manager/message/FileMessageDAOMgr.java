@@ -5,7 +5,9 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.FileMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.persistence.DataBaseConnectionMgr;
@@ -48,28 +50,30 @@ public class FileMessageDAOMgr implements FileMessageDAOMgt {
 
 		Connection oConnection = null;
 		PreparedStatement oPrepStatement = null;
-		
+
 		try {
 
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 
-			Blob sFile = oFileMessage.getFileMessage();
+			byte[] sFile = oFileMessage.getFileMessage();
 			int sIDSender = oFileMessage.getSender().getEmployeeID();
 			int sIDReceiver = oFileMessage.getReceiver().getEmployeeID();
-			
+
+			Blob sFileToInsert = new javax.sql.rowset.serial.SerialBlob(sFile);
+
 			String sInsert = "INSERT INTO FileMessages (file, employeeSenderID, employeeReceiverID) VALUES (?,?,?)";
-		
+
 			oPrepStatement = oConnection.prepareStatement(sInsert);
 
-			oPrepStatement.setBlob(1, sFile);
+			oPrepStatement.setBlob(1, sFileToInsert);
 			oPrepStatement.setInt(2, sIDSender);
-			oPrepStatement.setInt(3, sIDReceiver);			
+			oPrepStatement.setInt(3, sIDReceiver);
 
-			oPrepStatement.execute();			
+			oPrepStatement.execute();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();			
+			e.printStackTrace();
 		} finally {
 			if (oConnection != null) {
 				try {
@@ -80,6 +84,13 @@ public class FileMessageDAOMgr implements FileMessageDAOMgt {
 			}
 		}
 
+	}
+
+	@Override
+	public ArrayList<FileMessage> getFileMessages(Employee oSender,
+			Employee oReceiver) throws DataBaseConnection, RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

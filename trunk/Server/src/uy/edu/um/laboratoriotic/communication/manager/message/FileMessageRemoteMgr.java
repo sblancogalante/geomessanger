@@ -14,7 +14,7 @@ import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
  * This class is the implementation of FileMessageRemoteMgt
  * 
  * @author sblanco1
- *
+ * 
  */
 public class FileMessageRemoteMgr implements FileMessageRemoteMgt {
 
@@ -54,16 +54,32 @@ public class FileMessageRemoteMgr implements FileMessageRemoteMgt {
 			oFileMessageMgt.addFileMessage(oFileMessageVO);
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
-			
+
 		}
 
 	}
 
 	@Override
-	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender,
-			EmployeeVO oReceiver) throws RemoteException {
+	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSenderVO,
+			EmployeeVO oReceiverVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+
+		ArrayList<FileMessageVO> oListToReturn = new ArrayList<>();
+
+		FileMessageMgt oFileMessageMgt = BusinessFacade.getInstance()
+				.getFileMessageFactory().getFileMessageMgt();
+
+		try {
+			oListToReturn = oFileMessageMgt.getFileMessages(oSenderVO,
+					oReceiverVO);
+
+		} catch (DataBaseConnection e) {
+			// TODO Auto-generated catch block
+
+		}
+
+		return oListToReturn;
+
 	}
 
 	@Override
