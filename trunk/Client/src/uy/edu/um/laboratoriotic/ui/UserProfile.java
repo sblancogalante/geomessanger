@@ -18,8 +18,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import uy.edu.um.laboratoriotic.ui.ABM.ModifyUser;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -33,7 +36,7 @@ public class UserProfile extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public UserProfile(EmployeeVO employee, Boolean isEditable) {
+	public UserProfile(final EmployeeVO employee, Boolean isEditable) {
 		
 		this.setTitle("User Profile");
 		setBounds(100, 100, 475, 470);
@@ -102,20 +105,33 @@ public class UserProfile extends JDialog {
 					.addGap(22))
 		);
 		
-		JButton btnNewButton = new JButton("EditProfile");
+		JButton editButton = new JButton("EditProfile");
+		editButton.addActionListener( new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ModifyUser modify = new ModifyUser(employee);
+				modify.setVisible(true);
+			}
+			
+			
+		});
+			
+		
+		
 		GroupLayout gl_panel_1 = new GroupLayout(editPanel);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addGap(167)
-					.addComponent(btnNewButton)
+					.addComponent(editButton)
 					.addContainerGap(168, Short.MAX_VALUE))
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(btnNewButton)
+					.addComponent(editButton)
 					.addContainerGap(20, Short.MAX_VALUE))
 		);
 		editPanel.setLayout(gl_panel_1);

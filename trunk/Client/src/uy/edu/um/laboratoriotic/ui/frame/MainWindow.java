@@ -167,11 +167,9 @@ public class MainWindow extends JFrame {
 		editMenu.add(menuItemEditProfile);
 
 		adminMenu = new JMenu("Admin.");
-		/*
-		 * VER SI EL USUARIO ES ADMIN O NO
-		 */
-		boolean esAdmin = true;
-		adminMenu.setVisible(esAdmin);
+		boolean isAdmin = actualUser.getAdmin();
+		adminMenu.setVisible(isAdmin);
+		
 		menuBar.add(adminMenu);
 
 		exitMenuItem = new JMenuItem("Log off");
@@ -382,8 +380,6 @@ public class MainWindow extends JFrame {
 			listEmployee = actualizarContactos(employeeMgt, userList);
 			
 		} 
-		
-		
 		
 		JButton searchButton = new JButton("Search");
 		this.getRootPane().setDefaultButton(searchButton);
