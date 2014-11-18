@@ -1,6 +1,5 @@
 package uy.edu.um.laboratoriotic.business.entities.message;
 
-import java.sql.Blob;
 import java.sql.Timestamp;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
@@ -17,16 +16,16 @@ public class FileMessage extends Message {
 	/*
 	 * Attributes of the class
 	 */
-	private Blob file;
+	private byte[] file;
 	private String name;
 	private Employee sender;
 	private Employee receiver;
-	private Timestamp date;	
+	private Timestamp date;
 
 	/*
 	 * Constructor
 	 */
-	public FileMessage(int oIDMessage, Blob oFile, String oName,
+	public FileMessage(int oIDMessage, byte[] oFile, String oName,
 			Employee oSender, Employee oReceiver, Timestamp oDate) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
@@ -36,7 +35,19 @@ public class FileMessage extends Message {
 		this.sender = oSender;
 		this.receiver = oReceiver;
 		this.date = oDate;
-	
+
+	}
+
+	public FileMessage(int oIDMessage, byte[] oFile, String oName,
+			Employee oSender, Employee oReceiver) {
+		// TODO Auto-generated constructor stub
+		super(oIDMessage);
+
+		this.file = oFile;
+		this.name = oName;
+		this.sender = oSender;
+		this.receiver = oReceiver;
+
 	}
 
 	/*
@@ -45,17 +56,17 @@ public class FileMessage extends Message {
 	public FileMessageVO toVO() {
 
 		return new FileMessageVO(this.getIDMessage(), file, name,
-				sender.toVO(), receiver.toVO(), date);
+				sender.toVO(), receiver.toVO());
 	}
 
 	/*
 	 * Getters & Setters
 	 */
-	public Blob getFileMessage() {
+	public byte[] getFileMessage() {
 		return file;
 	}
 
-	public void setFileMessage(Blob oFileMessage) {
+	public void setFileMessage(byte[] oFileMessage) {
 		this.file = oFileMessage;
 	}
 
@@ -89,6 +100,6 @@ public class FileMessage extends Message {
 
 	public void setDate(Timestamp oDate) {
 		this.date = oDate;
-	}	
+	}
 
 }

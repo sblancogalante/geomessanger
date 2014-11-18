@@ -1,7 +1,6 @@
 package uy.edu.um.laboratoriotic.services.valueobject.message;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import java.sql.Timestamp;
 
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -13,21 +12,21 @@ import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
  * @author sblanco1
  * 
  */
-public class FileMessageVO extends MessageVO implements Serializable{
+public class FileMessageVO extends MessageVO implements Serializable {
 
 	/*
 	 * Attributes of the class
 	 */
-	private Blob file;
+	private byte[] file;
 	private String name;
 	private EmployeeVO sender;
 	private EmployeeVO receiver;
-	private Timestamp date;	
+	private Timestamp date;
 
 	/*
 	 * Constructor
 	 */
-	public FileMessageVO(int oIDMessage, Blob oFile, String oName,
+	public FileMessageVO(int oIDMessage, byte[] oFile, String oName,
 			EmployeeVO oSender, EmployeeVO oReceiver, Timestamp oDate) {
 		// TODO Auto-generated constructor stub
 		super(oIDMessage);
@@ -37,17 +36,29 @@ public class FileMessageVO extends MessageVO implements Serializable{
 		this.sender = oSender;
 		this.receiver = oReceiver;
 		this.date = oDate;
-		
+
+	}
+
+	public FileMessageVO(int oIDMessage, byte[] oFile, String oName,
+			EmployeeVO oSender, EmployeeVO oReceiver) {
+		// TODO Auto-generated constructor stub
+		super(oIDMessage);
+
+		this.file = oFile;
+		this.name = oName;
+		this.sender = oSender;
+		this.receiver = oReceiver;
+
 	}
 
 	/*
 	 * Getters & Setters
 	 */
-	public Blob getFileMessage() {
+	public byte[] getFileMessage() {
 		return file;
 	}
 
-	public void setFileMessage(Blob oFileMessage) {
+	public void setFileMessage(byte[] oFileMessage) {
 		this.file = oFileMessage;
 	}
 
@@ -81,6 +92,6 @@ public class FileMessageVO extends MessageVO implements Serializable{
 
 	public void setDate(Timestamp oDate) {
 		this.date = oDate;
-	}	
+	}
 
 }
