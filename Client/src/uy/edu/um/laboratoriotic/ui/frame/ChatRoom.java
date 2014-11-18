@@ -16,6 +16,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -44,9 +47,12 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import uy.edu.um.laboratoriotic.services.factory.message.FileMessageFactory;
 import uy.edu.um.laboratoriotic.services.factory.message.TextMessageFactory;
+import uy.edu.um.laboratoriotic.services.management.message.FileMessageMgt;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 import uy.edu.um.laboratoriotic.ui.UserProfile;
 
@@ -67,6 +73,8 @@ public class ChatRoom extends JFrame {
 		messageTextArea.setLineWrap(true);		
 		
 		final TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
+		final FileMessageMgt fileMgt = FileMessageFactory.getInstance().getFileMessageMgt();
+		
 		
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//HACE UN COSO PARA QE CIERRE BIEN, no esta liberanod los recursos
@@ -81,11 +89,44 @@ public class ChatRoom extends JFrame {
 	
 		
 		
-		JMenu mnNewMenu = new JMenu("Files");
-		menuBar.add(mnNewMenu);
+		JMenu fileMenu = new JMenu("Files");
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Send file...");
-		mnNewMenu.add(mntmNewMenuItem);
+		menuBar.add(fileMenu);
+		
+		JMenuItem sendFileMenuItem = new JMenuItem("Send file...");
+		sendFileMenuItem.addActionListener(new ActionListener(){
+		
+			public void actionPerformed(ActionEvent e){
+				FileInputStream file;
+				JFileChooser jFileChooser = new JFileChooser();
+				//file = new FileInputStream( new File(pickPath(jFileChooser)));
+				
+				
+				//FileMessageVO fileMessage = new FileMessageVO(0, file, senderEmployee, receiverEmployee, null);
+				
+				//fileMgt.addFileMessage(fileMessage);
+				
+				
+			}
+			
+		});
+		
+		
+		fileMenu.add(sendFileMenuItem);
+		
+		JMenuItem showDownloadsMenuItem = new JMenuItem("Show downloads...");
+		showDownloadsMenuItem.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				Descargas downloads = new Descargas(senderEmployee, receiverEmployee);
+				downloads.setVisible(true);
+			}
+
+		});
+		
+		
+		
+		fileMenu.add(showDownloadsMenuItem);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -376,7 +417,16 @@ public class ChatRoom extends JFrame {
 			return oListMessages;
 		
 	}
-
+	
+	private static String pickPath(JFileChooser fileChooser) {
+		String path = null;
+		JDialog dialog = new JDialog();
+		int returnVal = fileChooser.showOpenDialog(dialog);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			path = fileChooser.getSelectedFile().getPath();
+		}
+		return path;
+	}
 	
 	
 

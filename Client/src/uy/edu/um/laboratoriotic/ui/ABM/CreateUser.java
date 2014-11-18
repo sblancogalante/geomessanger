@@ -155,13 +155,19 @@ public class CreateUser extends JDialog {
 		
 		JLabel toLabel = new JLabel("to");
 		
+		String[] locationVector = {};
+		String[] sectorVector = {};
+		String[] documentVector = {};
 		try {
 			ArrayList<TypeVO> locationTypeArray = generalMgr.getTypes("Pais");
 			ArrayList<TypeVO> sectorTypeArray = generalMgr.getTypes("Sector");
 			ArrayList<TypeVO> documentTypeArray = generalMgr.getTypes("Documento");
-			ArrayList<String> locationArray = arrayTypeToString(locationTypeArray);
-			ArrayList<String> sectorArray = arrayTypeToString(sectorTypeArray);
-			ArrayList<String> documentArray = arrayTypeToString(documentTypeArray);
+			locationVector = arrayTypeToString(locationTypeArray);
+			sectorVector = arrayTypeToString(sectorTypeArray);
+			documentVector = arrayTypeToString(documentTypeArray);
+			
+			
+			
 			
 		} catch (RemoteException | NotBoundException e1) {
 			ErrorDialog typeError = new ErrorDialog("Se ha producido un error al comunicarse con la base de datos."
@@ -174,16 +180,16 @@ public class CreateUser extends JDialog {
 		
 		final JComboBox<String> secondHour = new JComboBox(hours);
 
-		final JComboBox<String> locationComboBox = new JComboBox(comboBoxDefaultArray);
+		final JComboBox<String> locationComboBox = new JComboBox(locationVector);
 
-		final JComboBox<String> sectorComboBox = new JComboBox(comboBoxDefaultArray);
+		final JComboBox<String> sectorComboBox = new JComboBox(sectorVector);
 
 		final JCheckBox isAdminCheckBox = new JCheckBox("is Admin");
 
 		final JLabel documentTypeLabel = new JLabel("Type of Document: ");
 
 		final JComboBox<String> typeDocumentComboBox = new JComboBox(
-				comboBoxDefaultArray);
+				documentVector);
 
 		JButton createUserButton = new JButton("Create User");
 		this.getRootPane().setDefaultButton(createUserButton);
@@ -610,7 +616,7 @@ public class CreateUser extends JDialog {
 		JLabel addPhotoLabel = new JLabel("Add Photo: ");
 		testPhotoLabel = new JLabel(rescaleImage(new File(photoPath), 384, 256));
 		final ImageIcon testPhoto = rescaleImage(new File(photoPath), 384, 256);
-
+		
 		JButton selectPhotoButton = new JButton("Select photo ");
 		selectPhotoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -769,10 +775,13 @@ public class CreateUser extends JDialog {
 	// METODOS
 
 
-	private ArrayList<String> arrayTypeToString(ArrayList<TypeVO> typeArray) {
-		ArrayList<String> oReturn = new ArrayList<String>();
+	private String[] arrayTypeToString(ArrayList<TypeVO> typeArray) {
+		
+		String[] oReturn = new String[typeArray.size()];
+		int index=0;
 		for(TypeVO oType : typeArray){
-			oReturn.add(oType.getValue());
+			oReturn[index]=(oType.getValue());
+			index++;
 		}
 		return oReturn;
 	}
