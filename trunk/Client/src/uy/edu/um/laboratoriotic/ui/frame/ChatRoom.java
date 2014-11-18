@@ -55,6 +55,7 @@ import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 import uy.edu.um.laboratoriotic.ui.UserProfile;
+import uy.edu.um.laboratoriotic.ui.dialog.SelectFileToSend;
 
 public class ChatRoom extends JFrame {
 
@@ -97,15 +98,8 @@ public class ChatRoom extends JFrame {
 		sendFileMenuItem.addActionListener(new ActionListener(){
 		
 			public void actionPerformed(ActionEvent e){
-				FileInputStream file;
-				JFileChooser jFileChooser = new JFileChooser();
-				//file = new FileInputStream( new File(pickPath(jFileChooser)));
-				
-				
-				//FileMessageVO fileMessage = new FileMessageVO(0, file, senderEmployee, receiverEmployee, null);
-				
-				//fileMgt.addFileMessage(fileMessage);
-				
+				SelectFileToSend selectFileDialog = new SelectFileToSend(senderEmployee,receiverEmployee);
+				selectFileDialog.setVisible(true);
 				
 			}
 			
