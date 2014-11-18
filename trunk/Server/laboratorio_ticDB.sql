@@ -39,6 +39,7 @@ CREATE TABLE `TextMessages` (
 CREATE TABLE `FileMessages` (
 	`fileMessageID` INT(10) NOT NULL AUTO_INCREMENT,
 	`file` LONGBLOB NOT NULL,
+	`fileName` VARCHAR(50) NOT NULL,
 	`employeeSenderID` INT(10) NOT NULL,
 	`employeeReceiverID` INT(10) NOT NULL,
 	`date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
