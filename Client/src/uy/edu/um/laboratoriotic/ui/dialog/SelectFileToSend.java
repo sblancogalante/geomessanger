@@ -23,7 +23,7 @@ import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
 import uy.edu.um.laboratoriotic.ui.ErrorDialog;
 
-public class selectFileToSend extends JDialog {
+public class SelectFileToSend extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
@@ -33,7 +33,7 @@ public class selectFileToSend extends JDialog {
 	JLabel urlLabel;
 	byte[] fileBytes;
 	
-	public selectFileToSend(final EmployeeVO sender, final EmployeeVO receiver) {
+	public SelectFileToSend(final EmployeeVO sender, final EmployeeVO receiver) {
 		setBounds(100, 100, 433, 164);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -51,11 +51,15 @@ public class selectFileToSend extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				
 				JFileChooser jFileChooser= new JFileChooser();
-				pathToFile = pickPath(jFileChooser);
+				
+				if(pickPath(jFileChooser) != null){
+					
+					pathToFile = pickPath(jFileChooser);
+				}
+				
 				fileToSend = new File(pathToFile);
 				fileNameLabel.setText(fileToSend.getName());
 				urlLabel.setText("URL: " + pathToFile);
-				
 				fileBytes = FileToBytes(fileToSend);
 				
 				
@@ -164,6 +168,8 @@ public class selectFileToSend extends JDialog {
  
 	    System.out.println("The file has been converted to bytes, sucesfully.");
         }catch(Exception e){
+        	ErrorDialog error = new ErrorDialog("Theres has been an error. \n\n ERROR: "+ e.getMessage());
+			error.setVisible(true);
         	e.printStackTrace();
         }
         
