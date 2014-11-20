@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -34,13 +36,13 @@ public class SelectFileToSend extends JDialog {
 	byte[] fileBytes;
 	
 	public SelectFileToSend(final EmployeeVO sender, final EmployeeVO receiver) {
-		setBounds(100, 100, 433, 164);
+		setBounds(100, 100, 501, 164);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
 		JLabel lblSelectAFile = new JLabel("Select a File:");
-		FileMessageMgt fileMgr = FileMessageFactory.getInstance().getFileMessageMgt();
+		final FileMessageMgt fileMgr = FileMessageFactory.getInstance().getFileMessageMgt();
 		
 		
 		
@@ -79,13 +81,15 @@ public class SelectFileToSend extends JDialog {
 					.addContainerGap()
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addComponent(fileNameLabel)
+							.addContainerGap(430, Short.MAX_VALUE))
+						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addComponent(lblSelectAFile)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(selectFileButton)
-							.addGap(18)
-							.addComponent(urlLabel, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE))
-						.addComponent(fileNameLabel))
-					.addContainerGap(35, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+							.addComponent(urlLabel, GroupLayout.PREFERRED_SIZE, 384, GroupLayout.PREFERRED_SIZE)
+							.addGap(14))))
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
@@ -118,6 +122,16 @@ public class SelectFileToSend extends JDialog {
 							
 						}else{
 							FileMessageVO fileMessage = new FileMessageVO(0,fileBytes,fileToSend.getName(),sender,receiver);
+							try {
+								fileMgr.addFileMessage(fileMessage);
+								dispose();
+							} catch (RemoteException | NotBoundException e1) {
+								ErrorDialog error = new ErrorDialog("There "
+										+ "has been an error in the Data Base conection. \n\n ERROR: " + e1.getMessage());
+								error.setVisible(true);
+								e1.printStackTrace();
+							}
+							
 						}
 						
 						
