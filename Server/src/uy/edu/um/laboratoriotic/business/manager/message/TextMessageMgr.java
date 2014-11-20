@@ -87,5 +87,15 @@ public class TextMessageMgr implements TextMessageMgt {
 
 		return oListToReturn;
 	}
+
+	@Override
+	public int countTextCharacters(Employee oEmployee)
+			throws DataBaseConnection, RemoteException {
+		// TODO Auto-generated method stub
+		
+		
+		
+		return 0;
+	}
 	
 }
