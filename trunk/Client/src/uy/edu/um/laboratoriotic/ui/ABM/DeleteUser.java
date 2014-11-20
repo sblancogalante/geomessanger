@@ -71,14 +71,12 @@ public class DeleteUser extends JDialog {
 			public Component getListCellRendererComponent(
 					JList<? extends EmployeeVO> list, EmployeeVO value,
 					int index, boolean isSelected, boolean cellHasFocus) {
-
 				
-				//HACER UN PANEL MEDIO SALADO
 				JLabel oLabel = new JLabel();	
 				if(isSelected){
 					oLabel.setForeground(Color.BLUE);
 				}
-				oLabel.setText(value.getName()+" "+value.getLastName());
+				oLabel.setText(value.getName()+" "+value.getLastName() + " "+ index);
 				return oLabel;
 			}
 		});
@@ -179,8 +177,9 @@ public class DeleteUser extends JDialog {
 						+ userList.getSelectedValue().getName() + userList.getSelectedValue().getLastName() + " ?");
 			
 						if (nvalue == 0){
-							//DEELTE USER
+							
 							try {
+								System.out.println(userList.getSelectedIndex());
 								employeeMgt.removeEmployee(userList.getSelectedValue());
 								dispose();
 							} catch (RemoteException | NotBoundException e) {
