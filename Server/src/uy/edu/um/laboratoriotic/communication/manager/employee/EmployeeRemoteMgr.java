@@ -108,8 +108,12 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 				.getEmployeeFactory().getEmployeeMgt();
 
 		try {
+			
 			oEmployee = oEmployeeMgt.searchEmployee(oUserName);
-			oEmployeeVOToReturn = oEmployee.toVO();
+			
+			if (oEmployee != null)
+				oEmployeeVOToReturn = oEmployee.toVO();
+			
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 
