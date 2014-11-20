@@ -23,16 +23,25 @@ public class DisplayDescargasPanelRender extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	
+	private ImageIcon flechaPhotoImage;
+	
 	public DisplayDescargasPanelRender(EmployeeVO sender, EmployeeVO receiver,FileMessageVO file) {
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 		setBackground(Color.WHITE);
 		JLabel flechaPhotoLabel;
 		
-		if (file.getReceiver().equals(receiver)){
-			flechaPhotoLabel = new JLabel(rescaleImage(new File("/Images/flecha.png"), 35,25));
+		
+		if (file.getSender().getID().equals(sender.getID())){
+
+			flechaPhotoImage = rescaleImage(new File("Images/flecha.png"), 35,25);
+			
 		}else{
-			flechaPhotoLabel = new JLabel(rescaleImage(new File("/Images/flecha2.png"), 35,25));
+			
+			flechaPhotoImage = rescaleImage(new File("Images/flecha2.png"), 35,25);
 		}
+		
+		flechaPhotoLabel= new JLabel(flechaPhotoImage);
 		
 		JLabel fileName = new JLabel(file.getFileMessageName());
 		GroupLayout groupLayout = new GroupLayout(this);

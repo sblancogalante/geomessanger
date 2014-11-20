@@ -60,18 +60,20 @@ public class FileMessageDAOMgr implements FileMessageDAOMgt {
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 
 			byte[] sFile = oFileMessage.getFileMessage();
+			String sFileName = oFileMessage.getFileMessageName();
 			int sIDSender = oFileMessage.getSender().getEmployeeID();
 			int sIDReceiver = oFileMessage.getReceiver().getEmployeeID();
 
 			Blob sFileToInsert = new javax.sql.rowset.serial.SerialBlob(sFile);
 
-			String sInsert = "INSERT INTO FileMessages (file, employeeSenderID, employeeReceiverID) VALUES (?,?,?)";
+			String sInsert = "INSERT INTO FileMessages (file, fileName, employeeSenderID, employeeReceiverID) VALUES (?,?,?,?)";
 
 			oPrepStatement = oConnection.prepareStatement(sInsert);
 
 			oPrepStatement.setBlob(1, sFileToInsert);
-			oPrepStatement.setInt(2, sIDSender);
-			oPrepStatement.setInt(3, sIDReceiver);
+			oPrepStatement.setString(2, sFileName);
+			oPrepStatement.setInt(3, sIDSender);
+			oPrepStatement.setInt(4, sIDReceiver);
 
 			oPrepStatement.execute();
 
