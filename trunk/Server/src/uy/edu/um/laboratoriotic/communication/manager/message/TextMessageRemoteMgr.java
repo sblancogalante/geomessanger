@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
+import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
+import uy.edu.um.laboratoriotic.business.helper.Helper;
 import uy.edu.um.laboratoriotic.business.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageRemoteMgt;
@@ -48,14 +50,14 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 		// TODO Auto-generated method stub
 
 		TextMessageMgt oTextMessageMgt = BusinessFacade.getInstance()
-				.getTextMessageFactory().getTextMessageMgt();		
+				.getTextMessageFactory().getTextMessageMgt();
 
 		try {
 			oTextMessageMgt.addTextMessage(oTextMessageVO);
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 
-		}		
+		}
 
 	}
 
@@ -70,7 +72,8 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 				.getTextMessageFactory().getTextMessageMgt();
 
 		try {
-			oListToReturn = oTextMessageMgt.getTextMessages(oSenderVO, oReceiverVO);			
+			oListToReturn = oTextMessageMgt.getTextMessages(oSenderVO,
+					oReceiverVO);
 
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
@@ -84,11 +87,27 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 	public int countTextCharacters(EmployeeVO oEmployeeVO)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		return 0;
+
+		int returnCount = 0;
+
+		TextMessageMgt oTextMessageMgt = BusinessFacade.getInstance()
+				.getTextMessageFactory().getTextMessageMgt();
+
+		try {
+
+			Employee oEmployee = Helper.modularizeEmployee(oEmployeeVO);
+			returnCount = oTextMessageMgt.countTextCharacters(oEmployee);
+
+		} catch (DataBaseConnection e) {
+
+		}
+
+		return returnCount;
 	}
 
 	@Override
-	public void clearHistory(EmployeeVO oSender, EmployeeVO oReceiver) {
+	public void clearHistory(EmployeeVO oSender, EmployeeVO oReceiver)
+			throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
