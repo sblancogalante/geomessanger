@@ -176,10 +176,6 @@ public class SelectFileToSend extends JDialog {
 	    fileInputStream.read(bFile);
 	    fileInputStream.close();
  
-	    for (int i = 0; i < bFile.length; i++) {
-	       	System.out.print((char)bFile[i]);
-            }
- 
 	    System.out.println("The file has been converted to bytes, sucesfully.");
         }catch(Exception e){
         	ErrorDialog error = new ErrorDialog("Theres has been an error. \n\n ERROR: "+ e.getMessage());
