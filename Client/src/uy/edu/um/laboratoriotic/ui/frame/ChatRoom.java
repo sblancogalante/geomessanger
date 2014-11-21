@@ -74,9 +74,6 @@ public class ChatRoom extends JFrame {
 		final JTextArea messageTextArea = new JTextArea("Message...");
 		messageTextArea.setLineWrap(true);	
 		
-		
-	
-		
 		final TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
 		final FileMessageMgt fileMgt = FileMessageFactory.getInstance().getFileMessageMgt();
 		
@@ -232,7 +229,7 @@ public class ChatRoom extends JFrame {
 			senderPhotoImage = rescaleImage(new File("Images/Foto.png"), 118,118);
 			
 		}else{
-			
+			  
 			senderPhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 118, 118);
 			
 			
