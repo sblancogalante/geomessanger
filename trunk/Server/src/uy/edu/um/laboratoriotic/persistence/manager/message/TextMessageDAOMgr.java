@@ -172,4 +172,42 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 		return oList;
 	}
 
+	@Override
+	public int countTextCharacters(Employee oEmployee)
+			throws DataBaseConnection {
+		// TODO Auto-generated method stub
+
+		Statement oStatement = null;
+		Connection oConnection = null;
+
+		int returnCount = 0;
+
+		try {
+
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
+			oStatement = oConnection.createStatement();
+			ResultSet oResultSet = null;
+			String sQuery = null;
+
+			int sEmployeeID = EmployeeDAOFactory.getEmployeeDAOMgt()
+					.searchEmployee(oEmployee.getUserName()).getEmployeeID();
+			
+			sQuery = "SELECT * FROM (SELECT sum(char_length(text)) FROM TextMessages tm"
+					+ " WHERE tm.employeeSenderID = " + sEmployeeID + " ) as result ;";
+			
+			oResultSet = oStatement.executeQuery(sQuery);
+			
+			while(oResultSet.next()){
+				
+				returnCount = oResultSet.getInt(1);
+				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return returnCount;
+	}
+
 }

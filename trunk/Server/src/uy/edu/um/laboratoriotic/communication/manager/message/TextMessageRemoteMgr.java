@@ -4,8 +4,6 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
-import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
-import uy.edu.um.laboratoriotic.business.helper.Helper;
 import uy.edu.um.laboratoriotic.business.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageRemoteMgt;
@@ -93,13 +91,12 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 		TextMessageMgt oTextMessageMgt = BusinessFacade.getInstance()
 				.getTextMessageFactory().getTextMessageMgt();
 
-		try {
-
-			Employee oEmployee = Helper.modularizeEmployee(oEmployeeVO);
-			returnCount = oTextMessageMgt.countTextCharacters(oEmployee);
+		try {			
+			returnCount = oTextMessageMgt.countTextCharacters(oEmployeeVO);
 
 		} catch (DataBaseConnection e) {
-
+			// TODO Auto-generated catch block
+			
 		}
 
 		return returnCount;

@@ -53,7 +53,8 @@ public class TextMessageMgr implements TextMessageMgt {
 		TextMessageDAOMgt oNewDAOTextMessage = TextMessageDAOFactory
 				.getTextMessageDAOMgt();
 
-		TextMessage oTextMessageToReturn = Helper.modularizeTextMessage(oTextMessageVO);
+		TextMessage oTextMessageToReturn = Helper
+				.modularizeTextMessage(oTextMessageVO);
 
 		oNewDAOTextMessage.addTextMessage(oTextMessageToReturn);
 
@@ -74,7 +75,7 @@ public class TextMessageMgr implements TextMessageMgt {
 				.getTextMessageDAOMgt();
 
 		Employee oSenderEmployee = Helper.modularizeEmployee(oSenderVO);
-		
+
 		Employee oReceiverEmployee = Helper.modularizeEmployee(oReceiverVO);
 
 		oArrayList = oDAOTextMessage.getTextMessages(oSenderEmployee,
@@ -89,13 +90,19 @@ public class TextMessageMgr implements TextMessageMgt {
 	}
 
 	@Override
-	public int countTextCharacters(Employee oEmployee)
+	public int countTextCharacters(EmployeeVO oEmployeeVO)
 			throws DataBaseConnection, RemoteException {
 		// TODO Auto-generated method stub
+
+		int returnCount = 0;
+
+		TextMessageDAOMgt oTextMessageDAOMgt = TextMessageDAOFactory
+				.getTextMessageDAOMgt();
+		Employee oEmployee = Helper.modularizeEmployee(oEmployeeVO);
 		
-		
-		
-		return 0;
+		returnCount = oTextMessageDAOMgt.countTextCharacters(oEmployee);
+
+		return returnCount;
 	}
-	
+
 }

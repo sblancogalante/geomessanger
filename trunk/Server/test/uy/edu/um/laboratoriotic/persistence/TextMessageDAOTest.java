@@ -27,8 +27,8 @@ public class TextMessageDAOTest {
 
 		Employee oReceiver = new Employee(oTypeDocument, "1.814.930-7",
 				"Antonio", "Blanco", "ablanco", "qwerty123456", oTypeLocation,
-				oTypeSector, "ablancoa@correo.um.edu.uy", "Administrativo", null,
-				null, false, false);
+				oTypeSector, "ablancoa@correo.um.edu.uy", "Administrativo",
+				null, null, false, false);
 
 		TextMessage oTextMessage = new TextMessage(1, "Hola Mundo", oSender,
 				oReceiver);
@@ -58,6 +58,8 @@ public class TextMessageDAOTest {
 					oTextMessage4);
 			TextMessageDAOFactory.getTextMessageDAOMgt().getTextMessages(
 					oSender, oReceiver);
+			System.out.println(TextMessageDAOFactory.getTextMessageDAOMgt()
+					.countTextCharacters(oSender));
 
 		} catch (DataBaseConnection e) {
 			test();

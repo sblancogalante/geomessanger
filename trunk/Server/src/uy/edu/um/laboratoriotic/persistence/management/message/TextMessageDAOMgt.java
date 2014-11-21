@@ -26,14 +26,25 @@ public interface TextMessageDAOMgt {
 			throws DataBaseConnection;
 
 	/**
-	 * This method return a list with all the messages of the database
+	 * This method returns a list with all the messages of the database
 	 * 
 	 * @param oTextMessage
 	 * @return
 	 * @throws DataBaseConnection
 	 * @throws RemoteException
 	 */
-	public ArrayList<TextMessage> getTextMessages(Employee oSender, Employee oReceiverEmployee)
+	public ArrayList<TextMessage> getTextMessages(Employee oSender,
+			Employee oReceiverEmployee) throws DataBaseConnection;
+
+	/**
+	 * This method returns an int that represents the number of characters
+	 * sent by an employee
+	 * 
+	 * @param oEmployee
+	 * @return
+	 * @throws DataBaseConnection
+	 */
+	public int countTextCharacters(Employee oEmployee)
 			throws DataBaseConnection;
 
 }
