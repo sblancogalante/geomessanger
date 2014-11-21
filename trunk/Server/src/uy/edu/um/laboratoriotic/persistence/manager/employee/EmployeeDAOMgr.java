@@ -58,8 +58,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		try {
 
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
-			
-			Blob sProfilePicture = new javax.sql.rowset.serial.SerialBlob(oEmployee.getProfilePicture());
+
+			Blob sProfilePicture = new javax.sql.rowset.serial.SerialBlob(
+					oEmployee.getProfilePicture());
 
 			oStatement = oConnection.createStatement();
 			String sInsert = "INSERT INTO `Employees` (document, iD, name, lastName, userName, password, location, sector, mail, position, workingHour, profilePicture, status, admin) VALUES ('"
@@ -87,7 +88,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 					+ "',"
 					+ sProfilePicture
 					+ ","
-					+ oEmployee.getStatus() + "," + oEmployee.getAdmin() + ");";
+					+ oEmployee.getStatus()
+					+ ","
+					+ oEmployee.getAdmin() + ");";
 
 			oStatement.execute(sInsert);
 
@@ -168,11 +171,15 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				Blob sResultProfilePicture = oResultSet.getBlob(13);
 				boolean sResultStatus = oResultSet.getBoolean(14);
 				boolean sResultAdmin = oResultSet.getBoolean(15);
-				
-				byte[] sProfilePicture =null;
-				if(sResultProfilePicture!=null){
+
+				byte[] sProfilePicture = null;
+
+				if (sResultProfilePicture != null) {
+
 					int blobLength = (int) sResultProfilePicture.length();
-					sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
+					sProfilePicture = sResultProfilePicture.getBytes(1,
+							blobLength);
+
 				}
 
 				Type oTypeDocument = new Type("Document", sResultDocument);
@@ -183,8 +190,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 						oTypeDocument, sResultID, sResultName, sResultLastName,
 						sResultUserName, sResultPassword, oTypeLocation,
 						oTypeSector, sResultMail, sResultPosition,
-						sResultWorkingHour, sProfilePicture,
-						sResultStatus, sResultAdmin);
+						sResultWorkingHour, sProfilePicture, sResultStatus,
+						sResultAdmin);
 
 				oList.add(oEmployee);
 
@@ -242,11 +249,15 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				Blob sResultProfilePicture = oResultSet.getBlob(13);
 				boolean sResultStatus = oResultSet.getBoolean(14);
 				boolean sResultAdmin = oResultSet.getBoolean(15);
-				
-				byte[] sProfilePicture =null;
-				if(sResultProfilePicture!=null){
+
+				byte[] sProfilePicture = null;
+
+				if (sResultProfilePicture != null) {
+
 					int blobLength = (int) sResultProfilePicture.length();
-					sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
+					sProfilePicture = sResultProfilePicture.getBytes(1,
+							blobLength);
+
 				}
 
 				Type oTypeDocument = new Type("Document", sResultDocument);
@@ -257,8 +268,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 						sResultID, sResultName, sResultLastName,
 						sResultUserName, sResultPassword, oTypeLocation,
 						oTypeSector, sResultMail, sResultPosition,
-						sResultWorkingHour, sProfilePicture,
-						sResultStatus, sResultAdmin);
+						sResultWorkingHour, sProfilePicture, sResultStatus,
+						sResultAdmin);
 
 			}
 
@@ -278,10 +289,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 		return oEmployee;
 	}
-	
+
 	@Override
 	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection {
-	
 
 		Employee oEmployee = null;
 		Statement oStatement = null;
@@ -313,11 +323,14 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				Blob sResultProfilePicture = oResultSet.getBlob(13);
 				boolean sResultStatus = oResultSet.getBoolean(14);
 				boolean sResultAdmin = oResultSet.getBoolean(15);
-				
-				byte[] sProfilePicture =null;
-				if(sResultProfilePicture!=null){
+
+				byte[] sProfilePicture = null;
+
+				if (sResultProfilePicture != null) {
+
 					int blobLength = (int) sResultProfilePicture.length();
-					sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
+					sProfilePicture = sResultProfilePicture.getBytes(1,
+							blobLength);
 				}
 
 				Type oTypeDocument = new Type("Document", sResultDocument);
@@ -328,8 +341,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 						sResultID, sResultName, sResultLastName,
 						sResultUserName, sResultPassword, oTypeLocation,
 						oTypeSector, sResultMail, sResultPosition,
-						sResultWorkingHour, sProfilePicture,
-						sResultStatus, sResultAdmin);
+						sResultWorkingHour, sProfilePicture, sResultStatus,
+						sResultAdmin);
 
 			}
 
@@ -489,13 +502,17 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				Blob sResultProfilePicture = oResultSet.getBlob(13);
 				boolean sResultStatus = oResultSet.getBoolean(14);
 				boolean sResultAdmin = oResultSet.getBoolean(15);
-				
-				byte[] sProfilePicture =null;
-				if(sResultProfilePicture!=null){
+
+				byte[] sProfilePicture = null;
+
+				if (sResultProfilePicture != null) {
+
 					int blobLength = (int) sResultProfilePicture.length();
-					sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
+					sProfilePicture = sResultProfilePicture.getBytes(1,
+							blobLength);
+
 				}
-				
+
 				if (oUserName.equals(sResultUserName)
 						&& hashEncriptation(oPassword).equals(sResultPassword)) {
 
