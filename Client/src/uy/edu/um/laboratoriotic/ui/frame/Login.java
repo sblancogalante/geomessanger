@@ -43,6 +43,7 @@ public class Login extends JFrame {
 		setBounds(100, 100, 172, 273);
 		
 		
+		
 		final EmployeeMgt employeeMgr =  EmployeeFactory.getInstance().getEmployeeMgt();
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));

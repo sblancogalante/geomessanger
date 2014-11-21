@@ -63,6 +63,8 @@ public class CreateUser extends JDialog {
 	private JLabel passwordLabel;
 	private String photoPath;
 	private JLabel testPhotoLabel;
+	private ImageIcon testPhoto;
+	private byte[] photoBytes;
 
 	public CreateUser() {
 
@@ -199,7 +201,8 @@ public class CreateUser extends JDialog {
 				// Chequear contraseñas y tomar medidas.
 
 				String workingHours = "From "+ firstHour.getSelectedItem() + " to " + secondHour.getSelectedItem();
-				Blob profilePic = null;
+				
+				photoBytes = convertImageToBytes(testPhoto);
 
 				TypeVO oTypeVODocument = new TypeVO("Document",
 						(String) typeDocumentComboBox.getSelectedItem());
@@ -213,7 +216,7 @@ public class CreateUser extends JDialog {
 						lastNameText.getText(), userNameText.getText(), String
 								.valueOf(repeatPasswordText.getPassword()),
 						oTypeVOLocation, oTypeVOSector, eMailText.getText(),
-						positionText.getText(), workingHours, profilePic,
+						positionText.getText(), workingHours, photoBytes,
 						false, isAdminCheckBox.isSelected());
 
 				
@@ -615,7 +618,7 @@ public class CreateUser extends JDialog {
 
 		JLabel addPhotoLabel = new JLabel("Add Photo: ");
 		testPhotoLabel = new JLabel(rescaleImage(new File(photoPath), 384, 256));
-		final ImageIcon testPhoto = rescaleImage(new File(photoPath), 384, 256);
+		testPhoto = rescaleImage(new File(photoPath), 384, 256);
 		
 		JButton selectPhotoButton = new JButton("Select photo ");
 		selectPhotoButton.addActionListener(new ActionListener() {
@@ -851,6 +854,15 @@ public class CreateUser extends JDialog {
 
 		// 3. Convert the buffered image into an ImageIcon for return
 		return (new ImageIcon(resizedImg));
+	}
+	
+	
+	private byte[] convertImageToBytes(ImageIcon image){
+		byte[] oReturn;
+		
+		
+		return null;
+		
 	}
 
 }
