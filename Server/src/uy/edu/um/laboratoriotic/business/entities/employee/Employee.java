@@ -3,7 +3,6 @@ package uy.edu.um.laboratoriotic.business.entities.employee;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Blob;
 
 import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
@@ -21,18 +20,20 @@ public class Employee {
 	 * Attributes of the class
 	 */
 	private int employeeID;
-	private String iD, name, lastName, userName, password, mail, position, workingHour;
+	private String iD, name, lastName, userName, password, mail, position,
+			workingHour;
 	private Type document, location, sector;
-	private Blob profilePicture;
+	private byte[] profilePicture;
 	private boolean status, admin;
 
 	/*
 	 * Constructors
 	 */
-	public Employee(int oEmployeeID, Type oDocument, String oID, String oName, String oLastName,
-			String oUserName, String oPassword, Type oLocation,
-			Type oSector, String oMail, String oPosition,
-			String oWorkingHour, Blob oProfilePicture, boolean oStatus, boolean oAdmin) {
+	public Employee(int oEmployeeID, Type oDocument, String oID, String oName,
+			String oLastName, String oUserName, String oPassword,
+			Type oLocation, Type oSector, String oMail, String oPosition,
+			String oWorkingHour, byte[] oProfilePicture, boolean oStatus,
+			boolean oAdmin) {
 
 		this.employeeID = oEmployeeID;
 		this.setDocument(oDocument);
@@ -52,11 +53,10 @@ public class Employee {
 
 	}
 
-	
 	public Employee(Type oDocument, String oID, String oName, String oLastName,
-			String oUserName, String oPassword, Type oLocation,
-			Type oSector, String oMail, String oPosition,
-			String oWorkingHour, Blob oProfilePicture, boolean oStatus, boolean oAdmin) {
+			String oUserName, String oPassword, Type oLocation, Type oSector,
+			String oMail, String oPosition, String oWorkingHour,
+			byte[] oProfilePicture, boolean oStatus, boolean oAdmin) {
 
 		this.document = oDocument;
 		this.iD = oID;
@@ -72,8 +72,8 @@ public class Employee {
 		this.profilePicture = oProfilePicture;
 		this.status = oStatus;
 		this.admin = oAdmin;
-		
-	}	
+
+	}
 
 	public Employee(String oUserName, String oPassword, Type oLocation,
 			Type oSector, boolean oStatus) {
@@ -98,8 +98,9 @@ public class Employee {
 	 */
 	public EmployeeVO toVO() {
 
-		return new EmployeeVO(employeeID, document.toVO(), iD, name, lastName, userName, password, location.toVO(),
-				sector.toVO(), mail, position, workingHour, profilePicture, status, admin);
+		return new EmployeeVO(employeeID, document.toVO(), iD, name, lastName,
+				userName, password, location.toVO(), sector.toVO(), mail,
+				position, workingHour, profilePicture, status, admin);
 
 	}
 
@@ -140,7 +141,6 @@ public class Employee {
 	public Type getDocument() {
 		return document;
 	}
-
 
 	public void setDocument(Type document) {
 		this.document = document;
@@ -226,11 +226,11 @@ public class Employee {
 		this.workingHour = oWorkingHour;
 	}
 
-	public Blob getProfilePicture() {
+	public byte[] getProfilePicture() {
 		return profilePicture;
 	}
 
-	public void setProfilePicture(Blob oProfilePicture) {
+	public void setProfilePicture(byte[] oProfilePicture) {
 		this.profilePicture = oProfilePicture;
 	}
 
@@ -245,7 +245,6 @@ public class Employee {
 	public boolean getAdmin() {
 		return admin;
 	}
-
 
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
