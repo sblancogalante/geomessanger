@@ -58,6 +58,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 		try {
 
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
+			
+			Blob sProfilePicture = new javax.sql.rowset.serial.SerialBlob(oEmployee.getProfilePicture());
 
 			oStatement = oConnection.createStatement();
 			String sInsert = "INSERT INTO `Employees` (document, iD, name, lastName, userName, password, location, sector, mail, position, workingHour, profilePicture, status, admin) VALUES ('"
@@ -83,7 +85,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 					+ "','"
 					+ oEmployee.getWorkingHour()
 					+ "',"
-					+ oEmployee.getProfilePicture()
+					+ sProfilePicture
 					+ ","
 					+ oEmployee.getStatus() + "," + oEmployee.getAdmin() + ");";
 
@@ -166,6 +168,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				Blob sResultProfilePicture = oResultSet.getBlob(13);
 				boolean sResultStatus = oResultSet.getBoolean(14);
 				boolean sResultAdmin = oResultSet.getBoolean(15);
+				
+				int blobLength = (int) sResultProfilePicture.length();
+				byte[] sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
 
 				Type oTypeDocument = new Type("Document", sResultDocument);
 				Type oTypeLocation = new Type("Location", sResultLocation);
@@ -175,7 +180,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 						oTypeDocument, sResultID, sResultName, sResultLastName,
 						sResultUserName, sResultPassword, oTypeLocation,
 						oTypeSector, sResultMail, sResultPosition,
-						sResultWorkingHour, sResultProfilePicture,
+						sResultWorkingHour, sProfilePicture,
 						sResultStatus, sResultAdmin);
 
 				oList.add(oEmployee);
@@ -234,6 +239,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				Blob sResultProfilePicture = oResultSet.getBlob(13);
 				boolean sResultStatus = oResultSet.getBoolean(14);
 				boolean sResultAdmin = oResultSet.getBoolean(15);
+				
+				int blobLength = (int) sResultProfilePicture.length();
+				byte[] sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
 
 				Type oTypeDocument = new Type("Document", sResultDocument);
 				Type oTypeLocation = new Type("Location", sResultLocation);
@@ -243,7 +251,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 						sResultID, sResultName, sResultLastName,
 						sResultUserName, sResultPassword, oTypeLocation,
 						oTypeSector, sResultMail, sResultPosition,
-						sResultWorkingHour, sResultProfilePicture,
+						sResultWorkingHour, sProfilePicture,
 						sResultStatus, sResultAdmin);
 
 			}
@@ -299,6 +307,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				Blob sResultProfilePicture = oResultSet.getBlob(13);
 				boolean sResultStatus = oResultSet.getBoolean(14);
 				boolean sResultAdmin = oResultSet.getBoolean(15);
+				
+				int blobLength = (int) sResultProfilePicture.length();
+				byte[] sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
 
 				Type oTypeDocument = new Type("Document", sResultDocument);
 				Type oTypeLocation = new Type("Location", sResultLocation);
@@ -308,7 +319,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 						sResultID, sResultName, sResultLastName,
 						sResultUserName, sResultPassword, oTypeLocation,
 						oTypeSector, sResultMail, sResultPosition,
-						sResultWorkingHour, sResultProfilePicture,
+						sResultWorkingHour, sProfilePicture,
 						sResultStatus, sResultAdmin);
 
 			}
@@ -469,6 +480,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				Blob sResultProfilePicture = oResultSet.getBlob(13);
 				boolean sResultStatus = oResultSet.getBoolean(14);
 				boolean sResultAdmin = oResultSet.getBoolean(15);
+				
+				int blobLength = (int) sResultProfilePicture.length();
+				byte[] sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
 
 				if (oUserName.equals(sResultUserName)
 						&& hashEncriptation(oPassword).equals(sResultPassword)) {
@@ -482,7 +496,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 							sResultLastName, sResultUserName, sResultPassword,
 							oTypeLocation, oTypeSector, sResultMail,
 							sResultPosition, sResultWorkingHour,
-							sResultProfilePicture, sResultStatus, sResultAdmin);
+							sProfilePicture, sResultStatus, sResultAdmin);
 
 				}
 			}

@@ -21,7 +21,7 @@ public class EmployeeVO implements Serializable {
 	private String iD, name, lastName, userName, password, mail, position,
 			workingHour;
 	private TypeVO document, location, sector;
-	private Blob profilePicture;
+	private byte[] profilePicture;
 	private boolean status, admin;
 
 	/*
@@ -31,7 +31,7 @@ public class EmployeeVO implements Serializable {
 	public EmployeeVO(int oEmployeeID, TypeVO oDocument, String oID, String oName,
 			String oLastName, String oUserName, String oPassword,
 			TypeVO oLocation, TypeVO oSector, String oMail, String oPosition,
-			String oWorkingHour, Blob oProfilePicture, boolean oStatus, boolean oAdmin) {
+			String oWorkingHour, byte[] oProfilePicture, boolean oStatus, boolean oAdmin) {
 
 		this.employeeID = oEmployeeID;
 		this.document = oDocument;
@@ -54,7 +54,7 @@ public class EmployeeVO implements Serializable {
 	public EmployeeVO(TypeVO oDocument, String oID, String oName, String oLastName,
 			String oUserName, String oPassword, TypeVO oLocation,
 			TypeVO oSector, String oMail, String oPosition,
-			String oWorkingHour, Blob oProfilePicture, boolean oStatus, boolean oAdmin) {
+			String oWorkingHour, byte[] oProfilePicture, boolean oStatus, boolean oAdmin) {
 
 		this.setDocument(oDocument);
 		this.iD = oID;
@@ -174,11 +174,11 @@ public class EmployeeVO implements Serializable {
 		this.position = oPosition;
 	}
 
-	public Blob getProfilePicture() {
+	public byte[] getProfilePicture() {
 		return profilePicture;
 	}
 
-	public void setProfilePicture(Blob oProfilePicture) {
+	public void setProfilePicture(byte[] oProfilePicture) {
 		this.profilePicture = oProfilePicture;
 	}
 
