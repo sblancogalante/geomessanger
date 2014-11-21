@@ -64,6 +64,20 @@ public class TextMessageMgr implements TextMessageMgt {
 		return oArrayListToReturn;
 	}
 
+	@Override
+	public int countTextCharacters(EmployeeVO oEmployeeVO)
+			throws RemoteException, NotBoundException {
+		// TODO Auto-generated method stub
+
+		int returnCount = 0;
+
+		TextMessageRemoteMgt oTextMessageRemoteMgt = newLookUp("TextMessageRemoteMgr");
+
+		returnCount = oTextMessageRemoteMgt.countTextCharacters(oEmployeeVO);
+
+		return returnCount;
+	}
+
 	/*
 	 * Helping methods
 	 */
@@ -80,5 +94,5 @@ public class TextMessageMgr implements TextMessageMgt {
 
 		return oTextMessageRemoteMgtToReturn;
 	}
-	
+
 }

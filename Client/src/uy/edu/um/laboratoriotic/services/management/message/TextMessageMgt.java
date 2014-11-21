@@ -34,7 +34,18 @@ public interface TextMessageMgt {
 	 * @throws NotBoundException
 	 * @throws RemoteException
 	 */
-	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSender, EmployeeVO oReceiver) throws RemoteException,
-			NotBoundException;
+	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSender,
+			EmployeeVO oReceiver) throws RemoteException, NotBoundException;
 
+	/**
+	 * This method is the one that communicates with the commons interface to
+	 * get a count of all the characters sent by an employee
+	 * 
+	 * @param oEmployeeVO
+	 * @return
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 */
+	public int countTextCharacters(EmployeeVO oEmployeeVO)
+			throws RemoteException, NotBoundException;
 }

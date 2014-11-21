@@ -3,7 +3,6 @@ package uy.edu.um.laboratoriotic.business.management.message;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
@@ -46,7 +45,7 @@ public interface TextMessageMgt {
 	 * @throws DataBaseConnection
 	 * @throws RemoteException
 	 */
-	public int countTextCharacters(Employee oEmployee)
+	public int countTextCharacters(EmployeeVO oEmployeeVO)
 			throws DataBaseConnection, RemoteException;
 
 }
