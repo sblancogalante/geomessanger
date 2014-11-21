@@ -11,6 +11,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -71,11 +72,54 @@ public class ChatRoom extends JFrame {
 	public ChatRoom(final EmployeeVO receiverEmployee, final EmployeeVO senderEmployee) { 
 		
 		final JTextArea messageTextArea = new JTextArea("Message...");
-		messageTextArea.setLineWrap(true);		
+		messageTextArea.setLineWrap(true);	
+		
+		
+	
 		
 		final TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
 		final FileMessageMgt fileMgt = FileMessageFactory.getInstance().getFileMessageMgt();
 		
+		
+		messageTextArea.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				char car = (char) e.getKeyCode();
+				if(car==KeyEvent.VK_ENTER){
+					messageTextArea.setText("");
+				}
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				char car = (char) e.getKeyCode();
+				if(car==KeyEvent.VK_ENTER){
+					TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),senderEmployee,receiverEmployee,null);
+					try {
+						if(!messageTextArea.getText().equals("Message...") || !messageTextArea.getText().equals("") ){
+							textMgt.addTextMessage(message);
+							messageTextArea.setText("");
+						
+						}
+						
+					} catch (RemoteException | NotBoundException exeption) {
+						// TODO Auto-generated catch block
+						exeption.printStackTrace();
+					}
+				}
+				
+			}
+		});
 		
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//HACE UN COSO PARA QE CIERRE BIEN, no esta liberanod los recursos
@@ -246,16 +290,15 @@ public class ChatRoom extends JFrame {
 		final JTextArea converTextArea = new JTextArea();
 		converTextArea.setEditable(false);
 		converTextArea.setLineWrap(true);
-	
 		
-		JButton sendButton = new JButton("Send");
-		this.getRootPane().setDefaultButton(sendButton);
 		
+		JButton sendButton = new JButton("Send");		
 		sendButton.addKeyListener(new KeyAdapter(){
 			public void KeyPressed(KeyEvent evt){
 				char car = (char) evt.getKeyCode();
 				if(car==KeyEvent.VK_ENTER){
 					TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),senderEmployee,receiverEmployee,null);
+					System.out.println("Enter!");
 					try {
 						if(!messageTextArea.getText().equals("Message...")){
 							textMgt.addTextMessage(message);

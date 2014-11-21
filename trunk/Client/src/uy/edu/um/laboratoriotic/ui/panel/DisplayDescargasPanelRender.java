@@ -17,6 +17,9 @@ import javax.swing.JLabel;
 
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 public class DisplayDescargasPanelRender extends JPanel {
 
@@ -34,33 +37,39 @@ public class DisplayDescargasPanelRender extends JPanel {
 		
 		if (file.getSender().getID().equals(sender.getID())){
 
-			flechaPhotoImage = rescaleImage(new File("Images/flecha.png"), 35,25);
+			flechaPhotoImage = new ImageIcon("Images/flecha2.png");
 			
 		}else{
 			
-			flechaPhotoImage = rescaleImage(new File("Images/flecha2.png"), 35,25);
+			flechaPhotoImage = new ImageIcon("Images/flecha.png");
 		}
 		
 		flechaPhotoLabel= new JLabel(flechaPhotoImage);
 		
 		JLabel fileName = new JLabel(file.getFileMessageName());
+		
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(flechaPhotoLabel, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(fileName, GroupLayout.PREFERRED_SIZE, 288, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(41, Short.MAX_VALUE))
+					.addComponent(flechaPhotoLabel, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(fileName, GroupLayout.PREFERRED_SIZE, 273, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(28, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(flechaPhotoLabel, GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-						.addComponent(fileName))
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(fileName, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+						.addComponent(flechaPhotoLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+						.addComponent(separator, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		setLayout(groupLayout);
@@ -117,5 +126,4 @@ public class DisplayDescargasPanelRender extends JPanel {
 			     // 3. Convert the buffered image into an ImageIcon for return
 			     return (new ImageIcon(resizedImg));
 			 }
-
 }

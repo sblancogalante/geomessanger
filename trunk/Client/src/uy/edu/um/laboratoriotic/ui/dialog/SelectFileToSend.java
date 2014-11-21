@@ -82,14 +82,14 @@ public class SelectFileToSend extends JDialog {
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addComponent(fileNameLabel)
-							.addContainerGap(430, Short.MAX_VALUE))
+							.addContainerGap(327, Short.MAX_VALUE))
 						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addComponent(lblSelectAFile)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(selectFileButton)
-							.addPreferredGap(ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-							.addComponent(urlLabel, GroupLayout.PREFERRED_SIZE, 384, GroupLayout.PREFERRED_SIZE)
-							.addGap(14))))
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(urlLabel, GroupLayout.PREFERRED_SIZE, 302, GroupLayout.PREFERRED_SIZE)
+							.addGap(5))))
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
