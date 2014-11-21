@@ -169,8 +169,11 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				boolean sResultStatus = oResultSet.getBoolean(14);
 				boolean sResultAdmin = oResultSet.getBoolean(15);
 				
-				int blobLength = (int) sResultProfilePicture.length();
-				byte[] sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
+				byte[] sProfilePicture =null;
+				if(sResultProfilePicture!=null){
+					int blobLength = (int) sResultProfilePicture.length();
+					sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
+				}
 
 				Type oTypeDocument = new Type("Document", sResultDocument);
 				Type oTypeLocation = new Type("Location", sResultLocation);
@@ -240,8 +243,11 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				boolean sResultStatus = oResultSet.getBoolean(14);
 				boolean sResultAdmin = oResultSet.getBoolean(15);
 				
-				int blobLength = (int) sResultProfilePicture.length();
-				byte[] sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
+				byte[] sProfilePicture =null;
+				if(sResultProfilePicture!=null){
+					int blobLength = (int) sResultProfilePicture.length();
+					sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
+				}
 
 				Type oTypeDocument = new Type("Document", sResultDocument);
 				Type oTypeLocation = new Type("Location", sResultLocation);
@@ -308,8 +314,11 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				boolean sResultStatus = oResultSet.getBoolean(14);
 				boolean sResultAdmin = oResultSet.getBoolean(15);
 				
-				int blobLength = (int) sResultProfilePicture.length();
-				byte[] sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
+				byte[] sProfilePicture =null;
+				if(sResultProfilePicture!=null){
+					int blobLength = (int) sResultProfilePicture.length();
+					sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
+				}
 
 				Type oTypeDocument = new Type("Document", sResultDocument);
 				Type oTypeLocation = new Type("Location", sResultLocation);
@@ -481,9 +490,12 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				boolean sResultStatus = oResultSet.getBoolean(14);
 				boolean sResultAdmin = oResultSet.getBoolean(15);
 				
-				int blobLength = (int) sResultProfilePicture.length();
-				byte[] sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
-
+				byte[] sProfilePicture =null;
+				if(sResultProfilePicture!=null){
+					int blobLength = (int) sResultProfilePicture.length();
+					sProfilePicture = sResultProfilePicture.getBytes(1, blobLength);
+				}
+				
 				if (oUserName.equals(sResultUserName)
 						&& hashEncriptation(oPassword).equals(sResultPassword)) {
 

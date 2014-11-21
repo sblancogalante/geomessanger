@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.Blob;
@@ -202,7 +203,7 @@ public class CreateUser extends JDialog {
 
 				String workingHours = "From "+ firstHour.getSelectedItem() + " to " + secondHour.getSelectedItem();
 				
-				photoBytes = convertImageToBytes(testPhoto);
+				photoBytes = convertImageToBytes(new File(photoPath));
 
 				TypeVO oTypeVODocument = new TypeVO("Document",
 						(String) typeDocumentComboBox.getSelectedItem());
@@ -253,6 +254,31 @@ public class CreateUser extends JDialog {
 					e.printStackTrace();
 				}
 
+			}
+
+			private byte[] convertImageToBytes(File fileInput) {
+				
+				FileInputStream fileInputStream=null;
+				 
+		        File file = fileInput;
+		 
+		        byte[] bFile = new byte[(int) file.length()];
+		 
+		        try {
+		            //convert file into array of bytes
+			    fileInputStream = new FileInputStream(file);
+			    fileInputStream.read(bFile);
+			    fileInputStream.close();
+		 
+			    System.out.println("The file has been converted to bytes, sucesfully.");
+		        }catch(Exception e){
+		        	ErrorDialog error = new ErrorDialog("Theres has been an error. \n\n ERROR: "+ e.getMessage());
+					error.setVisible(true);
+		        	e.printStackTrace();
+		        }
+		        
+		        
+		        return bFile;
 			}
 
 		});
@@ -855,14 +881,5 @@ public class CreateUser extends JDialog {
 		// 3. Convert the buffered image into an ImageIcon for return
 		return (new ImageIcon(resizedImg));
 	}
-	
-	
-	private byte[] convertImageToBytes(ImageIcon image){
-		byte[] oReturn;
-		
-		
-		return null;
-		
-	}
-
 }
+	
