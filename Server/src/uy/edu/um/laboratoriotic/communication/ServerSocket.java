@@ -49,7 +49,7 @@ public class ServerSocket {
 		    PrintWriter pw;
 			try {
 				
-				java.net.ServerSocket oServerSocket = new java.net.ServerSocket(7899);
+				java.net.ServerSocket oServerSocket = new java.net.ServerSocket(10999);
 				
 				while (true) {
 					
@@ -67,12 +67,9 @@ public class ServerSocket {
 		           
 		           colMap.put(sUser, oSocket);
 					
-				}
-				
+				}				
 
-	           //sSystem.out.println(sHola);
-				
-//	           oSocket.close();
+				//oSocket.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
