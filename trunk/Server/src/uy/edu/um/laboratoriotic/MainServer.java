@@ -19,7 +19,7 @@ import uy.edu.um.laboratoriotic.services.management.message.TextMessageRemoteMgt
 /**
  * This class is the one that initializes the DB connection and the RMI
  * 
- * @author sblanco1 HC4UK9xY5pN6
+ * @author sblanco1 
  * 
  */
 public class MainServer {
