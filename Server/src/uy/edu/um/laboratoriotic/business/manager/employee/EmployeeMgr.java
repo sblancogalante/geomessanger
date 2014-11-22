@@ -108,10 +108,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 		if (oEmployee != null) {
 			oEmployeeToReturn = oEmployee;
-		} else {
-			System.out.println("No se encontro el usuario con identificacion "
-					+ oUserName);
-		}
+		} 
 
 		return oEmployeeToReturn;
 	}
@@ -131,10 +128,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 		if (oEmployee != null) {
 			oEmployeeToReturn = oNewDAOEmployee.modifyEmployee(oEmployeeAux);
-		} else {
-			System.out.println("No se encontro el usuario con identificacion "
-					+ oEmployeeVO.getEmployeeID());
-		}
+		} 
 
 		return oEmployeeToReturn;
 	}

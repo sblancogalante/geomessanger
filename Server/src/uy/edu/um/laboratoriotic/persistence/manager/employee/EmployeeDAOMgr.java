@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Blob;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -57,13 +58,11 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 		try {
 
-			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
-
-			Blob sProfilePicture = new javax.sql.rowset.serial.SerialBlob(
-					oEmployee.getProfilePicture());
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();		
 
 			oStatement = oConnection.createStatement();
-			String sInsert = "INSERT INTO `Employees` (document, iD, name, lastName, userName, password, location, sector, mail, position, workingHour, profilePicture, status, admin) VALUES ('"
+			
+			String sInsert = "INSERT INTO `Employees` (document, iD, name, lastName, userName, password, location, sector, mail, position, workingHour, status, admin) VALUES ('"
 					+ oEmployee.getDocument().getValue()
 					+ "','"
 					+ oEmployee.getID()
@@ -86,13 +85,20 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 					+ "','"
 					+ oEmployee.getWorkingHour()
 					+ "',"
-					+ sProfilePicture
-					+ ","
 					+ oEmployee.getStatus()
 					+ ","
 					+ oEmployee.getAdmin() + ");";
 
 			oStatement.execute(sInsert);
+			
+			String sQuery = "INSERT INTO `Employees` (profilePicture) VALUES (?)";
+			
+			PreparedStatement oPreparedStatement = oConnection.prepareStatement(sQuery);
+			
+			Blob sProfilePicture = new javax.sql.rowset.serial.SerialBlob(
+					oEmployee.getProfilePicture());
+			
+			oPreparedStatement.setBlob(1, sProfilePicture);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
