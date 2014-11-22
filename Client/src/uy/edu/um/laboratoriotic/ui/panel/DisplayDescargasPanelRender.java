@@ -37,11 +37,11 @@ public class DisplayDescargasPanelRender extends JPanel {
 		
 		if (file.getSender().getID().equals(sender.getID())){
 
-			flechaPhotoImage = new ImageIcon("Images/flecha2.png");
+			flechaPhotoImage = new ImageIcon("Images/flecha.png");
 			
 		}else{
 			
-			flechaPhotoImage = new ImageIcon("Images/flecha.png");
+			flechaPhotoImage = new ImageIcon("Images/flecha2.png");
 		}
 		
 		flechaPhotoLabel= new JLabel(flechaPhotoImage);

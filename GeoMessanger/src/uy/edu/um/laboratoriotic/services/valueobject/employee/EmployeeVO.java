@@ -12,7 +12,7 @@ import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
  * @author sblanco1
  * 
  */
-public class EmployeeVO implements Serializable {
+public class EmployeeVO implements Serializable, Comparable<EmployeeVO> {
 
 	/*
 	 * Attributes of the class
@@ -212,6 +212,28 @@ public class EmployeeVO implements Serializable {
 
 	public void setAdmin(boolean oAdmin) {
 		this.admin = oAdmin;
+	}
+
+	@Override
+	/**
+	 * This method, compares Employees
+	 *
+	 * @param o
+	 * @return 0 employees have same status. 1 if this EmployeeVO status is flase. -1 if this EmployeeVO status is true.
+	 */
+	public int compareTo(EmployeeVO oEmployee) {
+		
+		int oReturn=0;
+		if(this.status==true &&  oEmployee.getStatus()==false){
+			
+			oReturn = -1;
+			
+		}else if(this.status==false &&  oEmployee.getStatus()==true){
+			
+			oReturn = 1;
+		}
+		
+		return oReturn;
 	}
 
 }
