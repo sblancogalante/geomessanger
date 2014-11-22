@@ -19,9 +19,11 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.lang.reflect.Array;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
@@ -322,8 +324,21 @@ public class MainWindow extends JFrame {
 							chatRoom.setVisible(true);
 						}
 					});
-					
+						
 					popUpMenu.add(sendMessageMenuItem);
+					popUpMenu.add(new JSeparator());
+					JMenuItem showDownloadsMenuItem = new JMenuItem("Archivos envidaos", new ImageIcon("Images/downloads.png"));
+					showDownloadsMenuItem.addActionListener(new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							Descargas descargas = new Descargas(actualUser,(EmployeeVO)list.getModel().getElementAt(list.getSelectedIndex()));
+							descargas.setVisible(true);
+							
+						}
+					});
+					
+					popUpMenu.add(showDownloadsMenuItem);
 					userList.setSelectedIndex(userList.locationToIndex(e.getPoint()));
 					System.out.println(userList.getSelectedIndex());
 					popUpMenu.show(userList,e.getX(),e.getY());
@@ -377,7 +392,7 @@ public class MainWindow extends JFrame {
 			employeeListModel = new DefaultListModel<EmployeeVO>();
 			fillDefaultListModelFromArray(actualUser,employeeMgt.getEmployees(), employeeListModel);
 			userList.setModel(employeeListModel);
-			listEmployee = actualizarContactos(employeeMgt, userList);
+			listEmployee = actualizarContactos(employeeMgt, userList, "Search user");
 			
 		} 
 		
@@ -386,7 +401,7 @@ public class MainWindow extends JFrame {
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
 				try {
-					listEmployee = actualizarContactos(employeeMgt, userList);
+					listEmployee = actualizarContactos(employeeMgt, userList,searchUserText.getText());
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -498,11 +513,28 @@ public class MainWindow extends JFrame {
 		return this;
 	}
 
-	private ArrayList<EmployeeVO>  actualizarContactos(EmployeeMgt employeeMgt, JList<EmployeeVO> userList)
+	private ArrayList<EmployeeVO>  actualizarContactos(EmployeeMgt employeeMgt, JList<EmployeeVO> userList, String userName)
 			throws RemoteException, NotBoundException {
 		
-		ArrayList<EmployeeVO> oListEmployee = employeeMgt.getEmployees();
+		
+		ArrayList<EmployeeVO> oListEmployee= new ArrayList<EmployeeVO>();
+		
+		if(userName.equals("Search user") || userName.equals("")){
+			
+			oListEmployee = employeeMgt.getEmployees();
 
+		}else{
+			EmployeeVO oEmployee = employeeMgt.searchEmployee(userName);
+			if(oEmployee!=null){
+				oListEmployee.add(oEmployee);
+			}else{
+				oListEmployee = employeeMgt.getEmployees();
+			}
+				
+		}
+		
+		oListEmployee = order(oListEmployee);
+		
 		if (oListEmployee != null && oListEmployee.size() > 0) {
 			
 			DefaultListModel<EmployeeVO> lModel = new DefaultListModel<EmployeeVO>();
@@ -585,6 +617,36 @@ public class MainWindow extends JFrame {
 	     // 3. Convert the buffered image into an ImageIcon for return
 	     return (new ImageIcon(resizedImg));
 	 }
+	
+	
+	
+	private ArrayList<EmployeeVO> order(ArrayList<EmployeeVO> list){
+		EmployeeVO[] employeeVec = new EmployeeVO[list.size()];
+		for(int i=0; i < list.size() ; i++){
+			employeeVec[i] = list.get(i);
+		}
+		employeeVec = insercion(employeeVec);
+		ArrayList<EmployeeVO> oReturn = new ArrayList<EmployeeVO>(Arrays.asList(employeeVec));
+		
+		return oReturn;
+	}
+	
+	
+	
+	private static <Thing extends Comparable<Thing>> Thing[] insercion(Thing[] vector){
+		Thing oTemp;
+		for(int i = 1; i < vector.length ; i++){
+			oTemp = vector[i];
+			for(int j = i-1; j>=0 && oTemp.compareTo(vector[j])<0 ; j--){
+				vector[j+1] = vector[j];
+				vector[j] = oTemp;
+			}
+			
+		}
+		
+		return vector;
+	}
+        
 	
 	
 	
