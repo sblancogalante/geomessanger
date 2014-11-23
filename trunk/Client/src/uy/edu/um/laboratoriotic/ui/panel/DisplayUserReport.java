@@ -29,7 +29,7 @@ public class DisplayUserReport extends JPanel {
 		
 		TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
 		
-		JLabel employeeNameLabel = new JLabel(employee.getName() + employee.getLastName());
+		JLabel employeeNameLabel = new JLabel(employee.getName() + " " +  employee.getLastName());
 		
 		JLabel countLabel = null;
 		try {

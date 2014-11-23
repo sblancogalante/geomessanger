@@ -55,6 +55,7 @@ import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.ui.UserProfile;
 import uy.edu.um.laboratoriotic.ui.ABM.CreateUser;
 import uy.edu.um.laboratoriotic.ui.ABM.DeleteUser;
+import uy.edu.um.laboratoriotic.ui.dialog.Reportes;
 import uy.edu.um.laboratoriotic.ui.panel.DisplayUserPanelRenderer;
 
 public class MainWindow extends JFrame {

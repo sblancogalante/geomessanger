@@ -1,4 +1,4 @@
-package uy.edu.um.laboratoriotic.ui.frame;
+package uy.edu.um.laboratoriotic.ui.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,6 +20,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
 import javax.swing.JSeparator;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JScrollPane;
@@ -33,7 +34,7 @@ import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.ui.ErrorDialog;
 import uy.edu.um.laboratoriotic.ui.panel.DisplayUserReport;
 
-public class Reportes extends JFrame {
+public class Reportes extends JDialog {
 
 	/**
 	 * 
@@ -60,9 +61,12 @@ public class Reportes extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+
+	
 	public Reportes() {
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		setBounds(100, 100, 508, 456);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
