@@ -76,7 +76,7 @@ public class DeleteUser extends JDialog {
 				if(isSelected){
 					oLabel.setForeground(Color.BLUE);
 				}
-				oLabel.setText(value.getName()+" "+value.getLastName() + " "+ index);
+				oLabel.setText(value.getName()+" "+value.getLastName());
 				return oLabel;
 			}
 		});

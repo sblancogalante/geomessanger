@@ -77,6 +77,7 @@ public class MainWindow extends JFrame {
 	private ArrayList<EmployeeVO> listEmployee;
 	private EmployeeVO actualUser;
 	private JScrollPane scrollPane;
+	private JMenuItem reportsMenuItem;
 
 	public MainWindow(EmployeeFilterVO actualFilterUser) throws RemoteException, NotBoundException {
 
@@ -204,6 +205,9 @@ public class MainWindow extends JFrame {
 			}
 
 		});
+		
+		
+		
 
 		adminMenu.add(createUserMenuItem);
 
@@ -224,6 +228,20 @@ public class MainWindow extends JFrame {
 		});
 
 		adminMenu.add(deleteUserMenuItem);
+		
+		reportsMenuItem = new JMenuItem("Reports");
+		reportsMenuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Reportes reports = new Reportes();
+				reports.setVisible(true);
+				
+			}
+		});
+		
+		
+		adminMenu.add(reportsMenuItem);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -462,10 +480,6 @@ public class MainWindow extends JFrame {
 					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
 					.addContainerGap())
 		);
-		
-		
-		
-		//INICIALIZATION OF THE JLIST 
 		
 		
 		

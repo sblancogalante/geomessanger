@@ -36,31 +36,22 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class NewLocation extends JDialog {
+
+
+public class NewDocument extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField newLocationText;
-	private ArrayList<TypeVO> locationsArray;
+	private JTextField newDocumentText;
+	private ArrayList<TypeVO> documentsArray;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			NewLocation dialog = new NewLocation();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+
 
 	/**
 	 * Create the dialog.
 	 */
-	public NewLocation() {
+	public NewDocument() {
 		
-		this.setTitle("Create Location");
+		this.setTitle("Create Type of Document");
 		setBounds(100, 100, 450, 373);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -70,21 +61,21 @@ public class NewLocation extends JDialog {
 		
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
-		JLabel lblCreateLocation = new JLabel("Create Location");
+		JLabel lblCreateLocation = new JLabel("Create Type of Document");
 		lblCreateLocation.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		
 		JSeparator separator = new JSeparator();
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
-		JLabel lblNewLocation = new JLabel("New Location: ");
+		JLabel lblNewLocation = new JLabel("New Type of Document: ");
 		
 		final GeneralMgt generalMgt =  GeneralFactory.getInstance()
 				.getGeneralMgt();
 		
-		newLocationText = new JTextField();
-		newLocationText.setEditable(true);
-		newLocationText.setColumns(10);
+		newDocumentText = new JTextField();
+		newDocumentText.setEditable(true);
+		newDocumentText.setColumns(10);
 		
 		
 		
@@ -105,7 +96,7 @@ public class NewLocation extends JDialog {
 							.addContainerGap()
 							.addComponent(lblNewLocation)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(newLocationText)
+							.addComponent(newDocumentText)
 							.addGap(195))
 						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addContainerGap()
@@ -123,7 +114,7 @@ public class NewLocation extends JDialog {
 					.addGap(18)
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLocation)
-						.addComponent(newLocationText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(newDocumentText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
 					.addGap(9))
@@ -151,14 +142,14 @@ public class NewLocation extends JDialog {
 		});
 		//Agrega las locations  conocidas
 		try {
-			locationsArray = generalMgt.getTypes("Pais");
+			documentsArray = generalMgt.getTypes("Documento");
 			DefaultListModel<TypeVO> typesListModel; 
 			typesListModel = new DefaultListModel<TypeVO>();
-			fillDefaultListModelFromArray(generalMgt.getTypes("Pais"), typesListModel);
+			fillDefaultListModelFromArray(generalMgt.getTypes("Documento"), typesListModel);
 			typesList.setModel(typesListModel); 
 			
 		} catch (RemoteException | NotBoundException e) {
-			ErrorDialog errorDialog = new ErrorDialog("Se ha producido un error al intentar buscar las locations conocidas."
+			ErrorDialog errorDialog = new ErrorDialog("Se ha producido un error al intentar buscar los tipos de documentos conocidas."
 					+ " \n \n ERROR: " + e.getMessage());
 			errorDialog.setVisible(true);
 			e.printStackTrace();
@@ -173,21 +164,21 @@ public class NewLocation extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton addLocationButton = new JButton("Add Location");
+				JButton addLocationButton = new JButton("Add Document");
 				addLocationButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
-						int nvalue = JOptionPane.showConfirmDialog(NewLocation.this, "Estas seguro que desea agregar la siguiente Localizacion: \n" 
-								+ newLocationText.getText() + " ?");
+						int nvalue = JOptionPane.showConfirmDialog(NewDocument.this, "Estas seguro que desea agregar el siguiente tipo de Documento: \n" 
+								+ newDocumentText.getText() + " ?");
 					
 								if (nvalue == 0){
 									try {
-										TypeVO oType = new TypeVO(0,"Pais",newLocationText.getText());
+										TypeVO oType = new TypeVO(0,"Documento",newDocumentText.getText());
 										generalMgt.addType(oType);
 										dispose();
 									} catch (RemoteException | NotBoundException e) {
-										ErrorDialog errorDialog = new ErrorDialog("Se ha producido un error al intentar agregar la siguiente localizacion "
-												+ newLocationText.getText() + "."
+										ErrorDialog errorDialog = new ErrorDialog("Se ha producido un error al intentar agregar el siguiente tipo de documento "
+												+ newDocumentText.getText() + "."
 												+ " \n \n ERROR: " + e.getMessage());
 										errorDialog.setVisible(true);
 										e.printStackTrace();
