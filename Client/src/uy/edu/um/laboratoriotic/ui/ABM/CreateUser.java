@@ -154,7 +154,7 @@ public class CreateUser extends JDialog {
 		
 		JLabel workingHoursLabel = new JLabel("Working Hours: ");
 		
-		String[] hours = {"00","01","02","03","03","04","05","06","07","08","09","10","11","12",
+		String[] hours = {"00","01","02","03","04","05","06","07","08","09","10","11","12",
 				"13","14","15","16","17","18","19","20","21","22","23"};
 		
 		final JComboBox firstHour = new JComboBox(hours);
@@ -272,9 +272,8 @@ public class CreateUser extends JDialog {
 		            //convert file into array of bytes
 			    fileInputStream = new FileInputStream(file);
 			    fileInputStream.read(bFile);
-			    fileInputStream.close();
-		 
-			    System.out.println("The file has been converted to bytes, sucesfully.");
+			    fileInputStream.close();		 
+			   
 		        }catch(Exception e){
 		        	ErrorDialog error = new ErrorDialog("Theres has been an error. \n\n ERROR: "+ e.getMessage());
 					error.setVisible(true);

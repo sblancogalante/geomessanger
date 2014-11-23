@@ -1,7 +1,6 @@
 package uy.edu.um.laboratoriotic.services.valueobject.employee;
 
 import java.io.Serializable;
-import java.sql.Blob;
 
 import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
 
@@ -216,10 +215,10 @@ public class EmployeeVO implements Serializable, Comparable<EmployeeVO> {
 
 	@Override
 	/**
-	 * This method, compares Employees
+	 * This method compares Employees
 	 *
 	 * @param o
-	 * @return 0 employees have same status. 1 if this EmployeeVO status is flase. -1 if this EmployeeVO status is true.
+	 * @return 0 employees have same status. 1 if this EmployeeVO status is false. -1 if this EmployeeVO status is true.
 	 */
 	public int compareTo(EmployeeVO oEmployee) {
 		
