@@ -32,6 +32,8 @@ import uy.edu.um.laboratoriotic.ui.ErrorDialog;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -67,6 +69,7 @@ public class NewLocation extends JDialog {
 		Dimension d = new Dimension(450,373);
 		this.setMaximumSize(d);
 		this.setMinimumSize(d);
+		
 		
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		

@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +19,7 @@ import java.sql.Blob;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -161,6 +164,7 @@ public class CreateUser extends JDialog {
 		String[] locationVector = {};
 		String[] sectorVector = {};
 		String[] documentVector = {};
+		
 		try {
 			ArrayList<TypeVO> locationTypeArray = generalMgr.getTypes("Pais");
 			ArrayList<TypeVO> sectorTypeArray = generalMgr.getTypes("Sector");
@@ -185,13 +189,13 @@ public class CreateUser extends JDialog {
 
 		final JComboBox<String> locationComboBox = new JComboBox(locationVector);
 
-		final JComboBox<String> sectorComboBox = new JComboBox(sectorVector);
+		final JComboBox<String> sectorComboBox = new JComboBox(sectorVector); 
 
 		final JCheckBox isAdminCheckBox = new JCheckBox("is Admin");
 
 		final JLabel documentTypeLabel = new JLabel("Type of Document: ");
 
-		final JComboBox<String> typeDocumentComboBox = new JComboBox(
+		final JComboBox<String> documentComboBox = new JComboBox(
 				documentVector);
 
 		JButton createUserButton = new JButton("Create User");
@@ -206,7 +210,7 @@ public class CreateUser extends JDialog {
 				photoBytes = convertImageToBytes(new File(photoPath));
 
 				TypeVO oTypeVODocument = new TypeVO("Document",
-						(String) typeDocumentComboBox.getSelectedItem());
+						(String) documentComboBox.getSelectedItem());
 				TypeVO oTypeVOLocation = new TypeVO("Location",
 						(String) locationComboBox.getSelectedItem());
 				TypeVO oTypeVOSector = new TypeVO("Sector",
@@ -363,6 +367,66 @@ public class CreateUser extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				NewDocument newDocument = new NewDocument();
 				newDocument.setVisible(true);
+				newDocument.addWindowListener(new WindowListener() {
+					
+					@Override
+					public void windowOpened(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowIconified(WindowEvent e) {
+					
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowDeiconified(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowDeactivated(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowClosing(WindowEvent e) {
+						
+						
+					}
+					
+					@Override
+					public void windowClosed(WindowEvent e) {
+						try {
+							ArrayList<TypeVO> documentTypeArray = generalMgr.getTypes("Documento");
+							String[] documentVector = arrayTypeToString(documentTypeArray);
+							DefaultComboBoxModel dcbm = new DefaultComboBoxModel<String>(documentVector);
+							documentComboBox.setModel(dcbm);
+							
+						} catch (RemoteException | NotBoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+
+						
+					}
+					
+					@Override
+					public void windowActivated(WindowEvent e) {
+					
+						// TODO Auto-generated method stub
+						
+					}
+				});
 			}
 		});
 
@@ -390,7 +454,7 @@ public class CreateUser extends JDialog {
 						.addComponent(nameText)
 						.addComponent(documentText, GroupLayout.PREFERRED_SIZE, 355, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel_2.createSequentialGroup()
-							.addComponent(typeDocumentComboBox, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
+							.addComponent(documentComboBox, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
 							.addGap(33)
 							.addComponent(newDocumentButton)))
 					.addGap(36))
@@ -401,7 +465,7 @@ public class CreateUser extends JDialog {
 					.addGap(58)
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
 						.addComponent(documentTypeLabel)
-						.addComponent(typeDocumentComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(documentComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(newDocumentButton))
 					.addPreferredGap(ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
@@ -458,6 +522,66 @@ public class CreateUser extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				NewLocation newLocation = new NewLocation();
 				newLocation.setVisible(true);
+				newLocation.addWindowListener(new WindowListener() {
+					
+					@Override
+					public void windowOpened(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowIconified(WindowEvent e) {
+					
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowDeiconified(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowDeactivated(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowClosing(WindowEvent e) {
+						
+						
+					}
+					
+					@Override
+					public void windowClosed(WindowEvent e) {
+						try {
+							ArrayList<TypeVO> locationTypeArray = generalMgr.getTypes("Pais");
+							String[] locationVector = arrayTypeToString(locationTypeArray);
+							DefaultComboBoxModel dcbm = new DefaultComboBoxModel<String>(locationVector);
+							locationComboBox.setModel(dcbm);
+							
+						} catch (RemoteException | NotBoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+
+						
+					}
+					
+					@Override
+					public void windowActivated(WindowEvent e) {
+					
+						// TODO Auto-generated method stub
+						
+					}
+				});
 			}
 		});
 
@@ -466,6 +590,66 @@ public class CreateUser extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				NewSector newSector = new NewSector();
 				newSector.setVisible(true);
+				newSector.addWindowListener(new WindowListener() {
+					
+					@Override
+					public void windowOpened(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowIconified(WindowEvent e) {
+					
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowDeiconified(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowDeactivated(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowClosing(WindowEvent e) {
+						
+						
+					}
+					
+					@Override
+					public void windowClosed(WindowEvent e) {
+						try {
+							ArrayList<TypeVO> sectorTypeArray = generalMgr.getTypes("Sector");
+							String[] sectorVector = arrayTypeToString(sectorTypeArray);
+							DefaultComboBoxModel dcbm = new DefaultComboBoxModel<String>(sectorVector);
+							sectorComboBox.setModel(dcbm);
+							
+						} catch (RemoteException | NotBoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+
+						
+					}
+					
+					@Override
+					public void windowActivated(WindowEvent e) {
+					
+						// TODO Auto-generated method stub
+						
+					}
+				});
 				
 			}
 		});
