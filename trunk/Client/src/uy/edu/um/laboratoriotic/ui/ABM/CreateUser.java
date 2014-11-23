@@ -357,147 +357,76 @@ public class CreateUser extends JDialog {
 
 		positionText = new JTextField();
 		positionText.setColumns(10);
+		
+		JButton newDocumentButton = new JButton("Add Type of Document");
+		newDocumentButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NewDocument newDocument = new NewDocument();
+				newDocument.setVisible(true);
+			}
+		});
 
 		GroupLayout gl_panel_2 = new GroupLayout(userDetailsPanel);
-		gl_panel_2
-				.setHorizontalGroup(gl_panel_2
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								gl_panel_2
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(obligatoryFieldLabel,
-												GroupLayout.PREFERRED_SIZE,
-												303, GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(242, Short.MAX_VALUE))
-						.addGroup(
-								gl_panel_2
-										.createSequentialGroup()
-										.addContainerGap(74, Short.MAX_VALUE)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addComponent(
-																positionLabel)
-														.addComponent(
-																documentLabel)
-														.addComponent(nameLabel)
-														.addComponent(
-																lastNameLabel)
-														.addComponent(
-																eMailLabel))
-										.addGap(18)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.LEADING,
-																false)
-														.addComponent(
-																positionText)
-														.addComponent(eMailText)
-														.addComponent(
-																lastNameText)
-														.addComponent(nameText)
-														.addComponent(
-																documentText,
-																GroupLayout.PREFERRED_SIZE,
-																355,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(36))
-						.addGroup(
-								Alignment.LEADING,
-								gl_panel_2
-										.createSequentialGroup()
-										.addGap(198)
-										.addComponent(documentTypeLabel)
-										.addGap(18)
-										.addComponent(typeDocumentComboBox,
-												GroupLayout.PREFERRED_SIZE,
-												105, GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(106, Short.MAX_VALUE)));
-		gl_panel_2
-				.setVerticalGroup(gl_panel_2
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								gl_panel_2
-										.createSequentialGroup()
-										.addGap(58)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																documentTypeLabel)
-														.addComponent(
-																typeDocumentComboBox,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.RELATED, 53,
-												Short.MAX_VALUE)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																documentText,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																documentLabel))
-										.addGap(18)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																nameText,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(nameLabel))
-										.addGap(18)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																lastNameText,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																lastNameLabel))
-										.addGap(18)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																eMailText,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																eMailLabel))
-										.addGap(18)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																positionLabel)
-														.addComponent(
-																positionText,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(58)
-										.addComponent(obligatoryFieldLabel)
-										.addContainerGap()));
+		gl_panel_2.setHorizontalGroup(
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(obligatoryFieldLabel, GroupLayout.PREFERRED_SIZE, 303, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(248, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_panel_2.createSequentialGroup()
+					.addContainerGap(24, Short.MAX_VALUE)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING)
+						.addComponent(documentTypeLabel)
+						.addComponent(positionLabel)
+						.addComponent(documentLabel)
+						.addComponent(nameLabel)
+						.addComponent(lastNameLabel)
+						.addComponent(eMailLabel))
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+						.addComponent(positionText)
+						.addComponent(eMailText)
+						.addComponent(lastNameText)
+						.addComponent(nameText)
+						.addComponent(documentText, GroupLayout.PREFERRED_SIZE, 355, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addComponent(typeDocumentComboBox, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
+							.addGap(33)
+							.addComponent(newDocumentButton)))
+					.addGap(36))
+		);
+		gl_panel_2.setVerticalGroup(
+			gl_panel_2.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addGap(58)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(documentTypeLabel)
+						.addComponent(typeDocumentComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(newDocumentButton))
+					.addPreferredGap(ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(documentText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(documentLabel))
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(nameText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(nameLabel))
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lastNameText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lastNameLabel))
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(eMailText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(eMailLabel))
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(positionLabel)
+						.addComponent(positionText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(58)
+					.addComponent(obligatoryFieldLabel)
+					.addContainerGap())
+		);
 
 		userDetailsPanel.setLayout(gl_panel_2);
 
@@ -533,6 +462,13 @@ public class CreateUser extends JDialog {
 		});
 
 		JButton addSectorButton = new JButton("Add Sector");
+		addSectorButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NewSector newSector = new NewSector();
+				newSector.setVisible(true);
+				
+			}
+		});
 
 		passwordLabel = new JLabel("Password: ");
 

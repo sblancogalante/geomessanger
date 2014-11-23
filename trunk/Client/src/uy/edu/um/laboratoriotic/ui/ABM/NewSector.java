@@ -40,7 +40,7 @@ public class NewSector extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField newSectorText;
-	private ArrayList<TypeVO> locationsArray;
+	private ArrayList<TypeVO> sectorsArray;
 
 	/**
 	 * Launch the application.
@@ -83,7 +83,7 @@ public class NewSector extends JDialog {
 				.getGeneralMgt();
 		
 		newSectorText = new JTextField();
-		newSectorText.setEditable(false);
+		newSectorText.setEditable(true);
 		newSectorText.setColumns(10);
 		
 		
@@ -138,23 +138,23 @@ public class NewSector extends JDialog {
 					JList<? extends TypeVO> list, TypeVO value,
 					int index, boolean isSelected, boolean cellHasFocus) {
 				
-				JLabel label = new JLabel(value.getType());
+				JLabel label = new JLabel(value.getValue());
 				
 				
 				if(isSelected){
 					label.setForeground(Color.BLUE);
 					
 				}
-				
+				 
 				return label;
 			}
 		});
 		//Agrega las locations  conocidas
 		try {
-			locationsArray = generalMgt.getTypes("");
+			sectorsArray = generalMgt.getTypes("Sector");
 			DefaultListModel<TypeVO> typesListModel; 
 			typesListModel = new DefaultListModel<TypeVO>();
-			fillDefaultListModelFromArray(generalMgt.getTypes(""), typesListModel);
+			fillDefaultListModelFromArray(generalMgt.getTypes("Sector"), typesListModel);
 			typesList.setModel(typesListModel); 
 			
 		} catch (RemoteException | NotBoundException e) {
@@ -183,7 +183,7 @@ public class NewSector extends JDialog {
 								if (nvalue == 0){
 									//DEELTE USER
 									try {
-										TypeVO oType = new TypeVO(1,"Sector",newSectorText.getText());
+										TypeVO oType = new TypeVO(0,"Sector",newSectorText.getText());
 										generalMgt.addType(oType);
 										dispose();
 									} catch (RemoteException | NotBoundException e) {
@@ -205,10 +205,17 @@ public class NewSector extends JDialog {
 					
 				buttonPane.add(addSectorButton);
 				getRootPane().setDefaultButton(addSectorButton);
-			}
-			{
+
 				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+						
+					}
+				});
+				
 				buttonPane.add(cancelButton);
 			}
 		}
