@@ -40,6 +40,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -48,13 +49,14 @@ public class ModifyUser extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField eMailTextField;
-	private JPasswordField passTextField;
-	private JPasswordField repeatPassField;
+	private JTextField documentTextField;
 	private JTextField positionTextField;
 	private String photoPath;
 	private JLabel testPhotoLabel;
 	JComboBox locationComboBox;
 	JComboBox sectorComboBox;
+	JComboBox documentComboBox;
+	private byte[] oProfilePicture;
 
 
 	public ModifyUser(final EmployeeVO employee) {
@@ -107,17 +109,19 @@ public class ModifyUser extends JDialog {
 			JPanel panel = new JPanel();
 			tabbedPane.addTab("Account", null, panel, null);
 			JLabel lblEmail = new JLabel("EMail: ");
-			JLabel lblPassword = new JLabel("Password: ");
-			JLabel lblRepeat = new JLabel("Repeat Password: ");
+			JLabel documentLabel = new JLabel("Document: ");
 			
 			String[] locationVector = {};
 			String[] sectorVector = {};
+			String[] documentVector = {};
 			
 			try {
 				ArrayList<TypeVO> locationTypeArray = generalMgt.getTypes("Pais");
 				ArrayList<TypeVO> sectorTypeArray = generalMgt.getTypes("Sector");
+				ArrayList<TypeVO> documentTypeArray = generalMgt.getTypes("Documento");
 				locationVector = arrayTypeToString(locationTypeArray);
 				sectorVector = arrayTypeToString(sectorTypeArray);
+				documentVector = arrayTypeToString(documentTypeArray);
 
 				
 			} catch (NotBoundException | RemoteException e1) {
@@ -133,16 +137,17 @@ public class ModifyUser extends JDialog {
 			
 			sectorComboBox = new JComboBox(sectorVector);
 			
+			documentComboBox = new JComboBox(documentVector);
+			
+			
+			
 			JLabel lblPosition = new JLabel("Position: ");
 			
 			eMailTextField = new JTextField(employee.getMail());
 			eMailTextField.setColumns(10);
 			
-			passTextField = new JPasswordField();
-			passTextField.setColumns(10);
-			
-			repeatPassField = new JPasswordField();
-			repeatPassField.setColumns(10);
+			documentTextField = new JTextField(employee.getID());
+			documentTextField.setColumns(10);
 			
 			positionTextField = new JTextField(employee.getPosition());
 			positionTextField.setColumns(10);
@@ -150,6 +155,10 @@ public class ModifyUser extends JDialog {
 			JLabel lblNewLabel_1 = new JLabel("Location");
 			
 			JLabel lblSector = new JLabel("Sector");
+			
+			JLabel lblDocumentType = new JLabel("Document Type: ");
+			
+			
 			GroupLayout gl_panel = new GroupLayout(panel);
 			gl_panel.setHorizontalGroup(
 				gl_panel.createParallelGroup(Alignment.LEADING)
@@ -163,20 +172,20 @@ public class ModifyUser extends JDialog {
 							.addGroup(gl_panel.createSequentialGroup()
 								.addContainerGap()
 								.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-									.addComponent(lblPassword)
-									.addComponent(lblRepeat)
+									.addComponent(documentLabel)
 									.addComponent(lblPosition)
 									.addComponent(lblEmail)
-									.addComponent(lblNewLabel_1))
-								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+									.addComponent(lblNewLabel_1)
+									.addComponent(lblDocumentType))
+								.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
 									.addGroup(gl_panel.createSequentialGroup()
 										.addGap(18)
 										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-											.addComponent(positionTextField, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-											.addComponent(passTextField, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-											.addComponent(eMailTextField, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-											.addComponent(repeatPassField, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)))
-									.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+											.addComponent(positionTextField, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+											.addComponent(eMailTextField, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+											.addComponent(documentTextField, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+											.addComponent(documentComboBox, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)))
+									.addGroup(gl_panel.createSequentialGroup()
 										.addPreferredGap(ComponentPlacement.RELATED)
 										.addComponent(lblSector)
 										.addGap(38)))))
@@ -189,14 +198,14 @@ public class ModifyUser extends JDialog {
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(lblEmail)
 							.addComponent(eMailTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGap(30)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblDocumentType)
+							.addComponent(documentComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGap(18)
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblPassword)
-							.addComponent(passTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGap(18)
-						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblRepeat)
-							.addComponent(repeatPassField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(documentLabel)
+							.addComponent(documentTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGap(18)
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(lblPosition)
@@ -209,7 +218,7 @@ public class ModifyUser extends JDialog {
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(locationComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addComponent(sectorComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(23, Short.MAX_VALUE))
+						.addContainerGap(36, Short.MAX_VALUE))
 			);
 			panel.setLayout(gl_panel);
 		}
@@ -223,39 +232,11 @@ public class ModifyUser extends JDialog {
 			panel_1.setForeground(Color.GRAY);
 			panel_1.setBorder(new LineBorder(new Color(128, 128, 128), 2, true));
 			
-			JButton btnNewButton = new JButton("Select Photo");
-			GroupLayout gl_panel = new GroupLayout(panel);
-			gl_panel.setHorizontalGroup(
-				gl_panel.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel.createSequentialGroup()
-						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_panel.createSequentialGroup()
-								.addGap(53)
-								.addComponent(lblAddPhoto)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(btnNewButton))
-							.addGroup(gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 404, GroupLayout.PREFERRED_SIZE)))
-						.addContainerGap(9, Short.MAX_VALUE))
-			);
-			gl_panel.setVerticalGroup(
-				gl_panel.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel.createSequentialGroup()
-						.addGap(23)
-						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblAddPhoto)
-							.addComponent(btnNewButton))
-						.addGap(18)
-						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-						.addContainerGap())
-			);
-			
-			
+			JButton selectPhotoButton = new JButton("Select Photo");
 			testPhotoLabel = new JLabel(rescaleImage(new File(photoPath), 384, 256));
 			final ImageIcon testPhoto = rescaleImage(new File(photoPath), 384, 256);
 			
-			JButton selectPhotoButton = new JButton("Select photo ");
+			
 			selectPhotoButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JFileChooser jFileChooser = new JFileChooser();
@@ -275,6 +256,36 @@ public class ModifyUser extends JDialog {
 					}
 				}
 			});
+			
+			GroupLayout gl_panel = new GroupLayout(panel);
+			gl_panel.setHorizontalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel.createSequentialGroup()
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel.createSequentialGroup()
+								.addGap(53)
+								.addComponent(lblAddPhoto)
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addComponent(selectPhotoButton))
+							.addGroup(gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 404, GroupLayout.PREFERRED_SIZE)))
+						.addContainerGap(9, Short.MAX_VALUE))
+			);
+			gl_panel.setVerticalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel.createSequentialGroup()
+						.addGap(23)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblAddPhoto)
+							.addComponent(selectPhotoButton))
+						.addGap(18)
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+						.addContainerGap())
+			);
+			
+			
+			
 			
 			
 			
@@ -316,37 +327,31 @@ public class ModifyUser extends JDialog {
 								(String) locationComboBox.getSelectedItem());
 						TypeVO oTypeVOSector = new TypeVO("Sector",
 								(String) sectorComboBox.getSelectedItem());
+						TypeVO oTypeVODocument = new TypeVO("Documento",
+								(String) documentComboBox.getSelectedItem());
 						
-						employee.setPassword(String.valueOf(passTextField.getPassword()));
+
 						employee.setLocation(oTypeVOLocation);
 						employee.setSector(oTypeVOSector);
-						//employee.setProfilePicture(oProfilePicture);
+						employee.setDocument(oTypeVODocument);
+						employee.setID(documentTextField.getText());
+						oProfilePicture = convertImageToBytes(new File(photoPath));
+						employee.setProfilePicture(oProfilePicture);
 						employee.setMail(eMailTextField.getText());
-						
 						try {
-							String pass1 = String.valueOf(passTextField.getPassword());
-							String pass2 = String.valueOf(repeatPassField
-									.getPassword());
-							
-							if (pass1.equals(pass2) && pass1 != "") {
-								
-								employeeMgt.modifyEmployee(employee);
-								System.out.println("Se ha modificado: "
-										+ employee.getUserName());
-								dispose();
-							} else if(!pass1.equals(pass2)) {
-								ErrorDialog errorDialogPassword = new ErrorDialog(
-										"Se ha detectado un error, las contraseñas ingresadas deben ser iguales. Porfavor intente nuevamente.");
-								errorDialogPassword.setVisible(true);
-								passTextField.setText("");
-								repeatPassField.setText("");
-							}
-							
+							employeeMgt.modifyEmployee(employee);
+							System.out.println("Se ha modificado: "
+									+ employee.getUserName());
+							dispose();
 						} catch (RemoteException | NotBoundException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
+						System.out.println("Se ha modificado: "
+								+ employee.getUserName());
+						dispose();
 						
+				
 					}
 					
 				});
@@ -441,5 +446,31 @@ public class ModifyUser extends JDialog {
 		// 3. Convert the buffered image into an ImageIcon for return
 		return (new ImageIcon(resizedImg));
 	}
-
+	
+	
+	
+	private byte[] convertImageToBytes(File fileInput) {
+		
+		FileInputStream fileInputStream=null;
+		 
+        File file = fileInput;
+ 
+        byte[] bFile = new byte[(int) file.length()];
+ 
+        try {
+            //convert file into array of bytes
+	    fileInputStream = new FileInputStream(file);
+	    fileInputStream.read(bFile);
+	    fileInputStream.close();
+ 
+	    System.out.println("The file has been converted to bytes, sucesfully.");
+        }catch(Exception e){
+        	ErrorDialog error = new ErrorDialog("Theres has been an error. \n\n ERROR: "+ e.getMessage());
+			error.setVisible(true);
+        	e.printStackTrace();
+        }
+        
+        
+        return bFile;
+	}
 }
