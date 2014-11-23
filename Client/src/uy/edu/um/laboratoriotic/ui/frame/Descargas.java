@@ -29,6 +29,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -39,6 +42,8 @@ import uy.edu.um.laboratoriotic.services.factory.message.FileMessageFactory;
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
+import uy.edu.um.laboratoriotic.ui.ErrorDialog;
+import uy.edu.um.laboratoriotic.ui.dialog.DownloadSuccesful;
 import uy.edu.um.laboratoriotic.ui.panel.DisplayDescargasPanelRender;
 
 public class Descargas extends JFrame {
@@ -49,7 +54,7 @@ public class Descargas extends JFrame {
 	
 	public Descargas(final EmployeeVO sender, final EmployeeVO reciver) {
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 330);
+		setBounds(100, 100, 450, 367);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -60,32 +65,42 @@ public class Descargas extends JFrame {
 		lblArchivosEnviados.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		
 		JSeparator separator = new JSeparator();
+		
+		JLabel lblDoubleclickToDownload = new JLabel("Double-Click to download file.");
+		lblDoubleclickToDownload.setForeground(Color.GRAY);
+		lblDoubleclickToDownload.setFont(new Font("Lucida Grande", Font.ITALIC, 13));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
 							.addGap(159)
 							.addComponent(lblArchivosEnviados))
-						.addGroup(gl_contentPane.createSequentialGroup()
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)))
 					.addGap(4))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblDoubleclickToDownload)
+					.addContainerGap(373, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblArchivosEnviados)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 8, GroupLayout.PREFERRED_SIZE)
 					.addGap(19)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-					.addContainerGap())
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblDoubleclickToDownload)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		
 		final JList<FileMessageVO> downloadJList = new JList<FileMessageVO>();
@@ -123,7 +138,9 @@ public class Descargas extends JFrame {
 				
 			}
 		} catch (RemoteException | NotBoundException e1) {
-			// TODO Auto-generated catch block
+			ErrorDialog error = new ErrorDialog("There has been an error retrieving data from Data Base. \n\n "
+					+ "ERROR: " + e1.getMessage());
+			error.setVisible(true);
 			e1.printStackTrace();
 		} 
 		
@@ -152,9 +169,28 @@ public class Descargas extends JFrame {
 		downloadJList.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
 		    	
+		    	
 		        JList list = (JList)evt.getSource();
 		        if (evt.getClickCount() == 2) {          // Double-click
-		           //Guarda la imagen en algun directorio.
+		          
+		        	 
+		    	    FileOutputStream fileOuputStream;
+					try {
+						FileMessageVO file = (FileMessageVO)list.getModel().getElementAt(list.getSelectedIndex());
+						String userDir = System.getProperty("user.home") + "/Desktop/" + file.getFileMessageName();
+						fileOuputStream = new FileOutputStream(userDir);
+			    	    fileOuputStream.write(file.getFileMessage());
+			    	    fileOuputStream.close();
+			    	    DownloadSuccesful ds = new DownloadSuccesful();
+			    	    ds.setVisible(true);
+			    	    
+					} catch (IOException e) {
+						ErrorDialog error = new ErrorDialog("There has been an error donwloading the file. \n\n "
+								+ "ERROR: " + e.getMessage());
+						error.setVisible(true);
+						e.printStackTrace();
+					}    
+		    	   
 		           
 		        } 
 		    }
@@ -173,8 +209,4 @@ public class Descargas extends JFrame {
 		}
 		
 	}
-	
-	 
-	
-		
 }
