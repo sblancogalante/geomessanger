@@ -66,7 +66,7 @@ public interface EmployeeRemoteMgt extends Remote {
 	 * @throws EmployeeAlreadyExists 
 	 */
 	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO)
-			throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists;
+			throws RemoteException, EmployeeDoesNotExist;
 
 	/**
 	 * This method communicates the server that the client wants to obtain all

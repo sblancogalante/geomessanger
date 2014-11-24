@@ -52,7 +52,7 @@ public interface EmployeeDAOMgt {
 	 * @throws DataBaseConnection
 	 * @throws EmployeeDoesNotExist 
 	 */
-	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection, EmployeeDoesNotExist, EmployeeAlreadyExists;
+	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection, EmployeeDoesNotExist;
 	
 	/**
 	 * This method returns an employee modified if the employee exists
@@ -60,10 +60,9 @@ public interface EmployeeDAOMgt {
 	 * @param oEmployee
 	 * @return
 	 * @throws DataBaseConnection
-	 * @throws EmployeeDoesNotExist 
-	 * @throws EmployeeAlreadyExists 
+	 * @throws EmployeeDoesNotExist 	
 	 */
-	public Employee modifyEmployee(Employee oEmployee) throws DataBaseConnection, EmployeeDoesNotExist, EmployeeAlreadyExists;
+	public Employee modifyEmployee(Employee oEmployee) throws DataBaseConnection, EmployeeDoesNotExist;
 	
 	/**
 	 * This method return a list with all the employees of the database

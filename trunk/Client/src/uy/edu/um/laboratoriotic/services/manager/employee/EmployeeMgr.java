@@ -116,12 +116,12 @@ public class EmployeeMgr implements EmployeeMgt {
 		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
 		try {
 			oEmployeeVOToReturn = oEmployeeRemoteMgt.searchEmployee(oUserName);
-		} catch (EmployeeDoesNotExist e) {
-			// TODO Auto-generated catch block
-			throw new EmployeeDoesNotExist();
 		} catch (EmployeeAlreadyExists e) {
 			// TODO Auto-generated catch block
 			throw new EmployeeAlreadyExists();
+		} catch (EmployeeDoesNotExist e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeDoesNotExist();
 		}
 
 		return oEmployeeVOToReturn;
@@ -129,7 +129,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO)
-			throws RemoteException, NotBoundException, EmployeeDoesNotExist, EmployeeAlreadyExists {
+			throws RemoteException, NotBoundException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		EmployeeVO oEmployeeVOToReturn = null;
@@ -141,11 +141,8 @@ public class EmployeeMgr implements EmployeeMgt {
 		} catch (EmployeeDoesNotExist e) {
 			// TODO Auto-generated catch block
 			throw new EmployeeDoesNotExist();
-		} catch (EmployeeAlreadyExists e) {
-			// TODO Auto-generated catch block
-			throw new EmployeeAlreadyExists();
 		}
-
+		
 		return oEmployeeVOToReturn;
 	}
 
