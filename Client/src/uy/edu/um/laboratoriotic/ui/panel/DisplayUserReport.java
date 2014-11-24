@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.factory.message.TextMessageFactory;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -40,8 +41,19 @@ public class DisplayUserReport extends JPanel {
 			countLabel_1 = new JLabel(String.valueOf(textMgt.countTextCharacters(employee)));
 			
 			
-		} catch (RemoteException | NotBoundException e) {
-			ErrorDialog error = new ErrorDialog("Ha ocurrido un error en el algoritmo de mensaje. \n\n ERROR: "
+		} catch (RemoteException e) {
+			ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
+					+ e.getMessage());
+			error.setVisible(true);
+			e.printStackTrace();
+		}catch(NotBoundException e){
+			ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+					+ e.getMessage());
+			error.setVisible(true);
+			e.printStackTrace();
+			
+		} catch (EmployeeDoesNotExist e) {
+			ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
 					+ e.getMessage());
 			error.setVisible(true);
 			e.printStackTrace();

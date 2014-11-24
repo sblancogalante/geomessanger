@@ -54,10 +54,13 @@ import javax.swing.border.LineBorder;
 
 import org.omg.CORBA.portable.ApplicationException;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import uy.edu.um.laboratoriotic.ui.ErrorDialog;
 import uy.edu.um.laboratoriotic.ui.UserProfile;
 import uy.edu.um.laboratoriotic.ui.ABM.CreateUser;
 import uy.edu.um.laboratoriotic.ui.ABM.DeleteUser;
@@ -92,11 +95,27 @@ public class MainWindow extends JFrame {
 				.getEmployeeMgt();
 		
 		
-		actualUser = employeeMgt.getLoginEmployee(actualFilterUser);
+		try {
+			actualUser = employeeMgt.getLoginEmployee(actualFilterUser);
+		} catch (EmployeeDoesNotExist e2) {
+			ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+					+ e2.getMessage());
+			error.setVisible(true);
+			e2.printStackTrace();
+		}
+		
 		
 		actualUser.setStatus(true);
 		
-		employeeMgt.modifyEmployee(actualUser);
+		try {
+			employeeMgt.modifyEmployee(actualUser);
+		} catch (EmployeeDoesNotExist e2) {
+			ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+					+ e2.getMessage());
+			error.setVisible(true);
+			e2.printStackTrace();
+		}
+		
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,15 +129,29 @@ public class MainWindow extends JFrame {
 			}
 
 			@Override
-			public void windowClosing(WindowEvent e) {
+			public void windowClosing(WindowEvent evt) {
+				
 				actualUser.setStatus(false);
+				
 				try {
 					employeeMgt.modifyEmployee(actualUser);
-				} catch (RemoteException | NotBoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (RemoteException e) {
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
+					e.printStackTrace();
+				}catch(NotBoundException e){
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
+					e.printStackTrace();
+					
+				} catch (EmployeeDoesNotExist e) {
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
+					e.printStackTrace();
 				}
-				
 			}
 
 			@Override
@@ -188,13 +221,26 @@ public class MainWindow extends JFrame {
 				actualUser.setStatus(false);
 				try {
 					employeeMgt.modifyEmployee(actualUser);
+					
 				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
 					e.printStackTrace();
-				} catch (NotBoundException e) {
-					// TODO Auto-generated catch block
+				}catch(NotBoundException e){
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
+					e.printStackTrace();
+					
+				} catch (EmployeeDoesNotExist e) {
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
 					e.printStackTrace();
 				}
+				
+				
 				Login login = new Login();
 				login.setVisible(true);
 				dispose();
@@ -225,9 +271,17 @@ public class MainWindow extends JFrame {
 				try {
 					deleteUser = new DeleteUser();
 					deleteUser.setVisible(true);
-				} catch (RemoteException | NotBoundException e) {
-					// TODO Auto-generated catch block
+				}  catch (RemoteException e) {
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
 					e.printStackTrace();
+				}catch(NotBoundException e){
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
+					e.printStackTrace();
+					
 				}
 				
 
@@ -554,7 +608,22 @@ public class MainWindow extends JFrame {
 			oListEmployee = employeeMgt.getEmployees();
 
 		}else{
-			EmployeeVO oEmployee = employeeMgt.searchEmployee(userName);
+			EmployeeVO oEmployee = null;
+			try {
+				oEmployee = employeeMgt.searchEmployee(userName);
+			} catch (EmployeeDoesNotExist e) {
+				
+				ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+						+ e.getMessage());
+				error.setVisible(true);
+				
+				e.printStackTrace();
+			} catch (EmployeeAlreadyExists e) {
+				ErrorDialog error = new ErrorDialog("Ha ocurrido un error, ese empleado ya existe. \n\n ERROR: "
+						+ e.getMessage());
+				error.setVisible(true);
+				e.printStackTrace();
+			}
 			if(oEmployee!=null){
 				oListEmployee.add(oEmployee);
 			}else{

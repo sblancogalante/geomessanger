@@ -22,9 +22,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.WrongLogin;
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
+import uy.edu.um.laboratoriotic.ui.ErrorDialog;
 
 public class Login extends JFrame {
 
@@ -109,7 +111,7 @@ public class Login extends JFrame {
 		this.getRootPane().setDefaultButton(loginButton);
 		
 		loginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evt) {
 				MainWindow wind;
 				try {
 					
@@ -124,9 +126,23 @@ public class Login extends JFrame {
 					}else{
 						errorLabel.setVisible(true);
 					}
-				} catch (RemoteException | NotBoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					
+				}  catch (RemoteException e) {
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
+					e.printStackTrace();
+				}catch(NotBoundException e){
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
+					e.printStackTrace();
+					
+				} catch (WrongLogin e) {
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al al intentar conectarse. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
+					e.printStackTrace();
 				}
 				
 			}		

@@ -30,6 +30,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -182,9 +183,21 @@ public class DeleteUser extends JDialog {
 								System.out.println(userList.getSelectedIndex());
 								employeeMgt.removeEmployee(userList.getSelectedValue());
 								dispose();
-							} catch (RemoteException | NotBoundException e) {
-								ErrorDialog errorDialog = new ErrorDialog("Se ha producido un error al intentar eliminar el usuario."
-										+ " \n \n ERROR: " + e.getMessage());
+							}  catch (RemoteException e) {
+								ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
+										+ e.getMessage());
+								error.setVisible(true);
+								e.printStackTrace();
+							}catch(NotBoundException e){
+								ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+										+ e.getMessage());
+								error.setVisible(true);
+								e.printStackTrace();
+								
+							} catch (EmployeeDoesNotExist e) {
+								ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+										+ e.getMessage());
+								error.setVisible(true);
 								e.printStackTrace();
 							}
 							

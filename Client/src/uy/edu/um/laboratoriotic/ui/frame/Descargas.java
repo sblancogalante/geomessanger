@@ -27,6 +27,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.EmptyBorder;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.factory.message.FileMessageFactory;
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -126,13 +127,23 @@ public class Descargas extends JFrame {
 				downloadJList.setModel(downloadListModel);
 				
 			}
-		} catch (RemoteException | NotBoundException e1) {
-			ErrorDialog error = new ErrorDialog("Ha ocurrido un error obteniendo informacion de la base de datos. \n\n "
-					+ "ERROR: " + e1.getMessage());
+		} catch (RemoteException e) {
+			ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
+					+ e.getMessage());
 			error.setVisible(true);
-			e1.printStackTrace();
-		} 
-		
+			e.printStackTrace();
+		}catch(NotBoundException e){
+			ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+					+ e.getMessage());
+			error.setVisible(true);
+			e.printStackTrace();
+			
+		} catch (EmployeeDoesNotExist e) {
+			ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+					+ e.getMessage());
+			error.setVisible(true);
+			e.printStackTrace();
+		}
 		
 		downloadJList.setCellRenderer(new ListCellRenderer<FileMessageVO>() {
 

@@ -32,6 +32,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.factory.general.GeneralFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
@@ -344,7 +345,7 @@ public class ModifyUser extends JDialog {
 				saveChangesButton.addActionListener(new ActionListener(){
 
 					@Override
-					public void actionPerformed(ActionEvent e) {
+					public void actionPerformed(ActionEvent evt) {
 						
 						employee.setPosition(positionTextField.getText());
 						
@@ -373,10 +374,24 @@ public class ModifyUser extends JDialog {
 							System.out.println("Se ha modificado: "
 									+ employee.getUserName());
 							dispose();
-						} catch (RemoteException | NotBoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+						}  catch (RemoteException e) {
+							ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
+									+ e.getMessage());
+							error.setVisible(true);
+							e.printStackTrace();
+						}catch(NotBoundException e){
+							ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+									+ e.getMessage());
+							error.setVisible(true);
+							e.printStackTrace();
+							
+						} catch (EmployeeDoesNotExist e) {
+							ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+									+ e.getMessage());
+							error.setVisible(true);
+							e.printStackTrace();
 						}
+						
 						System.out.println("Se ha modificado: "
 								+ employee.getUserName());
 						dispose();
