@@ -247,6 +247,8 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 			}
 
+			oResultSet.close();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -44,8 +44,10 @@ public class DisplayUserReport extends JPanel {
 
 		try {
 
+			System.out.println("Antes " + index);
 			countLabel_1 = new JLabel(String.valueOf(textMgt
 					.countTextCharacters(employee)));
+			System.out.println("Despues");
 
 		} catch (RemoteException e) {
 			ErrorDialog error = new ErrorDialog(
