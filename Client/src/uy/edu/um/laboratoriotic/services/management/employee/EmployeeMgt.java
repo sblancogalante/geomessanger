@@ -4,6 +4,12 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
+import uy.edu.um.laboratoriotic.exceptions.employee.MissingArguments;
+import uy.edu.um.laboratoriotic.exceptions.employee.PasswordTooShort;
+import uy.edu.um.laboratoriotic.exceptions.employee.UserNameAlreadyExists;
+import uy.edu.um.laboratoriotic.exceptions.employee.WrongLogin;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
@@ -22,9 +28,13 @@ public interface EmployeeMgt {
 	 * @param oEmployeeVO
 	 * @throws RemoteException
 	 * @throws NotBoundException
+	 * @throws MissingArguments 
+	 * @throws UserNameAlreadyExists 
+	 * @throws PasswordTooShort 
+	 * @throws EmployeeAlreadyExists 
 	 */
 	public void addEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
-			NotBoundException;
+			NotBoundException, EmployeeAlreadyExists, PasswordTooShort, UserNameAlreadyExists, MissingArguments;
 
 	/**
 	 * This method is the one that communicates with the commons interface to
@@ -44,9 +54,10 @@ public interface EmployeeMgt {
 	 * @param oEmployeeVO
 	 * @throws RemoteException
 	 * @throws NotBoundException
+	 * @throws EmployeeDoesNotExist 
 	 */
 	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
-			NotBoundException;
+			NotBoundException, EmployeeDoesNotExist;
 	
 	/**
 	 * This method is the one that communicates with the commons interface to
@@ -56,9 +67,11 @@ public interface EmployeeMgt {
 	 * @return
 	 * @throws RemoteException
 	 * @throws NotBoundException
+	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeAlreadyExists 
 	 */
 	public EmployeeVO searchEmployee(String oUserName) throws RemoteException,
-			NotBoundException;
+			NotBoundException, EmployeeDoesNotExist, EmployeeAlreadyExists;
 	
 	/**
 	 * This method is the one that communicates with the commons interface to 
@@ -68,9 +81,10 @@ public interface EmployeeMgt {
 	 * @return
 	 * @throws RemoteException
 	 * @throws NotBoundException
+	 * @throws EmployeeDoesNotExist 
 	 */
 	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
-	NotBoundException;
+	NotBoundException, EmployeeDoesNotExist;
 
 	/**
 	 * This method is the one that communicates with the commons interface to
@@ -80,9 +94,10 @@ public interface EmployeeMgt {
 	 * @return
 	 * @throws RemoteException
 	 * @throws NotBoundException
+	 * @throws WrongLogin 
 	 */
 	public boolean checkLogin(EmployeeFilterVO oEmployeeVO)throws RemoteException,
-	NotBoundException;
+	NotBoundException, WrongLogin;
 
 	/**
 	 * This method is the one that communicates with the commons interface to
@@ -93,8 +108,9 @@ public interface EmployeeMgt {
 	 * @return
 	 * @throws RemoteException
 	 * @throws NotBoundException
+	 * @throws EmployeeDoesNotExist 
 	 */
 	public EmployeeVO getLoginEmployee(EmployeeFilterVO oEmployeeFIlterVO)
-			throws RemoteException, NotBoundException;
+			throws RemoteException, NotBoundException, EmployeeDoesNotExist;
 
 }

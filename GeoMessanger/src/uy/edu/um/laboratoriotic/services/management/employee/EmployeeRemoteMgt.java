@@ -4,6 +4,13 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
+import uy.edu.um.laboratoriotic.exceptions.employee.MissingArguments;
+import uy.edu.um.laboratoriotic.exceptions.employee.PasswordTooShort;
+import uy.edu.um.laboratoriotic.exceptions.employee.UserNameAlreadyExists;
+import uy.edu.um.laboratoriotic.exceptions.employee.WrongArguments;
+import uy.edu.um.laboratoriotic.exceptions.employee.WrongLogin;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
@@ -23,7 +30,9 @@ public interface EmployeeRemoteMgt extends Remote {
 	 * @param oEmployee
 	 * @throws RemoteException
 	 */
-	public void addEmployee(EmployeeVO oEmployee) throws RemoteException;
+	public void addEmployee(EmployeeVO oEmployee) throws RemoteException,
+			EmployeeAlreadyExists, PasswordTooShort, UserNameAlreadyExists,
+			MissingArguments;
 
 	/**
 	 * This method communicates the server that the client is trying to remove
@@ -32,7 +41,8 @@ public interface EmployeeRemoteMgt extends Remote {
 	 * @param oEmployeeVO
 	 * @throws RemoteException
 	 */
-	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException;
+	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
+			EmployeeDoesNotExist;
 
 	/**
 	 * This method communicates the server that the client is searching an
@@ -42,18 +52,20 @@ public interface EmployeeRemoteMgt extends Remote {
 	 * @return
 	 * @throws RemoteException
 	 */
-	public EmployeeVO searchEmployee(String oUserName) throws RemoteException;
-	
+	public EmployeeVO searchEmployee(String oUserName) throws RemoteException,
+			EmployeeDoesNotExist, EmployeeAlreadyExists;
+
 	/**
-	 * This method communicates the server that the client wants to 
-	 * modify an employee
+	 * This method communicates the server that the client wants to modify an
+	 * employee
 	 * 
 	 * @param oEmployeeVO
 	 * @return
 	 * @throws RemoteException
 	 */
-	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO) throws RemoteException;
-	
+	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO)
+			throws RemoteException, EmployeeDoesNotExist;
+
 	/**
 	 * This method communicates the server that the client wants to obtain all
 	 * the employees
@@ -72,7 +84,7 @@ public interface EmployeeRemoteMgt extends Remote {
 	 * @throws RemoteException
 	 */
 	public boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO)
-			throws RemoteException;
+			throws RemoteException, WrongLogin;
 
 	/**
 	 * This method communicates the server that the client wants to obtain the
@@ -84,6 +96,6 @@ public interface EmployeeRemoteMgt extends Remote {
 	 * @throws RemoteException
 	 */
 	public EmployeeVO getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO)
-			throws RemoteException;
+			throws RemoteException, EmployeeDoesNotExist;
 
 }

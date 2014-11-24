@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.FileMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 
 /**
  * This is the persistence interface
@@ -34,8 +35,9 @@ public interface FileMessageDAOMgt {
 	 * 
 	 * @throws DataBaseConnection
 	 * @throws RemoteException
+	 * @throws EmployeeDoesNotExist 
 	 */
 	public ArrayList<FileMessage> getFileMessages(Employee oSender, Employee oReceiver)
-			throws DataBaseConnection, RemoteException;
+			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist;
 
 }

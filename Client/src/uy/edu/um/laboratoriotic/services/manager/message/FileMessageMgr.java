@@ -6,12 +6,19 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.ServiceFacade;
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageMgt;
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageRemoteMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
 
+/**
+ * This is the implementation of FileMessageMgt
+ * 
+ * @author sblanco1
+ * 
+ */
 public class FileMessageMgr implements FileMessageMgt {
 
 	/*
@@ -50,7 +57,7 @@ public class FileMessageMgr implements FileMessageMgt {
 	}
 
 	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender,
-			EmployeeVO oReceiver) throws RemoteException, NotBoundException {
+			EmployeeVO oReceiver) throws RemoteException, NotBoundException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		ArrayList<FileMessageVO> oArrayListToReturn = new ArrayList<>();

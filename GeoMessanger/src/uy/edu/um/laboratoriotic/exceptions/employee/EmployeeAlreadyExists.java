@@ -7,13 +7,17 @@ package uy.edu.um.laboratoriotic.exceptions.employee;
  * @author sblanco1
  *
  */
-public class EmlpoyeeAlreadyExists extends Exception {
+public class EmployeeAlreadyExists extends Exception {
 
 	/*
 	 * Constructor
 	 */
-	public EmlpoyeeAlreadyExists(String msg) {
+	public EmployeeAlreadyExists(String msg) {
 		super(msg);
+	}
+
+	public EmployeeAlreadyExists() {
+		// TODO Auto-generated constructor stub
 	}
 
 }

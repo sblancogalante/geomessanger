@@ -1,4 +1,4 @@
-package uy.edu.um.laboratoriotic.exceptions;
+package uy.edu.um.laboratoriotic.exceptions.employee;
 
 /**
  * This exception represents the case of adding an employee without filling all
@@ -14,6 +14,10 @@ public class MissingArguments extends Exception {
 	 */
 	public MissingArguments(String msg) {
 		super(msg);
+	}
+
+	public MissingArguments() {
+		// TODO Auto-generated constructor stub
 	}
 
 }

@@ -56,7 +56,7 @@ public class FileMessage extends Message {
 	public FileMessageVO toVO() {
 
 		return new FileMessageVO(this.getIDMessage(), file, name,
-				sender.toVO(), receiver.toVO());
+				sender.toVO(), receiver.toVO(), date);
 	}
 
 	/*

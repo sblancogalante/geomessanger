@@ -10,6 +10,8 @@ import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.helper.Helper;
 import uy.edu.um.laboratoriotic.business.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
+import uy.edu.um.laboratoriotic.exceptions.employee.WrongLogin;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
@@ -97,7 +99,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public Employee searchEmployee(String oUserName) throws DataBaseConnection,
-			RemoteException {
+			RemoteException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
@@ -115,7 +117,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public Employee modifyEmployee(EmployeeVO oEmployeeVO)
-			throws DataBaseConnection, RemoteException {
+			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
@@ -135,7 +137,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO)
-			throws DataBaseConnection, RemoteException {
+			throws DataBaseConnection, RemoteException, WrongLogin {
 
 		boolean toReturn = false;
 
@@ -150,7 +152,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public Employee getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO)
-			throws DataBaseConnection, RemoteException {
+			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist {
 
 		Employee oEmployeeToReturn = null;
 

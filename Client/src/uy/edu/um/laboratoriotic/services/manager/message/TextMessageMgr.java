@@ -6,12 +6,19 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.ServiceFacade;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageRemoteMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 
+/**
+ * This is the implementation of TextMessageMgt
+ * 
+ * @author sblanco1
+ * 
+ */
 public class TextMessageMgr implements TextMessageMgt {
 
 	/*
@@ -40,40 +47,55 @@ public class TextMessageMgr implements TextMessageMgt {
 	 */
 	@Override
 	public void addTextMessage(TextMessageVO oTextMessageVO)
-			throws RemoteException, NotBoundException {
+			throws RemoteException, NotBoundException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		TextMessageRemoteMgt oTextMessageRemoteMgt = newLookUp("TextMessageRemoteMgr");
 
-		oTextMessageRemoteMgt.addTextMessage(oTextMessageVO);
+		try {
+			oTextMessageRemoteMgt.addTextMessage(oTextMessageVO);
+		} catch (EmployeeDoesNotExist e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeDoesNotExist();
+		}
 
 	}
 
 	@Override
 	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSender,
-			EmployeeVO oReceiver) throws RemoteException, NotBoundException {
+			EmployeeVO oReceiver) throws RemoteException, NotBoundException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		ArrayList<TextMessageVO> oArrayListToReturn = new ArrayList<>();
 
 		TextMessageRemoteMgt oTextMessageRemoteMgt = newLookUp("TextMessageRemoteMgr");
 
-		oArrayListToReturn = oTextMessageRemoteMgt.getTextMessages(oSender,
-				oReceiver);
+		try {
+			oArrayListToReturn = oTextMessageRemoteMgt.getTextMessages(oSender,
+					oReceiver);
+		} catch (EmployeeDoesNotExist e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeDoesNotExist();
+		}
 
 		return oArrayListToReturn;
 	}
 
 	@Override
 	public int countTextCharacters(EmployeeVO oEmployeeVO)
-			throws RemoteException, NotBoundException {
+			throws RemoteException, NotBoundException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		int returnCount = 0;
 
 		TextMessageRemoteMgt oTextMessageRemoteMgt = newLookUp("TextMessageRemoteMgr");
 
-		returnCount = oTextMessageRemoteMgt.countTextCharacters(oEmployeeVO);
+		try {
+			returnCount = oTextMessageRemoteMgt.countTextCharacters(oEmployeeVO);
+		} catch (EmployeeDoesNotExist e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeDoesNotExist();
+		}
 
 		return returnCount;
 	}

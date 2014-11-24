@@ -6,6 +6,12 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
+import uy.edu.um.laboratoriotic.exceptions.employee.MissingArguments;
+import uy.edu.um.laboratoriotic.exceptions.employee.PasswordTooShort;
+import uy.edu.um.laboratoriotic.exceptions.employee.UserNameAlreadyExists;
+import uy.edu.um.laboratoriotic.exceptions.employee.WrongLogin;
 import uy.edu.um.laboratoriotic.services.ServiceFacade;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
@@ -46,11 +52,26 @@ public class EmployeeMgr implements EmployeeMgt {
 	 */
 	@Override
 	public void addEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
-			NotBoundException {
+			NotBoundException, EmployeeAlreadyExists, PasswordTooShort,
+			UserNameAlreadyExists, MissingArguments {
 		// TODO Auto-generated method stub
 
 		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
-		oEmployeeRemoteMgt.addEmployee(oEmployeeVO);
+		try {
+			oEmployeeRemoteMgt.addEmployee(oEmployeeVO);
+		} catch (EmployeeAlreadyExists e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeAlreadyExists();
+		} catch (PasswordTooShort e) {
+			// TODO Auto-generated catch block
+			throw new PasswordTooShort();
+		} catch (UserNameAlreadyExists e) {
+			// TODO Auto-generated catch block
+			throw new UserNameAlreadyExists();
+		} catch (MissingArguments e) {
+			// TODO Auto-generated catch block
+			throw new MissingArguments();
+		}
 
 	}
 
@@ -69,60 +90,90 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
-			NotBoundException {
+			NotBoundException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
-		oEmployeeRemoteMgt.removeEmployee(oEmployeeVO);
+		try {
+			oEmployeeRemoteMgt.removeEmployee(oEmployeeVO);
+		} catch (EmployeeDoesNotExist e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeDoesNotExist();
+		}
 
 	}
 
 	@Override
 	public EmployeeVO searchEmployee(String oUserName) throws RemoteException,
-			NotBoundException {
+			NotBoundException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		EmployeeVO oEmployeeVOToReturn = null;
 
 		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
-		oEmployeeVOToReturn = oEmployeeRemoteMgt.searchEmployee(oUserName);
+		try {
+			oEmployeeVOToReturn = oEmployeeRemoteMgt.searchEmployee(oUserName);
+		} catch (EmployeeDoesNotExist e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeDoesNotExist();
+		} catch (EmployeeAlreadyExists e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeAlreadyExists();
+		}
 
 		return oEmployeeVOToReturn;
 	}
 
 	@Override
 	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO)
-			throws RemoteException, NotBoundException {
+			throws RemoteException, NotBoundException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		EmployeeVO oEmployeeVOToReturn = null;
 
 		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
-		oEmployeeVOToReturn = oEmployeeRemoteMgt.modifyEmployee(oEmployeeVO);
+		try {
+			oEmployeeVOToReturn = oEmployeeRemoteMgt
+					.modifyEmployee(oEmployeeVO);
+		} catch (EmployeeDoesNotExist e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeDoesNotExist();
+		}
 
 		return oEmployeeVOToReturn;
 	}
 
 	@Override
 	public boolean checkLogin(EmployeeFilterVO oEmployeeVO)
-			throws RemoteException, NotBoundException {
+			throws RemoteException, NotBoundException, WrongLogin {
 		// TODO Auto-generated method stub
 
 		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
-		boolean toReturn = oEmployeeRemoteMgt.checkLogin(oEmployeeVO);
+		boolean toReturn;
+		try {
+			toReturn = oEmployeeRemoteMgt.checkLogin(oEmployeeVO);
+		} catch (WrongLogin e) {
+			// TODO Auto-generated catch block
+			throw new WrongLogin();
+		}
 
 		return toReturn;
 	}
 
 	@Override
 	public EmployeeVO getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO)
-			throws RemoteException, NotBoundException {
+			throws RemoteException, NotBoundException, EmployeeDoesNotExist {
 
 		EmployeeVO oEmployeeVOToReturn = null;
 
 		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
-		oEmployeeVOToReturn = oEmployeeRemoteMgt
-				.getLoginEmployee(oEmployeeFilterVO);
+		try {
+			oEmployeeVOToReturn = oEmployeeRemoteMgt
+					.getLoginEmployee(oEmployeeFilterVO);
+		} catch (EmployeeDoesNotExist e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeDoesNotExist();
+		}
 
 		return oEmployeeVOToReturn;
 	}

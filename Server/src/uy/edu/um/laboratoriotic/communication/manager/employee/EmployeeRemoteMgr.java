@@ -7,6 +7,8 @@ import uy.edu.um.laboratoriotic.business.BusinessFacade;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
+import uy.edu.um.laboratoriotic.exceptions.employee.WrongLogin;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -83,7 +85,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	}
 
 	@Override
-	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException {
+	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		Employee oEmployee;
@@ -104,7 +106,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	}
 
 	@Override
-	public EmployeeVO searchEmployee(String oUserName) throws RemoteException {
+	public EmployeeVO searchEmployee(String oUserName) throws RemoteException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		Employee oEmployee;
@@ -130,7 +132,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 	@Override
 	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO)
-			throws RemoteException {
+			throws RemoteException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		Employee oEmployee;
@@ -155,7 +157,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 	@Override
 	public boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO)
-			throws RemoteException {
+			throws RemoteException, WrongLogin {
 
 		boolean toReturn = false;
 
@@ -175,7 +177,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 	@Override
 	public EmployeeVO getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO)
-			throws RemoteException {
+			throws RemoteException, EmployeeDoesNotExist {
 
 		Employee oEmployeeToReturn = null;
 
