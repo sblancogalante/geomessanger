@@ -46,7 +46,6 @@ import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.factory.message.FileMessageFactory;
 import uy.edu.um.laboratoriotic.services.factory.message.TextMessageFactory;
@@ -125,12 +124,6 @@ public class ChatRoom extends JFrame {
 								+ e.getMessage());
 						error.setVisible(true);
 						e.printStackTrace();
-					} catch (EmployeeAlreadyExists e) {
-						// TODO Auto-generated catch block
-						ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
-								+ e.getMessage());
-						error.setVisible(true);
-						e.printStackTrace();
 					}
 				}
 				
@@ -193,8 +186,12 @@ public class ChatRoom extends JFrame {
 			
 		}else{
 			
-			//receiverPhotoImage = rescaleImageFromBytes(receiverEmployee.getProfilePicture(), 77, 77);
-			receiverPhotoImage = rescaleImage(new File("Images/Foto.png"), 77,77);
+			receiverPhotoImage = rescaleImageFromBytes(receiverEmployee.getProfilePicture(), 77, 77);
+
+			
+			if(receiverPhotoImage==null){
+				receiverPhotoImage = rescaleImage(new File("Images/Foto.png"), 77,77);
+			}
 		}
 		
 		final JLabel receiverPhotoLabel = new JLabel(receiverPhotoImage);
@@ -248,9 +245,11 @@ public class ChatRoom extends JFrame {
 			
 		}else{
 			  
-			//senderPhotoImage = rescaleImageFromBytes(senderEmployee.getProfilePicture(), 118, 118);
-			senderPhotoImage = rescaleImage(new File("Images/Foto.png"), 77,77);
+			senderPhotoImage = rescaleImageFromBytes(senderEmployee.getProfilePicture(), 118, 118);
 			
+			if(senderPhotoImage==null){
+				senderPhotoImage = rescaleImage(new File("Images/Foto.png"), 77,77);
+			}
 			
 		}
 		
@@ -338,12 +337,6 @@ public class ChatRoom extends JFrame {
 								+ e.getMessage());
 						error.setVisible(true);
 						e.printStackTrace();
-					} catch (EmployeeAlreadyExists e) {
-						// TODO Auto-generated catch block
-						ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
-								+ e.getMessage());
-						error.setVisible(true);
-						e.printStackTrace();
 					}
 				}
 				
@@ -377,12 +370,6 @@ public class ChatRoom extends JFrame {
 					
 				} catch (EmployeeDoesNotExist e) {
 					ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
-							+ e.getMessage());
-					error.setVisible(true);
-					e.printStackTrace();
-				} catch (EmployeeAlreadyExists e) {
-					// TODO Auto-generated catch block
-					ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
 							+ e.getMessage());
 					error.setVisible(true);
 					e.printStackTrace();
@@ -518,12 +505,6 @@ public class ChatRoom extends JFrame {
 						+ e.getMessage());
 				error.setVisible(true);
 				e.printStackTrace();
-			} catch (EmployeeAlreadyExists e) {
-				// TODO Auto-generated catch block
-				ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
-						+ e.getMessage());
-				error.setVisible(true);
-				e.printStackTrace();
 			}
 			return oListMessages;
 		
@@ -592,7 +573,7 @@ public class ChatRoom extends JFrame {
 	     return (new ImageIcon(resizedImg));
 	 }
 	
-	
+	//resize image
 	public ImageIcon rescaleImageFromBytes(byte[] imageBytes, int maxHeight, int maxWidth){
 	     int newHeight = 0, newWidth = 0;        // Variables for the new height and width
 	     int priorHeight = 0, priorWidth = 0;
@@ -608,40 +589,44 @@ public class ChatRoom extends JFrame {
 	     ImageIcon sizeImage;
 
 	 
+	     if(image!=null){
+		     sizeImage = new ImageIcon(image);
 
-	     sizeImage = new ImageIcon(image);
+		     if(sizeImage != null){
+		    	 
+		         priorHeight = sizeImage.getIconHeight(); 
+		         priorWidth = sizeImage.getIconWidth();
+		     }
 
-	     if(sizeImage != null){
-	    	 
-	         priorHeight = sizeImage.getIconHeight(); 
-	         priorWidth = sizeImage.getIconWidth();
+		     // Calculate the correct new height and width
+		     if((float)priorHeight/(float)priorWidth > (float)maxHeight/(float)maxWidth){
+		     
+		         newHeight = maxHeight;
+		         newWidth = (int)(((float)priorWidth/(float)priorHeight)*(float)newHeight);
+		     }else{
+		    	 
+		         newWidth = maxWidth;
+		         newHeight = (int)(((float)priorHeight/(float)priorWidth)*(float)newWidth);
+		     }
+
+
+		     // Resize the image
+
+		     // 1. Create a new Buffered Image and Graphic2D object
+		     BufferedImage resizedImg = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+		     Graphics2D g2 = resizedImg.createGraphics();
+
+		     // 2. Use the Graphic object to draw a new image to the image in the buffer
+		     g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		     g2.drawImage(image, 0, 0, newWidth, newHeight, null);
+		     g2.dispose();
+		     // 3. Convert the buffered image into an ImageIcon for return
+		     return (new ImageIcon(resizedImg));
 	     }
-
-	     // Calculate the correct new height and width
-	     if((float)priorHeight/(float)priorWidth > (float)maxHeight/(float)maxWidth){
 	     
-	         newHeight = maxHeight;
-	         newWidth = (int)(((float)priorWidth/(float)priorHeight)*(float)newHeight);
-	     }else{
-	    	 
-	         newWidth = maxWidth;
-	         newHeight = (int)(((float)priorHeight/(float)priorWidth)*(float)newWidth);
-	     }
+	     return null;
 
-
-	     // Resize the image
-
-	     // 1. Create a new Buffered Image and Graphic2D object
-	     BufferedImage resizedImg = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
-	     Graphics2D g2 = resizedImg.createGraphics();
-
-	     // 2. Use the Graphic object to draw a new image to the image in the buffer
-	     g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	     g2.drawImage(image, 0, 0, newWidth, newHeight, null);
-	     g2.dispose();
-
-	     // 3. Convert the buffered image into an ImageIcon for return
-	     return (new ImageIcon(resizedImg));
+	   
 	 }
 	
 	
