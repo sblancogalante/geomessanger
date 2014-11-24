@@ -5,38 +5,33 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.ListCellRenderer;
-import javax.swing.border.EmptyBorder;
-import javax.swing.DefaultListModel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JSeparator;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
-import uy.edu.um.laboratoriotic.services.factory.general.GeneralFactory;
-import uy.edu.um.laboratoriotic.services.management.general.GeneralMgt;
-import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
-import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
-import uy.edu.um.laboratoriotic.ui.ErrorDialog;
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListCellRenderer;
+import javax.swing.border.EmptyBorder;
+
+import uy.edu.um.laboratoriotic.services.factory.general.GeneralFactory;
+import uy.edu.um.laboratoriotic.services.management.general.GeneralMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
+import uy.edu.um.laboratoriotic.ui.ErrorDialog;
 
 public class NewLocation extends JDialog {
 
@@ -62,7 +57,7 @@ public class NewLocation extends JDialog {
 	 */
 	public NewLocation() {
 		
-		this.setTitle("Create Location");
+		this.setTitle("Crear Ubicacion");
 		setBounds(100, 100, 450, 373);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -73,7 +68,7 @@ public class NewLocation extends JDialog {
 		
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
-		JLabel lblCreateLocation = new JLabel("Create Location");
+		JLabel lblCreateLocation = new JLabel("Crear Ubicacion");
 		lblCreateLocation.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		
 		JSeparator separator = new JSeparator();
@@ -176,7 +171,7 @@ public class NewLocation extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton addLocationButton = new JButton("Add Location");
+				JButton addLocationButton = new JButton("Añadir Pais");
 				addLocationButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
@@ -211,7 +206,7 @@ public class NewLocation extends JDialog {
 				getRootPane().setDefaultButton(addLocationButton);
 			
 			
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					
 					@Override

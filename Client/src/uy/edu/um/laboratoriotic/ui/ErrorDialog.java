@@ -28,7 +28,7 @@ public class ErrorDialog extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			ErrorDialog dialog = new ErrorDialog("An error has occured.");
+			ErrorDialog dialog = new ErrorDialog("Ha ocurrido un error.");
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -96,8 +96,8 @@ public class ErrorDialog extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
+				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setActionCommand("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

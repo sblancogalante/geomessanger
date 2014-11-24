@@ -70,6 +70,7 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 				.getTextMessageFactory().getTextMessageMgt();
 
 		try {
+			
 			oListToReturn = oTextMessageMgt.getTextMessages(oSenderVO,
 					oReceiverVO);
 

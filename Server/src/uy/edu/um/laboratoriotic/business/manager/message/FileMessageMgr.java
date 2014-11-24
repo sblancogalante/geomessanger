@@ -72,15 +72,19 @@ public class FileMessageMgr implements FileMessageMgt {
 				.getFileMessageDAOMgt();
 
 		Employee oSenderEmployee = Helper.modularizeEmployee(oSenderVO);
-		
+
 		Employee oReceiverEmployee = Helper.modularizeEmployee(oReceiverVO);
 
 		oArrayList = oDAOFileMessage.getFileMessages(oSenderEmployee,
 				oReceiverEmployee);
 
-		for (FileMessage iFileMessage : oArrayList) {
-			oFileMessageVO = iFileMessage.toVO();
-			oListToReturn.add(oFileMessageVO);
+		if (oArrayList != null) {
+
+			for (FileMessage iFileMessage : oArrayList) {
+				oFileMessageVO = iFileMessage.toVO();
+				oListToReturn.add(oFileMessageVO);
+			}
+
 		}
 
 		return oListToReturn;

@@ -40,7 +40,7 @@ public class DownloadSuccesful extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		JLabel lblTheDonwloadHas = new JLabel("The file has been downloaded successfully!!");
+		JLabel lblTheDonwloadHas = new JLabel("El archivo se ha descargado de forma exitosa!!");
 		lblTheDonwloadHas.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(

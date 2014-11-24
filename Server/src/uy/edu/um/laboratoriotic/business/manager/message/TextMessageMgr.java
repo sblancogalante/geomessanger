@@ -81,11 +81,15 @@ public class TextMessageMgr implements TextMessageMgt {
 		oArrayList = oDAOTextMessage.getTextMessages(oSenderEmployee,
 				oReceiverEmployee);
 
-		for (TextMessage iTextMessage : oArrayList) {
-			oTextMessageVO = iTextMessage.toVO();
-			oListToReturn.add(oTextMessageVO);
+		if (oArrayList != null) {
+		
+			for (TextMessage iTextMessage : oArrayList) {
+				oTextMessageVO = iTextMessage.toVO();
+				oListToReturn.add(oTextMessageVO);
+			}
+			
 		}
-
+		
 		return oListToReturn;
 	}
 
@@ -99,7 +103,7 @@ public class TextMessageMgr implements TextMessageMgt {
 		TextMessageDAOMgt oTextMessageDAOMgt = TextMessageDAOFactory
 				.getTextMessageDAOMgt();
 		Employee oEmployee = Helper.modularizeEmployee(oEmployeeVO);
-		
+
 		returnCount = oTextMessageDAOMgt.countTextCharacters(oEmployee);
 
 		return returnCount;

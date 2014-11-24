@@ -89,7 +89,7 @@ public class DisplayDescargasPanelRender extends JPanel {
 			     } catch (Exception e) {
 
 			             e.printStackTrace();
-			             System.out.println("Picture upload attempted & failed");
+			            
 			     }
 
 			     sizeImage = new ImageIcon(image);

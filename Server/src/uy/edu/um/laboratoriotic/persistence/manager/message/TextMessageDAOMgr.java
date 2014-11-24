@@ -114,8 +114,14 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 			int oSenderID = EmployeeDAOFactory.getEmployeeDAOMgt()
 					.searchEmployee(oSender.getUserName()).getEmployeeID();
-			int oReceiverID = EmployeeDAOFactory.getEmployeeDAOMgt()
-					.searchEmployee(oReceiver.getUserName()).getEmployeeID();
+			int oReceiverID = 0;
+
+			if (oReceiver != null) {
+
+				oReceiverID = EmployeeDAOFactory.getEmployeeDAOMgt()
+						.searchEmployee(oReceiver.getUserName())
+						.getEmployeeID();
+			}
 
 			sQuery = "SELECT * FROM (SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.textMessageID, tm.text, tm.date, tm.employeeSenderID, tm.employeeReceiverID"
 					+ " FROM Employees e, TextMessages tm"
@@ -191,16 +197,18 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 			int sEmployeeID = EmployeeDAOFactory.getEmployeeDAOMgt()
 					.searchEmployee(oEmployee.getUserName()).getEmployeeID();
-			
+
 			sQuery = "SELECT * FROM (SELECT sum(char_length(text)) FROM TextMessages tm"
-					+ " WHERE tm.employeeSenderID = " + sEmployeeID + " ) as result ;";
-			
+					+ " WHERE tm.employeeSenderID = "
+					+ sEmployeeID
+					+ " ) as result ;";
+
 			oResultSet = oStatement.executeQuery(sQuery);
-			
-			while(oResultSet.next()){
-				
+
+			while (oResultSet.next()) {
+
 				returnCount = oResultSet.getInt(1);
-				
+
 			}
 
 		} catch (SQLException e) {

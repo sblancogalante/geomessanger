@@ -1,7 +1,5 @@
 package uy.edu.um.laboratoriotic.ui.panel;
 
-import javax.swing.JPanel;
-
 import java.awt.Color;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -9,11 +7,10 @@ import java.rmi.RemoteException;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.factory.message.TextMessageFactory;
-import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.ui.ErrorDialog;
@@ -36,7 +33,7 @@ public class DisplayUserReport extends JPanel {
 			countLabel_1 = new JLabel(String.valueOf(textMgt.countTextCharacters(employee)));
 			
 		} catch (RemoteException | NotBoundException e) {
-			ErrorDialog error = new ErrorDialog("There has been an error, in the count messages algorithm. \n\n ERROR: "
+			ErrorDialog error = new ErrorDialog("Ha ocurrido un error en el algoritmo de mensaje. \n\n ERROR: "
 					+ e.getMessage());
 			error.setVisible(true);
 			e.printStackTrace();

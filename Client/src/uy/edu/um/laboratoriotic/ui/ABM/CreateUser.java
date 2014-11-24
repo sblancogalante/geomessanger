@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.sql.Blob;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -72,7 +71,7 @@ public class CreateUser extends JDialog {
 
 	public CreateUser() {
 
-		this.setTitle("Create User");
+		this.setTitle("Crear Usuario");
 		setBounds(100, 100, 600, 635);
 
 		Dimension d = new Dimension(600, 635);
@@ -144,7 +143,7 @@ public class CreateUser extends JDialog {
 						.addComponent(panel_4, GroupLayout.DEFAULT_SIZE, 49,
 								Short.MAX_VALUE).addContainerGap()));
 
-		String[] comboBoxDefaultArray = { "<<Default>>" };
+		String[] comboBoxDefaultArray = { "<<Valor por defecto>>" };
 		
 		String[] comboBoxLocations;
 		
@@ -152,14 +151,14 @@ public class CreateUser extends JDialog {
 		
 		String[] comboBoxTypeDocument;
 		
-		JLabel workingHoursLabel = new JLabel("Working Hours: ");
+		JLabel workingHoursLabel = new JLabel("Horario de trabajo: ");
 		
 		String[] hours = {"00","01","02","03","04","05","06","07","08","09","10","11","12",
 				"13","14","15","16","17","18","19","20","21","22","23"};
 		
 		final JComboBox firstHour = new JComboBox(hours);
 		
-		JLabel toLabel = new JLabel("to");
+		JLabel toLabel = new JLabel("hasta");
 		
 		String[] locationVector = {};
 		String[] sectorVector = {};
@@ -191,21 +190,21 @@ public class CreateUser extends JDialog {
 
 		final JComboBox<String> sectorComboBox = new JComboBox(sectorVector); 
 
-		final JCheckBox isAdminCheckBox = new JCheckBox("is Admin");
+		final JCheckBox isAdminCheckBox = new JCheckBox("Admin");
 
-		final JLabel documentTypeLabel = new JLabel("Type of Document: ");
+		final JLabel documentTypeLabel = new JLabel("Tipo de documento: ");
 
 		final JComboBox<String> documentComboBox = new JComboBox(
 				documentVector);
 
-		JButton createUserButton = new JButton("Create User");
+		JButton createUserButton = new JButton("Crear usuario");
 		this.getRootPane().setDefaultButton(createUserButton);
 		createUserButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
 				// Chequear contraseñas y tomar medidas.
 
-				String workingHours = "From "+ firstHour.getSelectedItem() + " to " + secondHour.getSelectedItem();
+				String workingHours = "Desde "+ firstHour.getSelectedItem() + " hasta " + secondHour.getSelectedItem();
 				
 				photoBytes = convertImageToBytes(new File(photoPath));
 
@@ -275,7 +274,7 @@ public class CreateUser extends JDialog {
 			    fileInputStream.close();		 
 			   
 		        }catch(Exception e){
-		        	ErrorDialog error = new ErrorDialog("Theres has been an error. \n\n ERROR: "+ e.getMessage());
+		        	ErrorDialog error = new ErrorDialog("Se ha detectado un error. \n\n ERROR: "+ e.getMessage());
 					error.setVisible(true);
 		        	e.printStackTrace();
 		        }
@@ -286,7 +285,7 @@ public class CreateUser extends JDialog {
 
 		});
 
-		JButton cancelButton = new JButton("Cancel");
+		JButton cancelButton = new JButton("Cancelar");
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -331,37 +330,37 @@ public class CreateUser extends JDialog {
 		panel_4.setLayout(gl_panel_4);
 
 		userDetailsPanel = new JPanel();
-		tabbedPane.addTab("User Details", null, userDetailsPanel, null);
+		tabbedPane.addTab("Detalles del usuario", null, userDetailsPanel, null);
 
 		JLabel obligatoryFieldLabel = new JLabel(
-				"<<NOTE: The fields with (*) are obligatory.>>");
+				"<<NOTA: Los campos con (*) son obligatorios.>>");
 
 		documentText = new JTextField();
 		documentText.setColumns(10);
 
-		documentLabel = new JLabel("Document:");
+		documentLabel = new JLabel("Documento (*):");
 
 		nameText = new JTextField();
 		nameText.setColumns(10);
 
-		nameLabel = new JLabel("Name:");
+		nameLabel = new JLabel("Nombre:");
 
 		lastNameText = new JTextField();
 		lastNameText.setColumns(10);
 
-		lastNameLabel = new JLabel("Last name:");
+		lastNameLabel = new JLabel("Apellido:");
 
 		eMailText = new JTextField();
 		eMailText.setColumns(10);
 
-		eMailLabel = new JLabel("EMail Address: ");
+		eMailLabel = new JLabel("Direccion de correo (*):");
 
-		positionLabel = new JLabel("Position: ");
+		positionLabel = new JLabel("Posicion: ");
 
 		positionText = new JTextField();
 		positionText.setColumns(10);
 		
-		JButton newDocumentButton = new JButton("Add Type of Document");
+		JButton newDocumentButton = new JButton("Añadir tipo de documento");
 		newDocumentButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NewDocument newDocument = new NewDocument();
@@ -495,10 +494,10 @@ public class CreateUser extends JDialog {
 
 		JPanel accountPanel = new JPanel();
 		accountPanel.setToolTipText("");
-		tabbedPane.addTab("Account", null, accountPanel, null);
+		tabbedPane.addTab("Cuenta", null, accountPanel, null);
 
 		JLabel lblNoteTheFields = new JLabel(
-				"<<NOTE: The fields with (*) are obligatory.>>");
+				"<<NOTA: Los campos con (*) son obligatorios.>>");
 
 		userNameText = new JTextField();
 		userNameText.setColumns(10);
@@ -506,17 +505,17 @@ public class CreateUser extends JDialog {
 		repeatPasswordText = new JPasswordField();
 		repeatPasswordText.setColumns(10);
 
-		JLabel userNameLabel = new JLabel("User name: ");
+		JLabel userNameLabel = new JLabel("Nombre de usuario (*): ");
 
-		JLabel repeatPassLabel = new JLabel("Repeat Password: ");
+		JLabel repeatPassLabel = new JLabel("Repetir contraseña (*): ");
 
-		JLabel locationLabel = new JLabel("Location: ");
+		JLabel locationLabel = new JLabel("Pais (*): ");
 
-		JLabel sectorLabel = new JLabel("Sector: ");
+		JLabel sectorLabel = new JLabel("Sector (*): ");
 
 		JSeparator separator = new JSeparator();
 
-		JButton addLocationButton = new JButton("Add Location");
+		JButton addLocationButton = new JButton("Añadir pais");
 		addLocationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NewLocation newLocation = new NewLocation();
@@ -584,7 +583,7 @@ public class CreateUser extends JDialog {
 			}
 		});
 
-		JButton addSectorButton = new JButton("Add Sector");
+		JButton addSectorButton = new JButton("Añadir Sector");
 		addSectorButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NewSector newSector = new NewSector();
@@ -653,7 +652,7 @@ public class CreateUser extends JDialog {
 			}
 		});
 
-		passwordLabel = new JLabel("Password: ");
+		passwordLabel = new JLabel("Contraseña (*): ");
 
 		passwordText = new JPasswordField();
 		passwordText.setColumns(10);
@@ -756,16 +755,16 @@ public class CreateUser extends JDialog {
 		accountPanel.setLayout(gl_panel_1);
 
 		JPanel otherPanel = new JPanel();
-		tabbedPane.addTab("Other", null, otherPanel, null);
+		tabbedPane.addTab("Otros", null, otherPanel, null);
 
 		JLabel label_1 = new JLabel(
-				"<<NOTE: The fields with (*) are obligatory.>>");
+				"<<NOTA: Los campos con (*) son obligatorios.>>");
 
-		JLabel addPhotoLabel = new JLabel("Add Photo: ");
+		JLabel addPhotoLabel = new JLabel("Añadir foto: ");
 		testPhotoLabel = new JLabel(rescaleImage(new File(photoPath), 384, 256));
 		testPhoto = rescaleImage(new File(photoPath), 384, 256);
 		
-		JButton selectPhotoButton = new JButton("Select photo ");
+		JButton selectPhotoButton = new JButton("Seleccionar foto ");
 		selectPhotoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser jFileChooser = new JFileChooser();
@@ -869,7 +868,7 @@ public class CreateUser extends JDialog {
 		panel.setLayout(gl_panel);
 		otherPanel.setLayout(gl_panel_3);
 
-		JLabel createUserLabel = new JLabel("Create User");
+		JLabel createUserLabel = new JLabel("Crear usuario");
 		createUserLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 28));
 
 		JSeparator separator_1 = new JSeparator();

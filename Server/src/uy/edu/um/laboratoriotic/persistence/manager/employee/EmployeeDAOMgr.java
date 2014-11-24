@@ -62,7 +62,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			oStatement = oConnection.createStatement();
 			
-			String sInsert = "INSERT INTO `Employees` (document, iD, name, lastName, userName, password, location, sector, mail, position, workingHour, status, admin) VALUES ('"
+			String sInsert = "INSERT INTO `Employees` (document, iD, name, lastName, userName, password, location, sector, email, position, workingHour, status, admin) VALUES ('"
 					+ oEmployee.getDocument().getValue()
 					+ "','"
 					+ oEmployee.getID()
@@ -713,7 +713,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
 
-			String sQuery = "UPDATE Employees set mail = '"
+			String sQuery = "UPDATE Employees set email = '"
 					+ oEmployee.getMail() + "' WHERE Employees.userName = '"
 					+ oEmployee.getUserName() + "';";
 
