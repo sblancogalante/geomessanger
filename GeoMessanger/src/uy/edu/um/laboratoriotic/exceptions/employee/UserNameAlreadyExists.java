@@ -1,5 +1,7 @@
 package uy.edu.um.laboratoriotic.exceptions.employee;
 
+import java.io.Serializable;
+
 /**
  * This exception represents the case of trying to add an employee with the same
  * user name of another that already exists on the database
@@ -7,7 +9,7 @@ package uy.edu.um.laboratoriotic.exceptions.employee;
  * @author sblanco1
  *
  */
-public class UserNameAlreadyExists extends Exception {
+public class UserNameAlreadyExists extends Exception implements Serializable  {
 
 	/*
 	 * Constructor

@@ -1,5 +1,7 @@
 package uy.edu.um.laboratoriotic.exceptions.employee;
 
+import java.io.Serializable;
+
 /**
  * This exception represents the case of adding an employee without filling all
  * the obligatory fields
@@ -7,7 +9,7 @@ package uy.edu.um.laboratoriotic.exceptions.employee;
  * @author sblanco1
  *
  */
-public class MissingArguments extends Exception {
+public class MissingArguments extends Exception implements Serializable  {
 
 	/*
 	 * Constructor
