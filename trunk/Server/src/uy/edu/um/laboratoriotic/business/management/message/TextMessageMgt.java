@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
@@ -23,9 +24,10 @@ public interface TextMessageMgt {
 	 * @param oTextMessage
 	 * @throws DataBaseConnection
 	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeAlreadyExists 
 	 */
 	public void addTextMessage(TextMessageVO oTextMessageVO)
-			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist;
+			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 	/**
 	 * This method makes sure that the database returns a list with all the
@@ -35,9 +37,10 @@ public interface TextMessageMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeAlreadyExists 
 	 */
 	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSender,
-			EmployeeVO oReceiver) throws DataBaseConnection, RemoteException, EmployeeDoesNotExist;
+			EmployeeVO oReceiver) throws DataBaseConnection, RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 	/**
 	 * This method makes sure that the database returns a character count of 
@@ -48,8 +51,9 @@ public interface TextMessageMgt {
 	 * @throws DataBaseConnection
 	 * @throws RemoteException
 	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeAlreadyExists 
 	 */
 	public int countTextCharacters(EmployeeVO oEmployeeVO)
-			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist;
+			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 }

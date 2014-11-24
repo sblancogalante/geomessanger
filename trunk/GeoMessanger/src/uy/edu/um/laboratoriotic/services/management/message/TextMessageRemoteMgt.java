@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
@@ -25,9 +26,10 @@ public interface TextMessageRemoteMgt extends Remote {
 	 * @return
 	 * @throws RemoteException
 	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeAlreadyExists 
 	 */
 	public void addTextMessage(TextMessageVO oTextMessageVO)
-			throws RemoteException, EmployeeDoesNotExist;
+			throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 	/**
 	 * This method communicates the server that the client is trying to get a
@@ -37,8 +39,9 @@ public interface TextMessageRemoteMgt extends Remote {
 	 * @return
 	 * @throws RemoteException
 	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeAlreadyExists 
 	 */
-	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSender, EmployeeVO oReceiver) throws RemoteException, EmployeeDoesNotExist;
+	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSender, EmployeeVO oReceiver) throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 	/**
 	 * This method communicates the server that the client is trying to get a
@@ -47,9 +50,10 @@ public interface TextMessageRemoteMgt extends Remote {
 	 * @return
 	 * @throws RemoteException
 	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeAlreadyExists 
 	 */
 	public int countTextCharacters(EmployeeVO oEmployeeVO)
-			throws RemoteException, EmployeeDoesNotExist;
+			throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 	/**
 	 * This method communicates the server that the client is trying to clear

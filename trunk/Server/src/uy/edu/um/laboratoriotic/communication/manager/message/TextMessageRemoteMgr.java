@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
 import uy.edu.um.laboratoriotic.business.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageRemoteMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -45,7 +46,7 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 	 */
 	@Override
 	public void addTextMessage(TextMessageVO oTextMessageVO)
-			throws RemoteException, EmployeeDoesNotExist {
+			throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		TextMessageMgt oTextMessageMgt = BusinessFacade.getInstance()
@@ -62,7 +63,7 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 
 	@Override
 	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSenderVO,
-			EmployeeVO oReceiverVO) throws RemoteException, EmployeeDoesNotExist {
+			EmployeeVO oReceiverVO) throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		ArrayList<TextMessageVO> oListToReturn = new ArrayList<>();
@@ -85,7 +86,7 @@ public class TextMessageRemoteMgr implements TextMessageRemoteMgt {
 
 	@Override
 	public int countTextCharacters(EmployeeVO oEmployeeVO)
-			throws RemoteException, EmployeeDoesNotExist {
+			throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		int returnCount = 0;

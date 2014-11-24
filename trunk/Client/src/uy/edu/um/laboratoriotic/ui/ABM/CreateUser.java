@@ -74,7 +74,7 @@ public class CreateUser extends JDialog {
 
 	public CreateUser() {
 
-		this.setTitle("Create User");
+		this.setTitle("Crear User");
 		setBounds(100, 100, 600, 635);
 
 		Dimension d = new Dimension(600, 635);
@@ -155,7 +155,7 @@ public class CreateUser extends JDialog {
 		
 		JLabel workingHoursLabel = new JLabel("Working Hours: ");
 		
-		String[] hours = {"00","01","02","03","03","04","05","06","07","08","09","10","11","12",
+		String[] hours = {"00","01","02","03","04","05","06","07","08","09","10","11","12",
 				"13","14","15","16","17","18","19","20","21","22","23"};
 		
 		final JComboBox firstHour = new JComboBox(hours);

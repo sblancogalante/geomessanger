@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.exceptions.employee.WrongLogin;
 import uy.edu.um.laboratoriotic.persistence.DataBaseConnectionMgr;
@@ -212,7 +213,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public Employee searchEmployee(String oUserName) throws DataBaseConnection, EmployeeDoesNotExist {
+	public Employee searchEmployee(String oUserName) throws DataBaseConnection, EmployeeDoesNotExist, EmployeeAlreadyExists {
 
 		Employee oEmployee = null;
 		Statement oStatement = null;
@@ -268,11 +269,13 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			}
 			
+			oResultSet.close();
+			
 			if(oEmployee == null){
 				throw new EmployeeDoesNotExist();
-			}
-
-			oResultSet.close();
+			} else{
+				throw new EmployeeAlreadyExists();				
+			}			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -290,7 +293,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection, EmployeeDoesNotExist {
+	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection, EmployeeDoesNotExist, EmployeeAlreadyExists {
 
 		Employee oEmployee = null;
 		Statement oStatement = null;
@@ -345,11 +348,13 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			}
 
+			oResultSet.close();
+			
 			if(oEmployee == null){
 				throw new EmployeeDoesNotExist();
-			}
-			
-			oResultSet.close();
+			} else{
+				throw new EmployeeAlreadyExists();
+			}			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -368,7 +373,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 	@Override
 	public Employee modifyEmployee(Employee oEmployee)
-			throws DataBaseConnection, EmployeeDoesNotExist {
+			throws DataBaseConnection, EmployeeDoesNotExist, EmployeeAlreadyExists {
 
 		Employee oEmployeeToReturn = null;
 		Connection oConnection = null;
@@ -412,6 +417,9 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			} catch (EmployeeDoesNotExist e) {
 				// TODO Auto-generated catch block
 				throw new EmployeeDoesNotExist();
+			} catch (EmployeeAlreadyExists e) {
+				// TODO Auto-generated catch block
+				throw new EmployeeAlreadyExists();
 			}
 
 			oStatement.close();
