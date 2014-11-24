@@ -176,6 +176,7 @@ public class ChatRoom extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				// TODO Auto-generated method stub
+				dispose();
 				
 			}
 			
@@ -294,7 +295,7 @@ public class ChatRoom extends JFrame {
 			
 		}else{
 			  
-			senderPhotoImage = rescaleImageFromBytes(senderEmployee.getProfilePicture(), 118, 118);
+			senderPhotoImage = rescaleImageFromBytes(senderEmployee.getProfilePicture(), 77, 77);
 			
 			if(senderPhotoImage==null){
 				senderPhotoImage = rescaleImage(new File("Images/Foto.png"), 77,77);

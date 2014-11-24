@@ -118,12 +118,12 @@ public class Reportes extends JDialog {
 			public Component getListCellRendererComponent(
 					JList<? extends EmployeeVO> list, EmployeeVO value,
 					int index, boolean isSelected, boolean cellHasFocus) {
-			
+				System.out.println("Entro renderer");
 				DisplayUserReport userReportPanel=null;
 				try {
 					userReportPanel = new DisplayUserReport(value, index);
 				} catch (EmployeeDoesNotExist e) {
-					// TODO Auto-generated catch block
+					e.printStackTrace();
 					throw new RuntimeException();
 					
 				}
@@ -194,6 +194,8 @@ public class Reportes extends JDialog {
 		
 		
 		contentPane.setLayout(gl_contentPane);
+		
+		System.out.println("Termino el constructor");
 	}
 	
 	
