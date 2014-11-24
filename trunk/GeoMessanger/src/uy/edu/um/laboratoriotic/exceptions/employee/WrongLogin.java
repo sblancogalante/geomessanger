@@ -1,5 +1,7 @@
 package uy.edu.um.laboratoriotic.exceptions.employee;
 
+import java.io.Serializable;
+
 /**
  * This exception represents the case of a combination of user name and password
  * that does not exist on the database
@@ -7,7 +9,7 @@ package uy.edu.um.laboratoriotic.exceptions.employee;
  * @author sblanco1
  *
  */
-public class WrongLogin extends Exception {
+public class WrongLogin extends Exception implements Serializable  {
 
 	/*
 	 * Constructor
