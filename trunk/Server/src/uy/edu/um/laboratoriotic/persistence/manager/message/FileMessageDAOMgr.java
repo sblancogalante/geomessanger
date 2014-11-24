@@ -78,6 +78,7 @@ public class FileMessageDAOMgr implements FileMessageDAOMgt {
 			oPrepStatement.setInt(4, sIDReceiver);
 
 			oPrepStatement.execute();
+			oPrepStatement.close();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

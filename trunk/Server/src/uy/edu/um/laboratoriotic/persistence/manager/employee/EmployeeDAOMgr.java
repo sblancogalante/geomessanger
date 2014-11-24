@@ -91,6 +91,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			
 			oPrepStatement.execute();
 			
+			oPrepStatement.close();
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
