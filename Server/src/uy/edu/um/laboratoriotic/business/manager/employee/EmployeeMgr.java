@@ -118,14 +118,14 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public Employee modifyEmployee(EmployeeVO oEmployeeVO)
-			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists {
+			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
 		Employee oEmployee;
 		Employee oEmployeeToReturn = null;
 
-		oEmployee = oNewDAOEmployee.searchEmployee(oEmployeeVO.getUserName());
+		oEmployee = oNewDAOEmployee.searchEmployee(oEmployeeVO.getEmployeeID());
 		
 		Employee oEmployeeAux = Helper.modularizeEmployee(oEmployeeVO);
 

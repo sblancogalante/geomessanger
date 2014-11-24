@@ -133,7 +133,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 	@Override
 	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO)
-			throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists {
+			throws RemoteException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		Employee oEmployee;

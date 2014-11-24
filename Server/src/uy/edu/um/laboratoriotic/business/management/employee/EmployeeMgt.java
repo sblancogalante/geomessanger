@@ -43,9 +43,9 @@ public interface EmployeeMgt {
 	 * @param oEmployee
 	 * @return
 	 * @throws EmployeeDoesNotExist 
-	 * @throws EmployeeAlreadyExists 
 	 */
-	public Employee modifyEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection, RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists;
+	public Employee modifyEmployee(EmployeeVO oEmployeeVO)
+			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist;
 
 	/**
 	 * This method makes sure that the database searches an employee

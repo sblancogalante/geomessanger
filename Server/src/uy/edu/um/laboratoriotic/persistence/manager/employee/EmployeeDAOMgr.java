@@ -56,7 +56,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	@Override
 	public void addEmployee(Employee oEmployee) throws DataBaseConnection {
 		// TODO Auto-generated method stub
-		
+
 		Connection oConnection = null;
 		PreparedStatement oPrepStatement = null;
 
@@ -81,14 +81,14 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			oPrepStatement.setString(9, oEmployee.getMail());
 			oPrepStatement.setString(10, oEmployee.getPosition());
 			oPrepStatement.setString(11, oEmployee.getWorkingHour());
-			
+
 			Blob sProfilePicture = new javax.sql.rowset.serial.SerialBlob(
 					oEmployee.getProfilePicture());
 
 			oPrepStatement.setBlob(12, sProfilePicture);
-			
+
 			oPrepStatement.setBoolean(13, oEmployee.getStatus());
-			oPrepStatement.setBoolean(14, oEmployee.getAdmin());			
+			oPrepStatement.setBoolean(14, oEmployee.getAdmin());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -213,7 +213,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public Employee searchEmployee(String oUserName) throws DataBaseConnection, EmployeeDoesNotExist, EmployeeAlreadyExists {
+	public Employee searchEmployee(String oUserName) throws DataBaseConnection,
+			EmployeeDoesNotExist, EmployeeAlreadyExists {
 
 		Employee oEmployee = null;
 		Statement oStatement = null;
@@ -268,14 +269,12 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 						sResultAdmin);
 
 			}
-			
+
 			oResultSet.close();
-			
-			if(oEmployee == null){
-				throw new EmployeeDoesNotExist();
-			} else{
-				throw new EmployeeAlreadyExists();				
-			}			
+
+			if (oEmployee != null) {
+				throw new EmployeeAlreadyExists();
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -293,7 +292,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection, EmployeeDoesNotExist, EmployeeAlreadyExists {
+	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection,
+			EmployeeDoesNotExist {
 
 		Employee oEmployee = null;
 		Statement oStatement = null;
@@ -348,13 +348,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			}
 
-			oResultSet.close();
-			
-			if(oEmployee == null){
-				throw new EmployeeDoesNotExist();
-			} else{
-				throw new EmployeeAlreadyExists();
-			}			
+			oResultSet.close();			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -373,7 +367,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 	@Override
 	public Employee modifyEmployee(Employee oEmployee)
-			throws DataBaseConnection, EmployeeDoesNotExist, EmployeeAlreadyExists {
+			throws DataBaseConnection, EmployeeDoesNotExist {
 
 		Employee oEmployeeToReturn = null;
 		Connection oConnection = null;
@@ -413,14 +407,11 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			updateAdmin(oEmployee);
 
 			try {
-				oEmployeeToReturn = searchEmployee(oEmployee.getUserName());
+				oEmployeeToReturn = searchEmployee(oEmployee.getEmployeeID());
 			} catch (EmployeeDoesNotExist e) {
 				// TODO Auto-generated catch block
 				throw new EmployeeDoesNotExist();
-			} catch (EmployeeAlreadyExists e) {
-				// TODO Auto-generated catch block
-				throw new EmployeeAlreadyExists();
-			}
+			} 
 
 			oStatement.close();
 
@@ -465,7 +456,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				if (oUserName.equals(userName)
 						&& hashEncriptation(oPassword).equals(password)) {
 					toReturn = true;
-				} else{
+				} else {
 					throw new WrongLogin();
 				}
 			}
@@ -545,7 +536,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 							sResultPosition, sResultWorkingHour,
 							sProfilePicture, sResultStatus, sResultAdmin);
 
-				} else{
+				} else {
 					throw new EmployeeDoesNotExist();
 				}
 			}
