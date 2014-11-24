@@ -114,12 +114,6 @@ public class MainWindow extends JFrame {
 					+ e2.getMessage());
 			error.setVisible(true);
 			e2.printStackTrace();
-		} catch (EmployeeAlreadyExists e1) {
-			// TODO Auto-generated catch block
-			ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
-					+ e1.getMessage());
-			error.setVisible(true);
-			e1.printStackTrace();
 		}
 		
 		
@@ -154,12 +148,6 @@ public class MainWindow extends JFrame {
 					
 				} catch (EmployeeDoesNotExist e) {
 					ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
-							+ e.getMessage());
-					error.setVisible(true);
-					e.printStackTrace();
-				} catch (EmployeeAlreadyExists e) {
-					// TODO Auto-generated catch block
-					ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
 							+ e.getMessage());
 					error.setVisible(true);
 					e.printStackTrace();
@@ -250,12 +238,6 @@ public class MainWindow extends JFrame {
 							+ e.getMessage());
 					error.setVisible(true);
 					e.printStackTrace();
-				} catch (EmployeeAlreadyExists e) {
-					// TODO Auto-generated catch block
-					ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
-							+ e.getMessage());
-					error.setVisible(true);
-					e.printStackTrace();
 				}
 				
 				
@@ -333,14 +315,12 @@ public class MainWindow extends JFrame {
 			
 		}else{
 			
-			userPhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 118, 118);
-			//userPhotoImage = rescaleImageFromBytes(actualUser.getProfilePicture(),118,118);
-//			try {
-//				userPhotoImage = new ImageIcon(scale(actualUser.getProfilePicture(), 118, 118));
-//			} catch (ApplicationException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
+			
+			userPhotoImage = rescaleImageFromBytes(actualUser.getProfilePicture(),118,118);
+			
+			if(userPhotoImage == null){
+				userPhotoImage = rescaleImage(new File("Images/Foto.png"), 118,118);
+			}
 
 			
 		}
@@ -751,40 +731,44 @@ public class MainWindow extends JFrame {
 			     ImageIcon sizeImage;
 
 			 
-
-			     sizeImage = new ImageIcon(image);
-
-			     if(sizeImage != null){
-			    	 
-			         priorHeight = sizeImage.getIconHeight(); 
-			         priorWidth = sizeImage.getIconWidth();
+			     if(image!=null){
+				     sizeImage = new ImageIcon(image);
+	
+				     if(sizeImage != null){
+				    	 
+				         priorHeight = sizeImage.getIconHeight(); 
+				         priorWidth = sizeImage.getIconWidth();
+				     }
+	
+				     // Calculate the correct new height and width
+				     if((float)priorHeight/(float)priorWidth > (float)maxHeight/(float)maxWidth){
+				     
+				         newHeight = maxHeight;
+				         newWidth = (int)(((float)priorWidth/(float)priorHeight)*(float)newHeight);
+				     }else{
+				    	 
+				         newWidth = maxWidth;
+				         newHeight = (int)(((float)priorHeight/(float)priorWidth)*(float)newWidth);
+				     }
+	
+	
+				     // Resize the image
+	
+				     // 1. Create a new Buffered Image and Graphic2D object
+				     BufferedImage resizedImg = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+				     Graphics2D g2 = resizedImg.createGraphics();
+	
+				     // 2. Use the Graphic object to draw a new image to the image in the buffer
+				     g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+				     g2.drawImage(image, 0, 0, newWidth, newHeight, null);
+				     g2.dispose();
+				     // 3. Convert the buffered image into an ImageIcon for return
+				     return (new ImageIcon(resizedImg));
 			     }
-
-			     // Calculate the correct new height and width
-			     if((float)priorHeight/(float)priorWidth > (float)maxHeight/(float)maxWidth){
 			     
-			         newHeight = maxHeight;
-			         newWidth = (int)(((float)priorWidth/(float)priorHeight)*(float)newHeight);
-			     }else{
-			    	 
-			         newWidth = maxWidth;
-			         newHeight = (int)(((float)priorHeight/(float)priorWidth)*(float)newWidth);
-			     }
+			     return null;
 
-
-			     // Resize the image
-
-			     // 1. Create a new Buffered Image and Graphic2D object
-			     BufferedImage resizedImg = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
-			     Graphics2D g2 = resizedImg.createGraphics();
-
-			     // 2. Use the Graphic object to draw a new image to the image in the buffer
-			     g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			     g2.drawImage(image, 0, 0, newWidth, newHeight, null);
-			     g2.dispose();
-
-			     // 3. Convert the buffered image into an ImageIcon for return
-			     return (new ImageIcon(resizedImg));
+			   
 			 }
 	
 	
@@ -816,29 +800,6 @@ public class MainWindow extends JFrame {
 		return vector;
 	}	
 	
-	private byte[] scale(byte[] fileData, int width, int height) throws ApplicationException {
-    	ByteArrayInputStream in = new ByteArrayInputStream(fileData);
-    	try {
-    		BufferedImage img = ImageIO.read(in);
-    		if(height == 0) {
-    			height = (width * img.getHeight())/ img.getWidth(); 
-    		}
-    		if(width == 0) {
-    			width = (height * img.getWidth())/ img.getHeight();
-    		}
-    		Image scaledImage = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-    		BufferedImage imageBuff = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-    		imageBuff.getGraphics().drawImage(scaledImage, 0, 0, new Color(0,0,0), null);
 
-    		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-
-    		ImageIO.write(imageBuff, "jpg", buffer);
-
-    		return buffer.toByteArray();
-    	} catch (IOException e) {
-    		throw new ApplicationException("jdsa", null);
-    	}
-    }
-	
 	
 }

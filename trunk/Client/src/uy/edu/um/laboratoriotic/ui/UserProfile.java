@@ -24,7 +24,10 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class UserProfile extends JDialog {
 
@@ -39,7 +42,7 @@ public class UserProfile extends JDialog {
 	public UserProfile(final EmployeeVO employee, Boolean isEditable) {
 		
 		this.setTitle("Perfil de usuario");
-		setBounds(100, 100, 475, 470);
+		setBounds(100, 100, 475, 485);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -47,12 +50,14 @@ public class UserProfile extends JDialog {
 		ImageIcon employeePhotoImage;
 		if(employee.getProfilePicture() == null){	
 			
-			employeePhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 120,120);
+			employeePhotoImage = rescaleImage(new File("Images/Foto.png"), 120,120);
 			
 		}else{
 			
-			employeePhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 120, 120);
-			//userPhotoImage = new ImageIcon("Images/luisFoto.jpg");
+			employeePhotoImage = rescaleImageFromBytes(employee.getProfilePicture(), 120, 120);
+			if(employeePhotoImage == null){
+				employeePhotoImage = rescaleImage(new File("Images/Foto.png"), 120,120);
+			}
 			
 		}
 		
@@ -77,14 +82,14 @@ public class UserProfile extends JDialog {
 				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(editPanel, GroupLayout.PREFERRED_SIZE, 452, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
 							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
 								.addComponent(lblNewLabel_2, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)))
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE))
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
+						.addComponent(editPanel, GroupLayout.PREFERRED_SIZE, 452, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		gl_contentPanel.setVerticalGroup(
@@ -100,9 +105,9 @@ public class UserProfile extends JDialog {
 							.addComponent(lblNewLabel_2)))
 					.addGap(29)
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGap(32)
 					.addComponent(editPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-					.addGap(22))
+					.addContainerGap())
 		);
 		
 		JButton editButton = new JButton("Editar perfil");
@@ -195,6 +200,66 @@ public class UserProfile extends JDialog {
 	
 	
 	//resize image
+	public ImageIcon rescaleImageFromBytes(byte[] imageBytes, int maxHeight, int maxWidth){
+	     int newHeight = 0, newWidth = 0;        // Variables for the new height and width
+	     int priorHeight = 0, priorWidth = 0;
+	     InputStream in = new ByteArrayInputStream(imageBytes);				
+	     BufferedImage image = null;
+	     
+		try {
+			image = ImageIO.read(in);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	     ImageIcon sizeImage;
+
+	 
+	     if(image!=null){
+		     sizeImage = new ImageIcon(image);
+
+		     if(sizeImage != null){
+		    	 
+		         priorHeight = sizeImage.getIconHeight(); 
+		         priorWidth = sizeImage.getIconWidth();
+		     }
+
+		     // Calculate the correct new height and width
+		     if((float)priorHeight/(float)priorWidth > (float)maxHeight/(float)maxWidth){
+		     
+		         newHeight = maxHeight;
+		         newWidth = (int)(((float)priorWidth/(float)priorHeight)*(float)newHeight);
+		     }else{
+		    	 
+		         newWidth = maxWidth;
+		         newHeight = (int)(((float)priorHeight/(float)priorWidth)*(float)newWidth);
+		     }
+
+
+		     // Resize the image
+
+		     // 1. Create a new Buffered Image and Graphic2D object
+		     BufferedImage resizedImg = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+		     Graphics2D g2 = resizedImg.createGraphics();
+
+		     // 2. Use the Graphic object to draw a new image to the image in the buffer
+		     g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		     g2.drawImage(image, 0, 0, newWidth, newHeight, null);
+		     g2.dispose();
+		     // 3. Convert the buffered image into an ImageIcon for return
+		     return (new ImageIcon(resizedImg));
+	     }else{
+	    	 ErrorDialog error = new ErrorDialog("La foto del usuario no encontro.");
+	    	 error.setVisible(true);
+	     }
+	     
+	     return null;
+
+	   
+	 }
+	
+	
+	//resize image
 		public ImageIcon rescaleImage(File source,int maxHeight, int maxWidth){
 		     int newHeight = 0, newWidth = 0;        // Variables for the new height and width
 		     int priorHeight = 0, priorWidth = 0;
@@ -243,4 +308,5 @@ public class UserProfile extends JDialog {
 		     // 3. Convert the buffered image into an ImageIcon for return
 		     return (new ImageIcon(resizedImg));
 		 }
+
 }

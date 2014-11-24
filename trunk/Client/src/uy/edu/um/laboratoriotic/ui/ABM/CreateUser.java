@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +19,7 @@ import java.sql.Blob;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -74,7 +77,7 @@ public class CreateUser extends JDialog {
 
 	public CreateUser() {
 
-		this.setTitle("Crear User");
+		this.setTitle("Create User");
 		setBounds(100, 100, 600, 635);
 
 		Dimension d = new Dimension(600, 635);
@@ -146,6 +149,7 @@ public class CreateUser extends JDialog {
 						.addComponent(panel_4, GroupLayout.DEFAULT_SIZE, 49,
 								Short.MAX_VALUE).addContainerGap()));
 
+		String[] comboBoxDefaultArray = { "<<Default>>" };
 		
 		String[] comboBoxLocations;
 		
@@ -155,7 +159,7 @@ public class CreateUser extends JDialog {
 		
 		JLabel workingHoursLabel = new JLabel("Working Hours: ");
 		
-		String[] hours = {"00","01","02","03","04","05","06","07","08","09","10","11","12",
+		String[] hours = {"00","01","02","03","03","04","05","06","07","08","09","10","11","12",
 				"13","14","15","16","17","18","19","20","21","22","23"};
 		
 		final JComboBox firstHour = new JComboBox(hours);
@@ -165,6 +169,7 @@ public class CreateUser extends JDialog {
 		String[] locationVector = {};
 		String[] sectorVector = {};
 		String[] documentVector = {};
+		
 		try {
 			ArrayList<TypeVO> locationTypeArray = generalMgr.getTypes("Pais");
 			ArrayList<TypeVO> sectorTypeArray = generalMgr.getTypes("Sector");
@@ -189,13 +194,13 @@ public class CreateUser extends JDialog {
 
 		final JComboBox<String> locationComboBox = new JComboBox(locationVector);
 
-		final JComboBox<String> sectorComboBox = new JComboBox(sectorVector);
+		final JComboBox<String> sectorComboBox = new JComboBox(sectorVector); 
 
 		final JCheckBox isAdminCheckBox = new JCheckBox("is Admin");
 
 		final JLabel documentTypeLabel = new JLabel("Type of Document: ");
 
-		final JComboBox<String> typeDocumentComboBox = new JComboBox(
+		final JComboBox<String> documentComboBox = new JComboBox(
 				documentVector);
 
 		JButton createUserButton = new JButton("Create User");
@@ -210,13 +215,11 @@ public class CreateUser extends JDialog {
 				photoBytes = convertImageToBytes(new File(photoPath));
 
 				TypeVO oTypeVODocument = new TypeVO("Document",
-						(String) typeDocumentComboBox.getSelectedItem());
+						(String) documentComboBox.getSelectedItem());
 				TypeVO oTypeVOLocation = new TypeVO("Location",
 						(String) locationComboBox.getSelectedItem());
 				TypeVO oTypeVOSector = new TypeVO("Sector",
 						(String) sectorComboBox.getSelectedItem());
-				
-				
 
 				EmployeeVO oEmployee = new EmployeeVO(oTypeVODocument,
 						documentText.getText(), nameText.getText(),
@@ -233,17 +236,19 @@ public class CreateUser extends JDialog {
 					String pass2 = String.valueOf(repeatPasswordText
 							.getPassword());
 					
-					EmployeeVO verifyUserName = employeeMgt.searchEmployee(oEmployee.getUserName());
+					EmployeeVO verifyUserName=null;
+					try {
+						verifyUserName = employeeMgt.searchEmployee(oEmployee.getUserName());
+					} catch (EmployeeDoesNotExist | EmployeeAlreadyExists e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					
-					if (pass1.equals(pass2) && verifyUserName == null && pass1.length() <= 5) {
+					if (pass1.equals(pass2) && verifyUserName == null) {
 						try {
 							employeeMgt.addEmployee(oEmployee);
-						} catch (PasswordTooShort e) {
-							e.printStackTrace();
-						} catch (UserNameAlreadyExists e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (MissingArguments e) {
+						} catch (EmployeeAlreadyExists | PasswordTooShort
+								| UserNameAlreadyExists | MissingArguments e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
@@ -261,37 +266,14 @@ public class CreateUser extends JDialog {
 								"Se ha detectado un error, el nombre de usuario ingresado ya existe. Porfavor intente nuevamente.");
 						userNameText.setText("");
 						errorDialogUserName.setVisible(true);
-					}else if(pass1.length() <= 5){
-						ErrorDialog errorDialog = new ErrorDialog(
-								"La constreña es muy corta intente nuevamente.");
-						errorDialog.setVisible(true);
-						passwordText.setText("");
-						repeatPasswordText.setText("");
-						
 					}
-				} catch (RemoteException e) {
+				} catch (RemoteException | NotBoundException e) {
 					ErrorDialog errorDialog = new ErrorDialog(
 							"Se ha producido un error al intentar guardar el usuario. \n \n ERROR: "
 									+ e.getMessage());
 					errorDialog.setVisible(true);
 					e.printStackTrace();
-				} catch (EmployeeDoesNotExist e) {
-					ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
-							+ e.getMessage());
-					error.setVisible(true);
-					e.printStackTrace();
-				} catch (EmployeeAlreadyExists e) {
-					ErrorDialog errorDialogUserName = new ErrorDialog(
-							"Se ha detectado un error, el nombre de usuario ingresado ya existe. Porfavor intente nuevamente.");
-					userNameText.setText("");
-					errorDialogUserName.setVisible(true);
-					e.printStackTrace();
-				} catch (NotBoundException e1) {
-					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
-							+ e1.getMessage());
-					error.setVisible(true);
-					e1.printStackTrace();
-				} 
+				}
 
 			}
 
@@ -396,147 +378,136 @@ public class CreateUser extends JDialog {
 
 		positionText = new JTextField();
 		positionText.setColumns(10);
+		
+		JButton newDocumentButton = new JButton("Add Type of Document");
+		newDocumentButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NewDocument newDocument = new NewDocument();
+				newDocument.setVisible(true);
+				newDocument.addWindowListener(new WindowListener() {
+					
+					@Override
+					public void windowOpened(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowIconified(WindowEvent e) {
+					
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowDeiconified(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowDeactivated(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowClosing(WindowEvent e) {
+						
+						
+					}
+					
+					@Override
+					public void windowClosed(WindowEvent e) {
+						try {
+							ArrayList<TypeVO> documentTypeArray = generalMgr.getTypes("Documento");
+							String[] documentVector = arrayTypeToString(documentTypeArray);
+							DefaultComboBoxModel dcbm = new DefaultComboBoxModel<String>(documentVector);
+							documentComboBox.setModel(dcbm);
+							
+						} catch (RemoteException | NotBoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+
+						
+					}
+					
+					@Override
+					public void windowActivated(WindowEvent e) {
+					
+						// TODO Auto-generated method stub
+						
+					}
+				});
+			}
+		});
 
 		GroupLayout gl_panel_2 = new GroupLayout(userDetailsPanel);
-		gl_panel_2
-				.setHorizontalGroup(gl_panel_2
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								gl_panel_2
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(obligatoryFieldLabel,
-												GroupLayout.PREFERRED_SIZE,
-												303, GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(242, Short.MAX_VALUE))
-						.addGroup(
-								gl_panel_2
-										.createSequentialGroup()
-										.addContainerGap(74, Short.MAX_VALUE)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addComponent(
-																positionLabel)
-														.addComponent(
-																documentLabel)
-														.addComponent(nameLabel)
-														.addComponent(
-																lastNameLabel)
-														.addComponent(
-																eMailLabel))
-										.addGap(18)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.LEADING,
-																false)
-														.addComponent(
-																positionText)
-														.addComponent(eMailText)
-														.addComponent(
-																lastNameText)
-														.addComponent(nameText)
-														.addComponent(
-																documentText,
-																GroupLayout.PREFERRED_SIZE,
-																355,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(36))
-						.addGroup(
-								Alignment.LEADING,
-								gl_panel_2
-										.createSequentialGroup()
-										.addGap(198)
-										.addComponent(documentTypeLabel)
-										.addGap(18)
-										.addComponent(typeDocumentComboBox,
-												GroupLayout.PREFERRED_SIZE,
-												105, GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(106, Short.MAX_VALUE)));
-		gl_panel_2
-				.setVerticalGroup(gl_panel_2
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								gl_panel_2
-										.createSequentialGroup()
-										.addGap(58)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																documentTypeLabel)
-														.addComponent(
-																typeDocumentComboBox,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.RELATED, 53,
-												Short.MAX_VALUE)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																documentText,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																documentLabel))
-										.addGap(18)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																nameText,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(nameLabel))
-										.addGap(18)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																lastNameText,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																lastNameLabel))
-										.addGap(18)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																eMailText,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																eMailLabel))
-										.addGap(18)
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																positionLabel)
-														.addComponent(
-																positionText,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(58)
-										.addComponent(obligatoryFieldLabel)
-										.addContainerGap()));
+		gl_panel_2.setHorizontalGroup(
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(obligatoryFieldLabel, GroupLayout.PREFERRED_SIZE, 303, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(248, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_panel_2.createSequentialGroup()
+					.addContainerGap(24, Short.MAX_VALUE)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING)
+						.addComponent(documentTypeLabel)
+						.addComponent(positionLabel)
+						.addComponent(documentLabel)
+						.addComponent(nameLabel)
+						.addComponent(lastNameLabel)
+						.addComponent(eMailLabel))
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+						.addComponent(positionText)
+						.addComponent(eMailText)
+						.addComponent(lastNameText)
+						.addComponent(nameText)
+						.addComponent(documentText, GroupLayout.PREFERRED_SIZE, 355, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addComponent(documentComboBox, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
+							.addGap(33)
+							.addComponent(newDocumentButton)))
+					.addGap(36))
+		);
+		gl_panel_2.setVerticalGroup(
+			gl_panel_2.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addGap(58)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(documentTypeLabel)
+						.addComponent(documentComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(newDocumentButton))
+					.addPreferredGap(ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(documentText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(documentLabel))
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(nameText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(nameLabel))
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lastNameText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lastNameLabel))
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(eMailText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(eMailLabel))
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(positionLabel)
+						.addComponent(positionText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(58)
+					.addComponent(obligatoryFieldLabel)
+					.addContainerGap())
+		);
 
 		userDetailsPanel.setLayout(gl_panel_2);
 
@@ -568,10 +539,137 @@ public class CreateUser extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				NewLocation newLocation = new NewLocation();
 				newLocation.setVisible(true);
+				newLocation.addWindowListener(new WindowListener() {
+					
+					@Override
+					public void windowOpened(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowIconified(WindowEvent e) {
+					
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowDeiconified(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowDeactivated(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowClosing(WindowEvent e) {
+						
+						
+					}
+					
+					@Override
+					public void windowClosed(WindowEvent e) {
+						try {
+							ArrayList<TypeVO> locationTypeArray = generalMgr.getTypes("Pais");
+							String[] locationVector = arrayTypeToString(locationTypeArray);
+							DefaultComboBoxModel dcbm = new DefaultComboBoxModel<String>(locationVector);
+							locationComboBox.setModel(dcbm);
+							
+						} catch (RemoteException | NotBoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+
+						
+					}
+					
+					@Override
+					public void windowActivated(WindowEvent e) {
+					
+						// TODO Auto-generated method stub
+						
+					}
+				});
 			}
 		});
 
 		JButton addSectorButton = new JButton("Add Sector");
+		addSectorButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NewSector newSector = new NewSector();
+				newSector.setVisible(true);
+				newSector.addWindowListener(new WindowListener() {
+					
+					@Override
+					public void windowOpened(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowIconified(WindowEvent e) {
+					
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowDeiconified(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowDeactivated(WindowEvent e) {
+						
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowClosing(WindowEvent e) {
+						
+						
+					}
+					
+					@Override
+					public void windowClosed(WindowEvent e) {
+						try {
+							ArrayList<TypeVO> sectorTypeArray = generalMgr.getTypes("Sector");
+							String[] sectorVector = arrayTypeToString(sectorTypeArray);
+							DefaultComboBoxModel dcbm = new DefaultComboBoxModel<String>(sectorVector);
+							sectorComboBox.setModel(dcbm);
+							
+						} catch (RemoteException | NotBoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+
+						
+					}
+					
+					@Override
+					public void windowActivated(WindowEvent e) {
+					
+						// TODO Auto-generated method stub
+						
+					}
+				});
+				
+			}
+		});
 
 		passwordLabel = new JLabel("Password: ");
 
