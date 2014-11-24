@@ -47,7 +47,7 @@ public class DataBaseConnectionMgr {
 	/*
 	 * Methods
 	 */
-	public static DataBaseConnectionMgr getInstance() {
+	public static synchronized DataBaseConnectionMgr getInstance() {
 
 		if (instance == null) {
 			instance = new DataBaseConnectionMgr();
