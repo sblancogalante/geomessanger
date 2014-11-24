@@ -60,15 +60,15 @@ public class ServiceFacade {
 	 */
 	public String getHost() {
 	
-		Properties prop = new Properties();
+		Properties oProperties = new Properties();
 		
 		try {
-			prop.load(new FileInputStream("dataSource.properties"));
+			oProperties.load(new FileInputStream("dataSource.properties"));
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 		
-		return prop.getProperty("host");
+		return oProperties.getProperty("host");
 	}
 
 	public int getPort() {

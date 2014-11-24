@@ -7,13 +7,14 @@ import org.junit.Test;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
 
 public class EmployeeDAOTest {
 
 	@Test
-	public void test() throws RemoteException, EmployeeDoesNotExist {
+	public void test() throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 
 		Type oTypeDocument = new Type("Document", "Cedula");
 		Type oTypeLocation = new Type("Location", "Uruguay");

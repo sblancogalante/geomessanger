@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
 import uy.edu.um.laboratoriotic.business.management.message.FileMessageMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageRemoteMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -62,7 +63,7 @@ public class FileMessageRemoteMgr implements FileMessageRemoteMgt {
 
 	@Override
 	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSenderVO,
-			EmployeeVO oReceiverVO) throws RemoteException, EmployeeDoesNotExist {
+			EmployeeVO oReceiverVO) throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		ArrayList<FileMessageVO> oListToReturn = new ArrayList<>();

@@ -7,6 +7,7 @@ import uy.edu.um.laboratoriotic.business.BusinessFacade;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.exceptions.employee.WrongLogin;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeRemoteMgt;
@@ -85,7 +86,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	}
 
 	@Override
-	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException, EmployeeDoesNotExist {
+	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		Employee oEmployee;
@@ -106,7 +107,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 	}
 
 	@Override
-	public EmployeeVO searchEmployee(String oUserName) throws RemoteException, EmployeeDoesNotExist {
+	public EmployeeVO searchEmployee(String oUserName) throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		Employee oEmployee;
@@ -132,7 +133,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 
 	@Override
 	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO)
-			throws RemoteException, EmployeeDoesNotExist {
+			throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		Employee oEmployee;

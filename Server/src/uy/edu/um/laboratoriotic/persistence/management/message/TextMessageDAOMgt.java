@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 
 /**
@@ -21,11 +22,13 @@ public interface TextMessageDAOMgt {
 	 * 
 	 * @param oTextMessage
 	 * @throws DataBaseConnection
-	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeDoesNotExist
+	 * @throws EmployeeAlreadyExists
 	 * @throws RemoteException
 	 */
 	public void addTextMessage(TextMessage oTextMessage)
-			throws DataBaseConnection, EmployeeDoesNotExist;
+			throws DataBaseConnection, EmployeeDoesNotExist,
+			EmployeeAlreadyExists;
 
 	/**
 	 * This method returns a list with all the messages of the database
@@ -33,22 +36,25 @@ public interface TextMessageDAOMgt {
 	 * @param oTextMessage
 	 * @return
 	 * @throws DataBaseConnection
-	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeDoesNotExist
+	 * @throws EmployeeAlreadyExists
 	 * @throws RemoteException
 	 */
 	public ArrayList<TextMessage> getTextMessages(Employee oSender,
-			Employee oReceiverEmployee) throws DataBaseConnection, EmployeeDoesNotExist;
+			Employee oReceiverEmployee) throws DataBaseConnection,
+			EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 	/**
-	 * This method returns an int that represents the number of characters
-	 * sent by an employee
+	 * This method returns an int that represents the number of characters sent
+	 * by an employee
 	 * 
 	 * @param oEmployee
 	 * @return
 	 * @throws DataBaseConnection
-	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeDoesNotExist
+	 * @throws EmployeeAlreadyExists 
 	 */
 	public int countTextCharacters(Employee oEmployee)
-			throws DataBaseConnection, EmployeeDoesNotExist;
+			throws DataBaseConnection, EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 }

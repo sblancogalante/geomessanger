@@ -8,6 +8,7 @@ import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.factory.message.TextMessageDAOFactory;
@@ -15,7 +16,7 @@ import uy.edu.um.laboratoriotic.persistence.factory.message.TextMessageDAOFactor
 public class TextMessageDAOTest {
 
 	@Test
-	public void test() throws RemoteException, EmployeeDoesNotExist {
+	public void test() throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 
 		Type oTypeDocument = new Type("Documento", "Cedula");
 		Type oTypeLocation = new Type("Location", "Uruguay");

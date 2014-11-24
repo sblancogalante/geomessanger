@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.persistence.DataBaseConnectionMgr;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
@@ -54,7 +55,8 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 	 */
 	@Override
 	public void addTextMessage(TextMessage oTextMessage)
-			throws DataBaseConnection, EmployeeDoesNotExist {
+			throws DataBaseConnection, EmployeeDoesNotExist,
+			EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		Connection oConnection = null;
@@ -71,14 +73,18 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 				sIDSender = EmployeeDAOFactory.getEmployeeDAOMgt()
 						.searchEmployee(oTextMessage.getSender().getUserName())
 						.getEmployeeID();
-				sIDReceiver = EmployeeDAOFactory.getEmployeeDAOMgt()
-						.searchEmployee(oTextMessage.getReceiver().getUserName())
+				sIDReceiver = EmployeeDAOFactory
+						.getEmployeeDAOMgt()
+						.searchEmployee(
+								oTextMessage.getReceiver().getUserName())
 						.getEmployeeID();
 			} catch (EmployeeDoesNotExist e) {
 				// TODO Auto-generated catch block
 				throw new EmployeeDoesNotExist();
+			} catch (EmployeeAlreadyExists e) {
+				// TODO Auto-generated catch block
+				throw new EmployeeAlreadyExists();
 			}
-			
 
 			String sInsert = "INSERT INTO TextMessages (text, employeeSenderID, employeeReceiverID) VALUES (?,?,?)";
 
@@ -107,7 +113,8 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 	@Override
 	public ArrayList<TextMessage> getTextMessages(Employee oSender,
-			Employee oReceiver) throws DataBaseConnection, EmployeeDoesNotExist {
+			Employee oReceiver) throws DataBaseConnection,
+			EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		ArrayList<TextMessage> oList = new ArrayList<>();
@@ -123,6 +130,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 			int oSenderID = 0;
 			int oReceiverID = 0;
+
 			try {
 				oSenderID = EmployeeDAOFactory.getEmployeeDAOMgt()
 						.searchEmployee(oSender.getUserName()).getEmployeeID();
@@ -132,13 +140,14 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 							.searchEmployee(oReceiver.getUserName())
 							.getEmployeeID();
 				}
+
 			} catch (EmployeeDoesNotExist e) {
 				// TODO Auto-generated catch block
 				throw new EmployeeDoesNotExist();
+			} catch (EmployeeAlreadyExists e) {
+				// TODO Auto-generated catch block
+				throw new EmployeeAlreadyExists();
 			}
-			
-
-			
 
 			sQuery = "SELECT * FROM (SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, tm.textMessageID, tm.text, tm.date, tm.employeeSenderID, tm.employeeReceiverID"
 					+ " FROM Employees e, TextMessages tm"
@@ -197,7 +206,7 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 
 	@Override
 	public int countTextCharacters(Employee oEmployee)
-			throws DataBaseConnection, EmployeeDoesNotExist {
+			throws DataBaseConnection, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		Statement oStatement = null;
@@ -215,10 +224,14 @@ public class TextMessageDAOMgr implements TextMessageDAOMgt {
 			int sEmployeeID = 0;
 			try {
 				sEmployeeID = EmployeeDAOFactory.getEmployeeDAOMgt()
-						.searchEmployee(oEmployee.getUserName()).getEmployeeID();
+						.searchEmployee(oEmployee.getUserName())
+						.getEmployeeID();
 			} catch (EmployeeDoesNotExist e) {
 				// TODO Auto-generated catch block
 				throw new EmployeeDoesNotExist();
+			} catch (EmployeeAlreadyExists e) {
+				// TODO Auto-generated catch block
+				throw new EmployeeAlreadyExists();
 			}
 
 			sQuery = "SELECT * FROM (SELECT sum(char_length(text)) FROM TextMessages tm"

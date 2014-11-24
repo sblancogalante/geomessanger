@@ -40,9 +40,10 @@ public interface EmployeeRemoteMgt extends Remote {
 	 * 
 	 * @param oEmployeeVO
 	 * @throws RemoteException
+	 * @throws EmployeeAlreadyExists 
 	 */
 	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
-			EmployeeDoesNotExist;
+			EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 	/**
 	 * This method communicates the server that the client is searching an
@@ -62,9 +63,10 @@ public interface EmployeeRemoteMgt extends Remote {
 	 * @param oEmployeeVO
 	 * @return
 	 * @throws RemoteException
+	 * @throws EmployeeAlreadyExists 
 	 */
 	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO)
-			throws RemoteException, EmployeeDoesNotExist;
+			throws RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 	/**
 	 * This method communicates the server that the client wants to obtain all

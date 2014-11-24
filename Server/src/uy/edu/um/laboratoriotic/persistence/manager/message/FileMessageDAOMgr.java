@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.FileMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.persistence.DataBaseConnectionMgr;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
@@ -95,7 +96,7 @@ public class FileMessageDAOMgr implements FileMessageDAOMgt {
 
 	@Override
 	public ArrayList<FileMessage> getFileMessages(Employee oSender,
-			Employee oReceiver) throws DataBaseConnection, RemoteException, EmployeeDoesNotExist {
+			Employee oReceiver) throws DataBaseConnection, RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		ArrayList<FileMessage> oList = new ArrayList<>();
@@ -170,6 +171,9 @@ public class FileMessageDAOMgr implements FileMessageDAOMgt {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (EmployeeAlreadyExists e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeAlreadyExists();
 		} finally {
 			if (oConnection != null) {
 				try {

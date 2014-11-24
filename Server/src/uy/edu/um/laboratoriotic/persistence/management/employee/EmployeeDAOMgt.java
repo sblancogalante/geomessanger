@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.exceptions.employee.WrongLogin;
 
@@ -21,7 +22,6 @@ public interface EmployeeDAOMgt {
 	 * 
 	 * @param oEmployee
 	 * @throws DataBaseConnection
-	 * @throws RemoteException
 	 */
 	public void addEmployee(Employee oEmployee) throws DataBaseConnection;
 
@@ -30,7 +30,6 @@ public interface EmployeeDAOMgt {
 	 * 
 	 * @param oUserName
 	 * @throws DataBaseConnection
-	 * @throws RemoteException
 	 */
 	public void removeEmployee(String oUserName) throws DataBaseConnection;
 
@@ -40,10 +39,10 @@ public interface EmployeeDAOMgt {
 	 * @param oUserName
 	 * @return
 	 * @throws DataBaseConnection
-	 * @throws EmployeeDoesNotExist 
-	 * @throws RemoteException
+	 * @throws EmployeeDoesNotExist
+	 * @throws EmployeeAlreadyExists 
 	 */
-	public Employee searchEmployee(String oUserName) throws DataBaseConnection, EmployeeDoesNotExist;
+	public Employee searchEmployee(String oUserName) throws DataBaseConnection, EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 	/**
 	 * This method searches an employee in the database
@@ -52,9 +51,8 @@ public interface EmployeeDAOMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 * @throws EmployeeDoesNotExist 
-	 * @throws RemoteException
 	 */
-	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection, EmployeeDoesNotExist;
+	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection, EmployeeDoesNotExist, EmployeeAlreadyExists;
 	
 	/**
 	 * This method returns an employee modified if the employee exists
@@ -63,15 +61,15 @@ public interface EmployeeDAOMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeAlreadyExists 
 	 */
-	public Employee modifyEmployee(Employee oEmployee) throws DataBaseConnection, EmployeeDoesNotExist;
+	public Employee modifyEmployee(Employee oEmployee) throws DataBaseConnection, EmployeeDoesNotExist, EmployeeAlreadyExists;
 	
 	/**
 	 * This method return a list with all the employees of the database
 	 * 
 	 * @return
 	 * @throws DataBaseConnection
-	 * @throws RemoteException
 	 */
 	public ArrayList<Employee> getEmployees() throws DataBaseConnection;
 
@@ -82,8 +80,7 @@ public interface EmployeeDAOMgt {
 	 * @param oPassword
 	 * @return
 	 * @throws DataBaseConnection
-	 * @throws WrongLogin 
-	 * @throws RemoteException
+	 * @throws WrongLogin
 	 */
 	public boolean checkLogin(String oUserName, String oPassword)
 			throws DataBaseConnection, WrongLogin;
@@ -96,7 +93,6 @@ public interface EmployeeDAOMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 * @throws EmployeeDoesNotExist 
-	 * @throws RemoteException
 	 */
 	public Employee getLoginEmployee(String oUserName, String oPassword)
 			throws DataBaseConnection, EmployeeDoesNotExist;

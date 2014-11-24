@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.exceptions.employee.WrongLogin;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
@@ -42,8 +43,9 @@ public interface EmployeeMgt {
 	 * @param oEmployee
 	 * @return
 	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeAlreadyExists 
 	 */
-	public Employee modifyEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection, RemoteException, EmployeeDoesNotExist;
+	public Employee modifyEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection, RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 	/**
 	 * This method makes sure that the database searches an employee
@@ -52,8 +54,9 @@ public interface EmployeeMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeAlreadyExists 
 	 */
-	public Employee searchEmployee(String oUserName) throws DataBaseConnection, RemoteException, EmployeeDoesNotExist;
+	public Employee searchEmployee(String oUserName) throws DataBaseConnection, RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 	/**
 	 * This method makes sure that the database returns a list with all the

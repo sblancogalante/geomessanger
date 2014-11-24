@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.FileMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 
 /**
@@ -36,8 +37,9 @@ public interface FileMessageDAOMgt {
 	 * @throws DataBaseConnection
 	 * @throws RemoteException
 	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeAlreadyExists 
 	 */
 	public ArrayList<FileMessage> getFileMessages(Employee oSender, Employee oReceiver)
-			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist;
+			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 }

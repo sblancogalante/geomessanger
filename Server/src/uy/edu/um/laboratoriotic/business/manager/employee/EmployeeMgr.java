@@ -10,6 +10,7 @@ import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.helper.Helper;
 import uy.edu.um.laboratoriotic.business.management.employee.EmployeeMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.exceptions.employee.WrongLogin;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
@@ -99,7 +100,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public Employee searchEmployee(String oUserName) throws DataBaseConnection,
-			RemoteException, EmployeeDoesNotExist {
+			RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();
@@ -117,7 +118,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public Employee modifyEmployee(EmployeeVO oEmployeeVO)
-			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist {
+			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		EmployeeDAOMgt oNewDAOEmployee = EmployeeDAOFactory.getEmployeeDAOMgt();

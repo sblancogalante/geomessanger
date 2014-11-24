@@ -21,8 +21,9 @@ public class DisplayUserReport extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @throws EmployeeDoesNotExist 
 	 */
-	public DisplayUserReport(EmployeeVO employee, int index) {
+	public DisplayUserReport(EmployeeVO employee, int index) throws EmployeeDoesNotExist {
 		
 		if(index % 2 == 0){
 			setBackground(Color.WHITE);
