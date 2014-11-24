@@ -116,11 +116,6 @@ public class Reportes extends JDialog {
 			
 				DisplayUserReport userReportPanel = new DisplayUserReport(value);
 				
-				if(isSelected){
-					userReportPanel.setBackground(Color.LIGHT_GRAY);
-					
-				}
-				
 				return userReportPanel;
 			
 			}

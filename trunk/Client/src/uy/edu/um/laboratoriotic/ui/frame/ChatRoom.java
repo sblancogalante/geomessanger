@@ -16,7 +16,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -168,8 +171,7 @@ public class ChatRoom extends JFrame {
 			
 		}else{
 			
-			receiverPhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 118, 118);
-			//userPhotoImage = new ImageIcon("Images/luisFoto.jpg");
+			receiverPhotoImage = rescaleImageFromBytes(receiverEmployee.getProfilePicture(), 118, 118);
 			
 		}
 		
@@ -224,7 +226,8 @@ public class ChatRoom extends JFrame {
 			
 		}else{
 			  
-			senderPhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 118, 118);
+			//senderPhotoImage = rescaleImageFromBytes(senderEmployee.getProfilePicture(), 118, 118);
+			senderPhotoImage = rescaleImage(new File("Images/Foto.png"), 118,118);
 			
 			
 		}
@@ -417,7 +420,8 @@ public class ChatRoom extends JFrame {
 				converTextArea.setText("");
 				
 				for(TextMessageVO message : messageList){
-					converTextArea.append(message.getSender().getName() +" " +message.getSender().getLastName() + ": " +  message.getTextMessage()+"\n");
+					System.out.println(message.getDate());
+					converTextArea.append(message.getSender().getName() +" " +message.getSender().getLastName()  + ": " +  message.getTextMessage()+"\n");
 				}
 				
 				pastMessageList = actualizarMensajes(textMgt, senderEmployee, receiverEmployee);
@@ -473,6 +477,58 @@ public class ChatRoom extends JFrame {
 	             e.printStackTrace();
 	            
 	     }
+
+	     sizeImage = new ImageIcon(image);
+
+	     if(sizeImage != null){
+	    	 
+	         priorHeight = sizeImage.getIconHeight(); 
+	         priorWidth = sizeImage.getIconWidth();
+	     }
+
+	     // Calculate the correct new height and width
+	     if((float)priorHeight/(float)priorWidth > (float)maxHeight/(float)maxWidth){
+	     
+	         newHeight = maxHeight;
+	         newWidth = (int)(((float)priorWidth/(float)priorHeight)*(float)newHeight);
+	     }else{
+	    	 
+	         newWidth = maxWidth;
+	         newHeight = (int)(((float)priorHeight/(float)priorWidth)*(float)newWidth);
+	     }
+
+
+	     // Resize the image
+
+	     // 1. Create a new Buffered Image and Graphic2D object
+	     BufferedImage resizedImg = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+	     Graphics2D g2 = resizedImg.createGraphics();
+
+	     // 2. Use the Graphic object to draw a new image to the image in the buffer
+	     g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	     g2.drawImage(image, 0, 0, newWidth, newHeight, null);
+	     g2.dispose();
+
+	     // 3. Convert the buffered image into an ImageIcon for return
+	     return (new ImageIcon(resizedImg));
+	 }
+	
+	
+	public ImageIcon rescaleImageFromBytes(byte[] imageBytes, int maxHeight, int maxWidth){
+	     int newHeight = 0, newWidth = 0;        // Variables for the new height and width
+	     int priorHeight = 0, priorWidth = 0;
+	     InputStream in = new ByteArrayInputStream(imageBytes);				
+	     BufferedImage image = null;
+	     
+		try {
+			image = ImageIO.read(in);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	     ImageIcon sizeImage;
+
+	 
 
 	     sizeImage = new ImageIcon(image);
 
