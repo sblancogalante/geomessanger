@@ -167,12 +167,12 @@ public class ChatRoom extends JFrame {
 		
 		if(receiverEmployee.getProfilePicture() == null){	
 			
-			receiverPhotoImage = rescaleImage(new File("Images/Foto.png"), 118,118);
+			receiverPhotoImage = rescaleImage(new File("Images/Foto.png"), 77,77);
 			
 		}else{
 			
-			receiverPhotoImage = rescaleImageFromBytes(receiverEmployee.getProfilePicture(), 118, 118);
-			
+			//receiverPhotoImage = rescaleImageFromBytes(receiverEmployee.getProfilePicture(), 77, 77);
+			receiverPhotoImage = rescaleImage(new File("Images/Foto.png"), 77,77);
 		}
 		
 		final JLabel receiverPhotoLabel = new JLabel(receiverPhotoImage);
@@ -222,12 +222,12 @@ public class ChatRoom extends JFrame {
 		ImageIcon senderPhotoImage;
 		if(senderEmployee.getProfilePicture() == null){	
 			
-			senderPhotoImage = rescaleImage(new File("Images/Foto.png"), 118,118);
+			senderPhotoImage = rescaleImage(new File("Images/Foto.png"), 77,77);
 			
 		}else{
 			  
 			//senderPhotoImage = rescaleImageFromBytes(senderEmployee.getProfilePicture(), 118, 118);
-			senderPhotoImage = rescaleImage(new File("Images/Foto.png"), 118,118);
+			senderPhotoImage = rescaleImage(new File("Images/Foto.png"), 77,77);
 			
 			
 		}
@@ -420,8 +420,8 @@ public class ChatRoom extends JFrame {
 				converTextArea.setText("");
 				
 				for(TextMessageVO message : messageList){
-					System.out.println(message.getDate());
-					converTextArea.append(message.getSender().getName() +" " +message.getSender().getLastName()  + ": " +  message.getTextMessage()+"\n");
+					
+					converTextArea.append(message.getSender().getName() +" " +message.getSender().getLastName() + ": " +  message.getTextMessage()+"\n");
 				}
 				
 				pastMessageList = actualizarMensajes(textMgt, senderEmployee, receiverEmployee);

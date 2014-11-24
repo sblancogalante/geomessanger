@@ -52,10 +52,12 @@ public class ModifyUser extends JDialog {
 	JComboBox sectorComboBox;
 	JComboBox documentComboBox;
 	private byte[] oProfilePicture;
+	private JComboBox<String> firstHour;
+	private JComboBox<String> secondHour;
 
 
 	public ModifyUser(final EmployeeVO employee) {
-		setBounds(100, 100, 470, 476);
+		setBounds(100, 100, 470, 508);
 		
 		final EmployeeMgt employeeMgt = EmployeeFactory.getInstance()
 				.getEmployeeMgt();
@@ -153,6 +155,18 @@ public class ModifyUser extends JDialog {
 			
 			JLabel lblDocumentType = new JLabel("Tipo de documento: ");
 			
+			JLabel lblHorarioDeTrabajo = new JLabel("Horario de Trabajo:");
+			
+			String[] hours = {"00","01","02","03","04","05","06","07","08","09","10","11","12",
+					"13","14","15","16","17","18","19","20","21","22","23"};
+			
+			firstHour = new JComboBox(hours);
+			
+			JLabel lblHasta = new JLabel("hasta");
+			
+			secondHour = new JComboBox(hours);
+			
+			
 			
 			GroupLayout gl_panel = new GroupLayout(panel);
 			gl_panel.setHorizontalGroup(
@@ -176,15 +190,25 @@ public class ModifyUser extends JDialog {
 									.addGroup(gl_panel.createSequentialGroup()
 										.addGap(18)
 										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-											.addComponent(positionTextField, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-											.addComponent(eMailTextField, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-											.addComponent(documentTextField, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+											.addComponent(positionTextField, GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+											.addComponent(eMailTextField, GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+											.addComponent(documentTextField, GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
 											.addComponent(documentComboBox, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)))
 									.addGroup(gl_panel.createSequentialGroup()
 										.addPreferredGap(ComponentPlacement.RELATED)
 										.addComponent(lblSector)
 										.addGap(38)))))
 						.addGap(72))
+					.addGroup(gl_panel.createSequentialGroup()
+						.addGap(19)
+						.addComponent(lblHorarioDeTrabajo)
+						.addGap(18)
+						.addComponent(firstHour, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblHasta)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(secondHour, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(105, Short.MAX_VALUE))
 			);
 			gl_panel.setVerticalGroup(
 				gl_panel.createParallelGroup(Alignment.LEADING)
@@ -213,7 +237,13 @@ public class ModifyUser extends JDialog {
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(locationComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addComponent(sectorComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(36, Short.MAX_VALUE))
+						.addGap(18)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblHorarioDeTrabajo)
+							.addComponent(firstHour, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblHasta)
+							.addComponent(secondHour, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addContainerGap(34, Short.MAX_VALUE))
 			);
 			panel.setLayout(gl_panel);
 		}
@@ -318,12 +348,15 @@ public class ModifyUser extends JDialog {
 						
 						employee.setPosition(positionTextField.getText());
 						
+						
 						TypeVO oTypeVOLocation = new TypeVO("Location",
 								(String) locationComboBox.getSelectedItem());
 						TypeVO oTypeVOSector = new TypeVO("Sector",
 								(String) sectorComboBox.getSelectedItem());
 						TypeVO oTypeVODocument = new TypeVO("Documento",
 								(String) documentComboBox.getSelectedItem());
+						
+						String workingHours = "Desde "+ firstHour.getSelectedItem() + " hasta " + secondHour.getSelectedItem();
 						
 
 						employee.setLocation(oTypeVOLocation);
@@ -333,6 +366,8 @@ public class ModifyUser extends JDialog {
 						oProfilePicture = convertImageToBytes(new File(photoPath));
 						employee.setProfilePicture(oProfilePicture);
 						employee.setMail(eMailTextField.getText());
+						employee.setWorkingHour(workingHours);
+						
 						try {
 							employeeMgt.modifyEmployee(employee);
 							System.out.println("Se ha modificado: "
@@ -357,6 +392,14 @@ public class ModifyUser extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+						
+					}
+				});
 				cancelButton.setActionCommand("Cancelar");
 				buttonPane.add(cancelButton);
 			}

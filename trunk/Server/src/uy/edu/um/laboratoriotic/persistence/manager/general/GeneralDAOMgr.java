@@ -172,7 +172,7 @@ public class GeneralDAOMgr implements GeneralDAOMgt {
 			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 			oStatement = oConnection.createStatement();
 			String sQuery = "SELECT * FROM Types t WHERE t.type = '" + oType
-					+ "' ORDER BY 1 ASC,2 ASC;";
+					+ "' ORDER BY 2 ASC,3 ASC;";
 			ResultSet oResultSet = oStatement.executeQuery(sQuery);
 			Type oTypeToReturn = null;
 

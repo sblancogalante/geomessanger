@@ -21,16 +21,24 @@ public class DisplayUserReport extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public DisplayUserReport(EmployeeVO employee) {
-		setBackground(Color.WHITE);
+	public DisplayUserReport(EmployeeVO employee, int index) {
+		
+		if(index % 2 == 0){
+			setBackground(Color.WHITE);
+		}else{
+			setBackground(Color.LIGHT_GRAY);
+		}
 		
 		TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
 		
 		JLabel employeeNameLabel = new JLabel(employee.getName() + " " +  employee.getLastName());
 		
-		JLabel countLabel = null;
+		countLabel_1 = null;
+		
 		try {
+			
 			countLabel_1 = new JLabel(String.valueOf(textMgt.countTextCharacters(employee)));
+			
 			
 		} catch (RemoteException | NotBoundException e) {
 			ErrorDialog error = new ErrorDialog("Ha ocurrido un error en el algoritmo de mensaje. \n\n ERROR: "

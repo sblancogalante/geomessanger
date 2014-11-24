@@ -24,14 +24,13 @@ public class ClientSocket {
 
 			pw = new PrintWriter(oSocket.getOutputStream(), true);
 
-			pw.write("LUIS");
+			pw.write("Hello");
 			pw.flush();			
 			
 			while (true) {
 			
 				String sUserWindowToResfresh = br.readLine(); // Esperando por nuevas notificaciones.
 				
-				//notify windows
 				
 			}
 			
