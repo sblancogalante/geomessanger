@@ -46,6 +46,7 @@ import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.factory.message.FileMessageFactory;
 import uy.edu.um.laboratoriotic.services.factory.message.TextMessageFactory;
@@ -121,6 +122,12 @@ public class ChatRoom extends JFrame {
 						
 					} catch (EmployeeDoesNotExist e) {
 						ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+								+ e.getMessage());
+						error.setVisible(true);
+						e.printStackTrace();
+					} catch (EmployeeAlreadyExists e) {
+						// TODO Auto-generated catch block
+						ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
 								+ e.getMessage());
 						error.setVisible(true);
 						e.printStackTrace();
@@ -331,6 +338,12 @@ public class ChatRoom extends JFrame {
 								+ e.getMessage());
 						error.setVisible(true);
 						e.printStackTrace();
+					} catch (EmployeeAlreadyExists e) {
+						// TODO Auto-generated catch block
+						ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
+								+ e.getMessage());
+						error.setVisible(true);
+						e.printStackTrace();
 					}
 				}
 				
@@ -364,6 +377,12 @@ public class ChatRoom extends JFrame {
 					
 				} catch (EmployeeDoesNotExist e) {
 					ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
+					e.printStackTrace();
+				} catch (EmployeeAlreadyExists e) {
+					// TODO Auto-generated catch block
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
 							+ e.getMessage());
 					error.setVisible(true);
 					e.printStackTrace();
@@ -496,6 +515,12 @@ public class ChatRoom extends JFrame {
 				
 			} catch (EmployeeDoesNotExist e) {
 				ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+						+ e.getMessage());
+				error.setVisible(true);
+				e.printStackTrace();
+			} catch (EmployeeAlreadyExists e) {
+				// TODO Auto-generated catch block
+				ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
 						+ e.getMessage());
 				error.setVisible(true);
 				e.printStackTrace();

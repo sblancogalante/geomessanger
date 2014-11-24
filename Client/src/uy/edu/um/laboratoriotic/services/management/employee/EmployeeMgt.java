@@ -55,9 +55,10 @@ public interface EmployeeMgt {
 	 * @throws RemoteException
 	 * @throws NotBoundException
 	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeAlreadyExists 
 	 */
 	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
-			NotBoundException, EmployeeDoesNotExist;
+			NotBoundException, EmployeeDoesNotExist, EmployeeAlreadyExists;
 	
 	/**
 	 * This method is the one that communicates with the commons interface to
@@ -82,9 +83,10 @@ public interface EmployeeMgt {
 	 * @throws RemoteException
 	 * @throws NotBoundException
 	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeAlreadyExists 
 	 */
 	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
-	NotBoundException, EmployeeDoesNotExist;
+	NotBoundException, EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 	/**
 	 * This method is the one that communicates with the commons interface to

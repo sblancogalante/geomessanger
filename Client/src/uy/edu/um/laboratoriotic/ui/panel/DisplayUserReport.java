@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.factory.message.TextMessageFactory;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
@@ -21,64 +22,87 @@ public class DisplayUserReport extends JPanel {
 
 	/**
 	 * Create the panel.
-	 * @throws EmployeeDoesNotExist 
+	 * 
+	 * @throws EmployeeDoesNotExist
 	 */
-	public DisplayUserReport(EmployeeVO employee, int index) throws EmployeeDoesNotExist {
-		
-		if(index % 2 == 0){
+	public DisplayUserReport(EmployeeVO employee, int index)
+			throws EmployeeDoesNotExist {
+
+		if (index % 2 == 0) {
 			setBackground(Color.WHITE);
-		}else{
+		} else {
 			setBackground(Color.LIGHT_GRAY);
 		}
-		
-		TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
-		
-		JLabel employeeNameLabel = new JLabel(employee.getName() + " " +  employee.getLastName());
-		
+
+		TextMessageMgt textMgt = TextMessageFactory.getInstance()
+				.getTextMessageMgt();
+
+		JLabel employeeNameLabel = new JLabel(employee.getName() + " "
+				+ employee.getLastName());
+
 		countLabel_1 = null;
-		
+
 		try {
-			
-			countLabel_1 = new JLabel(String.valueOf(textMgt.countTextCharacters(employee)));
-			
-			
+
+			countLabel_1 = new JLabel(String.valueOf(textMgt
+					.countTextCharacters(employee)));
+
 		} catch (RemoteException e) {
-			ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
-					+ e.getMessage());
+			ErrorDialog error = new ErrorDialog(
+					"Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
+							+ e.getMessage());
 			error.setVisible(true);
 			e.printStackTrace();
-		}catch(NotBoundException e){
-			ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
-					+ e.getMessage());
+		} catch (NotBoundException e) {
+			ErrorDialog error = new ErrorDialog(
+					"Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+							+ e.getMessage());
 			error.setVisible(true);
 			e.printStackTrace();
-			
+
 		} catch (EmployeeDoesNotExist e) {
-			ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
-					+ e.getMessage());
+			ErrorDialog error = new ErrorDialog(
+					"Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+							+ e.getMessage());
+			error.setVisible(true);
+			e.printStackTrace();
+		} catch (EmployeeAlreadyExists e) {
+			// TODO Auto-generated catch block
+			ErrorDialog error = new ErrorDialog(
+					"Ha ocurrido un error. \n\n ERROR: " + e.getMessage());
 			error.setVisible(true);
 			e.printStackTrace();
 		}
-		
+
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(employeeNameLabel, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
-					.addComponent(countLabel_1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-					.addGap(34))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(14)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(employeeNameLabel)
-						.addComponent(countLabel_1))
-					.addContainerGap(15, Short.MAX_VALUE))
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(employeeNameLabel,
+								GroupLayout.PREFERRED_SIZE, 210,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 140,
+								Short.MAX_VALUE)
+						.addComponent(countLabel_1, GroupLayout.PREFERRED_SIZE,
+								80, GroupLayout.PREFERRED_SIZE).addGap(34)));
+		groupLayout
+				.setVerticalGroup(groupLayout
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addGap(14)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																employeeNameLabel)
+														.addComponent(
+																countLabel_1))
+										.addContainerGap(15, Short.MAX_VALUE)));
 		setLayout(groupLayout);
 
 	}

@@ -6,6 +6,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.ServiceFacade;
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageMgt;
@@ -57,15 +58,20 @@ public class FileMessageMgr implements FileMessageMgt {
 	}
 
 	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender,
-			EmployeeVO oReceiver) throws RemoteException, NotBoundException, EmployeeDoesNotExist {
+			EmployeeVO oReceiver) throws RemoteException, NotBoundException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		ArrayList<FileMessageVO> oArrayListToReturn = new ArrayList<>();
 
 		FileMessageRemoteMgt oFileMessageRemoteMgt = newLookUp("FileMessageRemoteMgr");
 
-		oArrayListToReturn = oFileMessageRemoteMgt.getFileMessages(oSender,
-				oReceiver);
+		try {
+			oArrayListToReturn = oFileMessageRemoteMgt.getFileMessages(oSender,
+					oReceiver);
+		} catch (EmployeeAlreadyExists e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeAlreadyExists();
+		}
 
 		return oArrayListToReturn;
 	}

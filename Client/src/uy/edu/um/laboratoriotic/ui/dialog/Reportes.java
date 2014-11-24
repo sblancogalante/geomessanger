@@ -24,6 +24,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.EmptyBorder;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.factory.message.TextMessageFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
@@ -103,7 +104,13 @@ public class Reportes extends JDialog {
 					JList<? extends EmployeeVO> list, EmployeeVO value,
 					int index, boolean isSelected, boolean cellHasFocus) {
 			
-				DisplayUserReport userReportPanel = new DisplayUserReport(value, index);
+				DisplayUserReport userReportPanel = null;
+				try {
+					userReportPanel = new DisplayUserReport(value, index);
+				} catch (EmployeeDoesNotExist e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 //				JLabel userReportPanel = new JLabel();
 //				try {

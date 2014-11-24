@@ -30,6 +30,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
@@ -188,7 +189,7 @@ public class DeleteUser extends JDialog {
 										+ e.getMessage());
 								error.setVisible(true);
 								e.printStackTrace();
-							}catch(NotBoundException e){
+							} catch(NotBoundException e){
 								ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
 										+ e.getMessage());
 								error.setVisible(true);
@@ -196,6 +197,12 @@ public class DeleteUser extends JDialog {
 								
 							} catch (EmployeeDoesNotExist e) {
 								ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+										+ e.getMessage());
+								error.setVisible(true);
+								e.printStackTrace();
+							} catch (EmployeeAlreadyExists e) {
+								// TODO Auto-generated catch block
+								ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
 										+ e.getMessage());
 								error.setVisible(true);
 								e.printStackTrace();

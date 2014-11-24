@@ -27,6 +27,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.EmptyBorder;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.factory.message.FileMessageFactory;
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageMgt;
@@ -143,6 +144,12 @@ public class Descargas extends JFrame {
 					+ e.getMessage());
 			error.setVisible(true);
 			e.printStackTrace();
+		} catch (EmployeeAlreadyExists e1) {
+			// TODO Auto-generated catch block
+			ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
+					+ e1.getMessage());
+			error.setVisible(true);
+			e1.printStackTrace();
 		}
 		
 		downloadJList.setCellRenderer(new ListCellRenderer<FileMessageVO>() {

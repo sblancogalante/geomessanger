@@ -4,6 +4,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
@@ -35,9 +36,10 @@ public interface FileMessageMgt {
 	 * @throws NotBoundException
 	 * @throws RemoteException
 	 * @throws EmployeeDoesNotExist 
+	 * @throws EmployeeAlreadyExists 
 	 */
 	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender,
 			EmployeeVO oReceiver) throws RemoteException,
-			NotBoundException, EmployeeDoesNotExist;
+			NotBoundException, EmployeeDoesNotExist, EmployeeAlreadyExists;
 
 }
