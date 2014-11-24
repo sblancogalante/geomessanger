@@ -114,6 +114,9 @@ public class MainWindow extends JFrame {
 					+ e2.getMessage());
 			error.setVisible(true);
 			e2.printStackTrace();
+		} catch (EmployeeAlreadyExists e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		
 		
@@ -151,13 +154,38 @@ public class MainWindow extends JFrame {
 							+ e.getMessage());
 					error.setVisible(true);
 					e.printStackTrace();
+				} catch (EmployeeAlreadyExists e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 
 			@Override
 			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
+				actualUser.setStatus(false);
 				
+				try {
+					employeeMgt.modifyEmployee(actualUser);
+				} catch (RemoteException e1) {
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
+							+ e1.getMessage());
+					error.setVisible(true);
+					e1.printStackTrace();
+				}catch(NotBoundException e1){
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+							+ e1.getMessage());
+					error.setVisible(true);
+					e1.printStackTrace();
+					
+				} catch (EmployeeDoesNotExist e1) {
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+							+ e1.getMessage());
+					error.setVisible(true);
+					e1.printStackTrace();
+				} catch (EmployeeAlreadyExists e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}		
 			}
 
 			@Override
@@ -205,6 +233,66 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e){
 				UserProfile userProfile = new UserProfile(actualUser,true);
 				userProfile.setVisible(true);
+				userProfile.addWindowListener(new WindowListener() {
+					
+					@Override
+					public void windowOpened(WindowEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowIconified(WindowEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowDeiconified(WindowEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowDeactivated(WindowEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowClosing(WindowEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void windowClosed(WindowEvent e) {
+						if(actualUser.getProfilePicture() == null){	
+							
+							userPhotoImage = rescaleImage(new File("Images/Foto.png"), 118,118);
+							
+						}else{
+							
+							
+							userPhotoImage = rescaleImageFromBytes(actualUser.getProfilePicture(),118,118);
+							
+							if(userPhotoImage == null){
+								userPhotoImage = rescaleImage(new File("Images/Foto.png"), 118,118);
+							}
+
+							
+						}
+						
+						userPhotoLabel.setIcon(userPhotoImage);
+						
+					}
+					
+					@Override
+					public void windowActivated(WindowEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
 			}
 		});
 		editMenu.add(menuItemEditProfile);
@@ -237,6 +325,9 @@ public class MainWindow extends JFrame {
 					ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
 							+ e.getMessage());
 					error.setVisible(true);
+					e.printStackTrace();
+				} catch (EmployeeAlreadyExists e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -615,7 +706,6 @@ public class MainWindow extends JFrame {
 						+ e.getMessage());
 				error.setVisible(true);
 				
-				e.printStackTrace();
 			} catch (EmployeeAlreadyExists e) {
 				ErrorDialog error = new ErrorDialog("Ha ocurrido un error, ese empleado ya existe. \n\n ERROR: "
 						+ e.getMessage());

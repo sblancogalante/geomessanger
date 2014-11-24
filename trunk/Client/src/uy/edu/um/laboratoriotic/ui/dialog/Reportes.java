@@ -94,38 +94,6 @@ public class Reportes extends JDialog {
 		
 		JList<EmployeeVO> userList = new JList<EmployeeVO>();
 		
-		
-	
-		
-		userList.setCellRenderer(new ListCellRenderer<EmployeeVO>() {
-
-			@Override
-			public Component getListCellRendererComponent(
-					JList<? extends EmployeeVO> list, EmployeeVO value,
-					int index, boolean isSelected, boolean cellHasFocus) {
-			
-				DisplayUserReport userReportPanel = null;
-				try {
-					userReportPanel = new DisplayUserReport(value, index);
-				} catch (EmployeeDoesNotExist e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-//				JLabel userReportPanel = new JLabel();
-//				try {
-//					userReportPanel.setText(value.getName() + "                      " + String.valueOf(textMgt.countTextCharacters(value)));
-//				} catch (RemoteException | NotBoundException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-				
-				
-				return userReportPanel;
-			
-			}
-		});
-		
 		DefaultListModel<EmployeeVO> employeeListModel;
 		try {
 			if (employeeMgt.getEmployees() != null && employeeMgt.getEmployees().size() > 0) {
@@ -142,12 +110,37 @@ public class Reportes extends JDialog {
 			e.printStackTrace();
 		}
 		
+	
+		
+		userList.setCellRenderer(new ListCellRenderer<EmployeeVO>() {
+
+			@Override
+			public Component getListCellRendererComponent(
+					JList<? extends EmployeeVO> list, EmployeeVO value,
+					int index, boolean isSelected, boolean cellHasFocus) {
+			
+				DisplayUserReport userReportPanel=null;
+				try {
+					userReportPanel = new DisplayUserReport(value, index);
+				} catch (EmployeeDoesNotExist e) {
+					// TODO Auto-generated catch block
+					throw new RuntimeException();
+					
+				}
+				
+				
+				return userReportPanel;
+			
+			}
+		});
 		
 		JButton exportButton = new JButton("Exportar a Excel");
 		
 		JLabel lblNewLabel = new JLabel("Nombre");
 		
 		JLabel lblMessageCount = new JLabel("Cantidad de caracteres");
+		
+		scrollPane.setViewportView(userList);
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -164,7 +157,7 @@ public class Reportes extends JDialog {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(exportButton)
-					.addPreferredGap(ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 232, Short.MAX_VALUE)
 					.addComponent(cancelButton)
 					.addGap(19))
 				.addGroup(gl_contentPane.createSequentialGroup()
@@ -174,9 +167,9 @@ public class Reportes extends JDialog {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(53)
 					.addComponent(lblNewLabel)
-					.addPreferredGap(ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
 					.addComponent(lblMessageCount)
-					.addGap(107))
+					.addGap(71))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -199,7 +192,7 @@ public class Reportes extends JDialog {
 		);
 		
 		
-		scrollPane.setViewportView(userList);
+		
 		contentPane.setLayout(gl_contentPane);
 	}
 	

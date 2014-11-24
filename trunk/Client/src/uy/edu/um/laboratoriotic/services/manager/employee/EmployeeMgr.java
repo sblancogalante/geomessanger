@@ -90,7 +90,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
-			NotBoundException, EmployeeDoesNotExist, EmployeeAlreadyExists {
+			NotBoundException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
@@ -101,7 +101,7 @@ public class EmployeeMgr implements EmployeeMgt {
 			throw new EmployeeDoesNotExist();
 		} catch (EmployeeAlreadyExists e) {
 			// TODO Auto-generated catch block
-			throw new EmployeeAlreadyExists();
+			e.printStackTrace();
 		}
 
 	}
@@ -116,12 +116,11 @@ public class EmployeeMgr implements EmployeeMgt {
 		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
 		try {
 			oEmployeeVOToReturn = oEmployeeRemoteMgt.searchEmployee(oUserName);
+		} catch (EmployeeDoesNotExist e) {
+			throw new EmployeeDoesNotExist();
 		} catch (EmployeeAlreadyExists e) {
 			// TODO Auto-generated catch block
 			throw new EmployeeAlreadyExists();
-		} catch (EmployeeDoesNotExist e) {
-			// TODO Auto-generated catch block
-			throw new EmployeeDoesNotExist();
 		}
 
 		return oEmployeeVOToReturn;
@@ -142,7 +141,7 @@ public class EmployeeMgr implements EmployeeMgt {
 			// TODO Auto-generated catch block
 			throw new EmployeeDoesNotExist();
 		}
-		
+
 		return oEmployeeVOToReturn;
 	}
 

@@ -239,9 +239,12 @@ public class CreateUser extends JDialog {
 					EmployeeVO verifyUserName=null;
 					try {
 						verifyUserName = employeeMgt.searchEmployee(oEmployee.getUserName());
-					} catch (EmployeeDoesNotExist | EmployeeAlreadyExists e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					} catch (EmployeeDoesNotExist e) {
+						// nada que hacer
+					} catch (EmployeeAlreadyExists e1) {
+						ErrorDialog errorDialogPassword = new ErrorDialog(
+								"El cliente ya existe.");
+						errorDialogPassword.setVisible(true);
 					}
 					
 					if (pass1.equals(pass2) && verifyUserName == null) {

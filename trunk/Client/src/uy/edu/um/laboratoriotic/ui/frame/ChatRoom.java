@@ -15,6 +15,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -46,6 +48,7 @@ import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.factory.message.FileMessageFactory;
 import uy.edu.um.laboratoriotic.services.factory.message.TextMessageFactory;
@@ -124,6 +127,9 @@ public class ChatRoom extends JFrame {
 								+ e.getMessage());
 						error.setVisible(true);
 						e.printStackTrace();
+					} catch (EmployeeAlreadyExists e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 				
@@ -141,7 +147,50 @@ public class ChatRoom extends JFrame {
 		setJMenuBar(menuBar);
 		
 	
-		
+		this.addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosed(WindowEvent e) {
+				dispose();
+				
+			}
+			
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		JMenu fileMenu = new JMenu("Adjuntar");
 		
@@ -337,6 +386,9 @@ public class ChatRoom extends JFrame {
 								+ e.getMessage());
 						error.setVisible(true);
 						e.printStackTrace();
+					} catch (EmployeeAlreadyExists e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 				
@@ -372,6 +424,9 @@ public class ChatRoom extends JFrame {
 					ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
 							+ e.getMessage());
 					error.setVisible(true);
+					e.printStackTrace();
+				} catch (EmployeeAlreadyExists e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -504,6 +559,9 @@ public class ChatRoom extends JFrame {
 				ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
 						+ e.getMessage());
 				error.setVisible(true);
+				e.printStackTrace();
+			} catch (EmployeeAlreadyExists e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return oListMessages;
