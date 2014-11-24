@@ -16,4 +16,8 @@ public class WrongLogin extends Exception {
 		super(msg);
 	}
 
+	public WrongLogin() {
+		// TODO Auto-generated constructor stub
+	}
+
 }

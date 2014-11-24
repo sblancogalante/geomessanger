@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
 
@@ -26,9 +27,10 @@ public interface FileMessageMgt {
 	 * @return
 	 * @throws DataBaseConnection
 	 * @throws RemoteException 
+	 * @throws EmployeeDoesNotExist 
 	 */
 	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender, EmployeeVO oReceiver)
-			throws DataBaseConnection, RemoteException;
+			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist;
 
 
 }

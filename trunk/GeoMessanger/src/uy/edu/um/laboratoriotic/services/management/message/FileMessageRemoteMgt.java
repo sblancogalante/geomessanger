@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
 
@@ -27,9 +28,10 @@ public interface FileMessageRemoteMgt extends Remote {
 	 * @param oDate
 	 * @return
 	 * @throws RemoteException
+	 * @throws EmployeeDoesNotExist 
 	 */
 	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSender,
-			EmployeeVO oReceiver) throws RemoteException;
+			EmployeeVO oReceiver) throws RemoteException, EmployeeDoesNotExist;
 
 	/**
 	 * This method communicates the server that the client is trying to clear

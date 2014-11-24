@@ -7,12 +7,16 @@ package uy.edu.um.laboratoriotic.exceptions.employee;
  * @author sblanco1
  *
  */
-public class EmlpoyeeDoesNotExist extends Exception {
+public class EmployeeDoesNotExist extends Exception {
 
 	/*
 	 * Constructor
 	 */
-	public EmlpoyeeDoesNotExist(String msg) {
+	public EmployeeDoesNotExist(String msg) {
 		super(msg);
+	}
+
+	public EmployeeDoesNotExist() {
+		// TODO Auto-generated constructor stub
 	}
 }

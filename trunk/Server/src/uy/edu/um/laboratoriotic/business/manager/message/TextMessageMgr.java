@@ -8,6 +8,7 @@ import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
 import uy.edu.um.laboratoriotic.business.helper.Helper;
 import uy.edu.um.laboratoriotic.business.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.persistence.factory.message.TextMessageDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.management.message.TextMessageDAOMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
@@ -47,7 +48,7 @@ public class TextMessageMgr implements TextMessageMgt {
 	 */
 	@Override
 	public void addTextMessage(TextMessageVO oTextMessageVO)
-			throws DataBaseConnection, RemoteException {
+			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		TextMessageDAOMgt oNewDAOTextMessage = TextMessageDAOFactory
@@ -64,7 +65,7 @@ public class TextMessageMgr implements TextMessageMgt {
 
 	@Override
 	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSenderVO,
-			EmployeeVO oReceiverVO) throws DataBaseConnection, RemoteException {
+			EmployeeVO oReceiverVO) throws DataBaseConnection, RemoteException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		TextMessageVO oTextMessageVO;
@@ -95,7 +96,7 @@ public class TextMessageMgr implements TextMessageMgt {
 
 	@Override
 	public int countTextCharacters(EmployeeVO oEmployeeVO)
-			throws DataBaseConnection, RemoteException {
+			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		int returnCount = 0;

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.FileMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.persistence.DataBaseConnectionMgr;
 import uy.edu.um.laboratoriotic.persistence.factory.employee.EmployeeDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.management.message.FileMessageDAOMgt;
@@ -94,7 +95,7 @@ public class FileMessageDAOMgr implements FileMessageDAOMgt {
 
 	@Override
 	public ArrayList<FileMessage> getFileMessages(Employee oSender,
-			Employee oReceiver) throws DataBaseConnection, RemoteException {
+			Employee oReceiver) throws DataBaseConnection, RemoteException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		ArrayList<FileMessage> oList = new ArrayList<>();
@@ -108,11 +109,21 @@ public class FileMessageDAOMgr implements FileMessageDAOMgt {
 			ResultSet oResultSet = null;
 			String sQuery = null;
 
-			int oSenderID = EmployeeDAOFactory.getEmployeeDAOMgt()
-					.searchEmployee(oSender.getUserName()).getEmployeeID();
-			int oReceiverID = EmployeeDAOFactory.getEmployeeDAOMgt()
-					.searchEmployee(oReceiver.getUserName()).getEmployeeID();
+			int oSenderID = 0;
+			int oReceiverID = 0;
+			
+			try {
 
+				oSenderID = EmployeeDAOFactory.getEmployeeDAOMgt()
+						.searchEmployee(oSender.getUserName()).getEmployeeID();
+				oReceiverID = EmployeeDAOFactory.getEmployeeDAOMgt()
+						.searchEmployee(oReceiver.getUserName())
+						.getEmployeeID();
+				
+			} catch (EmployeeDoesNotExist e) {
+				throw new EmployeeDoesNotExist();
+			}
+			
 			sQuery = "SELECT * FROM (SELECT DISTINCT e.employeeID, e.iD, e.name, e.lastName, e.location, e.sector, e.position, fm.fileMessageID, fm.file, fm.fileName, fm.date, fm.employeeSenderID, fm.employeeReceiverID"
 					+ " FROM Employees e, FileMessages fm"
 					+ " WHERE fm.employeeSenderID = e.employeeID AND fm.employeeSenderID = "

@@ -8,11 +8,18 @@ import uy.edu.um.laboratoriotic.business.entities.message.FileMessage;
 import uy.edu.um.laboratoriotic.business.helper.Helper;
 import uy.edu.um.laboratoriotic.business.management.message.FileMessageMgt;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.persistence.factory.message.FileMessageDAOFactory;
 import uy.edu.um.laboratoriotic.persistence.management.message.FileMessageDAOMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
 
+/**
+ * This class is the implementation of FileMessageMgt
+ * 
+ * @author sblanco1
+ * 
+ */
 public class FileMessageMgr implements FileMessageMgt {
 
 	/*
@@ -61,7 +68,7 @@ public class FileMessageMgr implements FileMessageMgt {
 
 	@Override
 	public ArrayList<FileMessageVO> getFileMessages(EmployeeVO oSenderVO,
-			EmployeeVO oReceiverVO) throws DataBaseConnection, RemoteException {
+			EmployeeVO oReceiverVO) throws DataBaseConnection, RemoteException, EmployeeDoesNotExist {
 		// TODO Auto-generated method stub
 
 		FileMessageVO oFileMessageVO;

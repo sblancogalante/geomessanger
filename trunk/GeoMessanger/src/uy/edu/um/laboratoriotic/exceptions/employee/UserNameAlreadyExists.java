@@ -16,4 +16,8 @@ public class UserNameAlreadyExists extends Exception {
 		super(msg);
 	}
 
+	public UserNameAlreadyExists() {
+		// TODO Auto-generated constructor stub
+	}
+
 }

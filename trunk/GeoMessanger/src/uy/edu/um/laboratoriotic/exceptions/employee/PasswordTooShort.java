@@ -16,4 +16,8 @@ public class PasswordTooShort extends Exception {
 		super(msg);
 	}
 
+	public PasswordTooShort() {
+		// TODO Auto-generated constructor stub
+	}
+
 }

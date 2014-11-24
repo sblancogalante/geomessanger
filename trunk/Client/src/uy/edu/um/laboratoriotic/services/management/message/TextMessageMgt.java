@@ -4,6 +4,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 
@@ -22,9 +23,10 @@ public interface TextMessageMgt {
 	 * @param oTextMessageVO
 	 * @throws NotBoundException
 	 * @throws RemoteException
+	 * @throws EmployeeDoesNotExist 
 	 */
 	public void addTextMessage(TextMessageVO oTextMessageVO)
-			throws RemoteException, NotBoundException;
+			throws RemoteException, NotBoundException, EmployeeDoesNotExist;
 
 	/**
 	 * This method is the one that communicates with the commons interface to
@@ -33,9 +35,10 @@ public interface TextMessageMgt {
 	 * @return
 	 * @throws NotBoundException
 	 * @throws RemoteException
+	 * @throws EmployeeDoesNotExist 
 	 */
 	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSender,
-			EmployeeVO oReceiver) throws RemoteException, NotBoundException;
+			EmployeeVO oReceiver) throws RemoteException, NotBoundException, EmployeeDoesNotExist;
 
 	/**
 	 * This method is the one that communicates with the commons interface to
@@ -45,7 +48,8 @@ public interface TextMessageMgt {
 	 * @return
 	 * @throws RemoteException
 	 * @throws NotBoundException
+	 * @throws EmployeeDoesNotExist 
 	 */
 	public int countTextCharacters(EmployeeVO oEmployeeVO)
-			throws RemoteException, NotBoundException;
+			throws RemoteException, NotBoundException, EmployeeDoesNotExist;
 }

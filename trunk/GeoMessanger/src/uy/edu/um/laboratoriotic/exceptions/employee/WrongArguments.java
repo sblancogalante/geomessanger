@@ -1,4 +1,4 @@
-package uy.edu.um.laboratoriotic.exceptions;
+package uy.edu.um.laboratoriotic.exceptions.employee;
 
 /**
  * This exception represents the case of trying to do some action but sending

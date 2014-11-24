@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.message.TextMessage;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 
 /**
  * This is the persistence interface
@@ -20,10 +21,11 @@ public interface TextMessageDAOMgt {
 	 * 
 	 * @param oTextMessage
 	 * @throws DataBaseConnection
+	 * @throws EmployeeDoesNotExist 
 	 * @throws RemoteException
 	 */
 	public void addTextMessage(TextMessage oTextMessage)
-			throws DataBaseConnection;
+			throws DataBaseConnection, EmployeeDoesNotExist;
 
 	/**
 	 * This method returns a list with all the messages of the database
@@ -31,10 +33,11 @@ public interface TextMessageDAOMgt {
 	 * @param oTextMessage
 	 * @return
 	 * @throws DataBaseConnection
+	 * @throws EmployeeDoesNotExist 
 	 * @throws RemoteException
 	 */
 	public ArrayList<TextMessage> getTextMessages(Employee oSender,
-			Employee oReceiverEmployee) throws DataBaseConnection;
+			Employee oReceiverEmployee) throws DataBaseConnection, EmployeeDoesNotExist;
 
 	/**
 	 * This method returns an int that represents the number of characters
@@ -43,8 +46,9 @@ public interface TextMessageDAOMgt {
 	 * @param oEmployee
 	 * @return
 	 * @throws DataBaseConnection
+	 * @throws EmployeeDoesNotExist 
 	 */
 	public int countTextCharacters(Employee oEmployee)
-			throws DataBaseConnection;
+			throws DataBaseConnection, EmployeeDoesNotExist;
 
 }

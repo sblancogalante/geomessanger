@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.business.entities.general.Type;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
+import uy.edu.um.laboratoriotic.exceptions.employee.WrongLogin;
 import uy.edu.um.laboratoriotic.persistence.DataBaseConnectionMgr;
 import uy.edu.um.laboratoriotic.persistence.management.employee.EmployeeDAOMgt;
 
@@ -53,52 +55,39 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	@Override
 	public void addEmployee(Employee oEmployee) throws DataBaseConnection {
 		// TODO Auto-generated method stub
+		
 		Connection oConnection = null;
-		Statement oStatement = null;
+		PreparedStatement oPrepStatement = null;
 
 		try {
 
-			oConnection = DataBaseConnectionMgr.getInstance().getConnection();		
+			oConnection = DataBaseConnectionMgr.getInstance().getConnection();
 
-			oStatement = oConnection.createStatement();
-			
-			String sInsert = "INSERT INTO `Employees` (document, iD, name, lastName, userName, password, location, sector, email, position, workingHour, status, admin) VALUES ('"
-					+ oEmployee.getDocument().getValue()
-					+ "','"
-					+ oEmployee.getID()
-					+ "','"
-					+ oEmployee.getName()
-					+ "','"
-					+ oEmployee.getLastName()
-					+ "','"
-					+ oEmployee.getUserName()
-					+ "','"
-					+ oEmployee.getPassword()
-					+ "','"
-					+ oEmployee.getLocation().getValue()
-					+ "','"
-					+ oEmployee.getSector().getValue()
-					+ "','"
-					+ oEmployee.getMail()
-					+ "','"
-					+ oEmployee.getPosition()
-					+ "','"
-					+ oEmployee.getWorkingHour()
-					+ "',"
-					+ oEmployee.getStatus()
-					+ ","
-					+ oEmployee.getAdmin() + ");";
+			String sInsert = "INSERT INTO `Employees` (document, iD, name, lastName,"
+					+ " userName, password, location, sector, email, position,"
+					+ " workingHour, profilePicture, status, admin) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			oStatement.execute(sInsert);
-			
-			String sQuery = "INSERT INTO `Employees` (profilePicture) VALUES (?)";
-			
-			PreparedStatement oPreparedStatement = oConnection.prepareStatement(sQuery);
+			oPrepStatement = oConnection.prepareStatement(sInsert);
+
+			oPrepStatement.setString(1, oEmployee.getDocument().getValue());
+			oPrepStatement.setString(2, oEmployee.getID());
+			oPrepStatement.setString(3, oEmployee.getName());
+			oPrepStatement.setString(4, oEmployee.getLastName());
+			oPrepStatement.setString(5, oEmployee.getUserName());
+			oPrepStatement.setString(6, oEmployee.getPassword());
+			oPrepStatement.setString(7, oEmployee.getLocation().getValue());
+			oPrepStatement.setString(8, oEmployee.getSector().getValue());
+			oPrepStatement.setString(9, oEmployee.getMail());
+			oPrepStatement.setString(10, oEmployee.getPosition());
+			oPrepStatement.setString(11, oEmployee.getWorkingHour());
 			
 			Blob sProfilePicture = new javax.sql.rowset.serial.SerialBlob(
 					oEmployee.getProfilePicture());
+
+			oPrepStatement.setBlob(12, sProfilePicture);
 			
-			oPreparedStatement.setBlob(1, sProfilePicture);
+			oPrepStatement.setBoolean(13, oEmployee.getStatus());
+			oPrepStatement.setBoolean(14, oEmployee.getAdmin());			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -223,7 +212,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public Employee searchEmployee(String oUserName) throws DataBaseConnection {
+	public Employee searchEmployee(String oUserName) throws DataBaseConnection, EmployeeDoesNotExist {
 
 		Employee oEmployee = null;
 		Statement oStatement = null;
@@ -278,6 +267,10 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 						sResultAdmin);
 
 			}
+			
+			if(oEmployee == null){
+				throw new EmployeeDoesNotExist();
+			}
 
 			oResultSet.close();
 
@@ -297,7 +290,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 	}
 
 	@Override
-	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection {
+	public Employee searchEmployee(int oEmployeeID) throws DataBaseConnection, EmployeeDoesNotExist {
 
 		Employee oEmployee = null;
 		Statement oStatement = null;
@@ -352,6 +345,10 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 			}
 
+			if(oEmployee == null){
+				throw new EmployeeDoesNotExist();
+			}
+			
 			oResultSet.close();
 
 		} catch (SQLException e) {
@@ -371,7 +368,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 	@Override
 	public Employee modifyEmployee(Employee oEmployee)
-			throws DataBaseConnection {
+			throws DataBaseConnection, EmployeeDoesNotExist {
 
 		Employee oEmployeeToReturn = null;
 		Connection oConnection = null;
@@ -410,7 +407,12 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 			updateStatus(oEmployee);
 			updateAdmin(oEmployee);
 
-			oEmployeeToReturn = searchEmployee(oEmployee.getUserName());
+			try {
+				oEmployeeToReturn = searchEmployee(oEmployee.getUserName());
+			} catch (EmployeeDoesNotExist e) {
+				// TODO Auto-generated catch block
+				throw new EmployeeDoesNotExist();
+			}
 
 			oStatement.close();
 
@@ -431,7 +433,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 	@Override
 	public boolean checkLogin(String oUserName, String oPassword)
-			throws DataBaseConnection {
+			throws DataBaseConnection, WrongLogin {
 
 		boolean toReturn = false;
 		Connection oConnection = null;
@@ -455,6 +457,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 				if (oUserName.equals(userName)
 						&& hashEncriptation(oPassword).equals(password)) {
 					toReturn = true;
+				} else{
+					throw new WrongLogin();
 				}
 			}
 
@@ -478,7 +482,7 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 
 	@Override
 	public Employee getLoginEmployee(String oUserName, String oPassword)
-			throws DataBaseConnection {
+			throws DataBaseConnection, EmployeeDoesNotExist {
 
 		Employee oEmployeeToReturn = null;
 		Connection oConnection = null;
@@ -533,6 +537,8 @@ public class EmployeeDAOMgr implements EmployeeDAOMgt {
 							sResultPosition, sResultWorkingHour,
 							sProfilePicture, sResultStatus, sResultAdmin);
 
+				} else{
+					throw new EmployeeDoesNotExist();
 				}
 			}
 

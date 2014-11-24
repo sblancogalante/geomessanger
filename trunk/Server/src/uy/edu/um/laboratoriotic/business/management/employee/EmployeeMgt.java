@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import uy.edu.um.laboratoriotic.business.entities.employee.Employee;
 import uy.edu.um.laboratoriotic.exceptions.DataBaseConnection;
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
+import uy.edu.um.laboratoriotic.exceptions.employee.WrongLogin;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeFilterVO;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 
@@ -39,8 +41,9 @@ public interface EmployeeMgt {
 	 * 
 	 * @param oEmployee
 	 * @return
+	 * @throws EmployeeDoesNotExist 
 	 */
-	public Employee modifyEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection, RemoteException;
+	public Employee modifyEmployee(EmployeeVO oEmployeeVO) throws DataBaseConnection, RemoteException, EmployeeDoesNotExist;
 
 	/**
 	 * This method makes sure that the database searches an employee
@@ -48,8 +51,9 @@ public interface EmployeeMgt {
 	 * @param oUserName
 	 * @return
 	 * @throws DataBaseConnection
+	 * @throws EmployeeDoesNotExist 
 	 */
-	public Employee searchEmployee(String oUserName) throws DataBaseConnection, RemoteException;
+	public Employee searchEmployee(String oUserName) throws DataBaseConnection, RemoteException, EmployeeDoesNotExist;
 
 	/**
 	 * This method makes sure that the database returns a list with all the
@@ -67,9 +71,10 @@ public interface EmployeeMgt {
 	 * @param oEmployee
 	 * @return
 	 * @throws DataBaseConnection
+	 * @throws WrongLogin 
 	 */
 	public boolean checkLogin(EmployeeFilterVO oEmployeeFilterVO)
-			throws DataBaseConnection, RemoteException;
+			throws DataBaseConnection, RemoteException, WrongLogin;
 
 	/**
 	 * This method makes sure that the database returns an employee after the
@@ -79,8 +84,9 @@ public interface EmployeeMgt {
 	 * @param oPassword
 	 * @return
 	 * @throws DataBaseConnection
+	 * @throws EmployeeDoesNotExist 
 	 */
 	public Employee getLoginEmployee(EmployeeFilterVO oEmployeeFilterVO)
-			throws DataBaseConnection, RemoteException;
+			throws DataBaseConnection, RemoteException, EmployeeDoesNotExist;
 
 }
