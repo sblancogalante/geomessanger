@@ -1,42 +1,31 @@
 package uy.edu.um.laboratoriotic.ui.frame;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.EventQueue;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.DefaultListModel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
-import javax.swing.JScrollPane;
-import javax.swing.JList;
-import javax.swing.JLabel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.ListCellRenderer;
-
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListCellRenderer;
+import javax.swing.border.EmptyBorder;
 
 import uy.edu.um.laboratoriotic.services.factory.message.FileMessageFactory;
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageMgt;
@@ -66,7 +55,7 @@ public class Descargas extends JFrame {
 		
 		JSeparator separator = new JSeparator();
 		
-		JLabel lblDoubleclickToDownload = new JLabel("Double-Click to download file.");
+		JLabel lblDoubleclickToDownload = new JLabel("Doble click para descargar archivo.");
 		lblDoubleclickToDownload.setForeground(Color.GRAY);
 		lblDoubleclickToDownload.setFont(new Font("Lucida Grande", Font.ITALIC, 13));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -138,7 +127,7 @@ public class Descargas extends JFrame {
 				
 			}
 		} catch (RemoteException | NotBoundException e1) {
-			ErrorDialog error = new ErrorDialog("There has been an error retrieving data from Data Base. \n\n "
+			ErrorDialog error = new ErrorDialog("Ha ocurrido un error obteniendo informacion de la base de datos. \n\n "
 					+ "ERROR: " + e1.getMessage());
 			error.setVisible(true);
 			e1.printStackTrace();
@@ -185,7 +174,7 @@ public class Descargas extends JFrame {
 			    	    ds.setVisible(true);
 			    	    
 					} catch (IOException e) {
-						ErrorDialog error = new ErrorDialog("There has been an error donwloading the file. \n\n "
+						ErrorDialog error = new ErrorDialog("Ha ocurrido un error al descargar el archivo. \n\n "
 								+ "ERROR: " + e.getMessage());
 						error.setVisible(true);
 						e.printStackTrace();

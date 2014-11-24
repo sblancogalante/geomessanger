@@ -1,41 +1,11 @@
 package uy.edu.um.laboratoriotic.ui.ABM;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-
-import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
-import uy.edu.um.laboratoriotic.services.factory.general.GeneralFactory;
-import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
-import uy.edu.um.laboratoriotic.services.management.general.GeneralMgt;
-import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
-import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
-import uy.edu.um.laboratoriotic.ui.ErrorDialog;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-
-import java.awt.Font;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JPasswordField;
-import javax.swing.JSeparator;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JTabbedPane;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
-
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -44,6 +14,31 @@ import java.io.FileInputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
+import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
+import uy.edu.um.laboratoriotic.services.factory.general.GeneralFactory;
+import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
+import uy.edu.um.laboratoriotic.services.management.general.GeneralMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
+import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
+import uy.edu.um.laboratoriotic.ui.ErrorDialog;
 
 public class ModifyUser extends JDialog {
 
@@ -73,7 +68,7 @@ public class ModifyUser extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		JLabel lblModifyUser = new JLabel("Modify User");
+		JLabel lblModifyUser = new JLabel("Modificar usuario");
 		lblModifyUser.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		JSeparator separator = new JSeparator();
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -107,9 +102,9 @@ public class ModifyUser extends JDialog {
 		);
 		{
 			JPanel panel = new JPanel();
-			tabbedPane.addTab("Account", null, panel, null);
+			tabbedPane.addTab("Cuenta", null, panel, null);
 			JLabel lblEmail = new JLabel("EMail: ");
-			JLabel documentLabel = new JLabel("Document: ");
+			JLabel documentLabel = new JLabel("Documento: ");
 			
 			String[] locationVector = {};
 			String[] sectorVector = {};
@@ -141,7 +136,7 @@ public class ModifyUser extends JDialog {
 			
 			
 			
-			JLabel lblPosition = new JLabel("Position: ");
+			JLabel lblPosition = new JLabel("Posicion: ");
 			
 			eMailTextField = new JTextField(employee.getMail());
 			eMailTextField.setColumns(10);
@@ -152,11 +147,11 @@ public class ModifyUser extends JDialog {
 			positionTextField = new JTextField(employee.getPosition());
 			positionTextField.setColumns(10);
 			
-			JLabel lblNewLabel_1 = new JLabel("Location");
+			JLabel lblNewLabel_1 = new JLabel("Pais");
 			
 			JLabel lblSector = new JLabel("Sector");
 			
-			JLabel lblDocumentType = new JLabel("Document Type: ");
+			JLabel lblDocumentType = new JLabel("Tipo de documento: ");
 			
 			
 			GroupLayout gl_panel = new GroupLayout(panel);
@@ -224,15 +219,15 @@ public class ModifyUser extends JDialog {
 		}
 		{
 			JPanel panel = new JPanel();
-			tabbedPane.addTab("Other", null, panel, null);
+			tabbedPane.addTab("Otros", null, panel, null);
 			
-			JLabel lblAddPhoto = new JLabel("Add Photo: ");
+			JLabel lblAddPhoto = new JLabel("Añadir foto: ");
 			
 			JPanel panel_1 = new JPanel();
 			panel_1.setForeground(Color.GRAY);
 			panel_1.setBorder(new LineBorder(new Color(128, 128, 128), 2, true));
 			
-			JButton selectPhotoButton = new JButton("Select Photo");
+			JButton selectPhotoButton = new JButton("Seleccionar foto");
 			testPhotoLabel = new JLabel(rescaleImage(new File(photoPath), 384, 256));
 			final ImageIcon testPhoto = rescaleImage(new File(photoPath), 384, 256);
 			
@@ -315,7 +310,7 @@ public class ModifyUser extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton saveChangesButton = new JButton("Save changes");
+				JButton saveChangesButton = new JButton("Guardar cambios");
 				saveChangesButton.addActionListener(new ActionListener(){
 
 					@Override
@@ -361,8 +356,8 @@ public class ModifyUser extends JDialog {
 				getRootPane().setDefaultButton(saveChangesButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
+				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setActionCommand("Cancelar");
 				buttonPane.add(cancelButton);
 			}
 		}
@@ -461,11 +456,10 @@ public class ModifyUser extends JDialog {
             //convert file into array of bytes
 	    fileInputStream = new FileInputStream(file);
 	    fileInputStream.read(bFile);
-	    fileInputStream.close();
- 
-	    System.out.println("The file has been converted to bytes, sucesfully.");
+	    fileInputStream.close(); 
+	    
         }catch(Exception e){
-        	ErrorDialog error = new ErrorDialog("Theres has been an error. \n\n ERROR: "+ e.getMessage());
+        	ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "+ e.getMessage());
 			error.setVisible(true);
         	e.printStackTrace();
         }

@@ -38,7 +38,7 @@ public class UserProfile extends JDialog {
 	 */
 	public UserProfile(final EmployeeVO employee, Boolean isEditable) {
 		
-		this.setTitle("User Profile");
+		this.setTitle("Perfil de usuario");
 		setBounds(100, 100, 475, 470);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -105,7 +105,7 @@ public class UserProfile extends JDialog {
 					.addGap(22))
 		);
 		
-		JButton editButton = new JButton("EditProfile");
+		JButton editButton = new JButton("Editar perfil");
 		editButton.addActionListener( new ActionListener(){
 
 			@Override
@@ -136,14 +136,16 @@ public class UserProfile extends JDialog {
 		);
 		editPanel.setLayout(gl_panel_1);
 		JLabel idLabel = new JLabel("ID: " + employee.getID());
-		JLabel userNameLabel = new JLabel("User Name: " + employee.getUserName());
+		JLabel userNameLabel = new JLabel("Nombre de usuario: " + employee.getUserName());
 		JLabel eMailLabel = new JLabel("EMail: " + employee.getMail());
-		JLabel locationLabel = new JLabel("Loaction: " + employee.getLocation().getValue());
+		JLabel locationLabel = new JLabel("Pais: " + employee.getLocation().getValue());
 		JLabel sectorLabel = new JLabel("Sector: " + employee.getSector().getValue());
-		JLabel positionLabel = new JLabel("Position: " + employee.getPosition());
-		JLabel workingHoursLabel = new JLabel("Working Hours: " + employee.getWorkingHour());
-		JLabel statusLabel = new JLabel("Actual Status: " + employee.getStatus());
-		JLabel documentTypeLabel = new JLabel("Document Type: " + employee.getDocument().getValue());
+		JLabel positionLabel = new JLabel("Posicion: " + employee.getPosition());
+		JLabel workingHoursLabel = new JLabel("Horario de trabajo: " + employee.getWorkingHour());
+		String estadoActual = employee.getStatus()?"Conectado":"Desconectado";
+		
+		JLabel statusLabel = new JLabel("Estado actual: " + estadoActual);
+		JLabel documentTypeLabel = new JLabel("Tipo de documento: " + employee.getDocument().getValue());
 		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -204,7 +206,7 @@ public class UserProfile extends JDialog {
 		     } catch (Exception e) {
 
 		             e.printStackTrace();
-		             System.out.println("Picture upload attempted & failed");
+		             
 		     }
 
 		     sizeImage = new ImageIcon(image);

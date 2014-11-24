@@ -5,36 +5,33 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.ListCellRenderer;
-import javax.swing.border.EmptyBorder;
-import javax.swing.DefaultListModel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JSeparator;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
-import uy.edu.um.laboratoriotic.services.factory.general.GeneralFactory;
-import uy.edu.um.laboratoriotic.services.management.general.GeneralMgt;
-import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
-import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
-import uy.edu.um.laboratoriotic.ui.ErrorDialog;
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListCellRenderer;
+import javax.swing.border.EmptyBorder;
+
+import uy.edu.um.laboratoriotic.services.factory.general.GeneralFactory;
+import uy.edu.um.laboratoriotic.services.management.general.GeneralMgt;
+import uy.edu.um.laboratoriotic.services.valueobject.general.TypeVO;
+import uy.edu.um.laboratoriotic.ui.ErrorDialog;
 
 
 
@@ -51,7 +48,7 @@ public class NewDocument extends JDialog {
 	 */
 	public NewDocument() {
 		
-		this.setTitle("Create Type of Document");
+		this.setTitle("Crear tipo de documento");
 		setBounds(100, 100, 450, 373);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,14 +58,14 @@ public class NewDocument extends JDialog {
 		
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
-		JLabel lblCreateLocation = new JLabel("Create Type of Document");
+		JLabel lblCreateLocation = new JLabel("Crear tipo de documento");
 		lblCreateLocation.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		
 		JSeparator separator = new JSeparator();
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
-		JLabel lblNewLocation = new JLabel("New Type of Document: ");
+		JLabel lblNewLocation = new JLabel("Nuevo tipo de documento: ");
 		
 		final GeneralMgt generalMgt =  GeneralFactory.getInstance()
 				.getGeneralMgt();
@@ -164,7 +161,7 @@ public class NewDocument extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton addLocationButton = new JButton("Add Document");
+				JButton addLocationButton = new JButton("Añadir Documento");
 				addLocationButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
@@ -199,7 +196,7 @@ public class NewDocument extends JDialog {
 				getRootPane().setDefaultButton(addLocationButton);
 			
 			
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					
 					@Override

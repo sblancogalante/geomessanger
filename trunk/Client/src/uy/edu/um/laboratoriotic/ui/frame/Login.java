@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
@@ -53,18 +51,18 @@ public class Login extends JFrame {
 		loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		loginLabel.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		
-		final JLabel errorLabel = new JLabel("Incorrect Password!");
+		final JLabel errorLabel = new JLabel("Contraseña incorrecta!");
 		errorLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
 		errorLabel.setForeground(Color.RED);
 		
-		userText = new JTextField("User name");
+		userText = new JTextField("Nombre de usuario");
 		userText.setForeground(Color.LIGHT_GRAY);
 		userText.setColumns(10);
 		// User name text field,changes of color when foucs
 				userText.addFocusListener(new FocusListener() {
 
 					public void focusGained(FocusEvent e) {
-						if (userText.getText().equals("User name")) {
+						if (userText.getText().equals("Nombre de usuario")) {
 							userText.setText("");
 							userText.setForeground(Color.BLACK);
 						}
@@ -73,20 +71,20 @@ public class Login extends JFrame {
 
 					public void focusLost(FocusEvent e) {
 						if (userText.getText().equals("")) {
-							userText.setText("User name");
+							userText.setText("Nombre de usuario");
 							userText.setForeground(Color.LIGHT_GRAY);
 						}
 					}
 				});
 		
-		passwordText = new JPasswordField("Password");
+		passwordText = new JPasswordField("Contraseña");
 		passwordText.setForeground(Color.LIGHT_GRAY);
 		// Password text field,changes of color when foucs
 				passwordText.addFocusListener(new FocusListener() {
 
 					public void focusGained(FocusEvent e) {
 						if (String.valueOf(passwordText.getPassword()).equals(
-								"Password")) {
+								"Contraseña")) {
 							passwordText.setText("");
 							passwordText.setForeground(Color.BLACK);
 						}
@@ -96,7 +94,7 @@ public class Login extends JFrame {
 					public void focusLost(FocusEvent e) {
 
 						if (String.valueOf(passwordText.getPassword()).equals("")) {
-							passwordText.setText("Password");
+							passwordText.setText("Contraseña");
 							passwordText.setForeground(Color.LIGHT_GRAY);
 						}
 
@@ -106,7 +104,7 @@ public class Login extends JFrame {
 				
 		passwordText.setColumns(10);
 		
-		loginButton = new JButton("Log in");
+		loginButton = new JButton("Ingresar");
 		//Hace que el Login button ejecute el action performed del listener cunado se apreta ENTER
 		this.getRootPane().setDefaultButton(loginButton);
 		
@@ -136,7 +134,7 @@ public class Login extends JFrame {
 		});
 		
 		
-		quitButton = new JButton("Quit");
+		quitButton = new JButton("Salir");
 		quitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();

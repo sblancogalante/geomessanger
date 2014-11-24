@@ -19,7 +19,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.lang.reflect.Array;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -147,7 +146,7 @@ public class MainWindow extends JFrame {
 			
 		});
 		
-		this.setTitle("Main Window");
+		this.setTitle("Menu principal");
 		setBounds(100, 100, 600, 620);
 		Dimension d = new Dimension(600, 550);
 		this.setMinimumSize(d);
@@ -155,13 +154,13 @@ public class MainWindow extends JFrame {
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		fileMenu = new JMenu("File");
+		fileMenu = new JMenu("Opciones");
 		menuBar.add(fileMenu);
 
-		editMenu = new JMenu("Edit");
+		editMenu = new JMenu("Editar");
 		menuBar.add(editMenu);
 
-		menuItemEditProfile = new JMenuItem("Profile");
+		menuItemEditProfile = new JMenuItem("Perfil");
 		menuItemEditProfile.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				UserProfile userProfile = new UserProfile(actualUser,true);
@@ -170,13 +169,13 @@ public class MainWindow extends JFrame {
 		});
 		editMenu.add(menuItemEditProfile);
 
-		adminMenu = new JMenu("Admin.");
+		adminMenu = new JMenu("Opciones Admin.");
 		boolean isAdmin = actualUser.getAdmin();
 		adminMenu.setVisible(isAdmin);
 		
 		menuBar.add(adminMenu);
 
-		exitMenuItem = new JMenuItem("Log off");
+		exitMenuItem = new JMenuItem("Desconectarse");
 		exitMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
 				actualUser.setStatus(false);
@@ -196,7 +195,7 @@ public class MainWindow extends JFrame {
 		});
 		fileMenu.add(exitMenuItem);
 
-		createUserMenuItem = new JMenuItem("Create User");
+		createUserMenuItem = new JMenuItem("Crear usuario");
 		createUserMenuItem.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -212,7 +211,7 @@ public class MainWindow extends JFrame {
 
 		adminMenu.add(createUserMenuItem);
 
-		deleteUserMenuItem = new JMenuItem("Delete User");
+		deleteUserMenuItem = new JMenuItem("Eliminar usuario");
 		deleteUserMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
 				DeleteUser deleteUser;
@@ -230,7 +229,7 @@ public class MainWindow extends JFrame {
 
 		adminMenu.add(deleteUserMenuItem);
 		
-		reportsMenuItem = new JMenuItem("Reports");
+		reportsMenuItem = new JMenuItem("Reportes");
 		reportsMenuItem.addActionListener(new ActionListener() {
 			
 			@Override
@@ -304,10 +303,11 @@ public class MainWindow extends JFrame {
 		
 		
 		userNameLabel = new JLabel(actualUser.getName() + " " + actualUser.getLastName());
-		userStateLabel = new JLabel(String.valueOf(actualUser.getStatus()));
+		String estadoActual = actualUser.getStatus()?"Conectado":"Desconectado";
+		userStateLabel = new JLabel(String.valueOf(estadoActual));
 
 		searchUserText = new JTextField();
-		searchUserText.setText("Search user");
+		searchUserText.setText("Buscar usuario");
 		searchUserText.setForeground(Color.LIGHT_GRAY);
 		searchUserText.setColumns(10);
 		
@@ -389,7 +389,7 @@ public class MainWindow extends JFrame {
 		searchUserText.addFocusListener(new FocusListener() {
 
 			public void focusGained(FocusEvent e) {
-				if (searchUserText.getText().equals("Search user")) {
+				if (searchUserText.getText().equals("Buscar usuario")) {
 					searchUserText.setText("");
 					searchUserText.setForeground(Color.BLACK);
 				}
@@ -397,7 +397,7 @@ public class MainWindow extends JFrame {
 
 			public void focusLost(FocusEvent e) {
 				if (searchUserText.getText().equals("")) {
-					searchUserText.setText("Search user");
+					searchUserText.setText("Buscar usuario");
 					searchUserText.setForeground(Color.LIGHT_GRAY);
 				}
 			}
@@ -411,11 +411,11 @@ public class MainWindow extends JFrame {
 			employeeListModel = new DefaultListModel<EmployeeVO>();
 			fillDefaultListModelFromArray(actualUser,employeeMgt.getEmployees(), employeeListModel);
 			userList.setModel(employeeListModel);
-			listEmployee = actualizarContactos(employeeMgt, userList, "Search user");
+			listEmployee = actualizarContactos(employeeMgt, userList, "Buscar usuario");
 			
 		} 
 		
-		JButton searchButton = new JButton("Search");
+		JButton searchButton = new JButton("Buscar");
 		this.getRootPane().setDefaultButton(searchButton);
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent args0) {
@@ -534,7 +534,7 @@ public class MainWindow extends JFrame {
 		
 		ArrayList<EmployeeVO> oListEmployee= new ArrayList<EmployeeVO>();
 		
-		if(userName.equals("Search user") || userName.equals("")){
+		if(userName.equals("Buscar usuario") || userName.equals("")){
 			
 			oListEmployee = employeeMgt.getEmployees();
 
@@ -560,7 +560,7 @@ public class MainWindow extends JFrame {
 			
 		} else {
 			
-			System.out.println("Null Employee List");
+			System.out.println("Lista de empleados vacia");
 		}
 		
 		return oListEmployee;
@@ -595,7 +595,7 @@ public class MainWindow extends JFrame {
 	     } catch (Exception e) {
 
 	             e.printStackTrace();
-	             System.out.println("Picture upload attempted & failed");
+	             
 	     }
 
 	     sizeImage = new ImageIcon(image);
@@ -660,10 +660,6 @@ public class MainWindow extends JFrame {
 		}
 		
 		return vector;
-	}
-        
-	
-	
-	
+	}	
 	
 }

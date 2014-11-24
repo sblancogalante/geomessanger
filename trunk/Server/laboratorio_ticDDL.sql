@@ -5,6 +5,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 CREATE DATABASE IF NOT EXISTS `laboratorio_tic` ;
 USE `laboratorio_tic` ;
 
+-- -----------------------------------------------------
+-- Table `laboratorio_tic`.`Employees`
+-- -----------------------------------------------------
 CREATE TABLE `Employees` (
 	`employeeID` INT(10) NOT NULL AUTO_INCREMENT,
 	`document` VARCHAR(30) NOT NULL DEFAULT 'Cedula', 
@@ -15,7 +18,7 @@ CREATE TABLE `Employees` (
 	`password` VARCHAR(100) NOT NULL,
 	`location` VARCHAR(30) NOT NULL,
 	`sector` VARCHAR(30) NOT NULL,
-	`mail` VARCHAR(30) NOT NULL,
+	`email` VARCHAR(30) NOT NULL,
 	`position` VARCHAR(30),
 	`workingHour` VARCHAR(20),
 	`profilePicture` LONGBLOB DEFAULT NULL,
@@ -25,6 +28,10 @@ CREATE TABLE `Employees` (
 	UNIQUE KEY (`userName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+-- -----------------------------------------------------
+-- Table `laboratoirio_tic`.`TextMessages`
+-- -----------------------------------------------------
 CREATE TABLE `TextMessages` (
 	`textMessageID` BIGINT(10) NOT NULL AUTO_INCREMENT,
 	`text` VARCHAR(300),
@@ -36,6 +43,10 @@ CREATE TABLE `TextMessages` (
 	FOREIGN KEY (`employeeReceiverID`) REFERENCES `Employees`(`employeeID`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+-- -----------------------------------------------------
+-- Table `laboratrorio_tic`.`FileMessages`
+-- -----------------------------------------------------
 CREATE TABLE `FileMessages` (
 	`fileMessageID` INT(10) NOT NULL AUTO_INCREMENT,
 	`file` LONGBLOB NOT NULL,
@@ -48,6 +59,10 @@ CREATE TABLE `FileMessages` (
 	FOREIGN KEY (`employeeReceiverID`) REFERENCES `Employees`(`employeeID`) ON DELETE CASCADE ON UPDATE NO ACTION	
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+-- -----------------------------------------------------
+-- Table `laboratorio_tic`.`Types`
+-- -----------------------------------------------------
 CREATE TABLE `Types` (
 	`typeID` INT(10) NOT NULL AUTO_INCREMENT, 
 	`type` VARCHAR(30) NOT NULL, 

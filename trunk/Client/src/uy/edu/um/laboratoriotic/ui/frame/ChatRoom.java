@@ -17,14 +17,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.imageio.ImageIO;
-import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -33,7 +30,6 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -44,7 +40,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Timer;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -53,7 +48,6 @@ import uy.edu.um.laboratoriotic.services.factory.message.TextMessageFactory;
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageMgt;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
-import uy.edu.um.laboratoriotic.services.valueobject.message.FileMessageVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
 import uy.edu.um.laboratoriotic.ui.UserProfile;
 import uy.edu.um.laboratoriotic.ui.dialog.SelectFileToSend;
@@ -71,7 +65,7 @@ public class ChatRoom extends JFrame {
 	 */
 	public ChatRoom(final EmployeeVO receiverEmployee, final EmployeeVO senderEmployee) { 
 		
-		final JTextArea messageTextArea = new JTextArea("Message...");
+		final JTextArea messageTextArea = new JTextArea("Mensaje...");
 		messageTextArea.setLineWrap(true);	
 		
 		final TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
@@ -103,7 +97,7 @@ public class ChatRoom extends JFrame {
 				if(car==KeyEvent.VK_ENTER){
 					TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),senderEmployee,receiverEmployee,null);
 					try {
-						if(!messageTextArea.getText().equals("Message...") || !messageTextArea.getText().equals("") ){
+						if(!messageTextArea.getText().equals("Mensaje...") || !messageTextArea.getText().equals("") ){
 							textMgt.addTextMessage(message);
 							messageTextArea.setText("");
 						
@@ -120,7 +114,7 @@ public class ChatRoom extends JFrame {
 		
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//HACE UN COSO PARA QE CIERRE BIEN, no esta liberanod los recursos
-		this.setTitle("Chat Room");
+		this.setTitle("Ventana de chat");
 		setBounds(100, 100, 500, 500);
 		Dimension d = new Dimension(500,500);
 		this.setMinimumSize(d);
@@ -131,11 +125,11 @@ public class ChatRoom extends JFrame {
 	
 		
 		
-		JMenu fileMenu = new JMenu("Files");
+		JMenu fileMenu = new JMenu("Adjuntar");
 		
 		menuBar.add(fileMenu);
 		
-		JMenuItem sendFileMenuItem = new JMenuItem("Send file...");
+		JMenuItem sendFileMenuItem = new JMenuItem("Archivos...");
 		sendFileMenuItem.addActionListener(new ActionListener(){
 		
 			public void actionPerformed(ActionEvent e){
@@ -149,7 +143,7 @@ public class ChatRoom extends JFrame {
 		
 		fileMenu.add(sendFileMenuItem);
 		
-		JMenuItem showDownloadsMenuItem = new JMenuItem("Show downloads...");
+		JMenuItem showDownloadsMenuItem = new JMenuItem("Mostrar descargas...");
 		showDownloadsMenuItem.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -289,15 +283,15 @@ public class ChatRoom extends JFrame {
 		converTextArea.setLineWrap(true);
 		
 		
-		JButton sendButton = new JButton("Send");		
+		JButton sendButton = new JButton("Enviar");		
 		sendButton.addKeyListener(new KeyAdapter(){
 			public void KeyPressed(KeyEvent evt){
 				char car = (char) evt.getKeyCode();
 				if(car==KeyEvent.VK_ENTER){
 					TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),senderEmployee,receiverEmployee,null);
-					System.out.println("Enter!");
+					
 					try {
-						if(!messageTextArea.getText().equals("Message...")){
+						if(!messageTextArea.getText().equals("Mensaje...")){
 							textMgt.addTextMessage(message);
 							messageTextArea.setText("");
 						
@@ -320,7 +314,7 @@ public class ChatRoom extends JFrame {
 				
 				TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),senderEmployee,receiverEmployee,null);
 				try {
-					if(!messageTextArea.getText().equals("Message...")){
+					if(!messageTextArea.getText().equals("Mensaje...")){
 						textMgt.addTextMessage(message);
 						messageTextArea.setText("");
 					
@@ -334,9 +328,9 @@ public class ChatRoom extends JFrame {
 				
 		});
 		
-		JLabel chattingWithLabel = new JLabel("Chatting with " + receiverEmployee.getName()+  " " + receiverEmployee.getLastName());
+		JLabel chattingWithLabel = new JLabel("Chateando con " + receiverEmployee.getName()+  " " + receiverEmployee.getLastName());
 		
-		JLabel offLineLabel = new JLabel("<<The user is Offline>>");
+		JLabel offLineLabel = new JLabel("<<El usuario esta desconectado>>");
 		offLineLabel.setForeground(Color.RED);
 		offLineLabel.setVisible(!receiverEmployee.getStatus());
 		 
@@ -398,7 +392,7 @@ public class ChatRoom extends JFrame {
 		messageTextArea.addFocusListener(new FocusListener() {
 			
 		    public void focusGained(FocusEvent e) {
-		    	if(messageTextArea.getText().equals("Message...")){
+		    	if(messageTextArea.getText().equals("Mensaje...")){
 		    		messageTextArea.setText("");
 		    		messageTextArea.setForeground(Color.BLACK);
 		    	}
@@ -406,7 +400,7 @@ public class ChatRoom extends JFrame {
 
 		    public void focusLost(FocusEvent e) {
 		        if(messageTextArea.getText().equals("")){
-		        	messageTextArea.setText("Message...");
+		        	messageTextArea.setText("Mensaje...");
 		        	messageTextArea.setForeground(Color.LIGHT_GRAY);
 		        }
 		    }
@@ -477,7 +471,7 @@ public class ChatRoom extends JFrame {
 	     } catch (Exception e) {
 
 	             e.printStackTrace();
-	             System.out.println("Picture upload attempted & failed");
+	            
 	     }
 
 	     sizeImage = new ImageIcon(image);

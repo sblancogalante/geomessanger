@@ -12,7 +12,7 @@ INSERT INTO `laboratorio_tic`.`Employees`
 `password`,
 `location`,
 `sector`,
-`mail`,
+`email`,
 `position`, 
 `status`,
 `admin`)
@@ -42,7 +42,7 @@ INSERT INTO `laboratorio_tic`.`Employees`
 `password`,
 `location`,
 `sector`,
-`mail`,
+`email`,
 `position`, 
 `status`,
 `admin`)

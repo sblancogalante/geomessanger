@@ -51,7 +51,9 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 				.getEmployeeFactory().getEmployeeMgt();
 
 		try {
+			
 			oEmployeeMgt.addEmployee(oEmployeeVO);
+			
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 
@@ -69,7 +71,9 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 				.getEmployeeFactory().getEmployeeMgt();
 
 		try {
+			
 			oListToReturn = oEmployeeMgt.getEmployees();
+			
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 
@@ -88,8 +92,10 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 				.getEmployeeFactory().getEmployeeMgt();
 
 		try {
+			
 			oEmployee = oEmployeeMgt.searchEmployee(oEmployeeVO.getUserName());
 			oEmployeeMgt.removeEmployee(oEmployee.getUserName());
+			
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 
@@ -134,8 +140,10 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 				.getEmployeeFactory().getEmployeeMgt();
 
 		try {
+			
 			oEmployee = oEmployeeMgt.modifyEmployee(oEmployeeVO);
 			oEmployeeVOToReturn = oEmployee.toVO();
+			
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 
@@ -155,7 +163,9 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 				.getEmployeeFactory().getEmployeeMgt();
 
 		try {
+			
 			toReturn = oEmployeeMgt.checkLogin(oEmployeeFilterVO);
+			
 		} catch (DataBaseConnection e) {
 			// TODO Auto-generated catch block
 		}
@@ -173,6 +183,7 @@ public class EmployeeRemoteMgr implements EmployeeRemoteMgt {
 				.getEmployeeFactory().getEmployeeMgt();
 
 		try {
+			
 			oEmployeeToReturn = oEmployeeMgt
 					.getLoginEmployee(oEmployeeFilterVO);
 

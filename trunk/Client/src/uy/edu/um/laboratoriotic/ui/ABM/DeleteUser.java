@@ -47,7 +47,7 @@ public class DeleteUser extends JDialog {
 				.getEmployeeMgt();
 		
 		
-		this.setTitle("Delete User");
+		this.setTitle("Eliminar usuario");
 		setBounds(100, 100, 450, 410);
 		Dimension d = new Dimension(450,410);
 		//this.setMaximumSize(d);
@@ -57,11 +57,11 @@ public class DeleteUser extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
-		JLabel deleteUserLabel = new JLabel("Delete User");
+		JLabel deleteUserLabel = new JLabel("Eliminar usuario");
 		deleteUserLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		JSeparator separator = new JSeparator();
 		
-		ChooseUserLabel = new JLabel("Choose a user: ");
+		ChooseUserLabel = new JLabel("Seleccionar un usuario: ");
 		
 		final JList<EmployeeVO> userList = new JList<EmployeeVO>();
 		
@@ -97,7 +97,7 @@ public class DeleteUser extends JDialog {
 		// User name text field,changes of color when foucs
 		searchUserText.addFocusListener(new FocusListener() {	
 			public void focusGained(FocusEvent e) {
-				if(searchUserText.getText().equals("Search user")){
+				if(searchUserText.getText().equals("Buscar usuario")){
 					searchUserText.setText("");
 					searchUserText.setForeground(Color.BLACK);
 				 }
@@ -105,13 +105,13 @@ public class DeleteUser extends JDialog {
 
 			public void focusLost(FocusEvent e) {
 				if(searchUserText.getText().equals("")){
-					searchUserText.setText("Search user");
+					searchUserText.setText("Buscar usuario");
 					searchUserText.setForeground(Color.LIGHT_GRAY);
 				}
 			}
 		});
 		
-		JButton button = new JButton("Search");
+		JButton button = new JButton("Buscar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -167,13 +167,13 @@ public class DeleteUser extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton deleteButton = new JButton("DELETE");
+				JButton deleteButton = new JButton("ELIMINAR");
 				this.getRootPane().setDefaultButton(deleteButton);
 				deleteButton.setBackground(UIManager.getColor("Button.foreground"));
 				deleteButton.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent arg0) {
 
-						int nvalue = JOptionPane.showConfirmDialog(DeleteUser.this, "Are you sure you want to Delete : " 
+						int nvalue = JOptionPane.showConfirmDialog(DeleteUser.this, "Esta seguro que quiere eliminar a: " 
 						+ userList.getSelectedValue().getName() + userList.getSelectedValue().getLastName() + " ?");
 			
 						if (nvalue == 0){
@@ -195,16 +195,16 @@ public class DeleteUser extends JDialog {
 					}
 				});
 				
-				deleteButton.setActionCommand("Delete");
+				deleteButton.setActionCommand("Eliminar");
 				buttonPane.add(deleteButton);
 				getRootPane().setDefaultButton(deleteButton);
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent args0){
 						dispose();
 					}
 				});
-				cancelButton.setActionCommand("Cancel");
+				cancelButton.setActionCommand("Cancelar");
 				buttonPane.add(cancelButton);
 			}
 		}

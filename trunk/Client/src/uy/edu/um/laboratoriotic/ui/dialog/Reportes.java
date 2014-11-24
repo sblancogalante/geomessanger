@@ -1,17 +1,8 @@
 package uy.edu.um.laboratoriotic.ui.dialog;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,13 +11,18 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JScrollPane;
-import javax.swing.JList;
-import javax.swing.JButton;
 import javax.swing.ListCellRenderer;
+import javax.swing.border.EmptyBorder;
 
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
@@ -74,14 +70,14 @@ public class Reportes extends JDialog {
 		
 		EmployeeMgt employeeMgt = EmployeeFactory.getInstance().getEmployeeMgt();
 		
-		JLabel reportsLabel = new JLabel("Reports");
+		JLabel reportsLabel = new JLabel("Reportes");
 		reportsLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 24));
 		
 		JSeparator separator = new JSeparator();
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
-		JButton cancelButton = new JButton("Cancel");
+		JButton cancelButton = new JButton("Cancelar");
 		cancelButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -103,7 +99,7 @@ public class Reportes extends JDialog {
 				list.setModel(employeeListModel);
 			}
 		} catch (RemoteException | NotBoundException e) {
-			ErrorDialog error = new ErrorDialog("There has been an error, retrieving data from data Base. \n\n ERROR: "
+			ErrorDialog error = new ErrorDialog("Ha ocurrido un error obteniendo informacion de la base de datos. \n\n ERROR: "
 					+ e.getMessage());
 			error.setVisible(true);
 			
@@ -131,11 +127,11 @@ public class Reportes extends JDialog {
 		});
 		
 		
-		JButton exportButton = new JButton("Export to Excel");
+		JButton exportButton = new JButton("Exportar a Excel");
 		
-		JLabel lblNewLabel = new JLabel("Name");
+		JLabel lblNewLabel = new JLabel("Nombre");
 		
-		JLabel lblMessageCount = new JLabel("Message Count");
+		JLabel lblMessageCount = new JLabel("Cantidad de caracteres");
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
