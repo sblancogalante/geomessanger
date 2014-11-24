@@ -6,6 +6,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.ServiceFacade;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
@@ -47,7 +48,7 @@ public class TextMessageMgr implements TextMessageMgt {
 	 */
 	@Override
 	public void addTextMessage(TextMessageVO oTextMessageVO)
-			throws RemoteException, NotBoundException, EmployeeDoesNotExist {
+			throws RemoteException, NotBoundException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		TextMessageRemoteMgt oTextMessageRemoteMgt = newLookUp("TextMessageRemoteMgr");
@@ -57,13 +58,16 @@ public class TextMessageMgr implements TextMessageMgt {
 		} catch (EmployeeDoesNotExist e) {
 			// TODO Auto-generated catch block
 			throw new EmployeeDoesNotExist();
+		} catch (EmployeeAlreadyExists e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeAlreadyExists();
 		}
 
 	}
 
 	@Override
 	public ArrayList<TextMessageVO> getTextMessages(EmployeeVO oSender,
-			EmployeeVO oReceiver) throws RemoteException, NotBoundException, EmployeeDoesNotExist {
+			EmployeeVO oReceiver) throws RemoteException, NotBoundException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		ArrayList<TextMessageVO> oArrayListToReturn = new ArrayList<>();
@@ -76,6 +80,9 @@ public class TextMessageMgr implements TextMessageMgt {
 		} catch (EmployeeDoesNotExist e) {
 			// TODO Auto-generated catch block
 			throw new EmployeeDoesNotExist();
+		} catch (EmployeeAlreadyExists e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeAlreadyExists();
 		}
 
 		return oArrayListToReturn;
@@ -83,7 +90,7 @@ public class TextMessageMgr implements TextMessageMgt {
 
 	@Override
 	public int countTextCharacters(EmployeeVO oEmployeeVO)
-			throws RemoteException, NotBoundException, EmployeeDoesNotExist {
+			throws RemoteException, NotBoundException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		int returnCount = 0;
@@ -95,6 +102,9 @@ public class TextMessageMgr implements TextMessageMgt {
 		} catch (EmployeeDoesNotExist e) {
 			// TODO Auto-generated catch block
 			throw new EmployeeDoesNotExist();
+		} catch (EmployeeAlreadyExists e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeAlreadyExists();
 		}
 
 		return returnCount;

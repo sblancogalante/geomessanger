@@ -32,6 +32,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.factory.general.GeneralFactory;
@@ -387,6 +388,12 @@ public class ModifyUser extends JDialog {
 							
 						} catch (EmployeeDoesNotExist e) {
 							ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+									+ e.getMessage());
+							error.setVisible(true);
+							e.printStackTrace();
+						} catch (EmployeeAlreadyExists e) {
+							// TODO Auto-generated catch block
+							ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
 									+ e.getMessage());
 							error.setVisible(true);
 							e.printStackTrace();

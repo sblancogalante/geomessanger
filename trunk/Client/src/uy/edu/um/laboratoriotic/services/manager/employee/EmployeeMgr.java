@@ -90,7 +90,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public void removeEmployee(EmployeeVO oEmployeeVO) throws RemoteException,
-			NotBoundException, EmployeeDoesNotExist {
+			NotBoundException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		EmployeeRemoteMgt oEmployeeRemoteMgt = newLookUp("EmployeeRemoteMgr");
@@ -99,6 +99,9 @@ public class EmployeeMgr implements EmployeeMgt {
 		} catch (EmployeeDoesNotExist e) {
 			// TODO Auto-generated catch block
 			throw new EmployeeDoesNotExist();
+		} catch (EmployeeAlreadyExists e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeAlreadyExists();
 		}
 
 	}
@@ -126,7 +129,7 @@ public class EmployeeMgr implements EmployeeMgt {
 
 	@Override
 	public EmployeeVO modifyEmployee(EmployeeVO oEmployeeVO)
-			throws RemoteException, NotBoundException, EmployeeDoesNotExist {
+			throws RemoteException, NotBoundException, EmployeeDoesNotExist, EmployeeAlreadyExists {
 		// TODO Auto-generated method stub
 
 		EmployeeVO oEmployeeVOToReturn = null;
@@ -138,6 +141,9 @@ public class EmployeeMgr implements EmployeeMgt {
 		} catch (EmployeeDoesNotExist e) {
 			// TODO Auto-generated catch block
 			throw new EmployeeDoesNotExist();
+		} catch (EmployeeAlreadyExists e) {
+			// TODO Auto-generated catch block
+			throw new EmployeeAlreadyExists();
 		}
 
 		return oEmployeeVOToReturn;

@@ -114,6 +114,12 @@ public class MainWindow extends JFrame {
 					+ e2.getMessage());
 			error.setVisible(true);
 			e2.printStackTrace();
+		} catch (EmployeeAlreadyExists e1) {
+			// TODO Auto-generated catch block
+			ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
+					+ e1.getMessage());
+			error.setVisible(true);
+			e1.printStackTrace();
 		}
 		
 		
@@ -148,6 +154,12 @@ public class MainWindow extends JFrame {
 					
 				} catch (EmployeeDoesNotExist e) {
 					ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
+					e.printStackTrace();
+				} catch (EmployeeAlreadyExists e) {
+					// TODO Auto-generated catch block
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
 							+ e.getMessage());
 					error.setVisible(true);
 					e.printStackTrace();
@@ -235,6 +247,12 @@ public class MainWindow extends JFrame {
 					
 				} catch (EmployeeDoesNotExist e) {
 					ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
+					e.printStackTrace();
+				} catch (EmployeeAlreadyExists e) {
+					// TODO Auto-generated catch block
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error. \n\n ERROR: "
 							+ e.getMessage());
 					error.setVisible(true);
 					e.printStackTrace();
