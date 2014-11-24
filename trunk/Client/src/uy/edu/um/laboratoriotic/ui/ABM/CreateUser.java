@@ -37,6 +37,9 @@ import javax.swing.border.LineBorder;
 
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeAlreadyExists;
 import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
+import uy.edu.um.laboratoriotic.exceptions.employee.MissingArguments;
+import uy.edu.um.laboratoriotic.exceptions.employee.PasswordTooShort;
+import uy.edu.um.laboratoriotic.exceptions.employee.UserNameAlreadyExists;
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.factory.general.GeneralFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
@@ -143,7 +146,6 @@ public class CreateUser extends JDialog {
 						.addComponent(panel_4, GroupLayout.DEFAULT_SIZE, 49,
 								Short.MAX_VALUE).addContainerGap()));
 
-		String[] comboBoxDefaultArray = { "<<Default>>" };
 		
 		String[] comboBoxLocations;
 		
@@ -233,8 +235,18 @@ public class CreateUser extends JDialog {
 					
 					EmployeeVO verifyUserName = employeeMgt.searchEmployee(oEmployee.getUserName());
 					
-					if (pass1.equals(pass2) && verifyUserName == null) {
-						employeeMgt.addEmployee(oEmployee);
+					if (pass1.equals(pass2) && verifyUserName == null && pass1.length() <= 5) {
+						try {
+							employeeMgt.addEmployee(oEmployee);
+						} catch (PasswordTooShort e) {
+							e.printStackTrace();
+						} catch (UserNameAlreadyExists e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (MissingArguments e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						System.out.println("Se ha creado: "
 								+ oEmployee.getUserName());
 						dispose();
@@ -249,20 +261,37 @@ public class CreateUser extends JDialog {
 								"Se ha detectado un error, el nombre de usuario ingresado ya existe. Porfavor intente nuevamente.");
 						userNameText.setText("");
 						errorDialogUserName.setVisible(true);
+					}else if(pass1.length() <= 5){
+						ErrorDialog errorDialog = new ErrorDialog(
+								"La constreña es muy corta intente nuevamente.");
+						errorDialog.setVisible(true);
+						passwordText.setText("");
+						repeatPasswordText.setText("");
+						
 					}
-				} catch (RemoteException | NotBoundException e) {
+				} catch (RemoteException e) {
 					ErrorDialog errorDialog = new ErrorDialog(
 							"Se ha producido un error al intentar guardar el usuario. \n \n ERROR: "
 									+ e.getMessage());
 					errorDialog.setVisible(true);
 					e.printStackTrace();
 				} catch (EmployeeDoesNotExist e) {
-					// TODO Auto-generated catch block
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
 					e.printStackTrace();
 				} catch (EmployeeAlreadyExists e) {
-					// TODO Auto-generated catch block
+					ErrorDialog errorDialogUserName = new ErrorDialog(
+							"Se ha detectado un error, el nombre de usuario ingresado ya existe. Porfavor intente nuevamente.");
+					userNameText.setText("");
+					errorDialogUserName.setVisible(true);
 					e.printStackTrace();
-				}
+				} catch (NotBoundException e1) {
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+							+ e1.getMessage());
+					error.setVisible(true);
+					e1.printStackTrace();
+				} 
 
 			}
 

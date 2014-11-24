@@ -46,12 +46,14 @@ import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import uy.edu.um.laboratoriotic.exceptions.employee.EmployeeDoesNotExist;
 import uy.edu.um.laboratoriotic.services.factory.message.FileMessageFactory;
 import uy.edu.um.laboratoriotic.services.factory.message.TextMessageFactory;
 import uy.edu.um.laboratoriotic.services.management.message.FileMessageMgt;
 import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.services.valueobject.message.TextMessageVO;
+import uy.edu.um.laboratoriotic.ui.ErrorDialog;
 import uy.edu.um.laboratoriotic.ui.UserProfile;
 import uy.edu.um.laboratoriotic.ui.dialog.SelectFileToSend;
 
@@ -94,9 +96,9 @@ public class ChatRoom extends JFrame {
 			}
 			
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyPressed(KeyEvent evt) {
 				// TODO Auto-generated method stub
-				char car = (char) e.getKeyCode();
+				char car = (char) evt.getKeyCode();
 				if(car==KeyEvent.VK_ENTER){
 					TextMessageVO message = new TextMessageVO(0,messageTextArea.getText(),senderEmployee,receiverEmployee,null);
 					try {
@@ -106,9 +108,22 @@ public class ChatRoom extends JFrame {
 						
 						}
 						
-					} catch (RemoteException | NotBoundException exeption) {
-						// TODO Auto-generated catch block
-						exeption.printStackTrace();
+					} catch (RemoteException e) {
+						ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
+								+ e.getMessage());
+						error.setVisible(true);
+						e.printStackTrace();
+					}catch(NotBoundException e){
+						ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+								+ e.getMessage());
+						error.setVisible(true);
+						e.printStackTrace();
+						
+					} catch (EmployeeDoesNotExist e) {
+						ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+								+ e.getMessage());
+						error.setVisible(true);
+						e.printStackTrace();
 					}
 				}
 				
@@ -300,8 +315,21 @@ public class ChatRoom extends JFrame {
 						
 						}
 						
-					} catch (RemoteException | NotBoundException e) {
-						// TODO Auto-generated catch block
+					}  catch (RemoteException e) {
+						ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
+								+ e.getMessage());
+						error.setVisible(true);
+						e.printStackTrace();
+					}catch(NotBoundException e){
+						ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+								+ e.getMessage());
+						error.setVisible(true);
+						e.printStackTrace();
+						
+					} catch (EmployeeDoesNotExist e) {
+						ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+								+ e.getMessage());
+						error.setVisible(true);
 						e.printStackTrace();
 					}
 				}
@@ -323,8 +351,21 @@ public class ChatRoom extends JFrame {
 					
 					}
 					
-				} catch (RemoteException | NotBoundException e) {
-					// TODO Auto-generated catch block
+				}  catch (RemoteException e) {
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
+					e.printStackTrace();
+				}catch(NotBoundException e){
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
+					e.printStackTrace();
+					
+				} catch (EmployeeDoesNotExist e) {
+					ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+							+ e.getMessage());
+					error.setVisible(true);
 					e.printStackTrace();
 				}
 			}
@@ -442,8 +483,21 @@ public class ChatRoom extends JFrame {
 			ArrayList<TextMessageVO> oListMessages = new ArrayList<TextMessageVO>();
 			try {
 				oListMessages = textMgt.getTextMessages(oSender, oReceiver);
-			} catch (RemoteException | NotBoundException e) {
-				// TODO Auto-generated catch block
+			} catch (RemoteException e) {
+				ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con la base de datos. \n\n ERROR: "
+						+ e.getMessage());
+				error.setVisible(true);
+				e.printStackTrace();
+			}catch(NotBoundException e){
+				ErrorDialog error = new ErrorDialog("Ha ocurrido un error al intentar conectarse con el servidor. \n\n ERROR: "
+						+ e.getMessage());
+				error.setVisible(true);
+				e.printStackTrace();
+				
+			} catch (EmployeeDoesNotExist e) {
+				ErrorDialog error = new ErrorDialog("Ha ocurrido un error, no se encontro al empleado. \n\n ERROR: "
+						+ e.getMessage());
+				error.setVisible(true);
 				e.printStackTrace();
 			}
 			return oListMessages;
