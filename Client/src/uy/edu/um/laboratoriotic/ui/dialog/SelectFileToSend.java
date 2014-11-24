@@ -168,6 +168,14 @@ public class SelectFileToSend extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+						
+					}
+				});
 				cancelButton.setActionCommand("Cancelar");
 				buttonPane.add(cancelButton);
 			}

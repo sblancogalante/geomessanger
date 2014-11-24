@@ -214,6 +214,8 @@ public class CreateUser extends JDialog {
 						(String) locationComboBox.getSelectedItem());
 				TypeVO oTypeVOSector = new TypeVO("Sector",
 						(String) sectorComboBox.getSelectedItem());
+				
+				
 
 				EmployeeVO oEmployee = new EmployeeVO(oTypeVODocument,
 						documentText.getText(), nameText.getText(),

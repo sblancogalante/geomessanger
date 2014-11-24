@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class ServerSocket {
 
-	private Map<String, Socket> colMap = new HashMap<String, Socket>();
+	private static Map<String, Socket> colMap = new HashMap<String, Socket>();
 	
 	public void notifyClients(String sToUser, String sFromUser) {
 		
@@ -31,7 +31,7 @@ public class ServerSocket {
 	       
 	       pw = new PrintWriter(oSocket.getOutputStream(), true);
 	       
-	       pw.write(sFromUser);
+	       pw.write(sFromUser + "\n");
 	       pw.flush();
 	       
 		} catch (IOException e) {
@@ -41,7 +41,7 @@ public class ServerSocket {
 		
 	}
 	
-	public void aceptarConexiones() {
+	public static void aceptarConexiones() {
 		 
 			BufferedReader br;
 

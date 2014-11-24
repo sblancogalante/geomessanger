@@ -7,6 +7,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 import uy.edu.um.laboratoriotic.business.BusinessFacade;
+import uy.edu.um.laboratoriotic.communication.ServerSocket;
 import uy.edu.um.laboratoriotic.communication.factory.employee.EmployeeRemoteFactory;
 import uy.edu.um.laboratoriotic.communication.factory.general.GeneralRemoteFactory;
 import uy.edu.um.laboratoriotic.communication.factory.message.FileMessageRemoteFactory;
@@ -88,6 +89,8 @@ public class MainServer {
 			oRegistry.rebind(nameFileMessage, oStubFileMessage);
 
 			System.out.println("Ready and waiting");
+			
+//			ServerSocket.aceptarConexiones();
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

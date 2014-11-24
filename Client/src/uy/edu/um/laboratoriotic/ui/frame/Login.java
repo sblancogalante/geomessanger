@@ -137,7 +137,7 @@ public class Login extends JFrame {
 		quitButton = new JButton("Salir");
 		quitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
+				System.exit(EXIT_ON_CLOSE);
 			}
 		});
 		

@@ -25,10 +25,13 @@ import javax.swing.ListCellRenderer;
 import javax.swing.border.EmptyBorder;
 
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
+import uy.edu.um.laboratoriotic.services.factory.message.TextMessageFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
+import uy.edu.um.laboratoriotic.services.management.message.TextMessageMgt;
 import uy.edu.um.laboratoriotic.services.valueobject.employee.EmployeeVO;
 import uy.edu.um.laboratoriotic.ui.ErrorDialog;
 import uy.edu.um.laboratoriotic.ui.panel.DisplayUserReport;
+
 
 public class Reportes extends JDialog {
 
@@ -69,6 +72,7 @@ public class Reportes extends JDialog {
 		setContentPane(contentPane);
 		
 		EmployeeMgt employeeMgt = EmployeeFactory.getInstance().getEmployeeMgt();
+		final TextMessageMgt textMgt = TextMessageFactory.getInstance().getTextMessageMgt();
 		
 		JLabel reportsLabel = new JLabel("Reportes");
 		reportsLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 24));
@@ -87,8 +91,33 @@ public class Reportes extends JDialog {
 			}
 		});
 		
-		JList<EmployeeVO> list = new JList<EmployeeVO>();
+		JList<EmployeeVO> userList = new JList<EmployeeVO>();
 		
+		
+	
+		
+		userList.setCellRenderer(new ListCellRenderer<EmployeeVO>() {
+
+			@Override
+			public Component getListCellRendererComponent(
+					JList<? extends EmployeeVO> list, EmployeeVO value,
+					int index, boolean isSelected, boolean cellHasFocus) {
+			
+				DisplayUserReport userReportPanel = new DisplayUserReport(value, index);
+				
+//				JLabel userReportPanel = new JLabel();
+//				try {
+//					userReportPanel.setText(value.getName() + "                      " + String.valueOf(textMgt.countTextCharacters(value)));
+//				} catch (RemoteException | NotBoundException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+				
+				
+				return userReportPanel;
+			
+			}
+		});
 		
 		DefaultListModel<EmployeeVO> employeeListModel;
 		try {
@@ -96,7 +125,7 @@ public class Reportes extends JDialog {
 				 
 				employeeListModel = new DefaultListModel<EmployeeVO>(); 
 				fillDefaultListModelFromArray(employeeMgt.getEmployees(), employeeListModel);
-				list.setModel(employeeListModel);
+				userList.setModel(employeeListModel);
 			}
 		} catch (RemoteException | NotBoundException e) {
 			ErrorDialog error = new ErrorDialog("Ha ocurrido un error obteniendo informacion de la base de datos. \n\n ERROR: "
@@ -105,21 +134,6 @@ public class Reportes extends JDialog {
 			
 			e.printStackTrace();
 		}
-		
-		
-		list.setCellRenderer(new ListCellRenderer<EmployeeVO>() {
-
-			@Override
-			public Component getListCellRendererComponent(
-					JList<? extends EmployeeVO> list, EmployeeVO value,
-					int index, boolean isSelected, boolean cellHasFocus) {
-			
-				DisplayUserReport userReportPanel = new DisplayUserReport(value);
-				
-				return userReportPanel;
-			
-			}
-		});
 		
 		
 		JButton exportButton = new JButton("Exportar a Excel");
@@ -178,7 +192,7 @@ public class Reportes extends JDialog {
 		);
 		
 		
-		scrollPane.setViewportView(list);
+		scrollPane.setViewportView(userList);
 		contentPane.setLayout(gl_contentPane);
 	}
 	

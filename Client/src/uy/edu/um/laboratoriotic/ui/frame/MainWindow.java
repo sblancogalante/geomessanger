@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
@@ -18,7 +19,11 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -46,6 +51,8 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import org.omg.CORBA.portable.ApplicationException;
 
 import uy.edu.um.laboratoriotic.services.factory.employee.EmployeeFactory;
 import uy.edu.um.laboratoriotic.services.management.employee.EmployeeMgt;
@@ -255,7 +262,14 @@ public class MainWindow extends JFrame {
 		}else{
 			
 			userPhotoImage = rescaleImage(new File("Images/Manolo.jpg"), 118, 118);
-			//userPhotoImage = new ImageIcon("Images/luisFoto.jpg");
+			//userPhotoImage = rescaleImageFromBytes(actualUser.getProfilePicture(),118,118);
+//			try {
+//				userPhotoImage = new ImageIcon(scale(actualUser.getProfilePicture(), 118, 118));
+//			} catch (ApplicationException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+
 			
 		}
 		
@@ -440,7 +454,7 @@ public class MainWindow extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(1)
-							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE))
+							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(18)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -448,8 +462,8 @@ public class MainWindow extends JFrame {
 									.addComponent(userPhotoLabel, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(userNameLabel, GroupLayout.PREFERRED_SIZE, 292, GroupLayout.PREFERRED_SIZE)
-										.addComponent(userStateLabel, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)))
+										.addComponent(userStateLabel, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)
+										.addComponent(userNameLabel, GroupLayout.PREFERRED_SIZE, 292, GroupLayout.PREFERRED_SIZE)))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(221)
 									.addComponent(searchUserText, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE)
@@ -464,21 +478,22 @@ public class MainWindow extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(46)
-							.addComponent(userNameLabel)
-							.addGap(12)
-							.addComponent(userStateLabel))
-						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(16)
-							.addComponent(userPhotoLabel, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(userPhotoLabel, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(userNameLabel)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(userStateLabel)
+							.addGap(22)))
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 12, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(searchUserText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(searchButton))
 					.addGap(12)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
@@ -633,6 +648,58 @@ public class MainWindow extends JFrame {
 	     return (new ImageIcon(resizedImg));
 	 }
 	
+	//resize image
+			public ImageIcon rescaleImageFromBytes(byte[] imageBytes, int maxHeight, int maxWidth){
+			     int newHeight = 0, newWidth = 0;        // Variables for the new height and width
+			     int priorHeight = 0, priorWidth = 0;
+			     InputStream in = new ByteArrayInputStream(imageBytes);				
+			     BufferedImage image = null;
+			     
+				try {
+					image = ImageIO.read(in);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			     ImageIcon sizeImage;
+
+			 
+
+			     sizeImage = new ImageIcon(image);
+
+			     if(sizeImage != null){
+			    	 
+			         priorHeight = sizeImage.getIconHeight(); 
+			         priorWidth = sizeImage.getIconWidth();
+			     }
+
+			     // Calculate the correct new height and width
+			     if((float)priorHeight/(float)priorWidth > (float)maxHeight/(float)maxWidth){
+			     
+			         newHeight = maxHeight;
+			         newWidth = (int)(((float)priorWidth/(float)priorHeight)*(float)newHeight);
+			     }else{
+			    	 
+			         newWidth = maxWidth;
+			         newHeight = (int)(((float)priorHeight/(float)priorWidth)*(float)newWidth);
+			     }
+
+
+			     // Resize the image
+
+			     // 1. Create a new Buffered Image and Graphic2D object
+			     BufferedImage resizedImg = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+			     Graphics2D g2 = resizedImg.createGraphics();
+
+			     // 2. Use the Graphic object to draw a new image to the image in the buffer
+			     g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			     g2.drawImage(image, 0, 0, newWidth, newHeight, null);
+			     g2.dispose();
+
+			     // 3. Convert the buffered image into an ImageIcon for return
+			     return (new ImageIcon(resizedImg));
+			 }
+	
 	
 	
 	private ArrayList<EmployeeVO> order(ArrayList<EmployeeVO> list){
@@ -661,5 +728,30 @@ public class MainWindow extends JFrame {
 		
 		return vector;
 	}	
+	
+	private byte[] scale(byte[] fileData, int width, int height) throws ApplicationException {
+    	ByteArrayInputStream in = new ByteArrayInputStream(fileData);
+    	try {
+    		BufferedImage img = ImageIO.read(in);
+    		if(height == 0) {
+    			height = (width * img.getHeight())/ img.getWidth(); 
+    		}
+    		if(width == 0) {
+    			width = (height * img.getWidth())/ img.getHeight();
+    		}
+    		Image scaledImage = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+    		BufferedImage imageBuff = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    		imageBuff.getGraphics().drawImage(scaledImage, 0, 0, new Color(0,0,0), null);
+
+    		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+    		ImageIO.write(imageBuff, "jpg", buffer);
+
+    		return buffer.toByteArray();
+    	} catch (IOException e) {
+    		throw new ApplicationException("jdsa", null);
+    	}
+    }
+	
 	
 }
